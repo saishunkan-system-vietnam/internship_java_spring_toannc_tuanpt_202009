@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssv.com.mapper.AccountMapper">
+	<resultMap type="Account" id="accountMapping">
+		<id column="id" property="id" />
+		<result column="account_username" property="username"/>
+		<result column="account_email" property="email" />
+		<result column="account_password" property="password" />
+		<result column="account_role" property="role"/>
+	</resultMap>
+	
+	<select id="findAll" resultMap="accountMapping">
+		SELECT * FROM account_tbl ORDER BY id DESC
+	</select>
+	<select id="findName" resultMap="accountMapping">
+		SELECT * FROM account_tbl Where account_email LIKE #{name}
+	</select>
+	
+	<insert id="add" parameterType="Account">
+		INSERT INTO account_tbl(
+		account_username,
+		account_email,
+		account_password,
+		account_role
+		) VALUES(
+		#{username},
+		#{email},
+		#{password},
+		#{role}
+		)
+	</insert>
+	<update id="replace" parameterType="Account">
+		UPDATE account_tbl SET account_password=#{password} WHERE account_email=#{email}
+	</update>
+	<delete id="delete" parameterType = "int">
+		DELETE from account_tbl WHERE id = #{id} 
+	</delete>
+	<select id="pageUser" resultMap="accountMapping">
+		SELECT * FROM account_tbl Where ${nametype} LIKE #{name} ORDER BY id DESC LIMIT #{page},#{pagesize}
+	</select>
+	
+
+</mapper>
