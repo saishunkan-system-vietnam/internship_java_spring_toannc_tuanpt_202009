@@ -15,6 +15,8 @@ public class TeamForm {
 	private String type;
 	private String description;
 	private String logo;
+	private int idTeam1;
+	private int idTeam2;
 	private MultipartFile file;
 
 }

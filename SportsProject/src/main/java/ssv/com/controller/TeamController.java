@@ -3,12 +3,15 @@ package ssv.com.controller;
 import java.io.File;
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +36,10 @@ public class TeamController {
 	@GetMapping(value="getAll")
 	public ResponseEntity<List<Team>> getAll(){
 		return new ResponseEntity<List<Team>>(teamService.getAll(),HttpStatus.OK);
+	}
+	@GetMapping(value="getByTour/{idTournamet}")
+	public ResponseEntity<List<Team>> getByTour(@PathVariable int idTournamet){
+		return new ResponseEntity<List<Team>>(teamService.getByTour(idTournamet),HttpStatus.OK);
 	}
 
 	@GetMapping(value="getById")

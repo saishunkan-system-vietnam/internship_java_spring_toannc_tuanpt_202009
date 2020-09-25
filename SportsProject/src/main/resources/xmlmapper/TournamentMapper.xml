@@ -13,7 +13,7 @@
 		<result property="description" column="tournament_description" />
 		<collection property="schedule" javaType="ArrayList"
 			ofType="Schedule">
-			<id column="id_schedule" property="idschedule" />
+			<id column="id_schedule" property="idSchedule" />
 			<result column="schedule_start" property="timeStart" />
 			<result column="schedule_end" property="timeEnd" />
 			<result column="schedule_team1" property="idTeam1" />
@@ -81,5 +81,9 @@
 
 		<select id="findByValue" resultMap="tournamentMapping">
 			SELECT * FROM tournament_tbl ORDER BY ${value} DESC
+		</select>
+		<select id="getTourAction" resultMap="tournamentMapping">
+			SELECT * FROM sports.tournament_tbl where tournament_status=0
+		
 		</select>
 </mapper>

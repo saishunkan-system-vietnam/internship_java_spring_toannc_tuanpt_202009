@@ -1,6 +1,7 @@
 package ssv.com.entity;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Schedule {
-	private int idschedule;
+	private int idSchedule;
 	private Date timeEnd;
 	private Date timeStart;
 	private int idTeam1;
@@ -25,4 +26,6 @@ public class Schedule {
 	private String video;
 	private int status;
 	private String description;
+	private String nameTour;
+	private List<Team> team;
 }

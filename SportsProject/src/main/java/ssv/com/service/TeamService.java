@@ -83,4 +83,8 @@ public class TeamService {
 			teamRepository.save(team);
 		}
 	}
+
+	public List<Team> getByTour(int idTournamet) {
+		return teamRepository.getByTour(idTournamet);
+	}
 }

@@ -34,13 +34,18 @@ public class AccountRepository {
 		
 	}
 
-	public List<Account> pageUser(int page, int pagesize,String name,String nametype) {
-		return accountMapper.pageUser(page*pagesize,pagesize,name,nametype);
+
+
+	public Account findById(int id) {
+		return accountMapper.findById(id);
 	}
 
-	public List<Account> findName(String name) {
-		
-		return accountMapper.findName(name);
+	public List<Account> search(int page, int pageSize, String name, String type) {
+		return accountMapper.search(page,pageSize,name,type);
+	}
+
+	public  List<Account> searchTotal(String name, String type) {
+		return accountMapper.searchTotal(name,type);
 	}
 
 	

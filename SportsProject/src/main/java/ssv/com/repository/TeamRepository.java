@@ -64,4 +64,9 @@ public class TeamRepository {
 	public Set<Schedule> selectAllMatchsWinByTeam(int id){
 		return teamMapper.selectAllMatchsByTeam(id);
 	}
+
+	public List<Team> getByTour(int idTournamet) {
+		// TODO Auto-generated method stub
+		return teamMapper.getByTour(idTournamet);
+	}
 }

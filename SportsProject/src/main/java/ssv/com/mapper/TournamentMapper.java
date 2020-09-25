@@ -22,6 +22,8 @@ public interface TournamentMapper {
 
 	public void updateStatus(int idTour, int status);
 
+	public List<Tournament> getTourAction();
+
 
 	
 }

@@ -37,4 +37,6 @@ public interface TeamMapper {
 
 	public Set<Schedule> selectAllMatchsWinByTeam(int idTeam);
 
+	public List<Team> getByTour(int idTournament);
+
 }

@@ -38,6 +38,10 @@ public class TournamentController {
 		return new ResponseEntity<List<Tournament>>(tournamentService.getAll(),HttpStatus.OK);
 
 	}
+	@GetMapping(value="getTourAction")
+	public ResponseEntity<List<Tournament>> getTourAction(){
+		return new ResponseEntity<List<Tournament>>(tournamentService.getTourAction(),HttpStatus.OK);
+	}
 
 	@GetMapping(value="getById")
 	public ResponseEntity<Tournament> getById(@RequestParam int idTour){

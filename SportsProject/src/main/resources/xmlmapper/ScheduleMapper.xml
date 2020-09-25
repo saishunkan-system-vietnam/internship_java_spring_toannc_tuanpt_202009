@@ -17,19 +17,38 @@
 		<result column="schedule_address" property="address" />
 		<result column="schedule_status" property="status" />
 		<result column="schedule_tour" property="idTour" />
+		<result column="tournament_name" property="nameTour" />
+	<collection property="team" ofType="Team">
+			<id column="id_team" property="idTeam" />
+			<result column="team_name" property="nameTeam" />
+			<result column="team_totalmatch" property="totalmatch" />
+			<result column="team_totalwin" property="totalwin" />
+			<result column="team_type" property="type" />
+			<result column="team_description" property="description" />
+			<result column="team_logo" property="logo" />
+		</collection>
 	</resultMap>
 
-	<select id="getAll" resultMap="scheduleMapping">
-		Select * FROM schedule_tbl
+	<select id="search" resultMap="scheduleMapping">
+ Select * FROM schedule_tbl inner join tournament_tbl on schedule_tbl.schedule_tour=tournament_tbl.id_tour 
+ inner join team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team 
+ or schedule_tbl.schedule_team2=team_tbl.id_team 
+ 		where ${type} LIKE '%${nameSearch}%' ORDER BY id_schedule DESC LIMIT ${page},${pageSize} 
+	
+	</select>
+	<select id="searchTotal" resultMap="scheduleMapping">
+		Select * FROM schedule_tbl inner join tournament_tbl on schedule_tbl.schedule_tour=tournament_tbl.id_tour where ${type} LIKE '%${nameSearch}%' ORDER BY id_schedule DESC  
 	</select>
 	<select id="getByIdTour" resultMap="scheduleMapping">
 		Select * FROM schedule_tbl
-		where id_tour=${idTour}
+		where schedule_tour=${idTour}
 	</select>
 	<select id="getById" resultMap="scheduleMapping">
-		Select * FROM schedule_tbl where
-		id_schedule=${idSchedule}
+	 Select * FROM schedule_tbl inner join tournament_tbl on schedule_tbl.schedule_tour=tournament_tbl.id_tour 
+ inner join team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team 
+ or schedule_tbl.schedule_team2=team_tbl.id_team where id_schedule=${idSchedule}
 	</select>
+	
 
 	<insert id="create" parameterType="Schedule">
 		INSERT INTO
@@ -48,8 +67,8 @@
 		#{idTeam1},
 		#{idTeam2},
 		#{description},
-		#{address}
-		${idTournament}
+		#{address},
+		#{idTour}
 		)
 	</insert>
 	<delete id="delete" parameterType="int">
@@ -58,17 +77,12 @@
 	</delete>
 	<update id="updateShedule" parameterType="Schedule">
 		Update schedule_tbl set
-		schedule_start=#{timeStart} ,
-		schedule_end=#{timeEnd},
-		schedule_team1=#{idTeam1},
-		schedule_team2=#{idTeam2},
-		schedule_description=#{description},
-		schedule_address=#{address},
-		schedule_score1=#{scoreTeam1},
+		schedule_score1=#{scoreTeam1} ,
 		schedule_score2=#{scoreTeam2},
+		schedule_video=#{video},
 		schedule_winner=#{idwinner},
-		schedule_video=#{video}
-		Where id_schedule=${idSchedule}
+		schedule_description=#{description}
+		Where id_schedule=#{idSchedule};
 	</update>
 	<update id="editShedule" parameterType="Schedule">
 		Update schedule_tbl set
@@ -77,7 +91,7 @@
 		schedule_team1=#{idTeam1},
 		schedule_team2=#{idTeam2},
 		schedule_description=#{description},
-		schedule_address=#{address},
-		Where id_schedule=${idSchedule}
+		schedule_address=#{address}
+		Where id_schedule=#{idSchedule};
 	</update>
 </mapper>

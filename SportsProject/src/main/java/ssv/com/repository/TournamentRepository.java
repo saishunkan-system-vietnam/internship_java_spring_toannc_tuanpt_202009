@@ -42,6 +42,11 @@ public class TournamentRepository {
 		
 	}
 
+	public List<Tournament> getTourAction() {
+		// TODO Auto-generated method stub
+		return tournamentMapper.getTourAction();
+	}
+
 
 
 }

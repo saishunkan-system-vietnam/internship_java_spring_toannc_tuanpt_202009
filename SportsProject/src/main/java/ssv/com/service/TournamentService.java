@@ -73,4 +73,9 @@ public class TournamentService {
 
 	}
 
+	public List<Tournament> getTourAction() {
+		// TODO Auto-generated method stub
+		return tournamentRepository.getTourAction();
+
+}
 }

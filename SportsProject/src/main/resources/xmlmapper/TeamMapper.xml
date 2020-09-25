@@ -29,11 +29,11 @@
 			SELECT * FROM team_tbl p left join profile_tbl c on p.id_team=c.id_team
 	</select>
 
-	<select id="selectAllMatchsByTeam" resultMap="scheduleMapping">
+	<select id="selectAllMatchsByTeam" resultMap="teamMapping">
 		Select * from schedule_tbl where schedule_team1 = ${idTeam} or schedule_team2 = ${idTeam}
 	</select>
 
-	<select id="selectAllMatchsWinByTeam" resultMap="scheduleMapping">
+	<select id="selectAllMatchsWinByTeam" resultMap="teamMapping">
 		Select * from schedule_tbl where schedule_winner = ${idTeam}
 	</select>
 
@@ -70,6 +70,10 @@
 	</delete>
 	<select id="findByValue" resultMap="teamMapping">
 		SELECT * FROM team_tbl ORDER BY ${value} DESC
+	</select>
+	
+	<select id="getByTour" resultMap="teamMapping"> 
+		SELECT *FROM team_tbl where id_tour=${idTournament}  
 	</select>
 
 

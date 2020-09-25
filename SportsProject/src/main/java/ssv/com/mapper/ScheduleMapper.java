@@ -16,12 +16,16 @@ public interface ScheduleMapper {
 
 	public Schedule getById(int idSchedule);
 
-	public void create(Schedule schedule, int idTournament);
+	public void create(Schedule schedule);
 
 	public void delete(int idSchedule);
 
-	public void updateShedule(int idShedule);
+	public void updateShedule(Schedule schedule);
 
-	public void editShedule(int idShedule);
+	public void editShedule(Schedule schedule);
+
+	public List<Schedule> search(int page, int pageSize, String nameSearch, String type);
+
+	public List<Schedule> searchTotal(String nameSearch, String type);
 
 }

@@ -79,7 +79,6 @@ public class ProfileService {
 			Profile profile = modelMapper.map(profileForm, Profile.class);
 			accountRepository.add(account);
 			profileRepository.saveProfile(profile);
-
 			 SimpleMailMessage message = new SimpleMailMessage();
 		        message.setTo(profileForm.getEmail());
 		        message.setSubject("User và password");
@@ -91,6 +90,7 @@ public class ProfileService {
 	}
 
 	public List<Account> pageProfile(int page, int pagesize,String name,String nametype) {
-		return accountRepository.pageUser(page,pagesize,name,nametype);
+//		return accountRepository.pageUser(page,pagesize,name,nametype);
+		return null;
 	}
 }
