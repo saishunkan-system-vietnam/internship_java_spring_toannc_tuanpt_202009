@@ -39,4 +39,8 @@ public interface TeamMapper {
 
 	public List<Team> getByTour(int idTournament);
 
+	public int searchTotal(String nameSearch, String type);
+
+	public List<Team> search(int page, int pageSize, String nameSearch, String type, String sorts);
+
 }

@@ -2,6 +2,8 @@ package ssv.com.service;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +72,7 @@ public class ScheduleService {
 
 	public void updateShedule(ScheduleForm scheduleForm) throws IllegalStateException, IOException {
 		Schedule schedule =new Schedule();
+		schedule.setTitle(scheduleForm.getTitle());
 		schedule.setScoreTeam1(scheduleForm.getScoreTeam1());
 		schedule.setScoreTeam2(scheduleForm.getScoreTeam2());
 		schedule.setDescription(scheduleForm.getDescription());
@@ -100,9 +103,9 @@ public class ScheduleService {
 
 
 
-	public ScheduleDto search(int page, int pageSize, String nameSearch, String type) {
+	public ScheduleDto search(int page, int pageSize, String nameSearch, String type, String sorts) {
 		ScheduleDto dto=new ScheduleDto();
-		dto.setTotal(scheduleReponsitory.searchTotal(nameSearch,type).size());
+		dto.setTotal(scheduleReponsitory.searchTotal(nameSearch,type));
 		dto.setPage(page);
 		dto.setPageSize(pageSize);
 		if(dto.getTotal()%pageSize==0) {
@@ -111,7 +114,7 @@ public class ScheduleService {
 		else {
 			dto.setTotalPage((dto.getTotal()/pageSize)+1);
 		}
-		dto.setSchedules((scheduleReponsitory.search((page-1)*pageSize,pageSize,nameSearch,type)));
+		dto.setSchedules((scheduleReponsitory.search((page-1)*pageSize,pageSize,nameSearch,type,sorts)));
 		return dto;
 	}
 
@@ -120,6 +123,26 @@ public class ScheduleService {
 	public void createSchedule(Schedule schedule) {
 		 scheduleReponsitory.create(schedule);
 		
+	}
+
+
+
+	public void statusCheck() {
+		long millis=System.currentTimeMillis();  
+		Date date=new java.sql.Date(millis);  
+		List<Schedule> list=scheduleReponsitory.getAll();
+		for (Schedule schedule : list) {
+			if(schedule.getTimeStart().compareTo(date)>=0&&schedule.getTimeEnd().compareTo(date)>0) {
+				scheduleReponsitory.checkStatus(schedule.getIdSchedule(),1);
+			}
+			else if(schedule.getTimeEnd().compareTo(date)<=0) {
+				scheduleReponsitory.checkStatus(schedule.getIdSchedule(),2);
+			}
+			else {
+				scheduleReponsitory.checkStatus(schedule.getIdSchedule(),0);
+
+			}
+		}
 	}
 
 

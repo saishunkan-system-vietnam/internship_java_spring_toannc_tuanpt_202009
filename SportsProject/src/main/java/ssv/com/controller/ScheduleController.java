@@ -88,7 +88,7 @@ public class ScheduleController {
 			scheduleService.updateShedule(scheduleForm);
 			return new ResponseEntity<String>("update thanh cong", HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("update that bai", HttpStatus.OK);
+		return new ResponseEntity<String>("Chưa kết thúc không thể update", HttpStatus.OK);
 
 	}
 	@PostMapping(value = "editShedule")
@@ -100,14 +100,17 @@ public class ScheduleController {
 		return new ResponseEntity<String>("edit that bai", HttpStatus.OK);
 	}
 	@GetMapping(value="search")
-	public ResponseEntity<ScheduleDto> search(@RequestParam int page,@RequestParam int pageSize,@RequestParam String nameSearch,@RequestParam String type){
-		if(nameSearch==""||type=="") {
-			nameSearch="";
+	public ResponseEntity<ScheduleDto> search(@RequestParam int page,@RequestParam int pageSize,@RequestParam String nameSearch,@RequestParam String type,@RequestParam String sorts){
+		if(type=="") {
 			type="id_schedule";
 		};	
-		return new ResponseEntity<ScheduleDto>(scheduleService.search(page,pageSize*2,nameSearch,type),HttpStatus.OK);
+		return new ResponseEntity<ScheduleDto>(scheduleService.search(page,pageSize*2,nameSearch,type,sorts),HttpStatus.OK);
 		
 		
+	}
+	@GetMapping(value="status")
+	public void statusCheck() {
+		scheduleService.statusCheck();
 	}
 	
 	

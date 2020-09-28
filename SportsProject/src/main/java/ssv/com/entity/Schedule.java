@@ -27,5 +27,6 @@ public class Schedule {
 	private int status;
 	private String description;
 	private String nameTour;
+	private String title;
 	private List<Team> team;
 }

@@ -18,6 +18,7 @@ public class ScheduleForm {
 	private int idTeam1;
 	private int idTeam2;
 	private String description;
+	private String title;
 	private MultipartFile file;
 
 }

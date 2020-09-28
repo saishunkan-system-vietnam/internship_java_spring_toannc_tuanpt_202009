@@ -17,6 +17,7 @@
 		<result column="schedule_address" property="address" />
 		<result column="schedule_status" property="status" />
 		<result column="schedule_tour" property="idTour" />
+		<result column="schedule_title" property="idTitle"/>
 		<result column="tournament_name" property="nameTour" />
 	<collection property="team" ofType="Team">
 			<id column="id_team" property="idTeam" />
@@ -33,11 +34,11 @@
  Select * FROM schedule_tbl inner join tournament_tbl on schedule_tbl.schedule_tour=tournament_tbl.id_tour 
  inner join team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team 
  or schedule_tbl.schedule_team2=team_tbl.id_team 
- 		where ${type} LIKE '%${nameSearch}%' ORDER BY id_schedule DESC LIMIT ${page},${pageSize} 
+ 		where ${type} LIKE '%${nameSearch}%' ORDER BY id_schedule ${sorts} LIMIT ${page},${pageSize} 
 	
 	</select>
-	<select id="searchTotal" resultMap="scheduleMapping">
-		Select * FROM schedule_tbl inner join tournament_tbl on schedule_tbl.schedule_tour=tournament_tbl.id_tour where ${type} LIKE '%${nameSearch}%' ORDER BY id_schedule DESC  
+	<select id="searchTotal" resultType="int">
+		Select COUNT(*)  FROM schedule_tbl inner join tournament_tbl on schedule_tbl.schedule_tour=tournament_tbl.id_tour where ${type} LIKE '%${nameSearch}%'
 	</select>
 	<select id="getByIdTour" resultMap="scheduleMapping">
 		Select * FROM schedule_tbl
@@ -59,13 +60,15 @@
 		schedule_team2,
 		schedule_description,
 		schedule_address,
-		schedule_tour
+		schedule_tour,
+		schedule_title
 		)
 		VALUES(
 		#{timeStart},
 		#{timeEnd},
 		#{idTeam1},
 		#{idTeam2},
+		#{title}
 		#{description},
 		#{address},
 		#{idTour}
@@ -78,6 +81,7 @@
 	<update id="updateShedule" parameterType="Schedule">
 		Update schedule_tbl set
 		schedule_score1=#{scoreTeam1} ,
+		schedule_title=#{title}
 		schedule_score2=#{scoreTeam2},
 		schedule_video=#{video},
 		schedule_winner=#{idwinner},
@@ -94,4 +98,12 @@
 		schedule_address=#{address}
 		Where id_schedule=#{idSchedule};
 	</update>
+	<update id="checkStatus">
+		Update schedule_tbl set 
+		schedule_status=${i}
+		Where id_schedule=${j};
+	</update>
+	<select id="getAll" resultMap="scheduleMapping">
+		SELECT *FROM schedule_tbl
+	</select>
 </mapper>

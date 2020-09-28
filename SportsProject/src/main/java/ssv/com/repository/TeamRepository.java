@@ -69,4 +69,14 @@ public class TeamRepository {
 		// TODO Auto-generated method stub
 		return teamMapper.getByTour(idTournamet);
 	}
+
+	public int searchTotal(String nameSearch, String type) {
+		return teamMapper.searchTotal(nameSearch,type);
+	}
+
+	public List<Team> search(int page, int pageSize, String nameSearch, String type, String sorts) {
+		
+		
+		return teamMapper.search(page,pageSize,nameSearch,type,sorts);
+	}
 }

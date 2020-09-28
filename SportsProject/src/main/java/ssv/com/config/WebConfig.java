@@ -54,7 +54,7 @@ public class WebConfig {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
 		config.setAllowCredentials(true);
-		config.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
+		config.setAllowedOrigins(Arrays.asList("http://localhost:8080","http://localhost:8081"));
 		config.addAllowedMethod(HttpMethod.DELETE);
 		config.addAllowedMethod(HttpMethod.POST);
 		config.addAllowedMethod(HttpMethod.GET);

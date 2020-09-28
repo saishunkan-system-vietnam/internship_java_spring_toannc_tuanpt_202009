@@ -12,6 +12,7 @@
 		<result column="team_description" property="description"/>
 		<result column="team_logo" property="logo"/>
 		<result column="id_tour" property="idTour"/>
+		<result column="tournament_name" property="nameTour"/>
 		<collection property="profile" ofType="Profile">
 		<id property="id" column = "id"/>
 		<result property="name" column = "profile_name"/>
@@ -75,6 +76,12 @@
 	<select id="getByTour" resultMap="teamMapping"> 
 		SELECT *FROM team_tbl where id_tour=${idTournament}  
 	</select>
-
+	<select id="searchTotal" resultType="int">
+Select COUNT(*) FROM sports.team_tbl left join tournament_tbl on team_tbl.id_tour=tournament_tbl.id_tour  where ${type} LIKE '%${nameSearch}%'
+	</select>
+	<select id="search" resultMap="teamMapping">
+	SELECT * FROM sports.team_tbl left join tournament_tbl on team_tbl.id_tour=tournament_tbl.id_tour 
+where ${type} LIKE '%${nameSearch}%' ORDER BY id_schedule ${sorts} LIMIT ${page},${pageSize}  ;
+	</select>
 
 </mapper>

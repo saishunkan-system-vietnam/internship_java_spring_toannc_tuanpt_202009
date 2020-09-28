@@ -24,8 +24,11 @@ public interface ScheduleMapper {
 
 	public void editShedule(Schedule schedule);
 
-	public List<Schedule> search(int page, int pageSize, String nameSearch, String type);
+	public List<Schedule> search(int page, int pageSize, String nameSearch, String type, String sorts);
 
-	public List<Schedule> searchTotal(String nameSearch, String type);
+	public int searchTotal(String nameSearch, String type);
+
+	public void checkStatus(int j, int i);
+
 
 }

@@ -53,11 +53,16 @@ public class ScheduleReponsitory {
 
 	}
 
-	public List<Schedule> search(int page, int pageSize, String nameSearch, String type) {
-		return scheduleMapper.search(page,pageSize,nameSearch,type);
+	public List<Schedule> search(int page, int pageSize, String nameSearch, String type, String sorts) {
+		return scheduleMapper.search(page,pageSize,nameSearch,type,sorts);
 	}
 
-	public List<Schedule> searchTotal(String nameSearch, String type) {
+	public int searchTotal(String nameSearch, String type) {
 		return scheduleMapper.searchTotal(nameSearch,type);
+	}
+
+	public void checkStatus(int j, int i) {
+		scheduleMapper.checkStatus(j,i);
+		
 	}
 }

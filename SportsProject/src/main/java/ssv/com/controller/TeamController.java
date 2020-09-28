@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import ssv.com.controller.form.TeamForm;
+import ssv.com.dto.ScheduleDto;
+import ssv.com.dto.TeamDto;
 import ssv.com.entity.Profile;
 import ssv.com.entity.Team;
 import ssv.com.file.UploadFile;
@@ -84,6 +86,15 @@ public class TeamController {
 		}
 		return new ResponseEntity<String>("fail",HttpStatus.OK);
 
+	}
+	@GetMapping(value="search")
+	public ResponseEntity<TeamDto> search(@RequestParam int page,@RequestParam int pageSize,@RequestParam String nameSearch,@RequestParam String type,@RequestParam String sorts){
+		if(type=="") {
+			type="id_schedule";
+		};	
+		return new ResponseEntity<TeamDto>(teamService.search(page,pageSize*2,nameSearch,type,sorts),HttpStatus.OK);
+		
+		
 	}
 
 
