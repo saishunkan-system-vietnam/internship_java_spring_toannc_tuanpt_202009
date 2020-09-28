@@ -49,8 +49,8 @@ public class ScheduleController {
 		return new ResponseEntity<List<Schedule>>(scheduleService.getAll(),HttpStatus.OK);
 	}
 
-	@GetMapping(value="getById")
-	public ResponseEntity<Schedule> getById(@RequestParam int idSchedule){
+	@GetMapping(value="getById/{idSchedule}")
+	public ResponseEntity<Schedule> getById(@PathVariable int idSchedule){
 		return new ResponseEntity<Schedule>(scheduleService.getById(idSchedule),HttpStatus.OK);
 	}
 
