@@ -17,10 +17,12 @@ public interface  AccountMapper {
 
 	public void delete(int id);
 
-	public List<Account> pageUser(int page, int pagesize,String name,String nametype);
-
-	public List<Account> findName(String name);
-
 	public List<Account> getMembersEmailByRole();
+
+	public Account findById(int id);
+
+	public List<Account> search(int page, int pageSize, String name, String type);
+
+	public  List<Account> searchTotal(String name, String type);
 
 }

@@ -27,9 +27,11 @@
 		SELECT * FROM account_tbl ORDER BY id DESC
 	</select>
 	<select id="findName" resultMap="accountMapping">
-		SELECT * FROM account_tbl Where account_email LIKE #{name}
+		SELECT * FROM account_tbl Where account_email LIKE ${name}
 	</select>
-
+	<select id="findById" resultMap="accountMapping">
+		SELECT * From account_tbl a left join profile_tbl b on a.account_email=b.profile_email where a.id=${id}
+	</select>
 	<insert id="add" parameterType="Account">
 		INSERT INTO account_tbl(
 		account_username,
@@ -49,9 +51,6 @@
 	<delete id="delete" parameterType = "int">
 		DELETE from account_tbl WHERE id = #{id}
 	</delete>
-	<select id="pageUser" resultMap="accountMapping">
-		SELECT * FROM account_tbl Where ${nametype} LIKE #{name} ORDER BY id DESC LIMIT #{page},#{pagesize}
-	</select>
 
 	<select id="getMembersEmailByRole" resultMap="accountMapping">
 		SELECT a.id,a.account_username, p.id as id_profile ,p.profile_name,p.profile_email,p.profile_phone,p.profile_age,p.profile_age,p.profile_gender,p.profile_address,p.profile_avatar
@@ -61,5 +60,11 @@
 
 	<select id="findByValue" resultMap="accountMapping">
 		SELECT * FROM account_tbl ORDER BY ${value} DESC
+	</select>
+	<select id="search" resultMap="accountMapping">
+		SELECT * FROM account_tbl Where ${type} LIKE '%${name}%' ORDER BY id DESC LIMIT ${page},${pageSize}
+	</select>
+	<select id="searchTotal" resultMap="accountMapping">
+		SELECT * FROM account_tbl Where ${type} LIKE '%${name}%' ORDER BY id DESC 
 	</select>
 </mapper>

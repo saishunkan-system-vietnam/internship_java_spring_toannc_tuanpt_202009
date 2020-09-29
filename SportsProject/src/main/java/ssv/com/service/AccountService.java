@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-
+import ssv.com.dto.SearchAccountDto;
 import ssv.com.entity.Account;
 import ssv.com.repository.AccountRepository;
 
@@ -83,9 +83,7 @@ public class AccountService {
 	}
 
 
-	public List<Account> pageUser(int page, int pagesize,String name,String nametype) {
-		return accountRepository.pageUser(page,pagesize,name,nametype);
-	}
+
 
 
 	public boolean checkUser(Account acount) {
@@ -98,14 +96,31 @@ public class AccountService {
 	}
 
 
-	public int total() {
-		
-		return accountRepository.findAll().size();
+
+
+
+
+
+
+	public Account findById(int id) {
+	return accountRepository.findById(id);
 	}
 
 
-	public int total(String name) {
+	public SearchAccountDto search(int page, int pageSize, String name, String type) {
+		SearchAccountDto accountDto=new SearchAccountDto();
+		accountDto.setTotal(accountRepository.searchTotal(name,type).size());
+		accountDto.setPage(page);
+		accountDto.setPageSize(pageSize);
+		if(accountDto.getTotal()%pageSize==0) {
+			accountDto.setTotalPage(accountDto.getTotal()/pageSize);
+		}
+		else {
+			accountDto.setTotalPage((accountDto.getTotal()/pageSize)+1);
+		}
 		
-		return accountRepository.findName(name).size();
+		accountDto.setAccount(accountRepository.search((page-1)*pageSize,pageSize,name,type));
+		
+		return accountDto;
 	}
 }

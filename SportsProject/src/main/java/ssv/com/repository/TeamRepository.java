@@ -37,8 +37,8 @@ public class TeamRepository {
 
 	}
 
-	public void formatTour(int idTeam) {
-		teamMapper.formatTour(idTeam);
+	public void formatTour(int idTour) {
+		teamMapper.formatTour(idTour);
 
 	}
 
@@ -63,5 +63,29 @@ public class TeamRepository {
 
 	public Set<Schedule> selectAllMatchsWinByTeam(int id){
 		return teamMapper.selectAllMatchsByTeam(id);
+	}
+
+	public List<Team> getByTour(int idTournamet) {
+		// TODO Auto-generated method stub
+		return teamMapper.getByTour(idTournamet);
+	}
+
+	public int searchTotal(String nameSearch, String type) {
+		return teamMapper.searchTotal(nameSearch,type);
+	}
+
+	public List<Team> search(int page, int pageSize, String nameSearch, String type, String sorts) {
+		
+		
+		return teamMapper.search(page,pageSize,nameSearch,type,sorts);
+	}
+
+	public List<Team> teamWait(String type) {
+		// TODO Auto-generated method stub
+		return teamMapper.teamWait(type);
+	}
+
+	public void addTour(int idTeam) {
+		teamMapper.addTour(idTeam);		
 	}
 }

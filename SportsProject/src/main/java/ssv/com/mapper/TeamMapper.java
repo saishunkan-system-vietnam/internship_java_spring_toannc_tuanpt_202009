@@ -20,7 +20,7 @@ public interface TeamMapper {
 
 	void updateTourNew(int idTeam);
 
-	void formatTour(int idTeam);
+	void formatTour(int idTour);
 
 	public void deleteTeam(int id);
 
@@ -36,5 +36,15 @@ public interface TeamMapper {
 	public Set<Schedule> selectAllMatchsByTeam(int idTeam);
 
 	public Set<Schedule> selectAllMatchsWinByTeam(int idTeam);
+
+	public List<Team> getByTour(int idTournament);
+
+	public int searchTotal(String nameSearch, String type);
+
+	public List<Team> search(int page, int pageSize, String nameSearch, String type, String sorts);
+
+	public List<Team> teamWait(String type);
+
+	public void addTour(int idTeam);
 
 }

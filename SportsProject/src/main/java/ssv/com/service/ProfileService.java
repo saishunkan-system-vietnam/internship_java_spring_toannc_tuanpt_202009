@@ -14,6 +14,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.var;
 import ssv.com.RandomPass;
 import ssv.com.controller.form.ProfileForm;
 import ssv.com.dto.MemberInfoDTO;
@@ -21,6 +22,7 @@ import ssv.com.entity.Account;
 import ssv.com.entity.Profile;
 import ssv.com.file.UploadFile;
 import ssv.com.repository.AccountRepository;
+import ssv.com.repository.HistoryRepository;
 import ssv.com.repository.ProfileRepository;
 
 @Service
@@ -35,7 +37,9 @@ public class ProfileService {
 
 	@Autowired
 	private ModelMapper modelMapper;
-
+	
+	@Autowired
+	private HistoryRepository historyRepository;
 
 	public Long save(Profile profile) {
 		return profileRepository.saveProfile(profile);
@@ -75,11 +79,11 @@ public class ProfileService {
 			account.setPassword(new RandomPass().randomAlphaNumeric(8));
 			account.setUsername(profileForm.getName().toLowerCase().replace("\\s+","") + rand.nextInt(900) + 100);
 			account.setRole("ROLE_MEMBER");
-			profileForm.setAvatar(UploadFile.saveFile(profileForm.getFile()));
+		
 			Profile profile = modelMapper.map(profileForm, Profile.class);
+			profile.setAvatar(UploadFile.saveFile(profileForm.getFile()));
 			accountRepository.add(account);
 			profileRepository.saveProfile(profile);
-
 			 SimpleMailMessage message = new SimpleMailMessage();
 		        message.setTo(profileForm.getEmail());
 		        message.setSubject("User và password");
@@ -91,6 +95,12 @@ public class ProfileService {
 	}
 
 	public List<Account> pageProfile(int page, int pagesize,String name,String nametype) {
-		return accountRepository.pageUser(page,pagesize,name,nametype);
+//		return accountRepository.pageUser(page,pagesize,name,nametype);
+		return null;
+	}
+
+	public void newTour(int id) {
+		historyRepository.addTournament(profileRepository.findById(id).getId(), id);
+		
 	}
 }

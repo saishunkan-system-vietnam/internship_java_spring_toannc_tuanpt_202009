@@ -32,8 +32,7 @@
 		#{age},
 		#{gender},
 		#{address},
-		#{avatar},
-		#{idTeam}
+		#{avatar}
 		);
 	</insert>
 
@@ -50,10 +49,8 @@
 	</select>
 
 	<select id="findById" flushCache="true" statementType="PREPARED"
-		resultType="Profile">
-		SELECT profile_name as name, profile_email as email, profile_phone as phone,
-				profile_age as age, profile_gender as gender, profile_address as address,
-				profile_avatar as avatar, id_team as teamId
+		resultMap="profileMapping">
+		SELECT  *
 		FROM profile_tbl WHERE id= #{id}
 	</select>
 

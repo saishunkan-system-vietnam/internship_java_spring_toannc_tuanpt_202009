@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ssv.com.RandomPass;
 import ssv.com.dto.JwtResponse;
+import ssv.com.dto.SearchAccountDto;
 import ssv.com.entity.Account;
 import ssv.com.service.AccountService;
 import ssv.com.service.JwtService;
@@ -46,13 +47,13 @@ public class AccountController {
 	    String result = "";
 	    HttpStatus httpStatus = null;
 	    JwtResponse jwtResponse=new JwtResponse();
-	    if(user.getUsername().isEmpty()|| user.getPassword().isEmpty()) {
+	    if(!user.getUsername().isEmpty()|| !user.getPassword().isEmpty()) {
 	    try {
 	      if (accountService.checkLogin(user)) {
 
 	        result = jwtService.generateTokenLogin(user.getUsername());
 	        jwtResponse.setAccount(accountService.loadUserByUsername(user.getUsername()));
-	        jwtResponse.setToken(result);
+	        jwtResponse.setToken(result); 
 	        httpStatus = HttpStatus.OK;
 	        return new ResponseEntity<JwtResponse>(jwtResponse,httpStatus);
 	      } else {
@@ -66,12 +67,12 @@ public class AccountController {
 	    }
 	    return new ResponseEntity<JwtResponse>(jwtResponse,httpStatus);
 	    }
-        return new  ResponseEntity<String>("nhap sai du lieu ",httpStatus);
+        return new  ResponseEntity<String>("nhap sai du lieu ",HttpStatus.BAD_REQUEST);
 	  }
 	  @RequestMapping(value="/signup" ,method = RequestMethod.POST)
 		 public ResponseEntity<String> sigup(@RequestBody Account acount){
 		  String emailPattern = "\\w+@\\w+[.]\\w+";
-		    if(acount.getUsername().isEmpty()|| acount.getPassword().isEmpty()||acount.getEmail().matches(emailPattern)) {
+		    if(!acount.getUsername().isEmpty()|| !acount.getPassword().isEmpty()||!acount.getEmail().matches(emailPattern)) {
 			 if(accountService.checkEmail(acount.getEmail())&&!accountService.checkUser(acount)) {
 				 String hash=BCrypt.hashpw(acount.getPassword(), BCrypt.gensalt(12));
 				 acount.setPassword(hash);
@@ -144,27 +145,19 @@ public class AccountController {
 		  	list=accountService.findAll();
 		  return new ResponseEntity<List<Account>>(list,HttpStatus.OK);
 	  }
-	  @GetMapping(value="/page/{page}/{pagesize}")
-	  public ResponseEntity<List<Account>> pageUser(@PathVariable int page,@PathVariable int pagesize){
-		  List<Account> list=new ArrayList<Account>();
-		  	String a="account_email";
-		  	list=accountService.pageUser(page,pagesize,"%%",a);
-		  return new ResponseEntity<List<Account>>(list,HttpStatus.OK);
+	  @GetMapping(value="/getById/{id}")
+	  public ResponseEntity<Account> findById(@PathVariable(value="id") int id){
+		  return new ResponseEntity<Account>(accountService.findById(id),HttpStatus.OK);
 	  }
-	  @GetMapping(value="/search/{page}/{pagesize}/")
-	  public ResponseEntity<List<Account>> pageUserSearch(@PathVariable int page,@PathVariable int pagesize,@RequestParam String name,@RequestParam String nametype){
-		  List<Account> list=new ArrayList<Account>();
-		  	list=accountService.pageUser(page,pagesize,"%"+name+"%",nametype);
-		  return new ResponseEntity<List<Account>>(list,HttpStatus.OK);
+	  @GetMapping(value="/search")
+	  public ResponseEntity<SearchAccountDto> search(@RequestParam int page,@RequestParam int pageSize,@RequestParam String nameSearch,@RequestParam String type){
+			if(nameSearch==""&&type=="") {
+				nameSearch="";
+				type="id";
+			};	 
+		  return new ResponseEntity<SearchAccountDto>(accountService.search(page,pageSize,nameSearch,type),HttpStatus.OK);	  
 	  }
-	  @GetMapping(value="/tong")
-	  public int total() {
-		return accountService.total();
 
-	  }
-	  @GetMapping(value="/tongSearch")
-	  public int totalSearch(@RequestParam String name) {
-		return accountService.total("%"+name+"%");
-
-	  }
+	  
+	  
 }

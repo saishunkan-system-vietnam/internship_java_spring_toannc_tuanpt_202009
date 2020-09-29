@@ -44,14 +44,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	    http.csrf().ignoringAntMatchers("/api/v1/**");
 	    http.authorizeRequests().antMatchers("/api/v1/account/login**").permitAll().antMatchers("/api/v1/account/signup**").permitAll().
 	    antMatchers("/api/v1/account/foget").permitAll();
-	    http.antMatcher("/api/v1/account/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
-	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-	        .antMatchers(HttpMethod.GET,"/api/v1/account/**").access("hasRole('ROLE_ADMIN')")
-	        .antMatchers(HttpMethod.DELETE, "/api/v1/account/**").access("hasRole('ROLE_ADMIN')").and()
-	        
-	        .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-	        .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
-	  
+	    
+//	    http.antMatcher("/api/v1/account/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
+//	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+//	        .antMatchers(HttpMethod.GET,"/api/v1/account/**").access("hasRole('ROLE_ADMIN')")
+//	        .antMatchers(HttpMethod.DELETE, "/api/v1/account/**").access("hasRole('ROLE_ADMIN')").and()
+//	        
+//	        .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+//	        .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
+//	  
 	  }
 	  
 }

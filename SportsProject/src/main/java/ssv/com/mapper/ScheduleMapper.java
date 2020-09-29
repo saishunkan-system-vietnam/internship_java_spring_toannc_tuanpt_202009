@@ -16,12 +16,27 @@ public interface ScheduleMapper {
 
 	public Schedule getById(int idSchedule);
 
-	public void create(Schedule schedule, int idTournament);
+	public void create(Schedule schedule);
 
 	public void delete(int idSchedule);
 
-	public void updateShedule(int idShedule);
+	public void updateShedule(Schedule schedule);
 
-	public void editShedule(int idShedule);
+	public void editShedule(Schedule schedule);
+
+	public List<Schedule> search(int page, int pageSize, String nameSearch, String type, String sorts);
+
+	public int searchTotal(String nameSearch, String type);
+
+	public void checkStatus(int j, int i);
+
+	public int sum(int idTeam);
+
+	public int sumWin(int idTeam);
+
+	public int sumJoinByTour(int idTeam, int idTour);
+
+	public int sumWinJoinByTour(int idTeam, int idTour);
+
 
 }
