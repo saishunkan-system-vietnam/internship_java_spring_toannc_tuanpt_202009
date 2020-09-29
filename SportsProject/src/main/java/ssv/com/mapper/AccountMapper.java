@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import ssv.com.dto.MemberInfoDTO;
 import ssv.com.entity.Account;
 
 @Mapper

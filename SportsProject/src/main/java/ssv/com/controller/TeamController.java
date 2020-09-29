@@ -53,8 +53,8 @@ public class TeamController {
 		String path="";
 		try {
 			path = UploadFile.saveFile(teamForm.getFile());
-			teamForm.setLogo(path);
 			Team team=modelMapper.map(teamForm, Team.class);
+			team.setLogo(path);
 			if(!teamService.checkTeam(team)) {
 				teamService.save(team);
 			return new ResponseEntity<String>("thanh cong",HttpStatus.OK);
@@ -91,10 +91,10 @@ public class TeamController {
 	public ResponseEntity<TeamDto> search(@RequestParam int page,@RequestParam int pageSize,@RequestParam String nameSearch,@RequestParam String type,@RequestParam String sorts){
 		if(type=="") {
 			type="id_schedule";
-		};	
+		};
 		return new ResponseEntity<TeamDto>(teamService.search(page,pageSize*2,nameSearch,type,sorts),HttpStatus.OK);
-		
-		
+
+
 	}
 
 

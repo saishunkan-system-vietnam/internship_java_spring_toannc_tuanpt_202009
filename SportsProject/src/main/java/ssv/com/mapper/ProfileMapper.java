@@ -3,6 +3,7 @@ package ssv.com.mapper;
 import java.util.List;
 import java.util.Optional;
 
+import ssv.com.dto.MemberInfoDTO;
 import ssv.com.entity.Account;
 import ssv.com.entity.Profile;
 
@@ -17,7 +18,7 @@ public interface ProfileMapper {
 
 	public Long deleteProfile(Integer id);
 
-	public List<Account> getMembersEmailByRole();
-
 	public List<Account> pageProfile(int page, int pagesize,String name,String nametype);
+
+	public List<Profile> getMembers();
 }

@@ -37,6 +37,11 @@
 		);
 	</insert>
 
+	<select id="getMembers" resultMap="profileMapping">
+		SELECT p.*
+		FROM profile_tbl p
+		INNER JOIN account_tbl a ON p.profile_email = a.account_email WHERE account_role = 'ROLE_MEMBER';
+	</select>
 
 	<select id="findAllProfile" flushCache="true" statementType="PREPARED"
 		resultMap="profileMapping">
