@@ -21,6 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ssv.com.controller.form.TeamForm;
 import ssv.com.dto.ScheduleDto;
+
+import ssv.com.dto.TeamDetail;
+
 import ssv.com.dto.TeamDto;
 import ssv.com.entity.Profile;
 import ssv.com.entity.Team;
@@ -44,8 +47,8 @@ public class TeamController {
 		return new ResponseEntity<List<Team>>(teamService.getByTour(idTournamet),HttpStatus.OK);
 	}
 
-	@GetMapping(value="getById")
-	public ResponseEntity<Team> getById(@RequestParam int id){
+	@GetMapping(value="getById/{id}")
+	public ResponseEntity<Team> getById(@PathVariable int id){
 		return new ResponseEntity<Team>(teamService.getById(id),HttpStatus.OK);
 	}
 	@PostMapping(value="createTeam")
@@ -66,16 +69,7 @@ public class TeamController {
 		return new ResponseEntity<String>("loi",HttpStatus.OK);
 
 	}
-	@PostMapping(value="addMember")
-	public ResponseEntity<String> addMember(@RequestBody Profile profile,@RequestParam int idTeam){
-		if(teamService.checkMember(profile,idTeam)){
-			teamService.addMember(profile,idTeam);
-			return new ResponseEntity<String>("thanh cong",HttpStatus.OK);
-
-		}
-		return new ResponseEntity<String>("fail",HttpStatus.OK);
-
-	}
+	
 
 	@PostMapping(value="deleteMember")
 	public ResponseEntity<String> delteMember(@RequestBody Profile profile,@RequestParam int idTeam){
@@ -91,12 +85,19 @@ public class TeamController {
 	public ResponseEntity<TeamDto> search(@RequestParam int page,@RequestParam int pageSize,@RequestParam String nameSearch,@RequestParam String type,@RequestParam String sorts){
 		if(type=="") {
 			type="id_schedule";
-		};
+		};	
 		return new ResponseEntity<TeamDto>(teamService.search(page,pageSize*2,nameSearch,type,sorts),HttpStatus.OK);
-
+		
+		
+	}
+	@GetMapping(value="detail")
+	public ResponseEntity<TeamDetail> detailTeam(@RequestParam int idTeam,@RequestParam int idTour){
+		return new ResponseEntity<TeamDetail>(teamService.detail(idTeam,idTour),HttpStatus.OK);
 
 	}
 
-
-
+	@GetMapping(value="teamWait")
+	public ResponseEntity<List<Team>> teamWait(@RequestParam String type){
+		return new ResponseEntity<List<Team>>(teamService.teamWait(type),HttpStatus.OK);
+	}
 }

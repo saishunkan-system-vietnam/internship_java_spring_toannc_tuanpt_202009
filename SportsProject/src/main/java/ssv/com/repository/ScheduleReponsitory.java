@@ -43,7 +43,7 @@ public class ScheduleReponsitory {
 	}
 
 	public void updateShedule(Schedule schedule) {
-		var a=schedule;
+
 		scheduleMapper.updateShedule(schedule);
 
 	}
@@ -65,4 +65,26 @@ public class ScheduleReponsitory {
 		scheduleMapper.checkStatus(j,i);
 		
 	}
+
+
+	public int sum(int idTeam) {
+		// TODO Auto-generated method stub
+		return scheduleMapper.sum(idTeam);
+	}
+
+	public int sumWin(int idTeam) {
+		// TODO Auto-generated method stub
+		return scheduleMapper.sumWin(idTeam);
+	}
+
+	public int sumJoinByTour(int idTeam, int idTour) {
+		// TODO Auto-generated method stub
+		return scheduleMapper.sumJoinByTour(idTeam,idTour);
+	}
+	public int sumWinJoinByTour(int idTeam, int idTour) {
+		// TODO Auto-generated method stub
+		return scheduleMapper.sumWinJoinByTour(idTeam,idTour);
+	}
+
+
 }

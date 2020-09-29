@@ -65,6 +65,8 @@
 		SELECT * FROM account_tbl Where ${type} LIKE '%${name}%' ORDER BY id DESC LIMIT ${page},${pageSize}
 	</select>
 	<select id="searchTotal" resultMap="accountMapping">
-		SELECT * FROM account_tbl Where ${type} LIKE '%${name}%' ORDER BY id DESC
+
+		SELECT * FROM account_tbl Where ${type} LIKE '%${name}%' ORDER BY id DESC 
+
 	</select>
 </mapper>

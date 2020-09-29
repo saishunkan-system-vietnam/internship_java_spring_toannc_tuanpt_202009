@@ -14,7 +14,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TeamForm {
-	private int idTeam;
 	private String nameTeam;
 	private String type;
 	private String description;

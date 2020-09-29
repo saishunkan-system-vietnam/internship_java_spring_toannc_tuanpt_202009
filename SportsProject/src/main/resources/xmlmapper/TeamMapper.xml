@@ -59,7 +59,7 @@
 		Update team_tbl Set id_tour=@var_id  where id_team=${idTeam}
 	</update>
 	<update id="formatTour">
-		Update team_tbl Set id_tour=0  where id_team=${idTeam}
+		Update team_tbl Set id_tour=0  where id_tour=${idTour}
 	</update>
 
 	<update id="addMember">
@@ -83,5 +83,9 @@ Select COUNT(*) FROM sports.team_tbl left join tournament_tbl on team_tbl.id_tou
 	SELECT * FROM sports.team_tbl left join tournament_tbl on team_tbl.id_tour=tournament_tbl.id_tour 
 where ${type} LIKE '%${nameSearch}%' ORDER BY id_schedule ${sorts} LIMIT ${page},${pageSize}  ;
 	</select>
+	<select id="teamWait" resultMap="teamMapping">
+	SELECT *FROM team_tbl where id_tour=0 and team_type='${type}';
+	</select>
+
 
 </mapper>

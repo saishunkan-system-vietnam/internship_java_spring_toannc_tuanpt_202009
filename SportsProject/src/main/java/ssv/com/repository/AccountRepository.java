@@ -36,12 +36,23 @@ public class AccountRepository {
 	}
 
 
+
+
+	public Account findById(int id) {
+		return accountMapper.findById(id);
+	}
+
+	public List<Account> search(int page, int pageSize, String name, String type) {
+		return accountMapper.search(page,pageSize,name,type);
+	}
+
+	public  List<Account> searchTotal(String name, String type) {
+		return accountMapper.searchTotal(name,type);
+
 	public List<Account> getMembersEmailByRole() {
 		return accountMapper.getMembersEmailByRole();
 	}
 
-	public Account findById(int id) {
-		return accountMapper.findById(id);
 	}
 
 	public List<Account> search(int page, int pageSize, String name, String type) {
