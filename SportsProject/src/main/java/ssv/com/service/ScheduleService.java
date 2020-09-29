@@ -87,7 +87,6 @@ public class ScheduleService {
 			schedule.setIdwinner(schedule.getIdTeam2());
 		}
 		schedule.setDescription(scheduleForm.getDescription());
-
 		try {
 			schedule.setImage(UploadFile.saveFile(scheduleForm.getFileImage()));
 		} catch (Exception e) {
@@ -97,19 +96,16 @@ public class ScheduleService {
 		schedule.setVideo(UploadFile.saveVideo(scheduleForm.getFileVideo()));
 		scheduleReponsitory.updateShedule(schedule);
 		
-
 		
 	
 	}
 
 
 
-
 	public void editShedule(Schedule schedule) {
 		scheduleReponsitory.editShedule(schedule);
-
+		
 	}
-
 
 
 

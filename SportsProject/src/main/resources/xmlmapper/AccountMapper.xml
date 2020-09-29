@@ -55,7 +55,7 @@
 	<select id="getMembersEmailByRole" resultMap="accountMapping">
 		SELECT a.id,a.account_username, p.id as id_profile ,p.profile_name,p.profile_email,p.profile_phone,p.profile_age,p.profile_age,p.profile_gender,p.profile_address,p.profile_avatar
 		FROM profile_tbl p
-		INNER JOIN account_tbl a ON p.profile_email = a.account_email WHERE account_role = 'ROLE_MEMBER';
+		INNER JOIN account_tbl a ON p.profile_email = a.account_email;
 	</select>
 
 	<select id="findByValue" resultMap="accountMapping">
@@ -65,8 +65,6 @@
 		SELECT * FROM account_tbl Where ${type} LIKE '%${name}%' ORDER BY id DESC LIMIT ${page},${pageSize}
 	</select>
 	<select id="searchTotal" resultMap="accountMapping">
-
 		SELECT * FROM account_tbl Where ${type} LIKE '%${name}%' ORDER BY id DESC 
-
 	</select>
 </mapper>
