@@ -47,5 +47,4 @@ public interface TeamMapper {
 
 	public void addTour(int idTeam);
 
-
 }

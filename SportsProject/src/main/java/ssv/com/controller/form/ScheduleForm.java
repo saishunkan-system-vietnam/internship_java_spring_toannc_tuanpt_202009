@@ -23,5 +23,4 @@ public class ScheduleForm {
 	private MultipartFile fileVideo;
 
 
-
 }

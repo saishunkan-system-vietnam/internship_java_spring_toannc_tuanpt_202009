@@ -43,7 +43,6 @@ public class ScheduleReponsitory {
 	}
 
 	public void updateShedule(Schedule schedule) {
-
 		scheduleMapper.updateShedule(schedule);
 
 	}
@@ -66,7 +65,6 @@ public class ScheduleReponsitory {
 		
 	}
 
-
 	public int sum(int idTeam) {
 		// TODO Auto-generated method stub
 		return scheduleMapper.sum(idTeam);
@@ -85,6 +83,5 @@ public class ScheduleReponsitory {
 		// TODO Auto-generated method stub
 		return scheduleMapper.sumWinJoinByTour(idTeam,idTour);
 	}
-
 
 }

@@ -17,10 +17,8 @@
 		<result column="schedule_address" property="address" />
 		<result column="schedule_status" property="status" />
 		<result column="schedule_tour" property="idTour" />
-
 		<result column="schedule_image" property="image"/>
 		<result column="schedule_title" property="title"/>
-
 		<result column="tournament_name" property="nameTour" />
 	<collection property="team" ofType="Team">
 			<id column="id_team" property="idTeam" />
@@ -63,17 +61,14 @@
 		schedule_team2,
 		schedule_title,
 		schedule_address,
-		schedule_tour,
-		schedule_title
+		schedule_tour
 		)
 		VALUES(
 		#{timeStart},
 		#{timeEnd},
 		#{idTeam1},
 		#{idTeam2},
-
 		#{title},
-
 		#{address},
 		#{idTour}
 		)
@@ -84,13 +79,11 @@
 	</delete>
 	<update id="updateShedule" parameterType="Schedule">
 		Update schedule_tbl set
-
 		schedule_score1=#{scoreTeam1},
 		schedule_title=#{title},
 		schedule_score2=#{scoreTeam2},
 		schedule_video=#{video},
 		schedule_image=#{image},
-
 		schedule_winner=#{idwinner},
 		schedule_description=#{description}
 		Where id_schedule=#{idSchedule};
@@ -125,5 +118,4 @@ Select COUNT(*) FROM sports.schedule_tbl where schedule_team1=${idTeam} or sched
 	<select id="sumJoinByTour" resultType="int">
 	Select COUNT(*) FROM sports.schedule_tbl where (schedule_team1=${idTeam} or schedule_team2=${idTeam}) and schedule_tour=${idTour}
 	</select>
-
 </mapper>

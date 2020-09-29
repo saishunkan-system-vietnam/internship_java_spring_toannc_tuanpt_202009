@@ -29,7 +29,6 @@ import ssv.com.repository.ProfileRepository;
 public class ProfileService {
 	@Autowired
 	private ProfileRepository profileRepository;
-
 	@Autowired
 	private JavaMailSender emailSender;
 
@@ -59,7 +58,7 @@ public class ProfileService {
 	}
 
 	public List<MemberInfoDTO> getMembersEmailByRole(){
-		List<MemberInfoDTO> members = accountRepository.getMembersEmailByRole()
+		List<MemberInfoDTO> members = profileRepository.getMembersEmailByRole()
 				.stream().map(account -> {
 					return modelMapper.map(account, MemberInfoDTO.class);
 				}).collect(Collectors.toList());
@@ -100,13 +99,8 @@ public class ProfileService {
 		return null;
 	}
 
-<<<<<<< toannc
 	public void newTour(int id) {
 		historyRepository.addTournament(profileRepository.findById(id).getId(), id);
 		
-=======
-	public List<Profile> getMembers() {
-		return profileRepository.getMembers();
->>>>>>> master
 	}
 }
