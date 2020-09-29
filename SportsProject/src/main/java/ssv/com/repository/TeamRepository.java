@@ -80,6 +80,7 @@ public class TeamRepository {
 		return teamMapper.search(page,pageSize,nameSearch,type,sorts);
 	}
 
+
 	public List<Team> teamWait(String type) {
 		// TODO Auto-generated method stub
 		return teamMapper.teamWait(type);
@@ -88,4 +89,5 @@ public class TeamRepository {
 	public void addTour(int idTeam) {
 		teamMapper.addTour(idTeam);		
 	}
+
 }

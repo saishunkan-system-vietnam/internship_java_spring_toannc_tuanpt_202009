@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ssv.com.dto.ScheduleDto;
+
 import ssv.com.dto.TeamDetail;
+
 import ssv.com.dto.TeamDto;
 import ssv.com.entity.Profile;
 import ssv.com.entity.Schedule;
@@ -110,6 +112,7 @@ public class TeamService {
 		return dto;
 	}
 
+
 	public TeamDetail detail(int idTeam, int idTour) {
 		TeamDetail detail =new TeamDetail();
 		detail.setSum(scheduleReponsitory.sum(idTeam));
@@ -129,4 +132,5 @@ public class TeamService {
 		 teamRepository.addTour(idTeam);
 		
 	}
+
 }

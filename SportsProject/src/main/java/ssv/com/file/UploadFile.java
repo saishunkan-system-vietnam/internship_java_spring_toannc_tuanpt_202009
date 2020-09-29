@@ -17,7 +17,9 @@ public class UploadFile {
 		   String destination = System.getProperty("user.dir") + "/src/main/webapp/videos/" + multipartFile.getOriginalFilename();
 		   File file = new File(destination);
 		   multipartFile.transferTo(file);
+
 		   return "http://localhost:8090/videos/"+multipartFile.getOriginalFilename();
+
 	}
 
 }

@@ -21,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ssv.com.controller.form.TeamForm;
 import ssv.com.dto.ScheduleDto;
+
 import ssv.com.dto.TeamDetail;
+
 import ssv.com.dto.TeamDto;
 import ssv.com.entity.Profile;
 import ssv.com.entity.Team;
@@ -91,6 +93,7 @@ public class TeamController {
 	@GetMapping(value="detail")
 	public ResponseEntity<TeamDetail> detailTeam(@RequestParam int idTeam,@RequestParam int idTour){
 		return new ResponseEntity<TeamDetail>(teamService.detail(idTeam,idTour),HttpStatus.OK);
+
 	}
 
 	@GetMapping(value="teamWait")

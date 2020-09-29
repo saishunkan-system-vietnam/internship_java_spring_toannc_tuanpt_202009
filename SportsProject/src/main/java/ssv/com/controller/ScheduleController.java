@@ -112,6 +112,7 @@ public class ScheduleController {
 	public void statusCheck() {
 		scheduleService.statusCheck();
 	}
+
 	
 	
 
