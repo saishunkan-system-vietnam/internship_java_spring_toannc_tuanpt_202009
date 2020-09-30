@@ -45,10 +45,16 @@ public class TeamController {
 		return new ResponseEntity<List<Team>>(teamService.getByTour(idTournamet),HttpStatus.OK);
 	}
 
-	@GetMapping(value="getById/{id}")
-	public ResponseEntity<Team> getById(@PathVariable int id){
+	@GetMapping(value="findDetail/{id}")
+	public ResponseEntity<Team> getById(@PathVariable(value = "id") int id){
 		return new ResponseEntity<Team>(teamService.getById(id),HttpStatus.OK);
 	}
+
+	@GetMapping(value = "/{teamId}")
+	public ResponseEntity<Team> findById(@PathVariable(value = "teamId") int id){
+		return new ResponseEntity<Team>(teamService.findById(id),HttpStatus.OK);
+	}
+
 	@PostMapping(value="createTeam")
 	public ResponseEntity<String> createTeam(@ModelAttribute TeamForm teamForm ){
 		String path="";
@@ -67,7 +73,7 @@ public class TeamController {
 		return new ResponseEntity<String>("loi",HttpStatus.OK);
 
 	}
-	
+
 
 	@PostMapping(value="deleteMember")
 	public ResponseEntity<String> delteMember(@RequestBody Profile profile,@RequestParam int idTeam){
@@ -83,10 +89,10 @@ public class TeamController {
 	public ResponseEntity<TeamDto> search(@RequestParam int page,@RequestParam int pageSize,@RequestParam String nameSearch,@RequestParam String type,@RequestParam String sorts){
 		if(type=="") {
 			type="id_schedule";
-		};	
+		};
 		return new ResponseEntity<TeamDto>(teamService.search(page,pageSize*2,nameSearch,type,sorts),HttpStatus.OK);
-		
-		
+
+
 	}
 	@GetMapping(value="detail")
 	public ResponseEntity<TeamDetail> detailTeam(@RequestParam int idTeam,@RequestParam int idTour){

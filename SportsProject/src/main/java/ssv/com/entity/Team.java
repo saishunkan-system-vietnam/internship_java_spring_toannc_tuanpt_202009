@@ -20,6 +20,7 @@ public class Team {
 	private String description;
 	private String logo;
 	private int idTour;
+	private Tournament tournament;
 	private List<Profile> profile;
 
 }

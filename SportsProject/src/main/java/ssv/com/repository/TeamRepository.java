@@ -27,6 +27,10 @@ public class TeamRepository {
 		return teamMapper.getByID(id);
 	}
 
+	public Team findById(int id) {
+		return teamMapper.findById(id);
+	}
+
 	public void save(Team team) {
 		teamMapper.save(team);
 	}
@@ -75,8 +79,8 @@ public class TeamRepository {
 	}
 
 	public List<Team> search(int page, int pageSize, String nameSearch, String type, String sorts) {
-		
-		
+
+
 		return teamMapper.search(page,pageSize,nameSearch,type,sorts);
 	}
 
@@ -86,6 +90,6 @@ public class TeamRepository {
 	}
 
 	public void addTour(int idTeam) {
-		teamMapper.addTour(idTeam);		
+		teamMapper.addTour(idTeam);
 	}
 }

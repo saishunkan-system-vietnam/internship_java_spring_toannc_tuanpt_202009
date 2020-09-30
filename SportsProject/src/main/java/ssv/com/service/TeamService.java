@@ -20,8 +20,8 @@ import ssv.com.repository.TeamRepository;
 public class TeamService {
 	@Autowired
 	private TeamRepository teamRepository;
-	
-	@Autowired 
+
+	@Autowired
 	private ScheduleReponsitory scheduleReponsitory;
 
 
@@ -32,6 +32,10 @@ public class TeamService {
 
 	public Team getById(int id) {
 		return teamRepository.getByID(id);
+	}
+
+	public Team findById(int id) {
+		return teamRepository.findById(id);
 	}
 
 	public void save(Team team) {
@@ -60,7 +64,7 @@ public class TeamService {
 
 	public boolean checkMember(Profile profile, int idTeam) {
 
-		if(teamRepository.getByID(idTeam).getIdTour()==0&&profile.getIdTeam()==0) {
+		if(teamRepository.getByID(idTeam).getIdTour()==0 && profile.getIdTeam()==0) {
 			return true;
 		}
 
@@ -127,6 +131,6 @@ public class TeamService {
 
 	public void addTour(int idTeam) {
 		 teamRepository.addTour(idTeam);
-		
+
 	}
 }
