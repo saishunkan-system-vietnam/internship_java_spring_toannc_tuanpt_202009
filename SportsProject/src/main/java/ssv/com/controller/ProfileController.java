@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ssv.com.controller.form.ProfileForm;
-import ssv.com.dto.MemberInfoDTO;
 import ssv.com.entity.Account;
 import ssv.com.entity.Profile;
 import ssv.com.service.ProfileService;
@@ -32,11 +32,6 @@ public class ProfileController {
 		return profileService.findAll();
 	}
 
-	@GetMapping("/members")
-	public List<Profile> members(){
-		return profileService.getMembers();
-	}
-
 	@GetMapping(path = "/{profileId}")
 	public Profile getProfileById(@PathVariable (value = "profileId") int profileId) {
 		return profileService.findById(profileId);
@@ -50,7 +45,7 @@ public class ProfileController {
 	}
 
 	@PostMapping("/createMember")
-	public ResponseEntity<?> createMember(@RequestBody ProfileForm profileForm) throws Exception {
+	public ResponseEntity<?> createMember(@ModelAttribute ProfileForm profileForm) throws Exception {
 		return profileService.saveMember(profileForm);
 	}
 

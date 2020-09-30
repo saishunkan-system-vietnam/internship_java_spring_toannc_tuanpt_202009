@@ -20,6 +20,7 @@ public class Tournament {
 	private Date timeStart;
 	private String type;
 	private String description;
+	private String title;
 	private List<Schedule> schedule;
 	private List<Team> team;
 	

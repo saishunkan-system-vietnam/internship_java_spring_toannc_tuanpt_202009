@@ -7,17 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ssv.com.dto.ScheduleDto;
+import ssv.com.dto.TeamDetail;
 import ssv.com.dto.TeamDto;
 import ssv.com.entity.Profile;
 import ssv.com.entity.Schedule;
 import ssv.com.entity.Team;
 import ssv.com.mapper.TeamMapper;
+import ssv.com.repository.ScheduleReponsitory;
 import ssv.com.repository.TeamRepository;
 
 @Service
 public class TeamService {
 	@Autowired
 	private TeamRepository teamRepository;
+	
+	@Autowired 
+	private ScheduleReponsitory scheduleReponsitory;
 
 
 
@@ -40,8 +45,8 @@ public class TeamService {
 
 	}
 
-	public void formatTour(int idTeam) {
-		teamRepository.formatTour(idTeam);
+	public void formatTour(int idTour) {
+		teamRepository.formatTour(idTour);
 	}
 
 	public boolean checkTeam(Team team) {
@@ -103,5 +108,25 @@ public class TeamService {
 		}
 		dto.setTeam(teamRepository.search((page-1)*pageSize,pageSize,nameSearch,type,sorts));
 		return dto;
+	}
+
+	public TeamDetail detail(int idTeam, int idTour) {
+		TeamDetail detail =new TeamDetail();
+		detail.setSum(scheduleReponsitory.sum(idTeam));
+		detail.setSumWin(scheduleReponsitory.sumWin(idTeam));
+		detail.setSumJoinByTour(scheduleReponsitory.sumJoinByTour(idTeam,idTour));
+		detail.setSumWinJoinByTour(scheduleReponsitory.sumWinJoinByTour(idTeam,idTour));
+		detail.setRate(detail.getSumWin()*100/detail.getSum());
+		return detail;
+	}
+
+	public List<Team> teamWait(String type) {
+		// TODO Auto-generated method stub
+		return teamRepository.teamWait(type);
+	}
+
+	public void addTour(int idTeam) {
+		 teamRepository.addTour(idTeam);
+		
 	}
 }

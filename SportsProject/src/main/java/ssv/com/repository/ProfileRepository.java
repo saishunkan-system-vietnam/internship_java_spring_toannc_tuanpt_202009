@@ -1,12 +1,10 @@
 package ssv.com.repository;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import ssv.com.dto.MemberInfoDTO;
 import ssv.com.entity.Account;
 import ssv.com.entity.Profile;
 import ssv.com.exception.ResourceNotFoundException;
@@ -37,6 +35,10 @@ public class ProfileRepository {
 		return profileMapper.deleteProfile(profileId);
 	}
 
+	public List<Account> getMembersEmailByRole() {
+		return profileMapper.getMembersEmailByRole();
+	}
+
 	public Profile getByEmail(String email) {
 		return profileMapper.findByEmail(email);
 	}
@@ -44,10 +46,4 @@ public class ProfileRepository {
 	public List<Account> pageUser(int page, int pagesize,String name,String nametype) {
 		return profileMapper.pageProfile(page*pagesize,pagesize,name,nametype);
 	}
-
-	public List<Profile> getMembers() {
-		return profileMapper.getMembers();
-	}
-
-
 }

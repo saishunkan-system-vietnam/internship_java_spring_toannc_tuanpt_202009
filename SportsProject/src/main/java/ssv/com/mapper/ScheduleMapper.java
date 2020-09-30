@@ -30,5 +30,13 @@ public interface ScheduleMapper {
 
 	public void checkStatus(int j, int i);
 
+	public int sum(int idTeam);
+
+	public int sumWin(int idTeam);
+
+	public int sumJoinByTour(int idTeam, int idTour);
+
+	public int sumWinJoinByTour(int idTeam, int idTour);
+
 
 }

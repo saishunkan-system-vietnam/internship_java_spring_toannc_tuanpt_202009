@@ -10,14 +10,14 @@ public class UploadFile {
 		   String destination = System.getProperty("user.dir") + "/src/main/webapp/images/" + multipartFile.getOriginalFilename();
 		   File file = new File(destination);
 		   multipartFile.transferTo(file);
-		   return "images/"+multipartFile.getOriginalFilename();
+		   return "http://localhost:8090/images/"+multipartFile.getOriginalFilename();
 		}
 
 	public static String saveVideo(MultipartFile multipartFile) throws IllegalStateException, IOException {
 		   String destination = System.getProperty("user.dir") + "/src/main/webapp/videos/" + multipartFile.getOriginalFilename();
 		   File file = new File(destination);
 		   multipartFile.transferTo(file);
-		   return "videos/"+multipartFile.getOriginalFilename();
+		   return "http://localhost:8090/videos/"+multipartFile.getOriginalFilename();
 	}
 
 }

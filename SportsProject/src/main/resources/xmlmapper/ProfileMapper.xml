@@ -32,16 +32,10 @@
 		#{age},
 		#{gender},
 		#{address},
-		#{avatar},
-		#{idTeam}
+		#{avatar}
 		);
 	</insert>
 
-	<select id="getMembers" resultMap="profileMapping">
-		SELECT p.*
-		FROM profile_tbl p
-		INNER JOIN account_tbl a ON p.profile_email = a.account_email WHERE account_role = 'ROLE_MEMBER';
-	</select>
 
 	<select id="findAllProfile" flushCache="true" statementType="PREPARED"
 		resultMap="profileMapping">
@@ -55,10 +49,8 @@
 	</select>
 
 	<select id="findById" flushCache="true" statementType="PREPARED"
-		resultType="Profile">
-		SELECT profile_name as name, profile_email as email, profile_phone as phone,
-				profile_age as age, profile_gender as gender, profile_address as address,
-				profile_avatar as avatar, id_team as teamId
+		resultMap="profileMapping">
+		SELECT  *
 		FROM profile_tbl WHERE id= #{id}
 	</select>
 

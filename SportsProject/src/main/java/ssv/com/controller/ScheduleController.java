@@ -93,11 +93,11 @@ public class ScheduleController {
 	}
 	@PostMapping(value = "editShedule")
 	public ResponseEntity<String> editShedule(@RequestBody Schedule schedule){
-		if(tournamentService.getById(schedule.getIdTour()).getStatus()==0 ) {
+		if(tournamentService.getById(schedule.getIdTour()).getStatus()==0&&scheduleService.getById(schedule.getIdSchedule()).getStatus()==0 ) {
 			scheduleService.editShedule(schedule);
-			return new ResponseEntity<String>("edit thanh cong", HttpStatus.OK);
+			return new ResponseEntity<String>("Sửa thành công", HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("edit that bai", HttpStatus.OK);
+		return new ResponseEntity<String>("Trận đấu đã được diễn ra", HttpStatus.OK);
 	}
 	@GetMapping(value="search")
 	public ResponseEntity<ScheduleDto> search(@RequestParam int page,@RequestParam int pageSize,@RequestParam String nameSearch,@RequestParam String type,@RequestParam String sorts){

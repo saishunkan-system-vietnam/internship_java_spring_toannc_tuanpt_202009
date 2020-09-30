@@ -18,6 +18,5 @@ public class ProfileForm {
 	private String age;
 	private String gender;
 	private String address;
-	private String avatar;
 	private MultipartFile file;
 }
