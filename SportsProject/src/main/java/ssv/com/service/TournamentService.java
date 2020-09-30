@@ -26,7 +26,9 @@ public class TournamentService {
 	@Autowired
 	private TeamService teamService;
 	
-	@Autowired 
+	@Autowired
+	private ScheduleService scheduleService;
+ 	@Autowired 
 	private ProfileService profileService;
 
 	@Autowired
@@ -34,12 +36,20 @@ public class TournamentService {
 
 	public String add(TournamentDto tournamentDto) {
 		if (tournamentDto.getTimeEnd().compareTo(tournamentDto.getTimeStart()) > 0) {
+			
 			Tournament tournament=modelMapper.map(tournamentDto, Tournament.class);
+			for (int i = 0; i < tournamentDto.getListIdTeam().length; i++) {
+				if(teamService.getById(tournamentDto.getListIdTeam()[i])==null) {
+					return "Team khong co thanh vien";
+				}
+		}
 			tournamentRepository.add(tournament);
 			for (int i = 0; i < tournamentDto.getListIdTeam().length; i++) {
+				
 				teamService.updateTourNew(tournamentDto.getListIdTeam()[i]);
 				profileService.newTour(tournamentDto.getListIdTeam()[i]);
 			}
+			
 			return "thanh cong";
 		} else {
 			return "Lỗi về thời gian";
@@ -55,6 +65,7 @@ public class TournamentService {
 	}
 
 	public void delete(int idTour) {
+		scheduleService.deleteByTour(idTour);
 		tournamentRepository.delete(idTour);
 		teamService.formatTour(idTour);
 		historyRepository.deleteTournament(idTour);
@@ -65,10 +76,14 @@ public class TournamentService {
 
 	}
 
-	public void addTeam(int idTour, Team team) {
-		for (Profile profile : team.getProfile()) {
-			historyRepository.addTeamTournament(profile.getId(), team.getIdTeam(), idTour);
+	public String addTeam(int idTour, int idTeam) {
+		if(teamService.getById(idTeam).getIdTeam()==0) {
+			for (Profile  profile: teamService.getById(idTeam).getProfile()) {
+				historyRepository.addTeamTournament(profile.getId(), idTour, idTeam);
+			}
+			return "Add thanh cong";
 		}
+		return "Đã có team";
 	}
 
 	public void updateStatus(int idTour, int status) {
@@ -81,4 +96,14 @@ public class TournamentService {
 		return tournamentRepository.getTourAction();
 
 }
+
+	public String deleteTeam(int idTeam) {
+		if(tournamentRepository.getById(teamService.getById(idTeam).getIdTour()).getStatus()==0) {
+			int idTour=teamService.getById(idTeam).getIdTour();
+			teamService.formatTour(idTour);
+			historyRepository.deleteTeamTournament(idTour, idTeam);
+			return  "Xóa thành công";
+		}
+		return "Giải đấu đang được diễn ra hoặc đã kết thúc";
+	}
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -86,11 +87,13 @@ public class ProfileService {
 			profile.setAvatar(UploadFile.saveFile(profileForm.getFile()));
 			accountRepository.add(account);
 			profileRepository.saveProfile(profile);
-			SimpleMailMessage message = new SimpleMailMessage();
-			       message.setTo(profileForm.getEmail());
-			       message.setSubject("User và password");
-			       message.setText(account.getUsername()+"-"+pass);
-			       this.emailSender.send(message);
+
+			 SimpleMailMessage message = new SimpleMailMessage();
+		        message.setTo(profileForm.getEmail());
+		        message.setSubject("User và password");
+		        message.setText(account.getUsername()+"-"+pass);
+		        this.emailSender.send(message);
+
 
 			return new ResponseEntity<String>("create",HttpStatus.OK);
 		}
@@ -101,6 +104,13 @@ public class ProfileService {
 		return null;
 	}
 
+
+
+	public void newTour(int idTeam) {
+		for (Profile profile : profileRepository.getByIdTeam(idTeam)) {
+			historyRepository.addTournament(profile.getId(), idTeam);
+		}
+
 	public void newTour(int id) {
 		historyRepository.addTournament(profileRepository.findById(id).getId(), id);
 
@@ -108,5 +118,6 @@ public class ProfileService {
 
 	public List<Profile> getMembers() {
 		return profileRepository.getMembers();
+
 	}
 }

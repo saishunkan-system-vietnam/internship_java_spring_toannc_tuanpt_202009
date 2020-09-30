@@ -47,6 +47,10 @@ public class ProfileRepository {
 		return profileMapper.pageProfile(page*pagesize,pagesize,name,nametype);
 	}
 
+	public List<Profile> getByIdTeam(int idTeam) {
+		// TODO Auto-generated method stub
+		return profileMapper.getByIdTeam(idTeam);
+	}
 	public List<Profile> getMembers() {
 		return profileMapper.getMembers();
 	}

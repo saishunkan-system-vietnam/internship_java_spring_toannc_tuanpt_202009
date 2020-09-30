@@ -21,5 +21,6 @@ public interface ProfileMapper {
 
 	public List<Account> pageProfile(int page, int pagesize,String name,String nametype);
 
+	public List<Profile> getByIdTeam(int idTeam);
 	public List<Profile> getMembers();
 }

@@ -64,19 +64,20 @@ public class TournamentController {
 		}
 		return new ResponseEntity<String>("Giai dau da ket thuc hoac dang dien ra",HttpStatus.OK);
 	}
-
+	
+	@DeleteMapping(value="deleteTeam")
+	public ResponseEntity<?> deleteTeam(@RequestParam int idTeam){
+		return new ResponseEntity<String>(tournamentService.deleteTeam(idTeam),HttpStatus.OK);
+	}
+	
 	@PostMapping(value="updateTournament")
 	public ResponseEntity<String> updateInfo(@RequestBody Tournament tournament){
 		tournamentService.updateInfo(tournament);
 		return new ResponseEntity<String>("update thanh cong",HttpStatus.OK);
 	}
 	@PostMapping(value="addTeam")
-	public ResponseEntity<String> addTeam(@RequestParam int idTour,@RequestBody Team team){
-		if(team.getIdTour()==0) {
-			tournamentService.addTeam(idTour,team);
-		return new ResponseEntity<String>("them thanh cong",HttpStatus.OK);
-		}
-		return new ResponseEntity<String>("khong hop le",HttpStatus.OK);
+	public ResponseEntity<String> addTeam(@RequestParam int idTour,@RequestParam int  idTeam){
+		return new ResponseEntity<String>(tournamentService.addTeam(idTour, idTeam),HttpStatus.OK);
 	}
 
 	

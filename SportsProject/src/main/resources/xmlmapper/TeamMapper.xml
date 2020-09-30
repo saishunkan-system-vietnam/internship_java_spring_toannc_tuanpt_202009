@@ -118,8 +118,9 @@
 		${page},${pageSize} ;
 	</select>
 	<select id="teamWait" resultMap="teamMapping">
-		SELECT *FROM team_tbl where
-		id_tour=0 and team_type='${type}';
+
+	SELECT *FROM team_tbl inner join profile_tbl on team_tbl.id_team=profile_tbl.id_team where id_tour=0 and team_type='${type}';
+
 	</select>
 
 
