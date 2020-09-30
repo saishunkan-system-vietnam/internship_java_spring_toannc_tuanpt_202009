@@ -37,7 +37,7 @@ public class ProfileService {
 
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@Autowired
 	private HistoryRepository historyRepository;
 
@@ -79,7 +79,7 @@ public class ProfileService {
 			account.setPassword(new RandomPass().randomAlphaNumeric(8));
 			account.setUsername(profileForm.getName().toLowerCase().replace("\\s+","") + rand.nextInt(900) + 100);
 			account.setRole("ROLE_MEMBER");
-		
+
 			Profile profile = modelMapper.map(profileForm, Profile.class);
 			profile.setAvatar(UploadFile.saveFile(profileForm.getFile()));
 			accountRepository.add(account);
@@ -101,6 +101,10 @@ public class ProfileService {
 
 	public void newTour(int id) {
 		historyRepository.addTournament(profileRepository.findById(id).getId(), id);
-		
+
+	}
+
+	public List<Profile> getMembers() {
+		return profileRepository.getMembers();
 	}
 }

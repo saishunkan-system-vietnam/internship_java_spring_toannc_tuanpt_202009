@@ -46,4 +46,9 @@ public class ProfileRepository {
 	public List<Account> pageUser(int page, int pagesize,String name,String nametype) {
 		return profileMapper.pageProfile(page*pagesize,pagesize,name,nametype);
 	}
+
+	public List<Profile> getMembers() {
+		return profileMapper.getMembers();
+	}
+
 }

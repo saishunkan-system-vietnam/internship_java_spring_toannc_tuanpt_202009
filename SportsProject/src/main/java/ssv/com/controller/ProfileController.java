@@ -32,6 +32,12 @@ public class ProfileController {
 		return profileService.findAll();
 	}
 
+	@GetMapping("/members")
+	public List<Profile> members(){
+		return profileService.getMembers();
+	}
+
+
 	@GetMapping(path = "/{profileId}")
 	public Profile getProfileById(@PathVariable (value = "profileId") int profileId) {
 		return profileService.findById(profileId);
