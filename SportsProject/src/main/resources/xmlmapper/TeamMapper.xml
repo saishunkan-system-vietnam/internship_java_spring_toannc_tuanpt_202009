@@ -5,43 +5,64 @@
 <mapper namespace="ssv.com.mapper.TeamMapper">
 	<resultMap type="Team" id="teamMapping">
 		<id column="id_team" property="idTeam" />
-		<result column="team_name" property="nameTeam"/>
+		<result column="team_name" property="nameTeam" />
 		<result column="team_totalmatch" property="totalmatch" />
 		<result column="team_totalwin" property="totalwin" />
 		<result column="team_type" property="type" />
-		<result column="team_description" property="description"/>
-		<result column="team_logo" property="logo"/>
-		<result column="id_tour" property="idTour"/>
-		<result column="tournament_name" property="nameTour"/>
+		<result column="team_description" property="description" />
+		<result column="team_logo" property="logo" />
+		<result column="id_tour" property="idTour" />
+		<association property="tournament">
+			<id property="idTour" column="id_tour" />
+			<result property="nameTour" column="tournament_name" />
+			<result property="status" column="tournament_status" />
+			<result property="timeEnd" column="tournament_end" />
+			<result property="timeStart" column="tournament_start" />
+			<result property="type" column="tournament_type" />
+			<result property="title" column="tournament_title" />
+			<result property="description" column="tournament_description" />
+		</association>
 		<collection property="profile" ofType="Profile">
-		<id property="id" column = "id"/>
-		<result property="name" column = "profile_name"/>
-		<result property="email" column = "profile_email"/>
-		<result property="phone" column="profile_phone"/>
-		<result property="age" column="profile_age"/>
-	 	<result property="gender" column="profile_gender"/>
-		<result property="address" column="profile_address"/>
-	 	<result property="avatar" column="profile_avatar"/>
-	 	<result property="idTeam" column="id_team"/>
-
+			<id property="id" column="id" />
+			<result property="name" column="profile_name" />
+			<result property="email" column="profile_email" />
+			<result property="phone" column="profile_phone" />
+			<result property="age" column="profile_age" />
+			<result property="gender" column="profile_gender" />
+			<result property="address" column="profile_address" />
+			<result property="avatar" column="profile_avatar" />
+			<result property="idTeam" column="id_team" />
 		</collection>
+
 	</resultMap>
 	<select id="getAll" resultMap="teamMapping">
-			SELECT * FROM team_tbl p left join profile_tbl c on p.id_team=c.id_team
+		SELECT p.*, t.* FROM team_tbl p
+		left join profile_tbl c on p.id_team = c.id_team
+		left join tournament_tbl t on p.id_tour = t.id_tournament
 	</select>
 
 	<select id="selectAllMatchsByTeam" resultMap="teamMapping">
-		Select * from schedule_tbl where schedule_team1 = ${idTeam} or schedule_team2 = ${idTeam}
+		Select * from
+		schedule_tbl where schedule_team1 = ${idTeam} or schedule_team2 =
+		${idTeam}
 	</select>
 
 	<select id="selectAllMatchsWinByTeam" resultMap="teamMapping">
-		Select * from schedule_tbl where schedule_winner = ${idTeam}
+		Select * from
+		schedule_tbl where schedule_winner = ${idTeam}
+	</select>
+
+	<select id="findById" resultMap="teamMapping">
+		Select * from team_tbl where
+		id_team = ${teamId}
 	</select>
 
 	<select id="getByID" resultMap="teamMapping">
-	SELECT * FROM team_tbl p inner join profile_tbl c on p.id_team=c.id_team where p.id_team=${idTeam}
+		SELECT * FROM team_tbl p inner
+		join profile_tbl c on p.id_team=c.id_team
+		where p.id_team=${idTeam}
 	</select>
-	<insert id="save" parameterType="Team" >
+	<insert id="save" parameterType="Team">
 		INSERT INTO team_tbl(
 		team_name,
 		team_type,
@@ -55,37 +76,52 @@
 		)
 	</insert>
 	<update id="updateTourNew" parameterType="int">
-		SET @var_id := (SELECT MAX(id_tour) from tournament_tbl);
-		Update team_tbl Set id_tour=@var_id  where id_team=${idTeam}
+		SET @var_id := (SELECT
+		MAX(id_tour) from tournament_tbl);
+		Update team_tbl Set id_tour=@var_id
+		where id_team=${idTeam}
 	</update>
 	<update id="formatTour">
-		Update team_tbl Set id_tour=0  where id_tour=${idTour}
+		Update team_tbl Set id_tour=0 where id_tour=${idTour}
 	</update>
 
 	<update id="addMember">
-		Update profile_tbl  Set id_team =${idTeam} where id=${idProfile}
+		Update profile_tbl Set id_team =${idTeam} where
+		id=${idProfile}
 	</update>
 	<delete id="deleteMember">
-		DELETE profile_tbl Set id_team=0 where id=${idProfile}
+		DELETE profile_tbl Set id_team=0 where
+		id=${idProfile}
 
 	</delete>
 	<select id="findByValue" resultMap="teamMapping">
-		SELECT * FROM team_tbl ORDER BY ${value} DESC
+		SELECT * FROM team_tbl ORDER
+		BY ${value} DESC
 	</select>
-	
-	<select id="getByTour" resultMap="teamMapping"> 
-		SELECT *FROM team_tbl where id_tour=${idTournament}  
+
+	<select id="getByTour" resultMap="teamMapping">
+		SELECT *FROM team_tbl where
+		id_tour=${idTournament}
 	</select>
 	<select id="searchTotal" resultType="int">
-Select COUNT(*) FROM sports.team_tbl left join tournament_tbl on team_tbl.id_tour=tournament_tbl.id_tour  where ${type} LIKE '%${nameSearch}%'
+		Select COUNT(*) FROM
+		sports.team_tbl left join tournament_tbl on
+		team_tbl.id_tour=tournament_tbl.id_tour where ${type} LIKE
+		'%${nameSearch}%'
 	</select>
 	<select id="search" resultMap="teamMapping">
-	SELECT * FROM sports.team_tbl left join tournament_tbl on team_tbl.id_tour=tournament_tbl.id_tour 
-where ${type} LIKE '%${nameSearch}%' ORDER BY id_schedule ${sorts} LIMIT ${page},${pageSize}  ;
+		SELECT * FROM sports.team_tbl left
+		join tournament_tbl on
+		team_tbl.id_tour=tournament_tbl.id_tour
+		where
+		${type} LIKE '%${nameSearch}%' ORDER BY id_schedule ${sorts} LIMIT
+		${page},${pageSize} ;
 	</select>
 	<select id="teamWait" resultMap="teamMapping">
+
 	SELECT *FROM team_tbl inner join profile_tbl on team_tbl.id_team=profile_tbl.id_team where id_tour=0 and team_type='${type}';
+
 	</select>
-	
+
 
 </mapper>

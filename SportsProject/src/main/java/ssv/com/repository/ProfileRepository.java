@@ -51,4 +51,8 @@ public class ProfileRepository {
 		// TODO Auto-generated method stub
 		return profileMapper.getByIdTeam(idTeam);
 	}
+	public List<Profile> getMembers() {
+		return profileMapper.getMembers();
+	}
+
 }

@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,8 +39,7 @@ public class ProfileService {
 
 	@Autowired
 	private ModelMapper modelMapper;
-	
-	
+
 	@Autowired
 	private HistoryRepository historyRepository;
 
@@ -72,7 +72,7 @@ public class ProfileService {
 	public ResponseEntity<?> saveMember(ProfileForm profileForm) throws Exception {
 		Random rand = new Random();
 		if (profileRepository.getByEmail(profileForm.getEmail()) != null) {
-			return new ResponseEntity<String>("Email has already exsist!", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Email has already exsist!", HttpStatus.OK);
 		}
 		else {
 
@@ -82,18 +82,20 @@ public class ProfileService {
 			account.setPassword(BCrypt.hashpw(pass, BCrypt.gensalt(12)));
 			account.setUsername(profileForm.getName().toLowerCase().replace("\\s+","") + rand.nextInt(900) + 100);
 			account.setRole("ROLE_MEMBER");
-		
+
 			Profile profile = modelMapper.map(profileForm, Profile.class);
 			profile.setAvatar(UploadFile.saveFile(profileForm.getFile()));
 			accountRepository.add(account);
 			profileRepository.saveProfile(profile);
+
 			 SimpleMailMessage message = new SimpleMailMessage();
 		        message.setTo(profileForm.getEmail());
 		        message.setSubject("User và password");
 		        message.setText(account.getUsername()+"-"+pass);
 		        this.emailSender.send(message);
 
-			return new ResponseEntity<>(HttpStatus.CREATED);
+
+			return new ResponseEntity<String>("create",HttpStatus.OK);
 		}
 	}
 
@@ -103,9 +105,19 @@ public class ProfileService {
 	}
 
 
+
 	public void newTour(int idTeam) {
 		for (Profile profile : profileRepository.getByIdTeam(idTeam)) {
 			historyRepository.addTournament(profile.getId(), idTeam);
 		}
+
+	public void newTour(int id) {
+		historyRepository.addTournament(profileRepository.findById(id).getId(), id);
+
+	}
+
+	public List<Profile> getMembers() {
+		return profileRepository.getMembers();
+
 	}
 }

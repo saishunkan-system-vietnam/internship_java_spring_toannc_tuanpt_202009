@@ -16,6 +16,8 @@ public interface TeamMapper {
 
 	Team getByID(int idTeam);
 
+	Team findById(int teamId);
+
 	void save(Team team);
 
 	void updateTourNew(int idTeam);

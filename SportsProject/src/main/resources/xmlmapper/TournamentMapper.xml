@@ -10,8 +10,7 @@
 		<result property="timeEnd" column="tournament_end" />
 		<result property="timeStart" column="tournament_start" />
 		<result property="type" column="tournament_type" />
-				<result property="title" column="tournament_title" />
-		
+		<result property="title" column="tournament_title" />
 		<result property="description" column="tournament_description" />
 		<collection property="schedule" javaType="ArrayList"
 			ofType="Schedule">
@@ -53,6 +52,7 @@
 	</resultMap>
 
 
+
 		<select id="getById" resultMap="tournamentMapping">
 		SELECT * FROM sports.tournament_tbl p left join (history_tbl q left join
 			team_tbl d on q.id_team=d.id_team left join
@@ -88,17 +88,18 @@
 			Where id_tour=#{idTour}
 		</update>
 
-		<update id="updateStatus">
-			Update tournament_tbl set tournament_status=${status} where
-			id_tour=${idTour}
 
-		</update>
+	<update id="updateStatus">
+		Update tournament_tbl set tournament_status=${status} where
+		id_tour=${idTour}
 
-		<select id="findByValue" resultMap="tournamentMapping">
-			SELECT * FROM tournament_tbl ORDER BY ${value} DESC
-		</select>
-		<select id="getTourAction" resultMap="tournamentMapping">
-			SELECT * FROM sports.tournament_tbl where tournament_status=0
-		
-		</select>
+	</update>
+
+	<select id="findByValue" resultMap="tournamentMapping">
+		SELECT * FROM tournament_tbl ORDER BY ${value} DESC
+	</select>
+	<select id="getTourAction" resultMap="tournamentMapping">
+		SELECT * FROM sports.tournament_tbl where tournament_status=0
+
+	</select>
 </mapper>

@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 import ssv.com.rest.CustomAccessDeniedHandler;
 import ssv.com.rest.JwtAuthenticationTokenFilter;
@@ -41,18 +43,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	  @Override
 	  protected void configure(HttpSecurity http) throws Exception {
 	    // Disable crsf cho đường dẫn /rest/**
+
 	    http.csrf().ignoringAntMatchers("/api/v1/**");
+	    http.authorizeRequests().antMatchers("/images/**").permitAll();
 	    http.authorizeRequests().antMatchers("/api/v1/account/login**").permitAll().antMatchers("/api/v1/account/signup**").permitAll().
 	    antMatchers("/api/v1/account/foget").permitAll();
-	    
+
 //	    http.antMatcher("/api/v1/account/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
 //	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 //	        .antMatchers(HttpMethod.GET,"/api/v1/account/**").access("hasRole('ROLE_ADMIN')")
 //	        .antMatchers(HttpMethod.DELETE, "/api/v1/account/**").access("hasRole('ROLE_ADMIN')").and()
-//	        
+//
 //	        .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
 //	        .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
-//	  
+//
 	  }
-	  
+
 }
