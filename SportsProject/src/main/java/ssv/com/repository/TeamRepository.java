@@ -89,7 +89,11 @@ public class TeamRepository {
 		return teamMapper.teamWait(type);
 	}
 
-	public void addTour(int idTeam) {
-		teamMapper.addTour(idTeam);
+	public void formatTourById(int idTour, int idTeam) {
+		teamMapper.formatTourById(idTour,idTeam);
+	}
+
+	public void addTour(int idTour, int idTeam) {
+		teamMapper.addTour(idTour,idTeam);
 	}
 }

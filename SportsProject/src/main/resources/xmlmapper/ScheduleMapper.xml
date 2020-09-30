@@ -51,7 +51,7 @@
  or schedule_tbl.schedule_team2=team_tbl.id_team where id_schedule=${idSchedule}
 	</select>
 	<delete id="deleteByTour" parameterType="int">
-		Delete from schedule_tbl where id_tour=${idTour}
+		Delete from schedule_tbl where schedule_tour=${idTour}
 	</delete>
 
 	<insert id="create" parameterType="Schedule">

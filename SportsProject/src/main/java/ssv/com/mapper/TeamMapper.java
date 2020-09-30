@@ -47,6 +47,9 @@ public interface TeamMapper {
 
 	public List<Team> teamWait(String type);
 
-	public void addTour(int idTeam);
+
+	public void formatTourById(int idTour, int idTeam);
+
+	public void addTour(int idTour, int idTeam);
 
 }

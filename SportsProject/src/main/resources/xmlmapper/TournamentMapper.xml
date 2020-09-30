@@ -102,4 +102,6 @@
 		SELECT * FROM sports.tournament_tbl where tournament_status=0
 
 	</select>
+	
+		
 </mapper>

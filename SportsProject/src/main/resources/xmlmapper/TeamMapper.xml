@@ -84,7 +84,9 @@
 	<update id="formatTour">
 		Update team_tbl Set id_tour=0 where id_tour=${idTour}
 	</update>
-
+	<update id="formatTourById">
+			Update team_tbl Set id_tour=0 where id_tour=${idTour} and id_team=${idTeam}
+	</update>
 	<update id="addMember">
 		Update profile_tbl Set id_team =${idTeam} where
 		id=${idProfile}
@@ -122,6 +124,7 @@
 	SELECT *FROM team_tbl inner join profile_tbl on team_tbl.id_team=profile_tbl.id_team where id_tour=0 and team_type='${type}';
 
 	</select>
-
+	<update id="addTour">
+	Update team_tbl set id_tour=${idTour} where id_team=${idTeam}</update>
 
 </mapper>
