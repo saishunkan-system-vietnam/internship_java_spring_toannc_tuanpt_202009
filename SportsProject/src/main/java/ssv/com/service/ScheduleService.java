@@ -2,15 +2,12 @@ package ssv.com.service;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import lombok.val;
+
 import ssv.com.controller.form.ScheduleForm;
 import ssv.com.dto.ScheduleDto;
 import ssv.com.entity.Schedule;
@@ -19,59 +16,44 @@ import ssv.com.repository.ScheduleReponsitory;
 
 @Service
 public class ScheduleService {
-	
+
 	@Autowired
 	private ScheduleReponsitory scheduleReponsitory;
-
-
 
 	public List<Schedule> getAll() {
 		return scheduleReponsitory.getAll();
 	}
 
-
-
 	public boolean checkTime(Date timeStart, Date timeEnd, int idTour) {
-		List<Schedule> list=scheduleReponsitory.getByIdTour(idTour);
-		if(timeEnd.compareTo(timeStart)>0) {
-			if(list.isEmpty()) {
+		List<Schedule> list = scheduleReponsitory.getByIdTour(idTour);
+		if (timeEnd.compareTo(timeStart) > 0) {
+			if (list.isEmpty()) {
 				return true;
-			}
-			else {
-				if(timeStart.compareTo(list.get(list.size()-1).getTimeEnd())>0) {
+			} else {
+				if (timeStart.compareTo(list.get(list.size() - 1).getTimeEnd()) > 0) {
 					return true;
 				}
 			}
-			
+
 		}
 		return false;
 	}
 
-
-
 	public List<Schedule> getByIdTour(int idTour) {
-				return scheduleReponsitory.getByIdTour(idTour);
+		return scheduleReponsitory.getByIdTour(idTour);
 	}
-
-
 
 	public Schedule getById(int idSchedule) {
 		return scheduleReponsitory.getById(idSchedule);
 	}
 
-
-
-
-
 	public void delete(int idSchedule) {
 		scheduleReponsitory.delete(idSchedule);
-		
+
 	}
 
-
-
 	public void updateShedule(ScheduleForm scheduleForm) throws IllegalStateException, IOException {
-		Schedule schedule =new Schedule();
+		Schedule schedule = new Schedule();
 		schedule.setTitle(scheduleForm.getTitle());
 		schedule.setScoreTeam1(scheduleForm.getScoreTeam1());
 		schedule.setScoreTeam2(scheduleForm.getScoreTeam2());
@@ -80,10 +62,9 @@ public class ScheduleService {
 		schedule.setIdTeam2(scheduleForm.getIdTeam2());
 		schedule.setIdSchedule(scheduleForm.getIdSchedule());
 
-		if(schedule.getScoreTeam1()>schedule.getIdTeam2()) {
+		if (schedule.getScoreTeam1() > schedule.getIdTeam2()) {
 			schedule.setIdwinner(schedule.getIdTeam1());
-		}
-		else {
+		} else {
 			schedule.setIdwinner(schedule.getIdTeam2());
 		}
 		schedule.setDescription(scheduleForm.getDescription());
@@ -95,61 +76,47 @@ public class ScheduleService {
 		}
 		schedule.setVideo(UploadFile.saveVideo(scheduleForm.getFileVideo()));
 		scheduleReponsitory.updateShedule(schedule);
-		
-		
-	
+
 	}
-
-
 
 	public void editShedule(Schedule schedule) {
 		scheduleReponsitory.editShedule(schedule);
-		
+
 	}
 
-
-
 	public ScheduleDto search(int page, int pageSize, String nameSearch, String type, String sorts) {
-		ScheduleDto dto=new ScheduleDto();
-		dto.setTotal(scheduleReponsitory.searchTotal(nameSearch,type));
+		ScheduleDto dto = new ScheduleDto();
+		dto.setTotal(scheduleReponsitory.searchTotal(nameSearch, type));
 		dto.setPage(page);
 		dto.setPageSize(pageSize);
-		if(dto.getTotal()%pageSize==0) {
-			dto.setTotalPage(dto.getTotal()/pageSize);
+		if (dto.getTotal() % pageSize == 0) {
+			dto.setTotalPage(dto.getTotal() / pageSize);
+		} else {
+			dto.setTotalPage((dto.getTotal() / pageSize) + 1);
 		}
-		else {
-			dto.setTotalPage((dto.getTotal()/pageSize)+1);
-		}
-		dto.setSchedules((scheduleReponsitory.search((page-1)*pageSize,pageSize,nameSearch,type,sorts)));
+		dto.setSchedules((scheduleReponsitory.search((page - 1) * pageSize, pageSize, nameSearch, type, sorts)));
 		return dto;
 	}
 
-
-
 	public void createSchedule(Schedule schedule) {
-		 scheduleReponsitory.create(schedule);
-		
+		scheduleReponsitory.create(schedule);
+
 	}
 
-
-
 	public void statusCheck() {
-		long millis=System.currentTimeMillis();  
-		Date date=new java.sql.Date(millis);  
-		List<Schedule> list=scheduleReponsitory.getAll();
+		long millis = System.currentTimeMillis();
+		Date date = new java.sql.Date(millis);
+		List<Schedule> list = scheduleReponsitory.getAll();
 		for (Schedule schedule : list) {
-			if(schedule.getTimeStart().compareTo(date)>=0&&schedule.getTimeEnd().compareTo(date)>0) {
-				scheduleReponsitory.checkStatus(schedule.getIdSchedule(),1);
-			}
-			else if(schedule.getTimeEnd().compareTo(date)<=0) {
-				scheduleReponsitory.checkStatus(schedule.getIdSchedule(),2);
-			}
-			else {
-				scheduleReponsitory.checkStatus(schedule.getIdSchedule(),0);
+			if (schedule.getTimeStart().compareTo(date) >= 0 && schedule.getTimeEnd().compareTo(date) > 0) {
+				scheduleReponsitory.checkStatus(schedule.getIdSchedule(), 1);
+			} else if (schedule.getTimeEnd().compareTo(date) <= 0) {
+				scheduleReponsitory.checkStatus(schedule.getIdSchedule(), 2);
+			} else {
+				scheduleReponsitory.checkStatus(schedule.getIdSchedule(), 0);
 
 			}
 		}
 	}
-
 
 }
