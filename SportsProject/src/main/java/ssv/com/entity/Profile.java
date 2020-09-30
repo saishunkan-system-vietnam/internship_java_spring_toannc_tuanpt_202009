@@ -19,4 +19,5 @@ public class Profile {
 	private String address;
 	private String avatar;
 	private int idTeam;
+	private Team team;
 }

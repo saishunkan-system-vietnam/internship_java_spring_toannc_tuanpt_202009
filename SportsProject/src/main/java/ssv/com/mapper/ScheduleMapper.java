@@ -38,5 +38,7 @@ public interface ScheduleMapper {
 
 	public int sumWinJoinByTour(int idTeam, int idTour);
 
+	public void deleteByTour(int idTour);
+
 
 }

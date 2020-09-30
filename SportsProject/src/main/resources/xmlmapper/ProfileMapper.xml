@@ -13,6 +13,12 @@
 		<result property="address" column="profile_address"/>
 	 	<result property="avatar" column="profile_avatar"/>
 	 	<result property="idTeam" column="id_team"/>
+	 	<association property="team" >
+			<id column="id_team" property="idTeam" />
+			<result column="team_name" property="nameTeam" />
+			<result column="team_type" property="type" />
+			<result column="team_logo" property="logo" />
+		</association>
 
 	</resultMap>
 
@@ -39,7 +45,7 @@
 
 	<select id="findAllProfile" flushCache="true" statementType="PREPARED"
 		resultMap="profileMapping">
-		SELECT * FROM profile_tbl
+		SELECT * FROM profile_tbl left join team_tbl on team_tbl.id_team=profile_tbl.id_team
 	</select>
 
 	<select id="findByEmail" flushCache="true"
@@ -64,5 +70,8 @@
 
 	<select id="pageProfile" resultMap="profileMapping">
 		SELECT * FROM profile_tbl Where ${nametype} LIKE #{name} ORDER BY id DESC LIMIT #{page},#{pagesize}
+	</select>
+	<select id="getByIdTeam" resultMap="profileMapping">
+	SELECT *FROM profile_tbl Where id_team=${idTeam}
 	</select>
 </mapper>

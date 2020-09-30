@@ -84,4 +84,9 @@ public class ScheduleReponsitory {
 		return scheduleMapper.sumWinJoinByTour(idTeam,idTour);
 	}
 
+	public void deleteByTour(int idTour) {
+		 scheduleMapper.deleteByTour(idTour);
+		
+	}
+
 }

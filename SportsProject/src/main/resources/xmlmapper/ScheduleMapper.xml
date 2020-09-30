@@ -42,7 +42,7 @@
 		Select COUNT(*)  FROM schedule_tbl inner join tournament_tbl on schedule_tbl.schedule_tour=tournament_tbl.id_tour where ${type} LIKE '%${nameSearch}%'
 	</select>
 	<select id="getByIdTour" resultMap="scheduleMapping">
-		Select * FROM schedule_tbl
+		Select * FROM schedule_tbl inner join team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team   or schedule_tbl.schedule_team2=team_tbl.id_team 
 		where schedule_tour=${idTour}
 	</select>
 	<select id="getById" resultMap="scheduleMapping">
@@ -50,7 +50,9 @@
  inner join team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team 
  or schedule_tbl.schedule_team2=team_tbl.id_team where id_schedule=${idSchedule}
 	</select>
-	
+	<delete id="deleteByTour" parameterType="int">
+		Delete from schedule_tbl where id_tour=${idTour}
+	</delete>
 
 	<insert id="create" parameterType="Schedule">
 		INSERT INTO

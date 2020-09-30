@@ -46,4 +46,9 @@ public class ProfileRepository {
 	public List<Account> pageUser(int page, int pagesize,String name,String nametype) {
 		return profileMapper.pageProfile(page*pagesize,pagesize,name,nametype);
 	}
+
+	public List<Profile> getByIdTeam(int idTeam) {
+		// TODO Auto-generated method stub
+		return profileMapper.getByIdTeam(idTeam);
+	}
 }

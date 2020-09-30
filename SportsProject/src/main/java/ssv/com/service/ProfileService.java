@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,7 @@ public class ProfileService {
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
 	
 	@Autowired
 	private HistoryRepository historyRepository;
@@ -76,7 +78,8 @@ public class ProfileService {
 
 			Account account = new Account();
 			account.setEmail(profileForm.getEmail());
-			account.setPassword(new RandomPass().randomAlphaNumeric(8));
+			String pass=new RandomPass().randomAlphaNumeric(8);
+			account.setPassword(BCrypt.hashpw(pass, BCrypt.gensalt(12)));
 			account.setUsername(profileForm.getName().toLowerCase().replace("\\s+","") + rand.nextInt(900) + 100);
 			account.setRole("ROLE_MEMBER");
 		
@@ -87,7 +90,7 @@ public class ProfileService {
 			 SimpleMailMessage message = new SimpleMailMessage();
 		        message.setTo(profileForm.getEmail());
 		        message.setSubject("User và password");
-		        message.setText(account.getUsername()+"-"+account.getPassword());
+		        message.setText(account.getUsername()+"-"+pass);
 		        this.emailSender.send(message);
 
 			return new ResponseEntity<>(HttpStatus.CREATED);
@@ -99,8 +102,10 @@ public class ProfileService {
 		return null;
 	}
 
-	public void newTour(int id) {
-		historyRepository.addTournament(profileRepository.findById(id).getId(), id);
-		
+
+	public void newTour(int idTeam) {
+		for (Profile profile : profileRepository.getByIdTeam(idTeam)) {
+			historyRepository.addTournament(profile.getId(), idTeam);
+		}
 	}
 }

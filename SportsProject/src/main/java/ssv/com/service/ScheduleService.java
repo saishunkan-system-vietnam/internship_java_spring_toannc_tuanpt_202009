@@ -152,4 +152,11 @@ public class ScheduleService {
 	}
 
 
+
+	public void deleteByTour(int idTour) {
+		scheduleReponsitory.deleteByTour(idTour);
+		
+	}
+
+
 }
