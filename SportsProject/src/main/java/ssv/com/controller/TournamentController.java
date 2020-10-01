@@ -70,13 +70,13 @@ public class TournamentController {
 		return new ResponseEntity<String>(tournamentService.deleteTeam(idTeam),HttpStatus.OK);
 	}
 	
-	@PostMapping(value="updateTournament")
+	@PostMapping(value="edit")
 	public ResponseEntity<String> updateInfo(@RequestBody Tournament tournament){
-		tournamentService.updateInfo(tournament);
-		return new ResponseEntity<String>("update thanh cong",HttpStatus.OK);
+		;
+		return new ResponseEntity<String>(tournamentService.edit(tournament),HttpStatus.OK);
 	}
-	@PostMapping(value="addTeam")
-	public ResponseEntity<String> addTeam(@RequestParam int idTour,@RequestParam int  idTeam){
+	@PostMapping(value="addTeam/{idTour}/{idTeam}")
+	public ResponseEntity<String> addTeam(@PathVariable int idTour,@PathVariable int  idTeam){
 		return new ResponseEntity<String>(tournamentService.addTeam(idTour, idTeam),HttpStatus.OK);
 	}
 
@@ -90,13 +90,13 @@ public class TournamentController {
 				status=0;
 				tournamentService.updateStatus(tournament.getIdTour(),status);
 			}
-			else if(time.compareTo(tournament.getTimeStart())>=0&&time.compareTo(tournament.getTimeEnd())<0) {
-				status=1;
+			else if(time.compareTo(tournament.getTimeEnd())>=0) {
+				status=2;
 				tournamentService.updateStatus(tournament.getIdTour(),status);
 
 			}
 			else {
-				status=2;
+				status=1;
 				tournamentService.updateStatus(tournament.getIdTour(),status);
 
 			}

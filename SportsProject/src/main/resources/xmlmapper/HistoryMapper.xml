@@ -13,7 +13,7 @@
   
 </resultMap>
 	<insert id="addTournament">
-	SET @var_id := (SELECT MAX(id_tour) from tournament_tbl);
+	SET @var_id := (SELECT MAX(id_tournament) from tournament_tbl);
 		INSERT INTO history_tbl(
 		id_team,
 		id_tour,
@@ -38,7 +38,7 @@
 		) VALUES(
 		${idTeam},
 		${idTour},
-		${idMember}
+		${idMember})
 	</insert>
 
 

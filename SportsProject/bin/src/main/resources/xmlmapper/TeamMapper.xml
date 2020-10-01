@@ -55,7 +55,7 @@
 		)
 	</insert>
 	<update id="updateTourNew" parameterType="int">
-		SET @var_id := (SELECT MAX(id_tour) from tournament_tbl);
+		SET @var_id := (SELECT MAX(id_tourament) from tournament_tbl);
 		Update team_tbl Set id_tour=@var_id  where id_team=${idTeam}
 	</update>
 	<update id="formatTour">
@@ -77,10 +77,10 @@
 		SELECT *FROM team_tbl where id_tour=${idTournament}  
 	</select>
 	<select id="searchTotal" resultType="int">
-Select COUNT(*) FROM sports.team_tbl left join tournament_tbl on team_tbl.id_tour=tournament_tbl.id_tour  where ${type} LIKE '%${nameSearch}%'
+Select COUNT(*) FROM sports.team_tbl left join tournament_tbl on team_tbl.id_tour=tournament_tbl.id_tourament   where ${type} LIKE '%${nameSearch}%'
 	</select>
 	<select id="search" resultMap="teamMapping">
-	SELECT * FROM sports.team_tbl left join tournament_tbl on team_tbl.id_tour=tournament_tbl.id_tour 
+	SELECT * FROM sports.team_tbl left join tournament_tbl on team_tbl.id_tour=tournament_tbl.id_tourament  
 where ${type} LIKE '%${nameSearch}%' ORDER BY id_schedule ${sorts} LIMIT ${page},${pageSize}  ;
 	</select>
 

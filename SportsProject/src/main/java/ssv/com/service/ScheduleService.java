@@ -7,10 +7,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import lombok.var;
 import ssv.com.controller.form.ScheduleForm;
 import ssv.com.dto.ScheduleDto;
 import ssv.com.entity.Schedule;
+import ssv.com.entity.Tournament;
 import ssv.com.file.UploadFile;
 import ssv.com.repository.ScheduleReponsitory;
 
@@ -19,23 +20,33 @@ public class ScheduleService {
 
 	@Autowired
 	private ScheduleReponsitory scheduleReponsitory;
+	@Autowired
+	private TournamentService tournamentService;
+	@Autowired
+	private TournamentService service;
 
 	public List<Schedule> getAll() {
 		return scheduleReponsitory.getAll();
 	}
 
 	public boolean checkTime(Date timeStart, Date timeEnd, int idTour) {
-		List<Schedule> list = scheduleReponsitory.getByIdTour(idTour);
-		if (timeEnd.compareTo(timeStart) > 0) {
-			if (list.isEmpty()) {
-				return true;
-			} else {
-				if (timeStart.compareTo(list.get(list.size() - 1).getTimeEnd()) > 0) {
+		Tournament tournament=tournamentService.getById(idTour);
+		if(service.getById(idTour).getTimeEnd().compareTo(timeEnd)>=0) {
+			List<Schedule> list = scheduleReponsitory.getByIdTour(idTour);
+			if (timeEnd.compareTo(timeStart) > 0) {
+				if (list.isEmpty()) {
 					return true;
+				} else {
+					if (timeStart.compareTo(list.get(list.size() - 1).getTimeEnd()) > 0&&timeStart.compareTo(tournament.getTimeStart())>=0&&timeEnd.compareTo(tournament.getTimeEnd())<=0) {
+						return true;
+					}
 				}
-			}
 
+			}
+			
 		}
+		
+		
 		return false;
 	}
 
@@ -107,8 +118,11 @@ public class ScheduleService {
 		long millis = System.currentTimeMillis();
 		Date date = new java.sql.Date(millis);
 		List<Schedule> list = scheduleReponsitory.getAll();
+		var a=date;
 		for (Schedule schedule : list) {
-			if (schedule.getTimeStart().compareTo(date) >= 0 && schedule.getTimeEnd().compareTo(date) > 0) {
+			var b=schedule.getTimeStart();
+			System.out.println(a.compareTo(b)>0);
+			if (schedule.getTimeStart().compareTo(date) <= 0 && schedule.getTimeEnd().compareTo(date) > 0) {
 				scheduleReponsitory.checkStatus(schedule.getIdSchedule(), 1);
 			} else if (schedule.getTimeEnd().compareTo(date) <= 0) {
 				scheduleReponsitory.checkStatus(schedule.getIdSchedule(), 2);

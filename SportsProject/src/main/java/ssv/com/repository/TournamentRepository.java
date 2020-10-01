@@ -33,11 +33,7 @@ public class TournamentRepository {
 		
 	}
 
-	public void updateInfo(Tournament tournament) {
-		tournamentMapper.updateInfo(tournament);
-		
-	}
-
+	
 	public void updateStatus(int idTour, int status) {
 		tournamentMapper.updateStatus(idTour,status);
 		
@@ -46,6 +42,11 @@ public class TournamentRepository {
 	public List<Tournament> getTourAction() {
 		// TODO Auto-generated method stub
 		return tournamentMapper.getTourAction();
+	}
+
+	public void edit(Tournament tournament) {
+		tournamentMapper.edit(tournament);
+		
 	}
 
 

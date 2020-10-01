@@ -17,18 +17,17 @@ import ssv.com.repository.TournamentRepository;
 
 @Service
 public class TournamentService {
-	 ModelMapper modelMapper = new ModelMapper();
-
+	ModelMapper modelMapper = new ModelMapper();
 
 	@Autowired
 	private TournamentRepository tournamentRepository;
 
 	@Autowired
 	private TeamService teamService;
-	
+
 	@Autowired
 	private ScheduleService scheduleService;
- 	@Autowired 
+	@Autowired
 	private ProfileService profileService;
 
 	@Autowired
@@ -36,21 +35,25 @@ public class TournamentService {
 
 	public String add(TournamentDto tournamentDto) {
 		if (tournamentDto.getTimeEnd().compareTo(tournamentDto.getTimeStart()) > 0) {
+			Tournament tournament = modelMapper.map(tournamentDto, Tournament.class);
+			for (Tournament tournament2 : tournamentRepository.getAll()) {
+				if(tournament2.getNameTour()==tournamentDto.getNameTour()) {
+					return "Trung ten giai dau";
+				}
+			}
 			
-			Tournament tournament=modelMapper.map(tournamentDto, Tournament.class);
 			for (int i = 0; i < tournamentDto.getListIdTeam().length; i++) {
-				if(teamService.getById(tournamentDto.getListIdTeam()[i])==null) {
+				if (teamService.getById(tournamentDto.getListIdTeam()[i]) == null) {
 					return "Team khong co thanh vien";
 				}
-		}
+			}
 			tournamentRepository.add(tournament);
 			for (int i = 0; i < tournamentDto.getListIdTeam().length; i++) {
-				
+
 				teamService.updateTourNew(tournamentDto.getListIdTeam()[i]);
 				profileService.newTour(tournamentDto.getListIdTeam()[i]);
 			}
-			
-			return "thanh cong";
+			return "create";
 		} else {
 			return "Lỗi về thời gian";
 		}
@@ -69,21 +72,18 @@ public class TournamentService {
 		tournamentRepository.delete(idTour);
 		teamService.formatTour(idTour);
 		historyRepository.deleteTournament(idTour);
-		}
-
-	public void updateInfo(Tournament tournament) {
-		tournamentRepository.updateInfo(tournament);
-
 	}
 
+
 	public String addTeam(int idTour, int idTeam) {
-		if(teamService.getById(idTeam).getIdTeam()==0) {
-			for (Profile  profile: teamService.getById(idTeam).getProfile()) {
+		if (teamService.getById(idTeam).getIdTour() == 0) {
+			teamService.addTour(idTour,idTeam);
+			for (Profile profile : teamService.getById(idTeam).getProfile()) {
 				historyRepository.addTeamTournament(profile.getId(), idTour, idTeam);
 			}
 			return "Add thanh cong";
 		}
-		return "Đã có team";
+		return "Đã có Tour";
 	}
 
 	public void updateStatus(int idTour, int status) {
@@ -95,15 +95,23 @@ public class TournamentService {
 		// TODO Auto-generated method stub
 		return tournamentRepository.getTourAction();
 
-}
+	}
 
 	public String deleteTeam(int idTeam) {
-		if(tournamentRepository.getById(teamService.getById(idTeam).getIdTour()).getStatus()==0) {
-			int idTour=teamService.getById(idTeam).getIdTour();
-			teamService.formatTour(idTour);
+		if (tournamentRepository.getById(teamService.getById(idTeam).getIdTour()).getStatus() == 0) {
+			int idTour = teamService.getById(idTeam).getIdTour();
+			teamService.formatTourById(idTour,idTeam);
 			historyRepository.deleteTeamTournament(idTour, idTeam);
-			return  "Xóa thành công";
+			return "Xóa thành công";
 		}
 		return "Giải đấu đang được diễn ra hoặc đã kết thúc";
+	}
+
+	public String edit(Tournament tournament) {
+		if(tournamentRepository.getById(tournament.getIdTour()).getStatus()!=0) {
+			return "Giải đấu đang diễn ra";
+		}
+			tournamentRepository.edit(tournament);
+		return "edit";
 	}
 }

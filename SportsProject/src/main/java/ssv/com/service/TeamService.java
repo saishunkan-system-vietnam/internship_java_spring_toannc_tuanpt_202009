@@ -129,8 +129,18 @@ public class TeamService {
 		return teamRepository.teamWait(type);
 	}
 
-	public void addTour(int idTeam) {
-		 teamRepository.addTour(idTeam);
+	public void formatTourById(int idTour, int idTeam) {
+		teamRepository.formatTourById(idTour,idTeam);
+		
+	}
 
+	public void addTour(int idTour, int idTeam) {
+		teamRepository.addTour(idTour,idTeam);
+		
+	}
+
+	public Team teamTourHistory(int idTeam, int idTour) {
+		// TODO Auto-generated method stub
+		return teamRepository.teamTourHistory(idTeam,idTour);
 	}
 }

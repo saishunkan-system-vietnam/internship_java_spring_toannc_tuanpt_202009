@@ -103,4 +103,8 @@ public class TeamController {
 	public ResponseEntity<List<Team>> teamWait(@RequestParam String type){
 		return new ResponseEntity<List<Team>>(teamService.teamWait(type),HttpStatus.OK);
 	}
+	@GetMapping(value="teamTourHistory")
+	public ResponseEntity<Team> teamTourHistory(@RequestParam int idTeam,@RequestParam int idTour ){
+		return new ResponseEntity<Team>(teamService.teamTourHistory(idTeam,idTour),HttpStatus.OK);
+	}
 }
