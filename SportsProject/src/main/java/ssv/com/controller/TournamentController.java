@@ -75,8 +75,8 @@ public class TournamentController {
 		tournamentService.updateInfo(tournament);
 		return new ResponseEntity<String>("update thanh cong",HttpStatus.OK);
 	}
-	@PostMapping(value="addTeam")
-	public ResponseEntity<String> addTeam(@RequestParam int idTour,@RequestParam int  idTeam){
+	@PostMapping(value="addTeam/{idTour}/{idTeam}")
+	public ResponseEntity<String> addTeam(@PathVariable int idTour,@PathVariable int  idTeam){
 		return new ResponseEntity<String>(tournamentService.addTeam(idTour, idTeam),HttpStatus.OK);
 	}
 

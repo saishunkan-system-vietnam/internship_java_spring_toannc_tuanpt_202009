@@ -61,14 +61,14 @@ public class ScheduleController {
 
 	@PostMapping(value = "create")
 	public ResponseEntity<String> create(@RequestBody Schedule schedule){
-		
+
 		if(scheduleService.checkTime(schedule.getTimeStart(),schedule.getTimeEnd(),schedule.getIdTour())) {
 			scheduleService.createSchedule(schedule);
 //			teamService.updateTotalMatch();
-			return new ResponseEntity<String>("thanh cong",HttpStatus.OK);
+			return new ResponseEntity<String>("create",HttpStatus.OK);
 
 		}
-		return new ResponseEntity<String>("fail",HttpStatus.OK);
+		return new ResponseEntity<String>("trung lich",HttpStatus.OK);
 	}
 
 	@DeleteMapping(value="delete/{idSchedule}")

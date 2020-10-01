@@ -13,7 +13,7 @@
 		<result column="team_logo" property="logo" />
 		<result column="id_tour" property="idTour" />
 		<association property="tournament">
-			<id property="idTour" column="id_tour" />
+			<id property="idTour" column="id_tournamet" />
 			<result property="nameTour" column="tournament_name" />
 			<result property="status" column="tournament_status" />
 			<result property="timeEnd" column="tournament_end" />
@@ -84,7 +84,9 @@
 	<update id="formatTour">
 		Update team_tbl Set id_tour=0 where id_tour=${idTour}
 	</update>
-
+	<update id="formatTourById">
+			Update team_tbl Set id_tour=0 where id_tour=${idTour} and id_team=${idTeam}
+	</update>
 	<update id="addMember">
 		Update profile_tbl Set id_team =${idTeam} where
 		id=${idProfile}
@@ -112,7 +114,7 @@
 	<select id="search" resultMap="teamMapping">
 		SELECT * FROM sports.team_tbl left
 		join tournament_tbl on
-		team_tbl.id_tour=tournament_tbl.id_tour
+		team_tbl.id_tour=tournament_tbl.id_tournamet
 		where
 		${type} LIKE '%${nameSearch}%' ORDER BY id_schedule ${sorts} LIMIT
 		${page},${pageSize} ;
@@ -122,6 +124,7 @@
 	SELECT *FROM team_tbl inner join profile_tbl on team_tbl.id_team=profile_tbl.id_team where id_tour=0 and team_type='${type}';
 
 	</select>
-
+	<update id="addTour">
+	Update team_tbl set id_tour=${idTour} where id_team=${idTeam}</update>
 
 </mapper>
