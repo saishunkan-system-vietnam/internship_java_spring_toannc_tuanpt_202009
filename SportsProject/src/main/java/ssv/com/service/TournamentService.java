@@ -75,10 +75,7 @@ public class TournamentService {
 
 	}
 
-	public void updateInfo(Tournament tournament) {
-		tournamentRepository.updateInfo(tournament);
 
-	}
 
 
 	public String addTeam(int idTour, int idTeam) {
