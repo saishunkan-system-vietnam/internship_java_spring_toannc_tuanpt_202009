@@ -32,7 +32,7 @@ public class ScheduleService {
 
 		Tournament tournament=tournamentService.getById(idTour);
 
-		if(service.getById(idTour).getTimeEnd().compareTo(timeEnd)>=0) {
+		if(tournamentService.getById(idTour).getTimeEnd().compareTo(timeEnd)>=0) {
 			List<Schedule> list = scheduleReponsitory.getByIdTour(idTour);
 			if (timeEnd.compareTo(timeStart) > 0) {
 				if (list.isEmpty()) {
