@@ -13,7 +13,7 @@
 		<result column="team_logo" property="logo" />
 		<result column="id_tour" property="idTour" />
 		<association property="tournament">
-			<id property="idTour" column="id_tour" />
+			<id property="idTour" column="id_tournamet" />
 			<result property="nameTour" column="tournament_name" />
 			<result property="status" column="tournament_status" />
 			<result property="timeEnd" column="tournament_end" />
@@ -114,7 +114,7 @@
 	<select id="search" resultMap="teamMapping">
 		SELECT * FROM sports.team_tbl left
 		join tournament_tbl on
-		team_tbl.id_tour=tournament_tbl.id_tour
+		team_tbl.id_tour=tournament_tbl.id_tournamet
 		where
 		${type} LIKE '%${nameSearch}%' ORDER BY id_schedule ${sorts} LIMIT
 		${page},${pageSize} ;

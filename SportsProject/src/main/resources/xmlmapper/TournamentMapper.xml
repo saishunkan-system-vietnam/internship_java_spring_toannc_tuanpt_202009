@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ssv.com.mapper.TournamentMapper">
 	<resultMap id="tournamentMapping" type="Tournament">
-		<id property="idTour" column="id_tour" />
+		<id property="idTour" column="id_tournamet" />
 		<result property="nameTour" column="tournament_name" />
 		<result property="status" column="tournament_status" />
 		<result property="timeEnd" column="tournament_end" />
@@ -56,8 +56,8 @@
 		<select id="getById" resultMap="tournamentMapping">
 		SELECT * FROM sports.tournament_tbl p left join (history_tbl q left join
 			team_tbl d on q.id_team=d.id_team left join
-			profile_tbl e on q.id_member=e.id)on p.id_tour=q.id_tour left join
-			schedule_tbl c on p.id_tour=c.schedule_tour 
+			profile_tbl e on q.id_member=e.id)on p.id_tournamet=q.id_tour left join
+			schedule_tbl c on p.id_tournamet=c.schedule_tour 
 			Where p.id_tour=${idTour}
 	
 			;
@@ -80,18 +80,18 @@
 		</insert>
 		<delete id="delete" parameterType="int">
 			DELETE from tournament_tbl
-			WHERE id_tour = ${idTour}
+			WHERE id_tournamet = ${idTour}
 		</delete>
 		<update id="updateInfo">
 			Update tournament_tbl set tournament_name=#{nameTour}
 			,tournament_status=#{status},tournament_end=#{timeEnd},tournament_start=#{timeStart},tournament_type=#{type},tournament_description=#{description}
-			Where id_tour=#{idTour}
+			Where id_tournamet=#{idTour}
 		</update>
 
 
 	<update id="updateStatus">
 		Update tournament_tbl set tournament_status=${status} where
-		id_tour=${idTour}
+		id_tournamet=${idTour}
 
 	</update>
 
