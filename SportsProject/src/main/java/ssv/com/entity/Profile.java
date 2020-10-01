@@ -17,6 +17,7 @@ public class Profile {
 	private String age;
 	private String gender;
 	private String address;
+	private String type;
 	private String avatar;
 	private int idTeam;
 	private Team team;

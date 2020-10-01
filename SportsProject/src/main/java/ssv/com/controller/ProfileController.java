@@ -28,18 +28,22 @@ public class ProfileController {
 	private ProfileService profileService;
 
 	@GetMapping("/all")
-	public List<Profile> allProfiles(){
+	public List<Profile> allProfiles() {
 		return profileService.findAll();
 	}
 
 	@GetMapping("/members")
-	public List<Profile> members(){
+	public List<Profile> members() {
 		return profileService.getMembers();
 	}
 
+	@GetMapping("/getAllByTeam/{id}")
+	public List<Profile> getMembersByTeam(@PathVariable(value = "id") int id) {
+		return profileService.findAllByTeam(id);
+	}
 
 	@GetMapping(path = "/{profileId}")
-	public Profile getProfileById(@PathVariable (value = "profileId") int profileId) {
+	public Profile getProfileById(@PathVariable(value = "profileId") int profileId) {
 		return profileService.findById(profileId);
 	}
 
@@ -55,24 +59,25 @@ public class ProfileController {
 		return profileService.saveMember(profileForm);
 	}
 
-
 	@DeleteMapping("/{profileId}")
-    public ResponseEntity<?> deleteProject(@PathVariable Integer profileId){
+	public ResponseEntity<?> deleteProject(@PathVariable Integer profileId) {
 		profileService.delete(profileId);
-        return new ResponseEntity<String>("Profile with ID: '"+profileId+"' was deleted", HttpStatus.OK);
-    }
+		return new ResponseEntity<String>("Profile with ID: '" + profileId + "' was deleted", HttpStatus.OK);
+	}
 
-	 @GetMapping(value="/page/{page}/{pagesize}")
-	  public ResponseEntity<List<Account>> pageProfile(@PathVariable int page,@PathVariable int pagesize){
-		  List<Account> list=new ArrayList<Account>();
-		  	String a="account_email";
-		  	list=profileService.pageProfile(page,pagesize,"%%",a);
-		  return new ResponseEntity<List<Account>>(list,HttpStatus.OK);
-	  }
-	  @GetMapping(value="/search/{page}/{pagesize}/")
-	  public ResponseEntity<List<Account>> pageProfileSearch(@PathVariable int page,@PathVariable int pagesize,@RequestParam String name,@RequestParam String nametype){
-		  List<Account> list=new ArrayList<Account>();
-		  	list=profileService.pageProfile(page,pagesize,"%"+name+"%",nametype);
-		  return new ResponseEntity<List<Account>>(list,HttpStatus.OK);
-	  }
+	@GetMapping(value = "/page/{page}/{pagesize}")
+	public ResponseEntity<List<Account>> pageProfile(@PathVariable int page, @PathVariable int pagesize) {
+		List<Account> list = new ArrayList<Account>();
+		String a = "account_email";
+		list = profileService.pageProfile(page, pagesize, "%%", a);
+		return new ResponseEntity<List<Account>>(list, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/search/{page}/{pagesize}/")
+	public ResponseEntity<List<Account>> pageProfileSearch(@PathVariable int page, @PathVariable int pagesize,
+			@RequestParam String name, @RequestParam String nametype) {
+		List<Account> list = new ArrayList<Account>();
+		list = profileService.pageProfile(page, pagesize, "%" + name + "%", nametype);
+		return new ResponseEntity<List<Account>>(list, HttpStatus.OK);
+	}
 }

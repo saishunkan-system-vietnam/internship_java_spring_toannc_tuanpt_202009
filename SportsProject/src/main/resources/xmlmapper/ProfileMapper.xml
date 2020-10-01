@@ -12,6 +12,7 @@
 		<result property="age" column="profile_age" />
 		<result property="gender" column="profile_gender" />
 		<result property="address" column="profile_address" />
+		<result property="type" column="profile_type" />
 		<result property="avatar" column="profile_avatar" />
 		<result property="idTeam" column="id_team" />
 		<association property="team">
@@ -38,6 +39,7 @@
 		profile_age,
 		profile_gender,
 		profile_address,
+		profile_type,
 		profile_avatar
 		) VALUES(
 		#{name},
@@ -46,6 +48,7 @@
 		#{age},
 		#{gender},
 		#{address},
+		#{type},
 		#{avatar}
 		);
 	</insert>
@@ -75,6 +78,12 @@
 		resultMap="profileMapping">
 		SELECT *
 		FROM profile_tbl WHERE id= #{id}
+	</select>
+
+	<select id="findAllByTeam" flushCache="true" statementType="PREPARED"
+		resultMap="profileMapping">
+		SELECT *
+		FROM profile_tbl WHERE id_team= #{id}
 	</select>
 
 	<delete id="deleteProfile" flushCache="true"

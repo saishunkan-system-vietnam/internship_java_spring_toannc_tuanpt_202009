@@ -31,6 +31,10 @@ public class ProfileRepository {
 		return profileMapper.findAllProfile();
 	}
 
+	public List<Profile> findAllByTeam(int id) {
+		return profileMapper.findAllByTeam(id);
+	}
+
 	public Long delete(int profileId) {
 		return profileMapper.deleteProfile(profileId);
 	}
