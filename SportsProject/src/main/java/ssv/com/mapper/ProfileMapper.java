@@ -15,6 +15,8 @@ public interface ProfileMapper {
 
 	public List<Profile> findAllProfile();
 
+	public List<Profile> findAllByTeam(int id);
+
 	public Long deleteProfile(Integer id);
 
 	public List<Account> getMembersEmailByRole();

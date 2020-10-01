@@ -50,6 +50,10 @@ public class ProfileService {
 		return profileRepository.findById(id);
 	}
 
+	public List<Profile> findAllByTeam(int id) {
+		return profileRepository.findAllByTeam(id);
+	}
+
 	public List<Profile> findAll() {
 		return profileRepository.findAll();
 	}
@@ -65,7 +69,6 @@ public class ProfileService {
 				}).collect(Collectors.toList());
 		return members;
 	}
-
 
 	@Transactional
 	public ResponseEntity<?> saveMember(ProfileForm profileForm) throws Exception {
