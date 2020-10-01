@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ssv.com.mapper.TournamentMapper">
 	<resultMap id="tournamentMapping" type="Tournament">
-		<id property="idTour" column="id_tour" />
+		<id property="idTour" column="id_tournament" />
 		<result property="nameTour" column="tournament_name" />
 		<result property="status" column="tournament_status" />
 		<result property="timeEnd" column="tournament_end" />
@@ -41,15 +41,15 @@
 
 		<select id="getById" resultMap="tournamentMapping">
 			SELECT * FROM sports.tournament_tbl p inner join (history_tbl q inner join
-			team_tbl d on q.id_team=d.id_team )on p.id_tour=q.id_tour left join
-			schedule_tbl c on p.id_tour=c.schedule_tour
-			Where p.id_tour=${idTour}
+			team_tbl d on q.id_team=d.id_team )on p.id_tournament =q.id_tour left join
+			schedule_tbl c on p.id_tournament=c.schedule_tour
+			Where p.id_tournament =${idTour}
 			;
 		</select>
 		<select id="getAll" resultMap="tournamentMapping">
 			SELECT * FROM sports.tournament_tbl p inner join (history_tbl q inner join
-			team_tbl d on q.id_team=d.id_team )on p.id_tour=q.id_tour left join
-			schedule_tbl c on p.id_tour=c.schedule_tour;
+			team_tbl d on q.id_team=d.id_team )on p.id_tournament=q.id_tour left join
+			schedule_tbl c on p.id_tournament =c.schedule_tour;
 		</select>
 		<insert id="add" parameterType="Tournament">
 			INSERT INTO
@@ -65,17 +65,17 @@
 		</insert>
 		<delete id="delete" parameterType="int">
 			DELETE from tournament_tble
-			WHERE id_tour = #{idTour}
+			WHERE id_tournament = #{idTour}
 		</delete>
 		<update id="updateInfo">
 			Update tournament_tbl set tournament_name=#{nameTour}
 			,tournament_status=#{status},tournament_end=#{timeEnd},tournament_start=#{timeStart},tournament_type=#{type},tournament_description=#{description}
-			Where id_tour=#{idTour}
+			Where id_tournament =#{idTour}
 		</update>
 
 		<update id="updateStatus">
 			Update tournament_tbl set tournament_status=${status} where
-			id_tour=${idTour}
+			id_tournament =${idTour}
 
 		</update>
 

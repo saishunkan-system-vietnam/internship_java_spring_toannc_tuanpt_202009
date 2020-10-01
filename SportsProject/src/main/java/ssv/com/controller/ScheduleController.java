@@ -45,7 +45,6 @@ public class ScheduleController {
 
 	@GetMapping(value="getAll")
 	public ResponseEntity<List<Schedule>> getAll(){
-		val a=scheduleService.getAll();
 		return new ResponseEntity<List<Schedule>>(scheduleService.getAll(),HttpStatus.OK);
 	}
 
@@ -93,9 +92,9 @@ public class ScheduleController {
 	}
 	@PostMapping(value = "editShedule")
 	public ResponseEntity<String> editShedule(@RequestBody Schedule schedule){
-		if(tournamentService.getById(schedule.getIdTour()).getStatus()==0&&scheduleService.getById(schedule.getIdSchedule()).getStatus()==0 ) {
+		if(scheduleService.getById(schedule.getIdSchedule()).getStatus()==0 ) {
 			scheduleService.editShedule(schedule);
-			return new ResponseEntity<String>("Sửa thành công", HttpStatus.OK);
+			return new ResponseEntity<String>("edit", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("Trận đấu đã được diễn ra", HttpStatus.OK);
 	}

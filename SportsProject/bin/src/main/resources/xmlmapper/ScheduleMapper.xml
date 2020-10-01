@@ -31,21 +31,21 @@
 	</resultMap>
 
 	<select id="search" resultMap="scheduleMapping">
- Select * FROM schedule_tbl inner join tournament_tbl on schedule_tbl.schedule_tour=tournament_tbl.id_tour 
+ Select * FROM schedule_tbl inner join tournament_tbl on schedule_tbl.schedule_tour=tournament_tbl.id_tourament 
  inner join team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team 
  or schedule_tbl.schedule_team2=team_tbl.id_team 
  		where ${type} LIKE '%${nameSearch}%' ORDER BY id_schedule ${sorts} LIMIT ${page},${pageSize} 
 	
 	</select>
 	<select id="searchTotal" resultType="int">
-		Select COUNT(*)  FROM schedule_tbl inner join tournament_tbl on schedule_tbl.schedule_tour=tournament_tbl.id_tour where ${type} LIKE '%${nameSearch}%'
+		Select COUNT(*)  FROM schedule_tbl inner join tournament_tbl on schedule_tbl.schedule_tour=tournament_tbl.id_tourament  where ${type} LIKE '%${nameSearch}%'
 	</select>
 	<select id="getByIdTour" resultMap="scheduleMapping">
 		Select * FROM schedule_tbl
 		where schedule_tour=${idTour}
 	</select>
 	<select id="getById" resultMap="scheduleMapping">
-	 Select * FROM schedule_tbl inner join tournament_tbl on schedule_tbl.schedule_tour=tournament_tbl.id_tour 
+	 Select * FROM schedule_tbl inner join tournament_tbl on schedule_tbl.schedule_tour=tournament_tbl.id_tourament  
  inner join team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team 
  or schedule_tbl.schedule_team2=team_tbl.id_team where id_schedule=${idSchedule}
 	</select>

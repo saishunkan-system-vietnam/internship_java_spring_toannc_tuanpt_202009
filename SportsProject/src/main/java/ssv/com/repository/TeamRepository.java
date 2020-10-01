@@ -95,5 +95,12 @@ public class TeamRepository {
 
 	public void addTour(int idTour, int idTeam) {
 		teamMapper.addTour(idTour,idTeam);
+
+	}
+
+	public Team teamTourHistory(int idTeam, int idTour) {
+		// TODO Auto-generated method stub
+		return teamMapper.teamTourHistory(idTeam,idTour);
+
 	}
 }

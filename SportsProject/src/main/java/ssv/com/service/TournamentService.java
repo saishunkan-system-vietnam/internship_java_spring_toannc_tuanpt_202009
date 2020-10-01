@@ -72,12 +72,14 @@ public class TournamentService {
 		tournamentRepository.delete(idTour);
 		teamService.formatTour(idTour);
 		historyRepository.deleteTournament(idTour);
+
 	}
 
 	public void updateInfo(Tournament tournament) {
 		tournamentRepository.updateInfo(tournament);
 
 	}
+
 
 	public String addTeam(int idTour, int idTeam) {
 		if (teamService.getById(idTeam).getIdTour() == 0) {
@@ -109,5 +111,13 @@ public class TournamentService {
 			return "Xóa thành công";
 		}
 		return "Giải đấu đang được diễn ra hoặc đã kết thúc";
+	}
+
+	public String edit(Tournament tournament) {
+		if(tournamentRepository.getById(tournament.getIdTour()).getStatus()!=0) {
+			return "Giải đấu đang diễn ra";
+		}
+			tournamentRepository.edit(tournament);
+		return "edit";
 	}
 }
