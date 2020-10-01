@@ -59,6 +59,7 @@
 			profile_tbl e on q.id_member=e.id)on p.id_tournament=q.id_tour left join
 			schedule_tbl c on p.id_tournament=c.schedule_tour 
 			Where p.id_tournament=${idTour}
+
 	
 			;
 		</select>
@@ -81,17 +82,21 @@
 		<delete id="delete" parameterType="int">
 			DELETE from tournament_tbl
 			WHERE id_tournament = ${idTour}
+
 		</delete>
 		<update id="edit">
 			Update tournament_tbl set tournament_name=#{nameTour}
 			,tournament_end=#{timeEnd},tournament_start=#{timeStart},tournament_type=#{type},tournament_description=#{description}
 			Where id_tournament=#{idTour}
+
 		</update>
 
 
 	<update id="updateStatus">
 		Update tournament_tbl set tournament_status=${status} where
+
 		id_tournament=${idTour}
+
 
 	</update>
 

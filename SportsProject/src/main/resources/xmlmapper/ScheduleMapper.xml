@@ -69,8 +69,10 @@
 		id_schedule=${idSchedule}
 	</select>
 	<delete id="deleteByTour" parameterType="int">
+
 		Delete from schedule_tbl
 		where schedule_tour=${idTour}
+
 	</delete>
 
 	<insert id="create" parameterType="Schedule">

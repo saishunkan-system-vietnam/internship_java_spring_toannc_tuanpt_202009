@@ -52,6 +52,8 @@ public interface TeamMapper {
 
 	public void addTour(int idTour, int idTeam);
 
+
 	public Team teamTourHistory(int idTeam, int idTour);
+
 
 }

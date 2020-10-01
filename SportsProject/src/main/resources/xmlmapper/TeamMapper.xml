@@ -114,7 +114,9 @@
 	<select id="search" resultMap="teamMapping">
 		SELECT * FROM sports.team_tbl left
 		join tournament_tbl on
-		team_tbl.id_tour=tournament_tbl.id_tournament
+
+		team_tbl.id_tour=tournament_tbl.id_tournamet
+
 		where
 		${type} LIKE '%${nameSearch}%' ORDER BY id_schedule ${sorts} LIMIT
 		${page},${pageSize} ;
@@ -126,8 +128,10 @@
 	</select>
 	<update id="addTour">
 	Update team_tbl set id_tour=${idTour} where id_team=${idTeam}</update>
+
 	
 	<select id="teamTourHistory" resultMap="teamMapping">
 SELECT * FROM sports.team_tbl inner join (history_tbl left join profile_tbl c on history_tbl.id_member = c.id) on history_tbl.id_team=team_tbl.id_team  where history_tbl.id_tour=${idTour} and team_tbl.id_team=${idTeam}
 </select>
+
 </mapper>

@@ -22,21 +22,23 @@ public class ScheduleService {
 	private ScheduleReponsitory scheduleReponsitory;
 	@Autowired
 	private TournamentService tournamentService;
-	@Autowired
-	private TournamentService service;
+
 
 	public List<Schedule> getAll() {
 		return scheduleReponsitory.getAll();
 	}
 
 	public boolean checkTime(Date timeStart, Date timeEnd, int idTour) {
+
 		Tournament tournament=tournamentService.getById(idTour);
+
 		if(service.getById(idTour).getTimeEnd().compareTo(timeEnd)>=0) {
 			List<Schedule> list = scheduleReponsitory.getByIdTour(idTour);
 			if (timeEnd.compareTo(timeStart) > 0) {
 				if (list.isEmpty()) {
 					return true;
 				} else {
+
 					if (timeStart.compareTo(list.get(list.size() - 1).getTimeEnd()) > 0&&timeStart.compareTo(tournament.getTimeStart())>=0&&timeEnd.compareTo(tournament.getTimeEnd())<=0) {
 						return true;
 					}

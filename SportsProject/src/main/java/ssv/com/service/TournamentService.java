@@ -72,6 +72,12 @@ public class TournamentService {
 		tournamentRepository.delete(idTour);
 		teamService.formatTour(idTour);
 		historyRepository.deleteTournament(idTour);
+
+	}
+
+	public void updateInfo(Tournament tournament) {
+		tournamentRepository.updateInfo(tournament);
+
 	}
 
 

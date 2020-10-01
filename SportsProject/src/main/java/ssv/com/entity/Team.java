@@ -22,5 +22,4 @@ public class Team {
 	private int idTour;
 	private Tournament tournament;
 	private List<Profile> profile;
-
 }
