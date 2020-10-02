@@ -38,7 +38,8 @@
 	<select id="getAll" resultMap="teamMapping">
 		SELECT p.*, t.* FROM team_tbl p
 		left join profile_tbl c on p.id_team = c.id_team
-		left join tournament_tbl t on p.id_tour = t.id_tournament
+		left join
+		tournament_tbl t on p.id_tour = t.id_tournament
 	</select>
 
 	<select id="selectAllMatchsByTeam" resultMap="teamMapping">
@@ -85,7 +86,7 @@
 		Update team_tbl Set id_tour=0 where id_tour=${idTour}
 	</update>
 	<update id="formatTourById">
-			Update team_tbl Set id_tour=0 where id_tour=${idTour} and id_team=${idTeam}
+		Update team_tbl Set id_tour=0 where id_tour=${idTour} and id_team=${idTeam}
 	</update>
 	<update id="addMember">
 		Update profile_tbl Set id_team =${idTeam} where
@@ -116,15 +117,18 @@
 		join tournament_tbl on
 		team_tbl.id_tour=tournament_tbl.id_tournamet
 		where
-		${type} LIKE '%${nameSearch}%' ORDER BY id_schedule ${sorts} LIMIT
+		${type} LIKE '%${nameSearch}%' ORDER BY id_schedule ${sorts}
+		LIMIT
 		${page},${pageSize} ;
 	</select>
 	<select id="teamWait" resultMap="teamMapping">
 
-	SELECT *FROM team_tbl inner join profile_tbl on team_tbl.id_team=profile_tbl.id_team where id_tour=0 and team_type='${type}';
+		SELECT *FROM team_tbl inner join profile_tbl on
+		team_tbl.id_team=profile_tbl.id_team where id_tour=0 and
+		team_type='${type}';
 
 	</select>
 	<update id="addTour">
-	Update team_tbl set id_tour=${idTour} where id_team=${idTeam}</update>
-
+		Update team_tbl set id_tour=${idTour} where id_team=${idTeam}
+	</update>
 </mapper>

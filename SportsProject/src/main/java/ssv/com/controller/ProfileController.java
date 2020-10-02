@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ssv.com.controller.form.ProfileForm;
+import ssv.com.dto.ResponseQuery;
 import ssv.com.entity.Account;
 import ssv.com.entity.Profile;
 import ssv.com.service.ProfileService;
@@ -55,7 +56,7 @@ public class ProfileController {
 	}
 
 	@PostMapping("/createMember")
-	public ResponseEntity<?> createMember(@ModelAttribute ProfileForm profileForm) throws Exception {
+	public ResponseQuery<?> createMember(@ModelAttribute ProfileForm profileForm) throws Exception {
 		return profileService.saveMember(profileForm);
 	}
 

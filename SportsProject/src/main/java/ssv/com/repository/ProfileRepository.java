@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import ssv.com.entity.Account;
 import ssv.com.entity.Profile;
+import ssv.com.entity.Team;
 import ssv.com.exception.ResourceNotFoundException;
 import ssv.com.mapper.ProfileMapper;
 
@@ -57,6 +58,10 @@ public class ProfileRepository {
 	}
 	public List<Profile> getMembers() {
 		return profileMapper.getMembers();
+	}
+
+	public void updateMembersInTeam(Team team) {
+		profileMapper.updateMembersInTeam(team);
 	}
 
 }

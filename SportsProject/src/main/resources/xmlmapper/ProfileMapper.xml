@@ -55,16 +55,19 @@
 
 	<select id="getMembers" resultMap="profileMapping">
 		SELECT p.*, t.*
-		FROM profile_tbl p
-		left JOIN account_tbl a ON p.profile_email = a.account_email
-        left join team_tbl t on t.id_team = p.id_team
-        WHERE account_role = 'ROLE_MEMBER'
+		FROM
+		profile_tbl p
+		left JOIN account_tbl a ON p.profile_email =
+		a.account_email
+		left join team_tbl t on t.id_team = p.id_team
+		WHERE account_role = 'ROLE_MEMBER'
 	</select>
 
 
-	<select id="findAllProfile" flushCache="true" statementType="PREPARED"
-		resultMap="profileMapping">
-		SELECT * FROM profile_tbl left join team_tbl on team_tbl.id_team=profile_tbl.id_team
+	<select id="findAllProfile" flushCache="true"
+		statementType="PREPARED" resultMap="profileMapping">
+		SELECT * FROM profile_tbl left join
+		team_tbl on team_tbl.id_team=profile_tbl.id_team
 
 	</select>
 
@@ -80,10 +83,11 @@
 		FROM profile_tbl WHERE id= #{id}
 	</select>
 
-	<select id="findAllByTeam" flushCache="true" statementType="PREPARED"
-		resultMap="profileMapping">
+	<select id="findAllByTeam" flushCache="true"
+		statementType="PREPARED" resultMap="profileMapping">
 		SELECT *
-		FROM profile_tbl WHERE id_team= #{id}
+		FROM profile_tbl WHERE
+		id_team= #{id}
 	</select>
 
 	<delete id="deleteProfile" flushCache="true"
@@ -103,6 +107,15 @@
 		#{page},#{pagesize}
 	</select>
 	<select id="getByIdTeam" resultMap="profileMapping">
-	SELECT *FROM profile_tbl Where id_team=${idTeam}
+		SELECT *FROM profile_tbl Where id_team=${idTeam}
 	</select>
+
+	<update id="updateMembersInTeam">
+		update profile_tbl set id_team=0 where
+		id_team=${idTeam};
+
+	  <foreach collection="profile" item="item"  index="index"  separator=";" >
+		update profile_tbl set id_team=#{idTeam} where id=${item.id}
+	  </foreach>
+	</update>
 </mapper>

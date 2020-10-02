@@ -96,4 +96,6 @@ public class TeamRepository {
 	public void addTour(int idTour, int idTeam) {
 		teamMapper.addTour(idTour,idTeam);
 	}
+
+
 }
