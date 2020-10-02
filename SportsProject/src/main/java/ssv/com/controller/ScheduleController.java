@@ -111,6 +111,10 @@ public class ScheduleController {
 	public void statusCheck() {
 		scheduleService.statusCheck();
 	}
+	@GetMapping(value="upcomingMatch")
+	public ResponseEntity<List<Schedule>> upcomingMatch(){
+		return new ResponseEntity<List<Schedule>>(scheduleService.upcomingMatch(),HttpStatus.OK);
+	}
 	
 	
 

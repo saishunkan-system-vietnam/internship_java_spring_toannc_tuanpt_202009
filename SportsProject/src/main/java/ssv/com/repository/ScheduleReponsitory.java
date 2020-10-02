@@ -89,4 +89,14 @@ public class ScheduleReponsitory {
 		
 	}
 
+	public void updateSheduleNotFile(Schedule schedule) {
+		scheduleMapper.updateSheduleNotFile(schedule);
+		
+	}
+
+	public List<Schedule> upcomingMatch() {
+		// TODO Auto-generated method stub
+		return scheduleMapper.upcomingMatch();
+	}
+
 }

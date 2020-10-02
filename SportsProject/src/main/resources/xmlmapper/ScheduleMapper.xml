@@ -103,10 +103,17 @@
 	<update id="updateShedule" parameterType="Schedule">
 		Update schedule_tbl set
 		schedule_score1=#{scoreTeam1},
-		schedule_title=#{title},
 		schedule_score2=#{scoreTeam2},
 		schedule_video=#{video},
 		schedule_image=#{image},
+		schedule_winner=#{idwinner},
+		schedule_description=#{description}
+		Where id_schedule=#{idSchedule};
+	</update>
+		<update id="updateSheduleNotFile" parameterType="Schedule">
+		Update schedule_tbl set
+		schedule_score1=#{scoreTeam1},
+		schedule_score2=#{scoreTeam2},
 		schedule_winner=#{idwinner},
 		schedule_description=#{description}
 		Where id_schedule=#{idSchedule};
@@ -155,5 +162,15 @@
 		Select COUNT(*) FROM
 		sports.schedule_tbl where (schedule_team1=${idTeam} or
 		schedule_team2=${idTeam}) and schedule_tour=${idTour}
+	</select>
+	<select id="upcomingMatch" resultMap="scheduleMapping"> 
+	Select * FROM schedule_tbl inner
+		join tournament_tbl on
+		schedule_tbl.schedule_tour=tournament_tbl.id_tournament
+		inner join
+		team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team
+		or
+		schedule_tbl.schedule_team2=team_tbl.id_team
+		where schedule_status=0 order by schedule_start 
 	</select>
 </mapper>
