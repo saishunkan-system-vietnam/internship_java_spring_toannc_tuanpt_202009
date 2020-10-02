@@ -118,4 +118,8 @@ public class TeamController {
 		profileService.updateMembersInTeam(team);
 		return ResponseQuery.success("Update Success", null);
 	}
+	@GetMapping(value="teamTourHistory")
+	public ResponseEntity<Team> teamTourHistory(@RequestParam int idTeam,@RequestParam int idTour ){
+		return new ResponseEntity<Team>(teamService.teamTourHistory(idTeam,idTour),HttpStatus.OK);
+	}
 }
