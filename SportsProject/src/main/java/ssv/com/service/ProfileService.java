@@ -1,7 +1,6 @@
 package ssv.com.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -15,12 +14,13 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import lombok.var;
 import ssv.com.RandomPass;
 import ssv.com.controller.form.ProfileForm;
 import ssv.com.dto.MemberInfoDTO;
+import ssv.com.dto.ResponseQuery;
 import ssv.com.entity.Account;
 import ssv.com.entity.Profile;
+import ssv.com.entity.Team;
 import ssv.com.file.UploadFile;
 import ssv.com.repository.AccountRepository;
 import ssv.com.repository.HistoryRepository;
@@ -62,27 +62,25 @@ public class ProfileService {
 		return profileRepository.delete(profileId);
 	}
 
-	public List<MemberInfoDTO> getMembersEmailByRole(){
-		List<MemberInfoDTO> members = profileRepository.getMembersEmailByRole()
-				.stream().map(account -> {
-					return modelMapper.map(account, MemberInfoDTO.class);
-				}).collect(Collectors.toList());
+	public List<MemberInfoDTO> getMembersEmailByRole() {
+		List<MemberInfoDTO> members = profileRepository.getMembersEmailByRole().stream().map(account -> {
+			return modelMapper.map(account, MemberInfoDTO.class);
+		}).collect(Collectors.toList());
 		return members;
 	}
 
 	@Transactional
-	public ResponseEntity<?> saveMember(ProfileForm profileForm) throws Exception {
+	public ResponseQuery<?> saveMember(ProfileForm profileForm) throws Exception {
 		Random rand = new Random();
 		if (profileRepository.getByEmail(profileForm.getEmail()) != null) {
-			return new ResponseEntity<String>("Email has already exsist!", HttpStatus.OK);
-		}
-		else {
+			return ResponseQuery.faild("Email has already exsists", null);
+		} else {
 
 			Account account = new Account();
 			account.setEmail(profileForm.getEmail());
-			String pass=new RandomPass().randomAlphaNumeric(8);
+			String pass = new RandomPass().randomAlphaNumeric(8);
 			account.setPassword(BCrypt.hashpw(pass, BCrypt.gensalt(12)));
-			account.setUsername(profileForm.getName().toLowerCase().replace("\\s+","") + rand.nextInt(900) + 100);
+			account.setUsername(profileForm.getName().toLowerCase().replace("\\s+", "") + rand.nextInt(900) + 100);
 			account.setRole("ROLE_MEMBER");
 
 			Profile profile = modelMapper.map(profileForm, Profile.class);
@@ -90,23 +88,20 @@ public class ProfileService {
 			accountRepository.add(account);
 			profileRepository.saveProfile(profile);
 
-			 SimpleMailMessage message = new SimpleMailMessage();
-		        message.setTo(profileForm.getEmail());
-		        message.setSubject("User và password");
-		        message.setText(account.getUsername()+"-"+pass);
-		        this.emailSender.send(message);
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setTo(profileForm.getEmail());
+			message.setSubject("User và password");
+			message.setText(account.getUsername() + "-" + pass);
+			this.emailSender.send(message);
 
-
-			return new ResponseEntity<String>("create",HttpStatus.OK);
+			return ResponseQuery.success("Created memeber succcess", profile);
 		}
 	}
 
-	public List<Account> pageProfile(int page, int pagesize,String name,String nametype) {
+	public List<Account> pageProfile(int page, int pagesize, String name, String nametype) {
 //		return accountRepository.pageUser(page,pagesize,name,nametype);
 		return null;
 	}
-
-
 
 	public void newTour(int idTeam) {
 		for (Profile profile : profileRepository.getByIdTeam(idTeam)) {
@@ -117,5 +112,9 @@ public class ProfileService {
 	public List<Profile> getMembers() {
 		return profileRepository.getMembers();
 
+	}
+
+	public void updateMembersInTeam(Team team) {
+		profileRepository.updateMembersInTeam(team);
 	}
 }

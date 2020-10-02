@@ -109,4 +109,13 @@
 	<select id="getByIdTeam" resultMap="profileMapping">
 		SELECT *FROM profile_tbl Where id_team=${idTeam}
 	</select>
+
+	<update id="updateMembersInTeam">
+		update profile_tbl set id_team=0 where
+		id_team=${idTeam};
+
+	  <foreach collection="profile" item="item"  index="index"  separator=";" >
+		update profile_tbl set id_team=#{idTeam} where id=${item.id}
+	  </foreach>
+	</update>
 </mapper>
