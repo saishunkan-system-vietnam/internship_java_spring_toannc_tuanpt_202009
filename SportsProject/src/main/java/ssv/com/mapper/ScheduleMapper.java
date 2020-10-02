@@ -40,5 +40,9 @@ public interface ScheduleMapper {
 
 	public void deleteByTour(int idTour);
 
+	public void updateSheduleNotFile(Schedule schedule);
+
+	public List<Schedule> upcomingMatch();
+
 
 }

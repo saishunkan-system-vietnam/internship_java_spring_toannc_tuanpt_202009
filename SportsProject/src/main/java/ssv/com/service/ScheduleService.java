@@ -81,14 +81,19 @@ public class ScheduleService {
 			schedule.setIdwinner(schedule.getIdTeam2());
 		}
 		schedule.setDescription(scheduleForm.getDescription());
+		if(scheduleForm.getFileImage()==null&&scheduleForm.getFileVideo()==null) {
+			scheduleReponsitory.updateSheduleNotFile(schedule);
+		}
+		else {
 		try {
 			schedule.setImage(UploadFile.saveFile(scheduleForm.getFileImage()));
+			schedule.setVideo(UploadFile.saveVideo(scheduleForm.getFileVideo()));
+			scheduleReponsitory.updateShedule(schedule);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		schedule.setVideo(UploadFile.saveVideo(scheduleForm.getFileVideo()));
-		scheduleReponsitory.updateShedule(schedule);
+		}}
+		
 
 	}
 
@@ -138,6 +143,11 @@ public class ScheduleService {
 	public void deleteByTour(int idTour) {
 		scheduleReponsitory.deleteByTour(idTour);
 		
+	}
+
+	public List<Schedule> upcomingMatch() {
+		// TODO Auto-generated method stub
+		return scheduleReponsitory.upcomingMatch();
 	}
 
 }
