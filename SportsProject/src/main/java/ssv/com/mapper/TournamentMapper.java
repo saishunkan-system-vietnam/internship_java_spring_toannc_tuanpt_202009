@@ -18,7 +18,6 @@ public interface TournamentMapper {
 
 	public void delete(int idTour);
 
-
 	public void updateStatus(int idTour, int status);
 
 	public List<Tournament> getTourAction();
