@@ -2,10 +2,7 @@ package ssv.com.controller;
 
 
 
-import java.io.IOException;
 import java.util.List;
-
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,13 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.val;
 import ssv.com.controller.form.ScheduleForm;
-import ssv.com.dto.ScheduleDto;
 import ssv.com.entity.Schedule;
 import ssv.com.service.ScheduleService;
-import ssv.com.service.TeamService;
-import ssv.com.service.TournamentService;
 
 @RestController
 @RequestMapping("/api/v1/schedule/")
@@ -36,12 +29,6 @@ public class ScheduleController {
 
 	@Autowired
 	private ScheduleService scheduleService;
-
-	@Autowired
-	private TournamentService tournamentService;
-
-	@Autowired
-	private TeamService teamService;
 
 	@GetMapping(value="getAll")
 	public ResponseEntity<List<Schedule>> getAll(){
@@ -63,7 +50,6 @@ public class ScheduleController {
 
 		if(scheduleService.checkTime(schedule.getTimeStart(),schedule.getTimeEnd(),schedule.getIdTour())) {
 			scheduleService.createSchedule(schedule);
-//			teamService.updateTotalMatch();
 			return new ResponseEntity<String>("create",HttpStatus.OK);
 
 		}
@@ -75,14 +61,14 @@ public class ScheduleController {
 
 		if(scheduleService.getById(idSchedule).getStatus()==0 ) {
 			scheduleService.delete(idSchedule);
-//			teamService.updateTotalMatch();
 			return new ResponseEntity<String>("xoa thanh cong", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("xoa khong thanh cong", HttpStatus.OK);
 
 	}
+	
 	@PostMapping(value = "updateShedule")
-	public ResponseEntity<String> updateShedule(@ModelAttribute ScheduleForm scheduleForm) throws IllegalStateException, IOException{
+	public ResponseEntity<String> updateShedule(@ModelAttribute ScheduleForm scheduleForm) throws Exception{
 		if(scheduleService.getById(scheduleForm.getIdSchedule()).getStatus()==2) {
 			scheduleService.updateShedule(scheduleForm);
 			return new ResponseEntity<String>("update thanh cong", HttpStatus.OK);
@@ -90,6 +76,7 @@ public class ScheduleController {
 		return new ResponseEntity<String>("Chưa kết thúc không thể update", HttpStatus.OK);
 
 	}
+	
 	@PostMapping(value = "editShedule")
 	public ResponseEntity<String> editShedule(@RequestBody Schedule schedule){
 		if(scheduleService.getById(schedule.getIdSchedule()).getStatus()==0 ) {
@@ -98,19 +85,12 @@ public class ScheduleController {
 		}
 		return new ResponseEntity<String>("Trận đấu đã được diễn ra", HttpStatus.OK);
 	}
-	@GetMapping(value="search")
-	public ResponseEntity<ScheduleDto> search(@RequestParam int page,@RequestParam int pageSize,@RequestParam String nameSearch,@RequestParam String type,@RequestParam String sorts){
-		if(type=="") {
-			type="id_schedule";
-		};	
-		return new ResponseEntity<ScheduleDto>(scheduleService.search(page,pageSize*2,nameSearch,type,sorts),HttpStatus.OK);
-		
-		
-	}
 	@GetMapping(value="status")
 	public void statusCheck() {
 		scheduleService.statusCheck();
 	}
+	
+	//hien thi nhung tran dau dien ra som nhat
 	@GetMapping(value="upcomingMatch")
 	public ResponseEntity<List<Schedule>> upcomingMatch(){
 		return new ResponseEntity<List<Schedule>>(scheduleService.upcomingMatch(),HttpStatus.OK);

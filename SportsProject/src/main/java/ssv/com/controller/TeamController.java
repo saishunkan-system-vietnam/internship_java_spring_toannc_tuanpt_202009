@@ -1,9 +1,6 @@
 package ssv.com.controller;
 
-import java.io.File;
 import java.util.List;
-
-import javax.websocket.server.PathParam;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import ssv.com.controller.form.TeamForm;
+
 import ssv.com.dto.ResponseQuery;
 import ssv.com.dto.ScheduleDto;
+
 import ssv.com.dto.TeamDetail;
 import ssv.com.dto.TeamDto;
 import ssv.com.entity.Profile;
@@ -91,6 +89,7 @@ public class TeamController {
 
 	}
 
+
 	@GetMapping(value = "search")
 	public ResponseEntity<TeamDto> search(@RequestParam int page, @RequestParam int pageSize,
 			@RequestParam String nameSearch, @RequestParam String type, @RequestParam String sorts) {
@@ -118,8 +117,9 @@ public class TeamController {
 		profileService.updateMembersInTeam(team);
 		return ResponseQuery.success("Update Success", null);
 	}
-	@GetMapping(value="teamTourHistory")
-	public ResponseEntity<Team> teamTourHistory(@RequestParam int idTeam,@RequestParam int idTour ){
-		return new ResponseEntity<Team>(teamService.teamTourHistory(idTeam,idTour),HttpStatus.OK);
+
+	@GetMapping(value = "teamTourHistory")
+	public ResponseEntity<Team> teamTourHistory(@RequestParam int idTeam, @RequestParam int idTour) {
+		return new ResponseEntity<Team>(teamService.teamTourHistory(idTeam, idTour), HttpStatus.OK);
 	}
 }
