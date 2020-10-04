@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import ssv.com.entity.Account;
 import ssv.com.entity.Profile;
+import ssv.com.entity.Team;
 
 public interface ProfileMapper {
 	public Long saveProfile(Profile profile);
@@ -24,5 +25,8 @@ public interface ProfileMapper {
 	public List<Account> pageProfile(int page, int pagesize,String name,String nametype);
 
 	public List<Profile> getByIdTeam(int idTeam);
+
 	public List<Profile> getMembers();
+
+	public void updateMembersInTeam(Team team);
 }

@@ -16,11 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ssv.com.controller.form.TeamForm;
+
+import ssv.com.dto.ResponseQuery;
+import ssv.com.dto.ScheduleDto;
+
 import ssv.com.dto.TeamDetail;
 import ssv.com.dto.TeamDto;
 import ssv.com.entity.Profile;
 import ssv.com.entity.Team;
 import ssv.com.file.UploadFile;
+import ssv.com.service.ProfileService;
 import ssv.com.service.TeamService;
 
 @RestController
@@ -30,6 +35,9 @@ public class TeamController {
 
 	@Autowired
 	private TeamService teamService;
+
+	@Autowired
+	private ProfileService profileService;
 
 	@GetMapping(value = "getAll")
 	public ResponseEntity<List<Team>> getAll() {
@@ -81,6 +89,19 @@ public class TeamController {
 
 	}
 
+
+	@GetMapping(value = "search")
+	public ResponseEntity<TeamDto> search(@RequestParam int page, @RequestParam int pageSize,
+			@RequestParam String nameSearch, @RequestParam String type, @RequestParam String sorts) {
+		if (type == "") {
+			type = "id_schedule";
+		}
+		;
+		return new ResponseEntity<TeamDto>(teamService.search(page, pageSize * 2, nameSearch, type, sorts),
+				HttpStatus.OK);
+
+	}
+
 	@GetMapping(value = "detail")
 	public ResponseEntity<TeamDetail> detailTeam(@RequestParam int idTeam, @RequestParam int idTour) {
 		return new ResponseEntity<TeamDetail>(teamService.detail(idTeam, idTour), HttpStatus.OK);
@@ -89,6 +110,12 @@ public class TeamController {
 	@GetMapping(value = "teamWait")
 	public ResponseEntity<List<Team>> teamWait(@RequestParam String type) {
 		return new ResponseEntity<List<Team>>(teamService.teamWait(type), HttpStatus.OK);
+	}
+
+	@PostMapping(value = "update")
+	public ResponseQuery<?> update(@RequestBody Team team) {
+		profileService.updateMembersInTeam(team);
+		return ResponseQuery.success("Update Success", null);
 	}
 
 	@GetMapping(value = "teamTourHistory")
