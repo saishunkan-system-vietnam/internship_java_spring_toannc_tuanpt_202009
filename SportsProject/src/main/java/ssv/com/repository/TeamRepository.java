@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ssv.com.controller.form.TeamForm;
 import ssv.com.entity.Profile;
 import ssv.com.entity.Schedule;
 import ssv.com.entity.Team;
@@ -104,9 +105,15 @@ public class TeamRepository {
 
 	}
 
+
 	public void formatTotalMatch(int idTour) {
 		teamMapper.formatTotalMatch(idTour);
 		
+	}
+
+
+	public void updateTeam(int id, Team team) {
+		 teamMapper.updateTeam(id, team);
 	}
 
 

@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import ssv.com.controller.form.TeamForm;
 import ssv.com.entity.Schedule;
 import ssv.com.entity.Team;
 
@@ -57,5 +59,6 @@ public interface TeamMapper {
 	public void formatTotalMatch(int idTour);
 
 
+	public void updateTeam(@Param("id") int id, @Param("team") Team team);
 
 }
