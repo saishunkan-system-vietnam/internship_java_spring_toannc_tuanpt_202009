@@ -18,7 +18,8 @@ public class ScheduleService {
 	private ScheduleReponsitory scheduleReponsitory;
 	@Autowired
 	private TournamentService tournamentService;
-
+	@Autowired
+	private RoundService roundService;
 
 	public List<Schedule> getAll() {
 		return scheduleReponsitory.getAll();
@@ -32,12 +33,17 @@ public class ScheduleService {
 				if (list.isEmpty()) {
 					return true;
 				} else {
-					if (timeStart.compareTo(list.get(list.size() - 1).getTimeEnd()) > 0&&timeStart.compareTo(tournament.getTimeStart())>=0&&timeEnd.compareTo(tournament.getTimeEnd())<=0) {
-						return true;
+					for (Schedule schedule : list) {
+						if ((timeStart.compareTo(schedule.getTimeEnd()) >0
+								||timeEnd.compareTo(schedule.getTimeStart())<0)
+								&&timeStart.compareTo(tournament.getTimeStart())>0
+								&&timeEnd.compareTo(tournament.getTimeEnd())<=0) {
+							return true;
+						}
 					}
 				}
-			}	
-		}
+			}
+		}		
 		return false;
 	}
 
@@ -50,8 +56,10 @@ public class ScheduleService {
 	}
 
 	public void delete(int idSchedule) {
+		Schedule schedule =scheduleReponsitory.getById(idSchedule);
 		scheduleReponsitory.delete(idSchedule);
-
+		scheduleReponsitory.setTotalMatch(scheduleReponsitory.sumJoinByTour(schedule.getIdTeam1(), schedule.getIdTour()),schedule.getIdTeam1());
+		scheduleReponsitory.setTotalMatch(scheduleReponsitory.sumJoinByTour(schedule.getIdTeam2(), schedule.getIdTour()),schedule.getIdTeam2());
 	}
 
 	public void updateShedule(ScheduleForm scheduleForm) throws Exception {
@@ -85,6 +93,14 @@ public class ScheduleService {
 
 	public void createSchedule(Schedule schedule) {
 		scheduleReponsitory.create(schedule);
+		if(tournamentService.getById(schedule.getIdTour()).getType()=="football") {
+			roundService.createFootball();
+		}
+		else {
+			roundService.createTableBall();
+		}
+		scheduleReponsitory.setTotalMatch(scheduleReponsitory.sumJoinByTour(schedule.getIdTeam1(), schedule.getIdTour()),schedule.getIdTeam1());
+		scheduleReponsitory.setTotalMatch(scheduleReponsitory.sumJoinByTour(schedule.getIdTeam2(), schedule.getIdTour()),schedule.getIdTeam2());
 	}
 
 	public void statusCheck() {

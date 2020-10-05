@@ -128,17 +128,19 @@ public class TeamService {
 
 	}
 
-
-
 	public Team teamTourHistory(int idTeam, int idTour) {
 		// TODO Auto-generated method stub
 		return teamRepository.teamTourHistory(idTeam,idTour);
 	}
 
 	public void addTour(int idTour, int idTeam) {
-
 		teamRepository.addTour(idTour,idTeam);
 
+	}
+
+	public void formatTotalMatch(int idTour) {
+		teamRepository.formatTotalMatch(idTour);
+		
 	}
 
 }

@@ -29,12 +29,24 @@
 			<result column="team_description" property="description" />
 			<result column="team_logo" property="logo" />
 		</collection>
+		<collection property="round" ofType="Round">
+			<id column="id_round" property="idRound" />
+			<result column="round_name" property="roundName" />
+			<result column="round_score1" property="roundScore1" />
+			<result column="round_score2" property="roundScore2" />
+			<result column="round_description" property="description" />
+			<result column="round_schedule" property="roundSchedule" />
+		</collection>
 	</resultMap>
-	
+
 	<select id="getByIdTour" resultMap="scheduleMapping">
 		Select * FROM schedule_tbl
-		inner join team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team or
-		schedule_tbl.schedule_team2=team_tbl.id_team
+		join tournament_tbl on
+		schedule_tbl.schedule_tour=tournament_tbl.id_tournament
+		inner join
+		team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team or
+		schedule_tbl.schedule_team2=team_tbl.id_team inner join round_tbl on
+		schedule_tbl.id_schedule=round_tbl.round_schedule
 		where
 		schedule_tour=${idTour}
 	</select>
@@ -74,12 +86,12 @@
 		#{idTour}
 		)
 	</insert>
-	
+
 	<delete id="delete" parameterType="int">
 		DELETE from schedule_tbl WHERE
 		id_schedule = ${idSchedule}
 	</delete>
-	
+
 	<update id="updateShedule" parameterType="Schedule">
 		Update schedule_tbl set
 		schedule_score1=#{scoreTeam1},
@@ -88,18 +100,20 @@
 		schedule_image=#{image},
 		schedule_winner=#{idwinner},
 		schedule_description=#{description}
-		Where id_schedule=#{idSchedule};
+		Where
+		id_schedule=#{idSchedule};
 	</update>
-	
-		<update id="updateSheduleNotFile" parameterType="Schedule">
-		Update schedule_tbl set
+
+	<update id="updateSheduleNotFile" parameterType="Schedule">
+		Update
+		schedule_tbl set
 		schedule_score1=#{scoreTeam1},
 		schedule_score2=#{scoreTeam2},
 		schedule_winner=#{idwinner},
 		schedule_description=#{description}
 		Where id_schedule=#{idSchedule};
 	</update>
-	
+
 	<update id="editShedule" parameterType="Schedule">
 		Update schedule_tbl set
 		schedule_start=#{timeStart} ,
@@ -112,59 +126,69 @@
 		Where
 		id_schedule=#{idSchedule};
 	</update>
-	
+
 	<update id="checkStatus">
 		Update schedule_tbl set
 		schedule_status=${i}
 		Where
 		id_schedule=${j};
 	</update>
-	
+
 	<select id="getAll" resultMap="scheduleMapping">
-		Select * FROM schedule_tbl inner join tournament_tbl on
+		Select * FROM schedule_tbl inner
+		join tournament_tbl on
 		schedule_tbl.schedule_tour=tournament_tbl.id_tournament
 		inner join
 		team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team
-		or
-		schedule_tbl.schedule_team2=team_tbl.id_team
-	</select>
-	
+		or 
+		schedule_tbl.schedule_team2=team_tbl.id_team  inner join round_tbl on
+		schedule_tbl.id_schedule=round_tbl.round_schedule
+	</select> 
+
 	<select id="sum" resultType="int">
 		Select COUNT(*) FROM
 		sports.schedule_tbl where schedule_team1=${idTeam} or
 		schedule_team2=${idTeam}
 	</select>
-	
+
 	<select id="sumWin" resultType="int">
 		Select COUNT(*) FROM
 		sports.schedule_tbl where schedule_winner=${idTeam}
 	</select>
-	
+
 	<select id="sumWinJoinByTour" resultType="int">
 		Select COUNT(*) FROM
 		sports.schedule_tbl where schedule_winner=${idTeam} and
 		schedule_tour=${idTour}
 	</select>
-	
+
 	<select id="sumJoinByTour" resultType="int">
 		Select COUNT(*) FROM
 		sports.schedule_tbl where (schedule_team1=${idTeam} or
 		schedule_team2=${idTeam}) and schedule_tour=${idTour}
 	</select>
-	
-	<select id="upcomingMatch" resultMap="scheduleMapping"> 
-	Select * FROM schedule_tbl inner
+
+	<select id="upcomingMatch" resultMap="scheduleMapping">
+		Select * FROM schedule_tbl inner
 		join tournament_tbl on
 		schedule_tbl.schedule_tour=tournament_tbl.id_tournament
 		inner join
 		team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team
 		or
 		schedule_tbl.schedule_team2=team_tbl.id_team
-		where schedule_status=0 order by schedule_start 
+		where schedule_status=0
+		order by schedule_start
 	</select>
-	
+
 	<delete id="deleteData" parameterType="int">
-		DELETE from schedule_tbl WHERE
-		 schedule_tour=${idTour} And(schedule_team1=${idTeam} OR schedule_team2=${idTeam})
+		DELETE from schedule_tbl
+		WHERE
+		schedule_tour=${idTour} And(schedule_team1=${idTeam} OR schedule_team2=${idTeam})
 	</delete>
+	<update id="setTotalMatch" parameterType="int">
+		Update team_tbl set
+		team_totalmatch=${sumJoinByTour}
+		Where
+		id_team=${idTeam};
+	</update>
 </mapper>

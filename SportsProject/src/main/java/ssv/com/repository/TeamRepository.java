@@ -104,5 +104,10 @@ public class TeamRepository {
 
 	}
 
+	public void formatTotalMatch(int idTour) {
+		teamMapper.formatTotalMatch(idTour);
+		
+	}
+
 
 }

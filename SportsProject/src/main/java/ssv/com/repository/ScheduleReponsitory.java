@@ -64,7 +64,7 @@ public class ScheduleReponsitory {
 	}
 
 	public void deleteByTour(int idTour) {
-		 scheduleMapper.deleteByTour(idTour);
+		scheduleMapper.deleteByTour(idTour);
 		
 	}
 
@@ -78,7 +78,17 @@ public class ScheduleReponsitory {
 	}
 
 	public void deleteData(int idTour, int idTeam) {
-		 scheduleMapper.deleteData(idTour,idTeam);
+		scheduleMapper.deleteData(idTour,idTeam);
+	}
+
+	public void updateTotalMatch(Schedule schedule) {
+		scheduleMapper.updateTotalMatch(schedule);
+		
+	}
+
+	public void setTotalMatch(int sumJoinByTour, int idTeam) {
+		scheduleMapper.setTotalMatch(sumJoinByTour,idTeam);
+		
 	}
 
 }

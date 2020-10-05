@@ -73,7 +73,6 @@
 		#{nameTeam},
 		#{type},
 		#{description},
-		#{logo}
 		)
 	</insert>
 	<update id="updateTourNew" parameterType="int">
@@ -137,5 +136,9 @@
 	<select id="teamTourHistory" resultMap="teamMapping">
     SELECT * FROM sports.team_tbl inner join (history_tbl left join profile_tbl c on history_tbl.id_member = c.id) on history_tbl.id_team=team_tbl.id_team  where history_tbl.id_tour=${idTour} and team_tbl.id_team=${idTeam}
   </select>
+  
+  <update id="formatTotalMatch" parameterType="int">
+  		Update team_tbl set team_totalmatch=0 where id_tour=${idTour}
+  </update>
 
 </mapper>

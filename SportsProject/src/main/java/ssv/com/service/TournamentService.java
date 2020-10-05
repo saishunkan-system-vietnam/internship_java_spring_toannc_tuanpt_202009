@@ -85,6 +85,8 @@ public class TournamentService {
 	}
 
 	public void updateStatus(int idTour, int status) {
+		teamService.formatTotalMatch(idTour);
+		teamService.formatTour(idTour);
 		tournamentRepository.updateStatus(idTour, status);
 
 	}

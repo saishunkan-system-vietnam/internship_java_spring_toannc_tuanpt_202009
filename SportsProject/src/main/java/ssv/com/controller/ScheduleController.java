@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ssv.com.controller.form.ScheduleForm;
 import ssv.com.entity.Schedule;
+import ssv.com.service.RoundService;
 import ssv.com.service.ScheduleService;
+import ssv.com.service.TeamService;
+import ssv.com.service.TournamentService;
 
 @RestController
 @RequestMapping("/api/v1/schedule/")
@@ -29,7 +32,10 @@ public class ScheduleController {
 
 	@Autowired
 	private ScheduleService scheduleService;
-
+	@Autowired
+	private RoundService roundService;
+	@Autowired
+	private TournamentService tournamnetService;
 	@GetMapping(value="getAll")
 	public ResponseEntity<List<Schedule>> getAll(){
 		return new ResponseEntity<List<Schedule>>(scheduleService.getAll(),HttpStatus.OK);
@@ -51,15 +57,16 @@ public class ScheduleController {
 		if(scheduleService.checkTime(schedule.getTimeStart(),schedule.getTimeEnd(),schedule.getIdTour())) {
 			scheduleService.createSchedule(schedule);
 			return new ResponseEntity<String>("create",HttpStatus.OK);
-
 		}
-		return new ResponseEntity<String>("trung lich",HttpStatus.OK);
+		String result=tournamnetService.getById(schedule.getIdTour()).getTimeEnd()+"->"+tournamnetService.getById(schedule.getIdTour()).getTimeStart();
+		return new ResponseEntity<String>("trùng lịch ! Thời gian của giải đấu là " + result,HttpStatus.OK);
 	}
 
 	@DeleteMapping(value="delete/{idSchedule}")
 	public ResponseEntity<String> delete(@PathVariable int idSchedule){
 
 		if(scheduleService.getById(idSchedule).getStatus()==0 ) {
+			roundService.delete(idSchedule);
 			scheduleService.delete(idSchedule);
 			return new ResponseEntity<String>("xoa thanh cong", HttpStatus.OK);
 		}
