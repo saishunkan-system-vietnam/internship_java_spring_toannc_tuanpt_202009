@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssv.com.mapper.RoundMapper">
+	<resultMap id="roundMapping" type="Round">
+
+		<id property="idRound" column="id_round" />
+		<result property="roundName" column="round_name" />
+		<result property="roundScore1" column="round_score1" />
+		<result property="roundScore2" column="round_score2" />
+		<result property="roundDescription" column="round_description" />
+		<result property="roundSchedule" column="round_schedule" />
+	</resultMap>
+	<insert id="createFootball" parameterType="Round">
+		SET @var_id := (SELECT
+		MAX(id_schedule) from schedule_tbl);
+		INSERT INTO
+		round_tbl (
+		round_name,
+		round_schedule
+		)
+		VALUES(
+		'Hiệp 1',
+		@var_id
+		);
+		INSERT INTO
+		round_tbl (
+		round_name,
+		round_schedule
+		)
+		VALUES(
+		'Hiệp 2',
+		@var_id
+		)
+	</insert>
+	<insert id="createTableBall" parameterType="Round">
+		SET @var_id :=
+		(SELECT
+		MAX(id_schedule) from schedule_tbl);
+		INSERT INTO
+		round_tbl (
+		round_name,
+		round_schedule
+		)
+		VALUES(
+		'Set 1',
+		@var_id
+		);
+		INSERT INTO
+		round_tbl
+		(
+		round_name,
+		round_schedule
+		)
+		VALUES(
+		'Set 2',
+		@var_id
+		);
+		INSERT INTO
+		round_tbl (
+		round_name,
+		round_schedule
+		)
+		VALUES(
+		'Set 3',
+		@var_id
+		)
+	</insert>
+	<delete id="delete" parameterType="int">
+		Delete from round_tbl
+		where round_schedule=${idSchedule}
+	</delete>
+</mapper>
