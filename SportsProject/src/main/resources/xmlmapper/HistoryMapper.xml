@@ -5,7 +5,7 @@
 <mapper namespace="ssv.com.mapper.HistoryMapper">
 <resultMap id="historyMapping" type="History">
 
-  <id property="id" column="id" />
+  <id property="idHistory" column="id" />
   <result property="idTeam" column="id_team" />
   <result property="idTour" column="id_tour" />
   <result property="idMember" column="id_member" />

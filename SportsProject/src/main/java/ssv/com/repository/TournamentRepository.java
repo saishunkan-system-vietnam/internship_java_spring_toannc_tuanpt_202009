@@ -30,25 +30,17 @@ public class TournamentRepository {
 
 	public void delete(int idTour) {
 		tournamentMapper.delete(idTour);
-		
 	}
 
-	
 	public void updateStatus(int idTour, int status) {
 		tournamentMapper.updateStatus(idTour,status);
-		
 	}
 
 	public List<Tournament> getTourAction() {
-		// TODO Auto-generated method stub
 		return tournamentMapper.getTourAction();
 	}
 
 	public void edit(Tournament tournament) {
-		tournamentMapper.edit(tournament);
-		
+		tournamentMapper.edit(tournament);	
 	}
-
-
-
 }

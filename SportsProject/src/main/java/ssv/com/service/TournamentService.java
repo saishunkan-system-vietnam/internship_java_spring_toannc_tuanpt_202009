@@ -37,11 +37,10 @@ public class TournamentService {
 		if (tournamentDto.getTimeEnd().compareTo(tournamentDto.getTimeStart()) > 0) {
 			Tournament tournament = modelMapper.map(tournamentDto, Tournament.class);
 			for (Tournament tournament2 : tournamentRepository.getAll()) {
-				if(tournament2.getNameTour()==tournamentDto.getNameTour()) {
+				if(tournament2.getNameTour().equalsIgnoreCase(tournamentDto.getNameTour())) {
 					return "Trung ten giai dau";
 				}
 			}
-			
 			for (int i = 0; i < tournamentDto.getListIdTeam().length; i++) {
 				if (teamService.getById(tournamentDto.getListIdTeam()[i]) == null) {
 					return "Team khong co thanh vien";
@@ -72,11 +71,7 @@ public class TournamentService {
 		tournamentRepository.delete(idTour);
 		teamService.formatTour(idTour);
 		historyRepository.deleteTournament(idTour);
-
 	}
-
-
-
 
 	public String addTeam(int idTour, int idTeam) {
 		if (teamService.getById(idTeam).getIdTour() == 0) {
@@ -95,15 +90,14 @@ public class TournamentService {
 	}
 
 	public List<Tournament> getTourAction() {
-		// TODO Auto-generated method stub
 		return tournamentRepository.getTourAction();
-
 	}
 
 	public String deleteTeam(int idTeam) {
 		if (tournamentRepository.getById(teamService.getById(idTeam).getIdTour()).getStatus() == 0) {
 			int idTour = teamService.getById(idTeam).getIdTour();
 			teamService.formatTourById(idTour,idTeam);
+			scheduleService.deleteData(idTour,idTeam);
 			historyRepository.deleteTeamTournament(idTour, idTeam);
 			return "Xóa thành công";
 		}

@@ -24,10 +24,6 @@ public interface ScheduleMapper {
 
 	public void editShedule(Schedule schedule);
 
-	public List<Schedule> search(int page, int pageSize, String nameSearch, String type, String sorts);
-
-	public int searchTotal(String nameSearch, String type);
-
 	public void checkStatus(int j, int i);
 
 	public int sum(int idTeam);
@@ -43,6 +39,8 @@ public interface ScheduleMapper {
 	public void updateSheduleNotFile(Schedule schedule);
 
 	public List<Schedule> upcomingMatch();
+
+	public void deleteData(int idTour, int idTeam);
 
 
 }

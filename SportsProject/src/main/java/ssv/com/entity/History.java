@@ -10,8 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class History {
-	private int id_history;
-	private int id_member;
-	private int id_team;
-	private int id_tour;
+	private int idHistory;
+	private int idMember;
+	private int idTeam;
+	private int idTour;
 }
