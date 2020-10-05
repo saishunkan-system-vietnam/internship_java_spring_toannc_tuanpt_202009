@@ -3,15 +3,20 @@ package ssv.com.service;
 import java.util.List;
 import java.util.Set;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import ssv.com.controller.form.TeamForm;
 import ssv.com.dto.ScheduleDto;
 import ssv.com.dto.TeamDetail;
 import ssv.com.dto.TeamDto;
 import ssv.com.entity.Profile;
 import ssv.com.entity.Schedule;
 import ssv.com.entity.Team;
+import ssv.com.file.UploadFile;
 import ssv.com.mapper.TeamMapper;
 import ssv.com.repository.ScheduleReponsitory;
 import ssv.com.repository.TeamRepository;
@@ -23,6 +28,9 @@ public class TeamService {
 
 	@Autowired
 	private ScheduleReponsitory scheduleReponsitory;
+
+	@Autowired
+	private ModelMapper modelMapper;
 
 	public List<Team> getAll() {
 		return teamRepository.getAll();
@@ -128,17 +136,18 @@ public class TeamService {
 
 	}
 
-
-
 	public Team teamTourHistory(int idTeam, int idTour) {
 		// TODO Auto-generated method stub
-		return teamRepository.teamTourHistory(idTeam,idTour);
+		return teamRepository.teamTourHistory(idTeam, idTour);
 	}
 
 	public void addTour(int idTour, int idTeam) {
 
-		teamRepository.addTour(idTour,idTeam);
+		teamRepository.addTour(idTour, idTeam);
 
 	}
 
+	public void updateTeam(int id, Team team) {
+			teamRepository.updateTeam(id, team);
+	}
 }

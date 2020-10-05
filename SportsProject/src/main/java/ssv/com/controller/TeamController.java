@@ -118,6 +118,23 @@ public class TeamController {
 		profileService.updateMembersInTeam(team);
 		return ResponseQuery.success("Update Success", null);
 	}
+
+	@PostMapping(value = "updateInfo/{id}")
+	public ResponseQuery<?> updateTeamInfo(@PathVariable (value = "id") int id, @ModelAttribute TeamForm teamForm){
+		String path = "";
+		try {
+			path = UploadFile.saveFile(teamForm.getFile());
+			Team team = modelMapper.map(teamForm, Team.class);
+			team.setLogo(path);
+			teamService.updateTeam(id, team);
+			return ResponseQuery.success("Update Success", team);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ResponseQuery.success("failed", null);
+	}
+
 	@GetMapping(value="teamTourHistory")
 	public ResponseEntity<Team> teamTourHistory(@RequestParam int idTeam,@RequestParam int idTour ){
 		return new ResponseEntity<Team>(teamService.teamTourHistory(idTeam,idTour),HttpStatus.OK);
