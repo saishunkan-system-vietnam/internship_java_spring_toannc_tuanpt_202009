@@ -56,6 +56,8 @@ public interface TeamMapper {
 
 	public Team teamTourHistory(int idTeam, int idTour);
 
+	public void formatTotalMatch(int idTour);
+
 
 	public void updateTeam(@Param("id") int id, @Param("team") Team team);
 

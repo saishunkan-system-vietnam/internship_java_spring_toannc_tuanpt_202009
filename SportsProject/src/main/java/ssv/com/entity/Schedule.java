@@ -30,4 +30,5 @@ public class Schedule {
 	private String title;
 	private String image;
 	private List<Team> team;
+	private List<Round> round;
 }

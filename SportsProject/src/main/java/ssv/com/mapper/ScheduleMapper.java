@@ -42,5 +42,9 @@ public interface ScheduleMapper {
 
 	public void deleteData(int idTour, int idTeam);
 
+	public void updateTotalMatch(Schedule schedule);
+
+	public void setTotalMatch(int sumJoinByTour, int idTeam);
+
 
 }

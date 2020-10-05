@@ -105,8 +105,16 @@ public class TeamRepository {
 
 	}
 
+
+	public void formatTotalMatch(int idTour) {
+		teamMapper.formatTotalMatch(idTour);
+		
+	}
+
+
 	public void updateTeam(int id, Team team) {
 		 teamMapper.updateTeam(id, team);
 	}
+
 
 }

@@ -143,11 +143,17 @@ public class TeamService {
 
 	public void addTour(int idTour, int idTeam) {
 
-		teamRepository.addTour(idTour, idTeam);
+		teamRepository.addTour(idTour,idTeam);
 
+	}
+
+	public void formatTotalMatch(int idTour) {
+		teamRepository.formatTotalMatch(idTour);
+		
 	}
 
 	public void updateTeam(int id, Team team) {
 			teamRepository.updateTeam(id, team);
 	}
+
 }
