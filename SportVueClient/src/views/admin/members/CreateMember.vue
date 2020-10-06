@@ -171,7 +171,7 @@ export default {
           self.changeButton = !self.changeButton;
           // console.log(res.data);
           if (res.data.code === 9999) {
-            self.emailRules = [(v) => !self.email || res.data];
+            self.emailRules = [(v) => !self.email || "Email has already exists"];
           } else {
             self.isOpenModalMember();
             self.loadMemberAfterCreate(res.data.payload);

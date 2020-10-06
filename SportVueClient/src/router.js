@@ -22,7 +22,7 @@ import Teams from '@/views/admin/team/Teams'
 import CreateTeam from '@/views/admin/team/TeamCreate'
 import TeamDetail from '@/views/admin/team/TeamDetail'
 
-import AllSports from '@/views/web/contents/AllSports' 
+import AllSports from '@/views/web/contents/AllSports'
 import Soccer from '@/views/web/contents/Soccer'
 Vue.use(Router)
 
@@ -31,7 +31,7 @@ let routes = [
     path: '/',
     name: 'web',
     component: Web,
-    children:[
+    children: [
       {
         path: '/sports',
         name: 'allsports',
@@ -49,8 +49,8 @@ let routes = [
     name: 'login',
     component: AdminLogin
   },
-   
-  
+
+
   {
     path: '/admin/home',
     name: 'Home',
@@ -176,7 +176,6 @@ let routes = [
               userAuth: false
             }
           },
-
           {
             path: "/DetailTournament/:id",
             component: DetailTournament,
@@ -187,7 +186,6 @@ let routes = [
               userAuth: false
             }
           }
-
         ],
         meta: {
           requiredAuth: true,
@@ -195,7 +193,12 @@ let routes = [
           userAuth: false
         }
       }
-    ]
+    ],
+    meta: {
+      requiredAuth: true,
+      adminAuth: true,
+      userAuth: false
+    }
   }
 ]
 const router = new Router({
