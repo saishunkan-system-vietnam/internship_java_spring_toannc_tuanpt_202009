@@ -1,9 +1,6 @@
 <template>
   <v-card class="mx-auto my-12" max-width="60%">
-    <v-img
-      height="250"
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png"
-    ></v-img>
+    <v-img height="250" :src="team.logo"></v-img>
 
     <v-row>
       <v-card-title
@@ -58,7 +55,7 @@
               :passSelectedType="team.type"
               :memberProp="memberProp"
               :addedMember="addedMember"
-              :updateTeam = "updateTeam"
+              :updateTeam="updateTeam"
             />
 
             <v-divider class="mx-4" inset vertical></v-divider>
@@ -77,7 +74,7 @@
           <b-img
             :src="item.avatar"
             alt=""
-            width="80px"
+            class="fixImg1"
             style="margin: 5px 0 5px 0"
           />
         </template>
@@ -90,13 +87,30 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="primary" dark class="ma-2" @click="updateTeam">
+      <v-btn color="primary" dark class="ma-2" @click="dialogConfirm = true">
         Confirm List
       </v-btn>
     </v-card-actions>
 
     <v-dialog v-model="dialogEditTeam" max-width="60%">
-      <EditTeam :openEditTeam = "openEditTeam" :teamProps = "team" />
+      <EditTeam :openEditTeam="openEditTeam" :teamProps="team" />
+    </v-dialog>
+
+    <v-dialog v-model="dialogConfirm" max-width="350">
+      <v-card>
+        <v-card-title class="headline">
+          Confirm Apply This List ?
+        </v-card-title>
+        <v-card-actions>
+          <v-btn color="green darken-1" text @click="dialogConfirm = false">
+            Disagree
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="confirmUpdate">
+            Agree
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-dialog>
   </v-card>
 </template>
@@ -111,6 +125,7 @@ export default {
 
   data() {
     return {
+      dialogConfirm: false,
       dialogEditTeam: false,
       checkAdd: true,
       search: "",
@@ -141,10 +156,8 @@ export default {
       teamDetail: {},
     };
   },
-  
-  created() {
-    
-  },
+
+  created() {},
 
   mounted() {
     this.loadListMember(this.$route.params.id);
@@ -152,7 +165,6 @@ export default {
   },
   watch: {},
   methods: {
-
     isOpenModalMember: function () {
       this.dialogCreateMember = !this.dialogCreateMember;
       this.loadListMember();
@@ -165,9 +177,7 @@ export default {
         .then(function (response) {
           self.team = response.data;
         })
-        .catch(function (error) {
-     
-        });
+        .catch(function (error) {});
     },
 
     loadListMember(id) {
@@ -179,9 +189,7 @@ export default {
           self.desserts = self.teamDetail.profile;
           // console.log(self.desserts);
         })
-        .catch(function (error) {
-    
-        });
+        .catch(function (error) {});
     },
 
     updateTeam() {
@@ -189,12 +197,8 @@ export default {
       this.teamDetail.profile = this.desserts;
       axios
         .post(`http://localhost:8090/api/v1/team/update`, this.teamDetail)
-        .then(function (response) {
-          
-        })
-        .catch(function (error) {
-   
-        });
+        .then(function (response) {})
+        .catch(function (error) {});
     },
 
     removeMember(member) {
@@ -220,6 +224,17 @@ export default {
     openEditTeam: function () {
       this.dialogEditTeam = !this.dialogEditTeam;
     },
+
+    confirmUpdate: function () {
+      this.dialogConfirm = false;
+      this.updateTeam();
+    },
   },
 };
 </script>
+<style >
+.fixImg1 {
+  width: 100px;
+  height: 100px;
+}
+</style>>

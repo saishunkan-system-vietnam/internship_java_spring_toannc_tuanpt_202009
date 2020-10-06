@@ -70,9 +70,6 @@
         </v-row>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="primary" x-large text @click="isOpenModalMember">
-          Close
-        </v-btn>
         <v-spacer> </v-spacer>
         <v-btn
           color="primary"
