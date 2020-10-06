@@ -45,7 +45,7 @@ public class AccountController {
 		String result = "";
 		HttpStatus httpStatus = null;
 		JwtResponse jwtResponse = new JwtResponse();
-		if (!user.getUsername().isEmpty() || !user.getPassword().isEmpty()) {
+		if (!user.getUsername().isEmpty() && !user.getPassword().isEmpty()) {
 			try {
 				if (accountService.checkLogin(user)) {
 
@@ -71,8 +71,8 @@ public class AccountController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ResponseEntity<String> sigup(@RequestBody Account acount) {
 		String emailPattern = "\\w+@\\w+[.]\\w+";
-		if (!acount.getUsername().isEmpty() || !acount.getPassword().isEmpty()
-				|| !acount.getEmail().matches(emailPattern)) {
+		if (!acount.getUsername().isEmpty() && !acount.getPassword().isEmpty()
+				&& !acount.getEmail().matches(emailPattern)) {
 			if (accountService.checkEmail(acount.getEmail()) && !accountService.checkUser(acount)) {
 				String hash = BCrypt.hashpw(acount.getPassword(), BCrypt.gensalt(12));
 				acount.setPassword(hash);
@@ -90,7 +90,7 @@ public class AccountController {
 	@RequestMapping(value = "/forget/{email}", method = RequestMethod.POST)
 	public ResponseEntity<String> forget(@PathVariable String email) {
 		String emailPattern = "\\w+@\\w+[.]\\w+";
-		if (email.isEmpty() || email.matches(emailPattern)) {
+		if (email.isEmpty() && email.matches(emailPattern)) {
 			return new ResponseEntity<String>("nhap sai du lieu", HttpStatus.OK);
 		}
 		String result = "";

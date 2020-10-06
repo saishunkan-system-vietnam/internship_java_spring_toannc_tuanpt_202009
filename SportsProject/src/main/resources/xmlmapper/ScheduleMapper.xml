@@ -34,7 +34,7 @@
 			<result column="round_name" property="roundName" />
 			<result column="round_score1" property="roundScore1" />
 			<result column="round_score2" property="roundScore2" />
-			<result column="round_description" property="description" />
+			<result column="round_description" property="roundDescription" />
 			<result column="round_schedule" property="roundSchedule" />
 		</collection>
 	</resultMap>
@@ -54,6 +54,8 @@
 		Select * FROM schedule_tbl inner
 		join tournament_tbl on
 		schedule_tbl.schedule_tour=tournament_tbl.id_tournament
+		inner join round_tbl on
+		schedule_tbl.id_schedule=round_tbl.round_schedule
 		inner join
 		team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team
 		or
@@ -140,10 +142,10 @@
 		schedule_tbl.schedule_tour=tournament_tbl.id_tournament
 		inner join
 		team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team
-		or 
-		schedule_tbl.schedule_team2=team_tbl.id_team  inner join round_tbl on
+		or
+		schedule_tbl.schedule_team2=team_tbl.id_team inner join round_tbl on
 		schedule_tbl.id_schedule=round_tbl.round_schedule
-	</select> 
+	</select>
 
 	<select id="sum" resultType="int">
 		Select COUNT(*) FROM
@@ -169,7 +171,8 @@
 	</select>
 
 	<select id="upcomingMatch" resultMap="scheduleMapping">
-		Select * FROM schedule_tbl inner
+		Select * FROM schedule_tbl
+		inner
 		join tournament_tbl on
 		schedule_tbl.schedule_tour=tournament_tbl.id_tournament
 		inner join
@@ -183,7 +186,8 @@
 	<delete id="deleteData" parameterType="int">
 		DELETE from schedule_tbl
 		WHERE
-		schedule_tour=${idTour} And(schedule_team1=${idTeam} OR schedule_team2=${idTeam})
+		schedule_tour=${idTour} And(schedule_team1=${idTeam} OR
+		schedule_team2=${idTeam})
 	</delete>
 	<update id="setTotalMatch" parameterType="int">
 		Update team_tbl set

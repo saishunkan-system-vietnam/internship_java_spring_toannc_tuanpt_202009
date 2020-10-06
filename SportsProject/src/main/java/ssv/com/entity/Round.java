@@ -10,7 +10,7 @@ public class Round {
 	private String roundName;
 	private int roundScore1;
 	private int roundScore2;
-	private String description;
+	private String roundDescription;
 	private int roundSchedule;
 
 }

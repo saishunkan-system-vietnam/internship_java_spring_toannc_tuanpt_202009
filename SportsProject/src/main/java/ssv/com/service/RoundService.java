@@ -3,6 +3,7 @@ package ssv.com.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ssv.com.entity.Round;
 import ssv.com.repository.RoundRepository;
 
 @Service
@@ -24,5 +25,12 @@ public class RoundService {
 		roundRepository.delete(idSchedule);
 		
 	}
+
+	public String uploadSchedule(Round round) {
+		 roundRepository.uploadSchedule(round);
+		 return "thành công";
+	}
+
+	
 
 }
