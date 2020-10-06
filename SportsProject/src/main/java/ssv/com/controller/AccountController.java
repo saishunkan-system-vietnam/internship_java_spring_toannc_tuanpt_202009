@@ -72,7 +72,7 @@ public class AccountController {
 	public ResponseEntity<String> sigup(@RequestBody Account acount) {
 		String emailPattern = "\\w+@\\w+[.]\\w+";
 		if (!acount.getUsername().isEmpty() && !acount.getPassword().isEmpty()
-				&& !acount.getEmail().matches(emailPattern)) {
+				&& acount.getEmail().matches(emailPattern)) {
 			if (accountService.checkEmail(acount.getEmail()) && !accountService.checkUser(acount)) {
 				String hash = BCrypt.hashpw(acount.getPassword(), BCrypt.gensalt(12));
 				acount.setPassword(hash);
