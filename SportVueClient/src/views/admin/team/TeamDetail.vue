@@ -1,0 +1,225 @@
+<template>
+  <v-card class="mx-auto my-12" max-width="60%">
+    <v-img
+      height="250"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png"
+    ></v-img>
+
+    <v-row>
+      <v-card-title
+        ><h1>{{ team.nameTeam }}</h1></v-card-title
+      >
+      <v-spacer></v-spacer>
+      <v-card-title
+        ><h1>Win: {{ team.totalwin }}</h1></v-card-title
+      >
+    </v-row>
+    <v-card-text>
+      <v-row>
+        <h3>{{ team.type }}</h3>
+
+        <v-spacer> </v-spacer>
+        <h3>TotalMatch: {{ team.totalmatch }}</h3>
+      </v-row>
+    </v-card-text>
+    <v-card-text>
+      <v-row>
+        <div class="my-4 subtitle-1">
+          {{ team.description }} Small plates, salads & sandwiches - an intimate
+          setting with 12 indoor seats plus patio seating.
+        </div>
+        <v-spacer></v-spacer>
+
+        <v-btn color="primary" dark class="ma-2" @click="openEditTeam">
+          Edit Team
+        </v-btn>
+      </v-row>
+    </v-card-text>
+    <v-divider class="mx-4"></v-divider>
+
+    <v-row>
+      <v-col cols="12" md="5">
+        <v-card-title><h2>List Member</h2></v-card-title>
+      </v-col>
+      <v-spacer></v-spacer>
+      <v-col cols="12" md="2"> </v-col>
+    </v-row>
+
+    <v-card-text>
+      <v-data-table
+        :headers="headers"
+        :items="desserts"
+        class="elevation-1"
+        :search="search"
+      >
+        <template v-slot:top>
+          <v-toolbar flat color="white">
+            <ListMember
+              :passSelectedType="team.type"
+              :memberProp="memberProp"
+              :addedMember="addedMember"
+              :updateTeam = "updateTeam"
+            />
+
+            <v-divider class="mx-4" inset vertical></v-divider>
+            <v-spacer></v-spacer>
+
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+            ></v-text-field>
+          </v-toolbar>
+        </template>
+        <template v-slot:[`item.avatar`]="{ item }">
+          <b-img
+            :src="item.avatar"
+            alt=""
+            width="80px"
+            style="margin: 5px 0 5px 0"
+          />
+        </template>
+
+        <template v-slot:[`item.idTeam`]="{ item }">
+          <v-btn @click="removeMember(item)" small>Remove</v-btn>
+        </template>
+      </v-data-table>
+    </v-card-text>
+
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn color="primary" dark class="ma-2" @click="updateTeam">
+        Confirm List
+      </v-btn>
+    </v-card-actions>
+
+    <v-dialog v-model="dialogEditTeam" max-width="60%">
+      <EditTeam :openEditTeam = "openEditTeam" :teamProps = "team" />
+    </v-dialog>
+  </v-card>
+</template>
+
+<script>
+import axios from "axios";
+import EditTeam from "@/views/admin/team/EditTeam";
+import ListMember from "@/views/admin/members/ListMember";
+
+export default {
+  components: { EditTeam, ListMember },
+
+  data() {
+    return {
+      dialogEditTeam: false,
+      checkAdd: true,
+      search: "",
+      headers: [
+        {
+          text: "Avatar",
+          align: "start",
+          sortable: false,
+          value: "avatar",
+        },
+        { text: "Name", value: "name" },
+        { text: "Email", value: "email" },
+        { text: "Phone", value: "phone" },
+        { text: "Age", value: "age" },
+        { text: "Gender", value: "gender" },
+        {
+          text: "Actions",
+          value: "idTeam",
+          filter: (value, search, item) => {
+            if (item.idTeam != 0) return true;
+            return value;
+          },
+        },
+      ],
+      desserts: [],
+      team: {},
+      memberProp: {},
+      teamDetail: {},
+    };
+  },
+  
+  created() {
+    
+  },
+
+  mounted() {
+    this.loadListMember(this.$route.params.id);
+    this.loadTeamById(this.$route.params.id);
+  },
+  watch: {},
+  methods: {
+
+    isOpenModalMember: function () {
+      this.dialogCreateMember = !this.dialogCreateMember;
+      this.loadListMember();
+    },
+
+    loadTeamById(id) {
+      let self = this;
+      axios
+        .get(`http://localhost:8090/api/v1/team/findDetail/${id}`)
+        .then(function (response) {
+          self.team = response.data;
+        })
+        .catch(function (error) {
+     
+        });
+    },
+
+    loadListMember(id) {
+      let self = this;
+      axios
+        .get(`http://localhost:8090/api/v1/team/findDetail/${id}`)
+        .then(function (response) {
+          self.teamDetail = response.data;
+          self.desserts = self.teamDetail.profile;
+          // console.log(self.desserts);
+        })
+        .catch(function (error) {
+    
+        });
+    },
+
+    updateTeam() {
+      let self = this;
+      this.teamDetail.profile = this.desserts;
+      axios
+        .post(`http://localhost:8090/api/v1/team/update`, this.teamDetail)
+        .then(function (response) {
+          
+        })
+        .catch(function (error) {
+   
+        });
+    },
+
+    removeMember(member) {
+      console.log(this.desserts);
+      console.log("Removed");
+      let data = this.desserts.map((element, index) => {
+        if (element.id === member.id) {
+          element.idTeam = 0;
+          this.memberProp = element;
+          this.desserts.splice(index, 1);
+        }
+
+        return element;
+      });
+    },
+
+    addedMember(member) {
+      member.idTeam = this.$route.params.id;
+      this.desserts.push(member);
+      console.log(member.idTeam);
+    },
+
+    openEditTeam: function () {
+      this.dialogEditTeam = !this.dialogEditTeam;
+    },
+  },
+};
+</script>
