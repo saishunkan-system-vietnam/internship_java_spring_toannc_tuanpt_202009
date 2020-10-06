@@ -27,6 +27,7 @@
 			<result column="schedule_address" property="address" />
 			<result column="schedule_status" property="status" />
 			<result column="schedule_tour" property="idTour" />
+			
 		</collection>
 		<collection property="team" ofType="Team">
 			<id column="id_team" property="idTeam" />
