@@ -93,7 +93,8 @@ public class ScheduleService {
 
 	public void createSchedule(Schedule schedule) {
 		scheduleReponsitory.create(schedule);
-		if(tournamentService.getById(schedule.getIdTour()).getType()=="football") {
+		var a=tournamentService.getById(schedule.getIdTour()).getType();
+		if(tournamentService.getById(schedule.getIdTour()).getType().equals("football")) {
 			roundService.createFootball();
 		}
 		else {

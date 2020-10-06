@@ -3,6 +3,7 @@ package ssv.com.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ssv.com.entity.Round;
 import ssv.com.mapper.RoundMapper;
 
 @Repository
@@ -22,6 +23,11 @@ public class RoundRepository {
 
 	public void delete(int idSchedule) {
 		roundMapper.delete(idSchedule);
+		
+	}
+
+	public void uploadSchedule(Round round) {
+		roundMapper.uploadSchedule(round);
 		
 	}
 

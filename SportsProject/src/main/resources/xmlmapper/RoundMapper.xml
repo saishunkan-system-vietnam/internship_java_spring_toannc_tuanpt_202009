@@ -57,7 +57,8 @@
 		'Set 2',
 		@var_id
 		);
-		INSERT INTO
+		INSERT
+		INTO
 		round_tbl (
 		round_name,
 		round_schedule
@@ -69,6 +70,14 @@
 	</insert>
 	<delete id="delete" parameterType="int">
 		Delete from round_tbl
-		where round_schedule=${idSchedule}
+		where
+		round_schedule=${idSchedule}
 	</delete>
+	<update id="uploadSchedule" parameterType="Round">
+		Update
+		round_tbl set round_score1=#{roundScore1},round_score2=#{roundScore2},
+		round_description=#{roundDescription} where round_schedule=#{roundSchedule} and round_name=#{roundName}
+	</update>
+	
+	
 </mapper>
