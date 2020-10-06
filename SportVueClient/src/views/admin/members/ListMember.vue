@@ -65,8 +65,8 @@
                 <b-img
                   :src="item.avatar"
                   alt=""
-                  width="80px"
                   style="margin: 5px 0 5px 0"
+                  class="fixImg"
                 />
               </template>
 
@@ -107,9 +107,9 @@ export default {
     addedMember: {
       type: Function,
     },
-    updateTeam:{
-      type: Function
-    }
+    updateTeam: {
+      type: Function,
+    },
   },
   data() {
     return {
@@ -137,9 +137,7 @@ export default {
       members: [],
     };
   },
-  mounted() {
-   
-  },
+  mounted() {},
   watch: {
     memberProp: {
       immediate: true,
@@ -170,18 +168,11 @@ export default {
       axios
         .get("http://localhost:8090/api/v1/profiles/members")
         .then(function (response) {
-          console.log(response.data);
-          // console.log(self.passSelectedType);
           self.desserts = response.data.filter((item) => {
             return item.type === self.passSelectedType && item.idTeam == 0;
           });
-          // console.log("self.desserts");
-          // console.log(self.desserts);
         })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        });
+        .catch(function (error) {});
     },
     addMember(member) {
       this.checkAdd = false;
@@ -200,10 +191,10 @@ export default {
     loadMemberAfterCreate(member) {
       this.desserts.push(member);
     },
-    confirmList(){
-      this.dialogMemberTable = !this.dialogMemberTable
-      this.updateTeam()
-    }
+    confirmList() {
+      this.dialogMemberTable = !this.dialogMemberTable;
+      this.updateTeam();
+    },
   },
 };
 </script>
@@ -219,5 +210,9 @@ export default {
 }
 .space {
   max-height: 64px !important;
+}
+.fixImg {
+  height: 100px;
+  width: 100px;
 }
 </style>
