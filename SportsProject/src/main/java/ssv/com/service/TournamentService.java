@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import lombok.var;
@@ -113,4 +114,11 @@ public class TournamentService {
 			tournamentRepository.edit(tournament);
 		return "edit";
 	}
+
+	public List<Tournament> getByStatus(int status) {
+		// TODO Auto-generated method stub
+		return tournamentRepository.getByStatus(status);
+	}
+
+
 }

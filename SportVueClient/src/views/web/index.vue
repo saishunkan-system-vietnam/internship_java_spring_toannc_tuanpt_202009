@@ -28,7 +28,6 @@ export default {
     });
     this.$store.dispatch("tournament/getAll").then((response) => {
       this.tournamet = response.data;
-      console.log(response.data);
     });
   },
 };
