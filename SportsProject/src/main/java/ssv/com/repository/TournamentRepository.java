@@ -43,4 +43,9 @@ public class TournamentRepository {
 	public void edit(Tournament tournament) {
 		tournamentMapper.edit(tournament);	
 	}
+
+	public List<Tournament> getByStatus(int status) {
+		// TODO Auto-generated method stub
+		return tournamentMapper.getByStatus(status);
+	}
 }
