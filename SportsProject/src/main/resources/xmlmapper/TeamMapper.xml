@@ -22,7 +22,7 @@
 			<result property="title" column="tournament_title" />
 			<result property="description" column="tournament_description" />
 		</association>
-		<collection property="profile" ofType="Profile">
+		<collection property="profile" ofType="Profile" notNullColumn="id">
 			<id property="id" column="id" />
 			<result property="name" column="profile_name" />
 			<result property="email" column="profile_email" />
@@ -36,7 +36,7 @@
 
 	</resultMap>
 	<select id="getAll" resultMap="teamMapping">
-		SELECT p.*, t.* FROM team_tbl p
+		SELECT p.*, t.*, c.* FROM team_tbl p
 		left join profile_tbl c on p.id_team = c.id_team
 		left join
 		tournament_tbl t on p.id_tour = t.id_tournament
