@@ -40,14 +40,14 @@ public class TournamentController {
 		return new ResponseEntity<List<Tournament>>(tournamentService.getAll(), HttpStatus.OK);
 
 	}
-	//hien thi nhung tour chua bat dau
+
 	@GetMapping(value = "getTourAction")
 	public ResponseEntity<List<Tournament>> getTourAction() {
 		return new ResponseEntity<List<Tournament>>(tournamentService.getTourAction(), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "getById")
-	public ResponseEntity<Tournament> getById(@RequestParam int idTour) {
+	@GetMapping(value = "{idTour}")
+	public ResponseEntity<Tournament> getById(@PathVariable int idTour) {
 		return new ResponseEntity<Tournament>(tournamentService.getById(idTour), HttpStatus.OK);
 
 	}
