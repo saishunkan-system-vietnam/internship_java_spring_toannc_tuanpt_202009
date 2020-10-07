@@ -56,7 +56,10 @@
                     </v-btn>
                   </template>
 
-                  <Login :checkProfile="checkProfile" />
+                  <Login
+                    :closeLoginDialog="closeLoginDialog"
+                    :checkProfile="checkProfile"
+                  />
                 </v-dialog>
               </template>
             </v-col>
@@ -95,25 +98,40 @@ export default {
     return {
       LoginDialog: false,
       RegisterDialog: false,
-      isProfile: false,
       showMenu: false,
     };
   },
+  mounted() {
+    // console.log(this.$route)
+  },
   computed: {
+    isProfile: function () {
+      // console.log(this.$store.state.user.isProfile)
+      return this.$store.state.user.isProfile;
+    },
+
     //do this need to check bind (:) in html up
     avatar: function () {
-      return this.$store.state.auth.avatar;
-    },
-    isLoggedIn: function () {
-      return this.$store.getters.isLoggedIn;
+      let setAvatar = this.$store.state.user.userInfo.profile.avatar;
+      console.log(setAvatar)
+      if (setAvatar == null) {
+        let firstAvatar = this.$store.state.auth.avatar
+        console.log(firstAvatar)
+        return firstAvatar
+      } else {
+        return setAvatar;
+      }
     },
   },
   methods: {
+    closeLoginDialog() {
+      this.LoginDialog = false;
+    },
     closeRegisterDialog: function () {
       this.RegisterDialog = false;
     },
     checkProfile: function () {
-      this.isProfile = !this.isProfile;
+      this.$store.commit("user/user_profile");
     },
     profile() {
       alert("a");
@@ -122,7 +140,6 @@ export default {
       this.$store.dispatch("auth/logout").then(() => {
         this.checkProfile();
         this.LoginDialog = false;
-        this.setBlank();
       });
     },
     // setBlank() {
