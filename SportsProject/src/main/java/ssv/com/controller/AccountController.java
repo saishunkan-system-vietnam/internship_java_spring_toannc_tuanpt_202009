@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ssv.com.RandomPass;
 import ssv.com.dto.JwtResponse;
+import ssv.com.dto.ResponseQuery;
 import ssv.com.dto.SearchAccountDto;
 import ssv.com.entity.Account;
 import ssv.com.service.AccountService;
@@ -41,49 +42,47 @@ public class AccountController {
 	private JwtService jwtService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<?> login(HttpServletRequest request, @RequestBody Account user) {
+	public ResponseQuery<?> login(HttpServletRequest request, @RequestBody Account user) {
 		String result = "";
-		HttpStatus httpStatus = null;
 		JwtResponse jwtResponse = new JwtResponse();
 		if (!user.getUsername().isEmpty() && !user.getPassword().isEmpty()) {
 			try {
 				if (accountService.checkLogin(user)) {
-
 					result = jwtService.generateTokenLogin(user.getUsername());
 					jwtResponse.setAccount(accountService.loadUserByUsername(user.getUsername()));
 					jwtResponse.setToken(result);
-					httpStatus = HttpStatus.OK;
-					return new ResponseEntity<JwtResponse>(jwtResponse, httpStatus);
+
+					return ResponseQuery.success("Login success", jwtResponse);
 				} else {
-					result = "Sai thông tin tài khoản";
-					httpStatus = HttpStatus.BAD_REQUEST;
-					return new ResponseEntity<String>(result, httpStatus);
+					result = "Wrong info account";
+					return ResponseQuery.faild(result, null);
 				}
 			} catch (Exception ex) {
-				result = "Lỗi hệ thống";
-				httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+
+				return ResponseQuery.faild("INTERNAL_SERVER_ERROR",null);
 			}
-			return new ResponseEntity<JwtResponse>(jwtResponse, httpStatus);
 		}
-		return new ResponseEntity<String>("nhap sai du lieu ", HttpStatus.BAD_REQUEST);
+		return ResponseQuery.faild("Wrong input data", null);
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ResponseEntity<String> sigup(@RequestBody Account acount) {
+	public ResponseQuery<?> sigup(@RequestBody Account acount) {
 		String emailPattern = "\\w+@\\w+[.]\\w+";
 		if (!acount.getUsername().isEmpty() && !acount.getPassword().isEmpty()
 				&& acount.getEmail().matches(emailPattern)) {
-			if (accountService.checkEmail(acount.getEmail()) && !accountService.checkUser(acount)) {
+			if (accountService.checkEmail(acount.getEmail()) == false) {
+				return ResponseQuery.faild("Email has exists", 0);
+			} else if (accountService.checkUser(acount) == false) {
+				return ResponseQuery.faild("Username has exists", 1);
+			} else {
 				String hash = BCrypt.hashpw(acount.getPassword(), BCrypt.gensalt(12));
 				acount.setPassword(hash);
 				acount.setRole("ROLE_USER");
 				accountService.add(acount);
-				return new ResponseEntity<String>("Create!", HttpStatus.OK);
+				return ResponseQuery.success("Created profile succcess", acount);
 			}
-			return new ResponseEntity<String>("Tài khoản đã tồn tại hoặc email đã tồn tại!", HttpStatus.BAD_REQUEST);
 		}
-
-		return new ResponseEntity<String>("Nhap sai du lieu", HttpStatus.BAD_REQUEST);
+		return ResponseQuery.faild("Form data has wrong type value", acount);
 
 	}
 

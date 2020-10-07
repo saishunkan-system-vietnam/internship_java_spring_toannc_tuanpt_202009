@@ -1,42 +1,44 @@
 <template>
-    <v-card color="grey lighten-4 mb-1" flat tile>
-      <v-toolbar>
-        <div class="container" >
-          <v-row >
-            <v-col class="pt-4 pb-3">
-              <v-toolbar-title><a>Dash Board</a></v-toolbar-title>
-            </v-col>
-            <v-spacer></v-spacer>
-            <!-- <template v-if="isLoggedIn">
-            <template>
-              <v-row class="d-flex" justify="center">
-                <v-menu
-                  v-model="showMenu"
-                  absolute
-                  offset-y
-                  style="max-width: 600px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-card
-                      class="portrait"
-                      img="https://cdn.vuetifyjs.com/images/cards/girl.jpg"
-                      height="20"
-                      width="20"
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-card>
-                  </template>
+  <v-card color="grey lighten-4 mb-1" flat tile>
+    <v-toolbar>
+      <div class="container">
+        <v-row>
+          <v-col class="pt-4 pb-3">
+            <v-toolbar-title><a>Dash Board</a></v-toolbar-title>
+          </v-col>
+          <v-spacer></v-spacer>
+          <template v-if="isProfile">
+            <v-row class="d-flex" justify="center">
+              <v-menu
+                v-model="showMenu"
+                absolute
+                offset-y
+                style="max-width: 600px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-card
+                    class="portrait mt-2"
+                    img="https://cdn.vuetifyjs.com/images/cards/girl.jpg"
+                    height="40"
+                    width="40"
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-card>
+                </template>
 
-                  <v-list>
-                    <v-list-item v-for="(item, index) in items" :key="index">
-                      <v-list-item-title>{{ item.title }}</v-list-item-title>
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
-              </v-row>
-            </template>
-          </template> -->
-            <v-col class="d-flex" cols="1" >
+                <v-list>
+                  <v-list-item>
+                    <v-list-item-title>Profile</v-list-item-title>
+                  </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Logout</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </v-row>
+          </template>
+          <template v-else
+            ><v-col class="d-flex" cols="1">
               <template>
                 <v-dialog v-model="LoginDialog" max-width="600px">
                   <template v-slot:activator="{ on, attrs }">
@@ -46,7 +48,7 @@
                     </v-btn>
                   </template>
 
-                  <Login />
+                  <Login :checkProfile="checkProfile" />
                 </v-dialog>
               </template>
             </v-col>
@@ -60,19 +62,14 @@
                     </v-btn>
                   </template>
 
-                  <Register />
+                  <Register :closeRegisterDialog="closeRegisterDialog" />
                 </v-dialog>
-              </template>
-            </v-col>
-          </v-row>
-        </div>
-      </v-toolbar>
-    </v-card>
-
-    <!-- <v-navigation-drawer v-model="drawer" class="indigo">
-      <p>Test</p>
-    </v-navigation-drawer>-->
-
+              </template> </v-col
+          ></template>
+        </v-row>
+      </div>
+    </v-toolbar>
+  </v-card>
 </template>
 
 <script>
@@ -88,18 +85,10 @@ export default {
   },
   data() {
     return {
-      LoginDialog:false,
-      RegisterDialog:false,
-      drawer: false,
-      dialog: false,
-      items: [
-        {
-          title: "click1",
-        },
-        {
-          title: "click2",
-        },
-      ],
+      LoginDialog: false,
+      RegisterDialog: false,
+      isProfile: false,
+      showMenu: false,
     };
   },
   computed: {
@@ -107,8 +96,15 @@ export default {
       return this.$store.getters.isLoggedIn;
     },
   },
+  methods: {
+    closeRegisterDialog: function () {
+      this.RegisterDialog = false;
+    },
+    checkProfile: function () {
+      this.isProfile = !this.isProfile;
+    },
+  },
 };
 </script>
 <style>
-
 </style>
