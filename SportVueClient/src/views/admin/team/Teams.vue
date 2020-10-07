@@ -33,7 +33,7 @@
     </template>
     <template v-slot:[`item.logo`]="{ item }">
       <img
-        :src="`http://localhost:8090/${item.logo}`"
+        :src="item.logo"
         alt=""
         width="100px"
         height="50px"
@@ -41,7 +41,7 @@
       />
     </template>
     <template v-slot:[`item.actions`]="{ item }">
-      <v-icon small class="mr-2" @click="editTeam(item)"> mdi-pencil </v-icon>
+      <v-icon class="mr-2" @click="editTeam(item)"> mdi-pencil </v-icon>
     </template>
   </v-data-table>
 </template>
@@ -65,7 +65,7 @@ export default {
         { text: "Current Tournament", value: "tourName" },
         { text: "Total Matchs", value: "totalmatch" },
         { text: "Total Wins", value: "totalwin" },
-        { text: "Actions", value: "actions", sortable: false },
+        { text: "Team Detail", value: "actions", sortable: false },
       ],
       desserts: [],
       maxTeamId: 0,
@@ -77,7 +77,6 @@ export default {
       .get("http://localhost:8090/api/v1/team/getAll")
       .then(function (response) {
         self.desserts = response.data;
-        // console.log(response.data);
         self.maxTeamId =
           1 +
           Math.max.apply(
@@ -86,11 +85,8 @@ export default {
               return item.idTeam;
             })
           );
-
-        // console.log(self.maxTeamId);
       })
       .catch(function (error) {
-        // handle error
         console.log(error);
       });
   },
@@ -98,7 +94,7 @@ export default {
   methods: {
     editTeam(item) {
       console.log(item);
-      this.$router.push({ name: "TeamDetail", params: {id: item.idTeam } });
+      this.$router.push({ name: "TeamDetail", params: { id: item.idTeam } });
     },
   },
 };

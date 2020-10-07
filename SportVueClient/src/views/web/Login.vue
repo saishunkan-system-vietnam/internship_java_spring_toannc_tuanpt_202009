@@ -3,10 +3,18 @@
     <v-card-title>
       <span class="headline">Login</span>
     </v-card-title>
+
     <v-card-text>
       <v-container>
+        <h6
+          style="color: red"
+          align="center"
+          justify="center"
+          v-if="checkAccount"
+        >
+          Wrong Username or Password
+        </h6>
         <form @submit.prevent="login">
-
           <v-text-field
             v-model="user.username"
             label="Email"
@@ -17,6 +25,7 @@
             v-model="user.password"
             label="Password"
             required
+            type="password"
           ></v-text-field>
 
           <v-row>
@@ -32,7 +41,6 @@
               >
             </v-col>
           </v-row>
-
         </form>
       </v-container>
     </v-card-text>
@@ -40,40 +48,59 @@
 </template>
 <script>
 export default {
+  props: {
+    closeLoginDialog: {
+      type: Function,
+    },
+    checkProfile:{
+      type: Function
+    }
+  },
   data() {
     return {
       user: {
-        username: "",
-        password: "",
+        username: "Create1",
+        password: "123",
       },
-      
     };
   },
+  mounted() {
+    console.log(this.$store.state.auth.checkAccount);
+  },
   computed: {
+    checkAccount: function () {
+      return this.$store.state.auth.checkAccount;
+    },
     isLoggedIn: function () {
       return this.$store.getters.isLoggedIn;
     },
   },
   methods: {
     login: function () {
+      let self = this
+      // let userInfo = this.$store.state.user.userInfo;
       this.$store
         .dispatch("auth/login", this.user)
-        .then(() => {
-          const status = this.$store.state.auth;
-          if (status === null || status === undefined) {
-            this.$router.push("/");
-          } else if (status.role === "USER" || status.role === "MEMBER") {
-            this.$store.dialog = true
+        .then((res) => {
+          let userInfo = res.data.payload.account
+          // console.log(userInfo)
+          if (userInfo.role === null || userInfo.role === undefined) {
+            console.log("Failed")
+          } else if (userInfo.role === "ROLE_USER" || userInfo.role === "ROLE_MEMBER") {
+            console.log("run here")
+            self.checkProfile();
+            self.closeLoginDialog()
+            self.username = "";
+            self.password = "";
           } else {
-            //  this.$router.push('/admin/layout');
+            console.log("Failed")
           }
         })
         .catch((err) => console.log(err));
     },
-
-    getMembers: function () {
-      this.$store.dispatch("auth/getMembers");
-    },
+    // getMembers: function () {
+    //   this.$store.dispatch("auth/getMembers");
+    // },
   },
 };
 </script>

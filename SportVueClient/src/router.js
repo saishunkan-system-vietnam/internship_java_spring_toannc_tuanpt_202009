@@ -34,6 +34,8 @@ let routes = [
     path: '/',
     name: 'web',
     component: Web,
+
+    redirect: '/sports',
     children: [
       {
         path: '/sports',
@@ -77,6 +79,7 @@ let routes = [
     path: '/admin/home',
     name: 'Home',
     component: AdminHome,
+    redirect: '/LayoutUser',
     children: [
       {
         path: "/LayoutUser",
@@ -198,7 +201,6 @@ let routes = [
               userAuth: false
             }
           },
-
           {
             path: "/DetailTournament/:id",
             component: DetailTournament,
@@ -209,7 +211,6 @@ let routes = [
               userAuth: false
             }
           }
-
         ],
         meta: {
           requiredAuth: true,
@@ -217,7 +218,12 @@ let routes = [
           userAuth: false
         }
       }
-    ]
+    ],
+    meta: {
+      requiredAuth: true,
+      adminAuth: true,
+      userAuth: false
+    }
   }
 ]
 const router = new Router({
@@ -228,13 +234,24 @@ const router = new Router({
 
 router.beforeEach(async (to, from, next) => {
   // console.log(store)
+  // console.log(store.state.user.userInfo)
+  if (store.state.auth.token != '' && store.state.user.userInfo == null) {
+    store.commit('user/user_profile')
+    store.dispatch("user/getByUsername", null)
+    // console.log(store.state.user.userInfo)
+  }
+  else {
+    store.state.user.isProfile = false
+  }
+  next()
 
   if (to.meta.requiredAuth) {
     //Check token
     const authUser = store.state.auth
     const status = localStorage.getItem('secure');
     var decrypted = CryptoJS.AES.decrypt(status, "secure");
-    var role = decrypted.toString(CryptoJS.enc.Utf8)
+    var info = decrypted.toString(CryptoJS.enc.Utf8)
+    store.dispatch()
     if (!authUser || !authUser.token) {
       next({ name: '/admin/login' })
     }
@@ -242,17 +259,16 @@ router.beforeEach(async (to, from, next) => {
       if (role === 'ROLE_ADMIN') {
         next()
       } else {
-        next('/')
+        next('/admin/login')
       }
     }
-    else if (to.meta.userAuth) {
-      if (role === 'ROLE_USER' || role === 'MEMBER') {
-        next('/')
-      } else {
-        console.log("This is admin")
-        next('/admin/layout')
-      }
-    }
+    // else if (to.meta.userAuth) {
+    //   if (role === 'ROLE_USER' || role === 'MEMBER' || role === "ADMIN") {
+    //     next()
+    //   } else {
+    //     next()
+    //   }
+    // }
   }
   else {
     next()

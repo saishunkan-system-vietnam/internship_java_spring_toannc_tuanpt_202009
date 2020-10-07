@@ -1,10 +1,18 @@
 <template>
   <v-card>
-    <v-card-title>
-      <span class="headline">Admin Login</span>
-    </v-card-title>
-    <v-card-text>
-      <v-container>
+    <v-container>
+      <v-card-title>
+        <span class="headline">Admin Login</span>
+      </v-card-title>
+      <v-card-text>
+        <h6
+          style="color: red"
+          align="center"
+          justify="center"
+          v-if="checkAccount"
+        >
+          Wrong Username or Password
+        </h6>
         <form @submit.prevent="login">
           <v-text-field
             v-model="user.username"
@@ -15,16 +23,14 @@
           <v-text-field
             v-model="user.password"
             label="Password"
+            type="password"
             required
           ></v-text-field>
 
           <v-btn type="submit" color="blue darken-1" text>Login</v-btn>
-          <v-btn @click.prevent="getMembers" color="blue darken-1" text
-            >Signin</v-btn
-          >
         </form>
-      </v-container>
-    </v-card-text>
+      </v-card-text>
+    </v-container>
   </v-card>
 </template>
 <script>
@@ -32,21 +38,26 @@ export default {
   data() {
     return {
       user: {
-        username: "testAdmin",
+        username: "Admin",
         password: "123",
       },
     };
+  },
+  computed: {
+    checkAccount: function () {
+      return this.$store.state.auth.checkAccount;
+    },
   },
   methods: {
     login: function () {
       this.$store
         .dispatch("auth/login", this.user)
         .then(() => {
-          const status = localStorage.getItem('secure');
+          const status = localStorage.getItem("secure");
           // console.log(status);
           var decrypted = CryptoJS.AES.decrypt(status, "secure");
           // console.log(decrypted.toString(CryptoJS.enc.Utf8));
-          var role = decrypted.toString(CryptoJS.enc.Utf8)
+          var role = decrypted.toString(CryptoJS.enc.Utf8);
 
           if (status === null || status === undefined) {
             this.$router.push("/admin/login");
