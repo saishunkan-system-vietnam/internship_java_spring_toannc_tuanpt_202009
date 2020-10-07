@@ -93,8 +93,7 @@ public class ScheduleService {
 
 	public void createSchedule(Schedule schedule) {
 		scheduleReponsitory.create(schedule);
-		var a=tournamentService.getById(schedule.getIdTour()).getType();
-		if(tournamentService.getById(schedule.getIdTour()).getType().equals("football")) {
+		if(tournamentService.getById(schedule.getIdTour()).getType().equals("Football")) {
 			roundService.createFootball();
 		}
 		else {
@@ -133,6 +132,11 @@ public class ScheduleService {
 	public void deleteData(int idTour, int idTeam) {
 		scheduleReponsitory.deleteData(idTour,idTeam);
 		
+	}
+
+	public List<Schedule> relate(int idTeam1, int idTeam2, int idTour) {
+		// TODO Auto-generated method stub
+		return scheduleReponsitory.relate(idTeam1,idTeam2,idTour);
 	}
 
 }

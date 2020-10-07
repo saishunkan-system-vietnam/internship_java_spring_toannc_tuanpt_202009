@@ -102,6 +102,11 @@ public class ScheduleController {
 	public ResponseEntity<List<Schedule>> upcomingMatch(){
 		return new ResponseEntity<List<Schedule>>(scheduleService.upcomingMatch(),HttpStatus.OK);
 	}
+	//hiển thị những trận đấu liên quan đến 2 team
+	@GetMapping(value="related")
+	public ResponseEntity<List<Schedule>> related(@RequestParam int idTeam1,@RequestParam int idTeam2,@RequestParam int idTour){
+		return new ResponseEntity<List<Schedule>>(scheduleService.relate(idTeam1,idTeam2,idTour),HttpStatus.OK);
+	}
 	
 	
 

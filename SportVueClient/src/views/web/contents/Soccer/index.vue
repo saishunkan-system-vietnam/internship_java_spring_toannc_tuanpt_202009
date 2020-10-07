@@ -1,109 +1,44 @@
 <template>
-     <v-card>
-    <v-toolbar
-      color="deep-purple accent-4"
-      dark
-      flat
-    >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Page title</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
-
-      <template v-slot:extension>
-        <v-tabs
-          v-model="currentItem"
-          fixed-tabs
-          slider-color="white"
-        >
-          <v-tab
-            v-for="item in items"
-            :key="item"
-            :href="'#tab-' + item"
-          >
-            {{ item }}
-          </v-tab>
-
-          <v-menu
-            v-if="more.length"
-            bottom
-            left
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                text
-                class="align-self-center mr-4"
-                v-bind="attrs"
-                v-on="on"
+<v-container style="
+    padding-top: 0px;
+">
+  <v-row >
+    <v-col cols="12" sm="2" style="padding: 5px">
+      <v-card>
+        <v-list style="background-color: rgb(176 185 191);">
+          <v-list-item v-for="item in items" :key="item.title">
+            <v-list-item-content >
+              <router-link style="color:black"
+                :to="{ path: '/DetailTournametSoccer/' + item.idTour }"
               >
-                more
-                <v-icon right>
-                  mdi-menu-down
-                </v-icon>
-              </v-btn>
-            </template>
-
-            <v-list class="grey lighten-3">
-              <v-list-item
-                v-for="item in more"
-                :key="item"
-                @click="addItem(item)"
-              >
-                {{ item }}
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </v-tabs>
-      </template>
-    </v-toolbar>
-
-    <v-tabs-items v-model="currentItem">
-      <v-tab-item
-        v-for="item in items.concat(more)"
-        :key="item"
-        :value="'tab-' + item"
-      >
-        <v-card flat>
-          <v-card-text>
-            <h2>{{ item }}</h2>
-            {{ text }}
-          </v-card-text>
-        </v-card>
-      </v-tab-item>
-    </v-tabs-items>
-  </v-card>
+                <v-list-item-title v-text="item.nameTour"></v-list-item-title
+              ></router-link>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-card>
+    </v-col>
+    <v-col cols="12" sm="8" style="padding: 0px"
+      ><router-view></router-view
+    ></v-col>
+    <v-col cols="12" sm="2" style="padding: 0px">Right</v-col>
+  </v-row>
+</v-container>
 </template>
 <script>
-  export default {
-    data: () => ({
-      currentItem: 'tab-Web',
-      items: [
-        'Web', 'Shopping', 'Videos', 'Images',
-      ],
-      more: [
-        'News', 'Maps', 'Books', 'Flights', 'Apps',
-      ],
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    }),
-
-    methods: {
-      addItem (item) {
-        const removed = this.items.splice(0, 1)
-        this.items.push(
-          ...this.more.splice(this.more.indexOf(item), 1),
-        )
-        this.more.push(...removed)
-        this.$nextTick(() => { this.currentItem = 'tab-' + item })
-      },
-    },
-  }
+export default {
+  data() {
+    return {
+      items: [],
+    };
+  },
+  created() {
+    this.$store
+      .dispatch("tournament/getByType", "Football")
+      .then((response) => {
+        this.items = response.data;
+      });
+  },
+};
 </script>

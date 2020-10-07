@@ -136,5 +136,8 @@
 		SELECT * FROM
 		sports.tournament_tbl where tournament_status!=2
 	</select>
-
+	<select id="getByType" resultMap="tournamentMapping" >
+		SELECT * FROM
+		sports.tournament_tbl where tournament_type='${type}'
+	</select>
 </mapper>

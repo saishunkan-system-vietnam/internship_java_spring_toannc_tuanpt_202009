@@ -103,5 +103,10 @@ public class TournamentController {
 	public ResponseEntity<List<Tournament>> getByStatus(@RequestParam int status){
 		return new ResponseEntity<List<Tournament>>(tournamentService.getByStatus(status),HttpStatus.OK);
 	}
+	//Lấy data theo thể loại
+	@GetMapping(value="getByType")
+	public ResponseEntity<List<Tournament>> getByType(@RequestParam String type){
+		return new ResponseEntity<List<Tournament>>(tournamentService.getByType(type),HttpStatus.OK);
+	}
 
 }

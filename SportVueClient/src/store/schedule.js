@@ -1,5 +1,5 @@
 import { getById } from '@/api/ScheduleApi';
-import { create, deleteSchedule, edit, updateShedule, getByIdTour, statusNow, getAll, upcomingMatch } from '../api/ScheduleApi';
+import { create, deleteSchedule, edit, updateShedule, getByIdTour, statusNow, getAll, upcomingMatch, relate } from '../api/ScheduleApi';
 
 const actions = {
     getAll({ }) {
@@ -79,6 +79,16 @@ const actions = {
     upcomingMatch({ }) {
         return new Promise((resolve, reject) => {
             upcomingMatch().then(res => {
+                resolve(res)
+            }).catch((err) => {
+                reject(err);
+            })
+        })
+
+    },
+    related({ },data) {
+        return new Promise((resolve, reject) => {
+            relate(data).then(res => {
                 resolve(res)
             }).catch((err) => {
                 reject(err);

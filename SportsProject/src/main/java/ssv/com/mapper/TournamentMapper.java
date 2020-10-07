@@ -26,6 +26,8 @@ public interface TournamentMapper {
 
 	public List<Tournament> getByStatus(int status);
 
+	public List<Tournament> getByType(String type);
+
 
 	
 }

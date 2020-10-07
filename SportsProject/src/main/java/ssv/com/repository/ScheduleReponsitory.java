@@ -91,4 +91,9 @@ public class ScheduleReponsitory {
 		
 	}
 
+	public List<Schedule> relate(int idTeam1, int idTeam2, int idTour) {
+		// TODO Auto-generated method stub
+		return scheduleMapper.relate(idTeam1,idTeam2,idTour);
+	}
+
 }
