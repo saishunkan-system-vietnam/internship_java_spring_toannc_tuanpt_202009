@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssv.com.mapper.TournamentMapper">
+	<resultMap id="tournamentMapping" type="Tournament">
+		<id property="idTour" column="id_tournament" />
+		<result property="nameTour" column="tournament_name" />
+		<result property="status" column="tournament_status" />
+		<result property="timeEnd" column="tournament_end" />
+		<result property="timeStart" column="tournament_start" />
+		<result property="type" column="tournament_type" />
+		<result property="title" column="tournament_title" />
+		<result property="description" column="tournament_description" />
+		<collection property="schedule" javaType="ArrayList"
+			ofType="Schedule">
+			<id column="id_schedule" property="idSchedule" />
+			<result column="schedule_start" property="timeStart" />
+			<result column="schedule_end" property="timeEnd" />
+			<result column="schedule_team1" property="idTeam1" />
+			<result column="schedule_team2" property="idTeam2" />
+			<result column="schedule_score1" property="scoreTeam1" />
+			<result column="schedule_score2" property="scoreTeam2" />
+			<result column="schedule_winner" property="idwinner" />
+			<result column="schedule_video" property="video" />
+			<result column="schedule_description" property="description" />
+			<result column="schedule_address" property="address" />
+			<result column="schedule_status" property="status" />
+			<result column="schedule_tour" property="idTour" />
+		</collection>
+		<collection property="team" ofType="Team">
+			<id column="id_team" property="idTeam" />
+			<result column="team_name" property="nameTeam" />
+			<result column="team_totalmatch" property="totalmatch" />
+			<result column="team_totalwin" property="totalwin" />
+			<result column="team_type" property="type" />
+			<result column="team_description" property="description" />
+			<result column="team_logo" property="logo" />
+			<collection property="profile" ofType="Profile">
+				<id property="id" column="id" />
+				<result property="name" column="profile_name" />
+				<result property="email" column="profile_email" />
+				<result property="phone" column="profile_phone" />
+				<result property="age" column="profile_age" />
+				<result property="gender" column="profile_gender" />
+				<result property="address" column="profile_address" />
+				<result property="avatar" column="profile_avatar" />
+				<result property="idTeam" column="id_team" />
+
+			</collection>
+		</collection>
+	</resultMap>
+
+	<select id="getById" resultMap="tournamentMapping">
+		SELECT * FROM
+		sports.tournament_tbl p left join (history_tbl q left join
+		team_tbl d
+		on q.id_team=d.id_team left join
+		profile_tbl e on q.id_member=e.id)on
+		p.id_tournament=q.id_tour left join
+		schedule_tbl c on
+		p.id_tournament=c.schedule_tour
+		Where p.id_tournament=${idTour}
+	</select>
+
+	<select id="getTourInfo" resultMap="tournamentMapping">
+		SELECT * FROM tournament_tbl
+		Where id_tournament = ${idTour}
+	</select>
+
+	<select id="getAll" resultMap="tournamentMapping">
+		SELECT * FROM
+		sports.tournament_tbl p left join (history_tbl q left join
+		team_tbl d
+		on q.id_team=d.id_team left join
+		profile_tbl e on q.id_member=e.id)on
+		p.id_tournament=q.id_tour left join
+		schedule_tbl c on
+		p.id_tournament=c.schedule_tour
+	</select>
+
+	<insert id="add" parameterType="Tournament">
+		INSERT INTO
+		tournament_tbl(tournament_name,tournament_status,tournament_end,tournament_start,tournament_type,tournament_description,tournament_title)
+		VALUES (
+		#{nameTour},
+		#{status},
+		#{timeEnd},
+		#{timeStart},
+		#{type},
+		#{description},
+		#{title})
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		DELETE from tournament_tbl
+		WHERE id_tournament = ${idTour}
+	</delete>
+
+	<update id="edit">
+		Update tournament_tbl set tournament_name=#{nameTour}
+		,tournament_end=#{timeEnd},tournament_start=#{timeStart},tournament_type=#{type},tournament_description=#{description}
+		Where id_tournament=#{idTour}
+	</update>
+
+	<update id="updateStatus">
+		Update tournament_tbl set tournament_status=${status}
+		where
+		id_tournament=${idTour}
+	</update>
+
+	<select id="findByValue" resultMap="tournamentMapping">
+		SELECT * FROM tournament_tbl
+		ORDER BY ${value} DESC
+	</select>
+
+	<select id="getTourAction" resultMap="tournamentMapping">
+		SELECT * FROM
+		sports.tournament_tbl where tournament_status!=2
+	</select>
+
+</mapper>
