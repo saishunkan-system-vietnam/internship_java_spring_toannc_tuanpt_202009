@@ -7,6 +7,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ssv.com.dto.ResponseQuery;
 import ssv.com.dto.SearchAccountDto;
 import ssv.com.entity.Account;
 import ssv.com.repository.AccountRepository;
@@ -76,10 +77,10 @@ public class AccountService {
 	public boolean checkUser(Account acount) {
 		for (Account account : accountRepository.findAll()) {
 			if (account.getUsername().equals(acount.getUsername())) {
-				return true;
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	public Account findById(int id) {

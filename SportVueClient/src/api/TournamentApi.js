@@ -27,6 +27,3 @@ export function updateStatus(){
 export function edit(tournament){
     return Api.post('/tournament/edit',tournament)
 }
-export function getByStatus(status){
-    return Api.get('/tournament/getByStatus',{params:{status:status}})
-}
