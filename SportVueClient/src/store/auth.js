@@ -7,8 +7,6 @@ const state = {
     status: '',
     checkAccount: false,
     avatar: '',
-    // username: '',
-    // password: ''
 }
 
 const mutations = {
@@ -45,18 +43,15 @@ const actions = {
                         }, 3000);
                     } else {
                         const user = resp.data.payload
-                        console.log(user)
-                        var encrypted = CryptoJS.AES.encrypt(user.account.role, "secure");
+                        // console.log(user)
+                        var encrypted = CryptoJS.AES.encrypt(user.account.username, "secure");
                         // console.log("encrypted :" + encrypted)
                         // var decrypted = CryptoJS.AES.decrypt(encrypted,"secure");
                         // console.log(decrypted.toString(CryptoJS.enc.Utf8))
                         localStorage.setItem('token', user.token);
                         localStorage.setItem('secure', encrypted);
                         commit('auth_success', user);
-                        if(user.account.profile.avatar != null){
-                            commit('auth_image', user.account.profile.avatar)
-                        }
-                        
+                        commit('auth_image', user.account.profile.avatar)
                         resolve(resp)
                     }
                 })

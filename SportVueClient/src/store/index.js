@@ -19,7 +19,6 @@ export default new Vuex.Store({
 		schedule,
 		team,
 		tournament,
-		round
-		
-	}
+		round	
+	},
 })

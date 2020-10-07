@@ -21,6 +21,8 @@ public interface  AccountMapper {
 
 	public Account findById(int id);
 
+	public Account findByUsername(String username);
+
 	public List<Account> search(int page, int pageSize, String name, String type);
 
 	public  List<Account> searchTotal(String name, String type);

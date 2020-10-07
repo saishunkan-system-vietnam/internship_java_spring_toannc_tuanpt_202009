@@ -38,6 +38,10 @@ public class AccountRepository {
 		return accountMapper.findById(id);
 	}
 
+	public Account findByUsername(String username) {
+		return accountMapper.findByUsername(username);
+	}
+
 	public List<Account> search(int page, int pageSize, String name, String type) {
 		return accountMapper.search(page, pageSize, name, type);
 	}

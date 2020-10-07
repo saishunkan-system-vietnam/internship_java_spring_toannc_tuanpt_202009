@@ -87,6 +87,11 @@ public class AccountService {
 		return accountRepository.findById(id);
 	}
 
+	public Account findByUsername(String username) {
+		return accountRepository.findByUsername(username);
+	}
+
+
 	public SearchAccountDto search(int page, int pageSize, String name, String type) {
 		SearchAccountDto accountDto = new SearchAccountDto();
 		accountDto.setTotal(accountRepository.searchTotal(name, type).size());

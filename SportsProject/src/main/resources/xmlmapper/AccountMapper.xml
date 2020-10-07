@@ -32,6 +32,9 @@
 	<select id="findById" resultMap="accountMapping">
 		SELECT * From account_tbl a left join profile_tbl b on a.account_email=b.profile_email where a.id=${id}
 	</select>
+	<select id="findByUsername" resultMap="accountMapping">
+		SELECT * From account_tbl a left join profile_tbl b on a.account_email=b.profile_email where a.account_username=#{username}
+	</select>
 	<insert id="add" parameterType="Account">
 		INSERT INTO account_tbl(
 		account_username,
@@ -65,6 +68,6 @@
 		SELECT * FROM account_tbl Where ${type} LIKE '%${name}%' ORDER BY id DESC LIMIT ${page},${pageSize}
 	</select>
 	<select id="searchTotal" resultMap="accountMapping">
-		SELECT * FROM account_tbl Where ${type} LIKE '%${name}%' ORDER BY id DESC 
+		SELECT * FROM account_tbl Where ${type} LIKE '%${name}%' ORDER BY id DESC
 	</select>
 </mapper>

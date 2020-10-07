@@ -21,6 +21,9 @@ export function getById(id){
     return Api.get('/account/getById/'+id);
 }
 
+export function getByUsername(username){
+    return Api.get('/account/getByUsername/' + username)
+}
 // export function autoLogin(){
 //     return Api.post('/auth/autoLogin')
 // }

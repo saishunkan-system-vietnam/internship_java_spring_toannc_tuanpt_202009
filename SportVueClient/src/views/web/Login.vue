@@ -49,9 +49,12 @@
 <script>
 export default {
   props: {
-    checkProfile: {
+    closeLoginDialog: {
       type: Function,
     },
+    checkProfile:{
+      type: Function
+    }
   },
   data() {
     return {
@@ -74,25 +77,23 @@ export default {
   },
   methods: {
     login: function () {
-      let self = this;
+      let self = this
+      // let userInfo = this.$store.state.user.userInfo;
       this.$store
         .dispatch("auth/login", this.user)
         .then((res) => {
-          // console.log(res.data);
-
-          const status = localStorage.getItem("secure");
-
-          var decrypted = CryptoJS.AES.decrypt(status, "secure");
-          var role = decrypted.toString(CryptoJS.enc.Utf8);
-
-          if (role === null || role === undefined) {
-            this.$router.push("/");
-          } else if (role === "ROLE_USER" || role === "ROLE_MEMBER") {
+          let userInfo = res.data.payload.account
+          // console.log(userInfo)
+          if (userInfo.role === null || userInfo.role === undefined) {
+            console.log("Failed")
+          } else if (userInfo.role === "ROLE_USER" || userInfo.role === "ROLE_MEMBER") {
+            console.log("run here")
             self.checkProfile();
+            self.closeLoginDialog()
             self.username = "";
             self.password = "";
           } else {
-            this.$router.push("/");
+            console.log("Failed")
           }
         })
         .catch((err) => console.log(err));
