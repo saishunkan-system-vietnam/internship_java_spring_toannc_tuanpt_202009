@@ -5,6 +5,14 @@
         <span class="headline">Admin Login</span>
       </v-card-title>
       <v-card-text>
+        <h6
+          style="color: red"
+          align="center"
+          justify="center"
+          v-if="checkAccount"
+        >
+          Wrong Username or Password
+        </h6>
         <form @submit.prevent="login">
           <v-text-field
             v-model="user.username"
@@ -15,6 +23,7 @@
           <v-text-field
             v-model="user.password"
             label="Password"
+            type="password"
             required
           ></v-text-field>
 
@@ -34,6 +43,11 @@ export default {
       },
     };
   },
+  computed: {
+    checkAccount: function () {
+      return this.$store.state.auth.checkAccount;
+    },
+  },
   methods: {
     login: function () {
       this.$store
@@ -44,7 +58,7 @@ export default {
           var decrypted = CryptoJS.AES.decrypt(status, "secure");
           // console.log(decrypted.toString(CryptoJS.enc.Utf8));
           var role = decrypted.toString(CryptoJS.enc.Utf8);
-          
+
           if (status === null || status === undefined) {
             this.$router.push("/admin/login");
           } else if (role === "ROLE_ADMIN") {

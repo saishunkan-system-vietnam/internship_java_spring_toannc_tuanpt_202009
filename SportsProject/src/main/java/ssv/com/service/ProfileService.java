@@ -69,6 +69,16 @@ public class ProfileService {
 		return members;
 	}
 
+	public void saveProfile(Profile profile){
+		try {
+			profileRepository.saveProfile(profile);
+
+		}catch (Exception e) {
+			ResponseQuery.faild("Create profile failed", profile);
+		}
+
+	}
+
 	@Transactional
 	public ResponseQuery<?> saveMember(ProfileForm profileForm) throws Exception {
 		Random rand = new Random();

@@ -6,7 +6,12 @@
 
     <v-card-text>
       <v-container>
-        <h6 style="color:red" align="center" justify="center" v-if="checkAccount">
+        <h6
+          style="color: red"
+          align="center"
+          justify="center"
+          v-if="checkAccount"
+        >
           Wrong Username or Password
         </h6>
         <form @submit.prevent="login">
@@ -51,7 +56,7 @@ export default {
   data() {
     return {
       user: {
-        username: "test123",
+        username: "Create1",
         password: "123",
       },
     };
@@ -84,15 +89,14 @@ export default {
             this.$router.push("/");
           } else if (role === "ROLE_USER" || role === "ROLE_MEMBER") {
             self.checkProfile();
-            self.username = ""
-            self.password = ""
+            self.username = "";
+            self.password = "";
           } else {
             this.$router.push("/");
           }
         })
         .catch((err) => console.log(err));
     },
-
     // getMembers: function () {
     //   this.$store.dispatch("auth/getMembers");
     // },

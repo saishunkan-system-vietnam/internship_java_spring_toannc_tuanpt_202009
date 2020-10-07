@@ -26,8 +26,10 @@ import ssv.com.dto.JwtResponse;
 import ssv.com.dto.ResponseQuery;
 import ssv.com.dto.SearchAccountDto;
 import ssv.com.entity.Account;
+import ssv.com.entity.Profile;
 import ssv.com.service.AccountService;
 import ssv.com.service.JwtService;
+import ssv.com.service.ProfileService;
 
 @RestController
 @RequestMapping("/api/v1/account")
@@ -35,6 +37,9 @@ import ssv.com.service.JwtService;
 public class AccountController {
 	@Autowired
 	private AccountService accountService;
+
+	@Autowired
+	private ProfileService profileService;
 
 	@Autowired
 	private JavaMailSender emailSender;
@@ -75,10 +80,18 @@ public class AccountController {
 			} else if (accountService.checkUser(acount) == false) {
 				return ResponseQuery.faild("Username has exists", 1);
 			} else {
+				//create account
 				String hash = BCrypt.hashpw(acount.getPassword(), BCrypt.gensalt(12));
 				acount.setPassword(hash);
 				acount.setRole("ROLE_USER");
 				accountService.add(acount);
+
+				//create default profile
+				Profile profile = new Profile();
+				profile.setEmail(acount.getEmail());
+				profile.setAvatar("http://localhost:8090/images/defaultuser.png");
+				profileService.saveProfile(profile);
+
 				return ResponseQuery.success("Created profile succcess", acount);
 			}
 		}
