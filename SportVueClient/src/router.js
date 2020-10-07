@@ -31,6 +31,7 @@ let routes = [
     path: '/',
     name: 'web',
     component: Web,
+    redirect: '/sports',
     children: [
       {
         path: '/sports',
@@ -55,6 +56,7 @@ let routes = [
     path: '/admin/home',
     name: 'Home',
     component: AdminHome,
+    redirect: '/LayoutUser',
     children: [
       {
         path: "/LayoutUser",
@@ -223,15 +225,14 @@ router.beforeEach(async (to, from, next) => {
       if (role === 'ROLE_ADMIN') {
         next()
       } else {
-        next('/')
+        next('/admin/login')
       }
     }
     else if (to.meta.userAuth) {
-      if (role === 'ROLE_USER' || role === 'MEMBER') {
-        next('/')
+      if (role === 'ROLE_USER' || role === 'MEMBER' || role === "ADMIN") {
+        next()
       } else {
-        console.log("This is admin")
-        next('/admin/layout')
+        next()
       }
     }
   }

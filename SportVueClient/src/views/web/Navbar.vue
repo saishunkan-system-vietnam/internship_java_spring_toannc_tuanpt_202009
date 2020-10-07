@@ -18,7 +18,7 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-card
                     class="portrait mt-2"
-                    img="https://cdn.vuetifyjs.com/images/cards/girl.jpg"
+                    :img="avatar"
                     height="40"
                     width="40"
                     v-bind="attrs"
@@ -28,10 +28,18 @@
 
                 <v-list>
                   <v-list-item>
-                    <v-list-item-title>Profile</v-list-item-title>
+                    <v-list-item-title
+                      ><v-btn class="fixButton" @click="profile"
+                        >Profile</v-btn
+                      ></v-list-item-title
+                    >
                   </v-list-item>
                   <v-list-item>
-                    <v-list-item-title>Logout</v-list-item-title>
+                    <v-list-item-title
+                      ><v-btn class="fixButton" @click="logout"
+                        >Logout</v-btn
+                      ></v-list-item-title
+                    >
                   </v-list-item>
                 </v-list>
               </v-menu>
@@ -92,6 +100,10 @@ export default {
     };
   },
   computed: {
+    //do this need to check bind (:) in html up
+    avatar: function () {
+      return this.$store.state.auth.avatar;
+    },
     isLoggedIn: function () {
       return this.$store.getters.isLoggedIn;
     },
@@ -103,8 +115,26 @@ export default {
     checkProfile: function () {
       this.isProfile = !this.isProfile;
     },
+    profile() {
+      alert("a");
+    },
+    logout() {
+      this.$store.dispatch("auth/logout").then(() => {
+        this.checkProfile();
+        this.LoginDialog = false;
+        this.setBlank();
+      });
+    },
+    // setBlank() {
+    //   console.log(this.$refs);
+    //   this.$refs.refLogin.test();
+    // },
   },
 };
 </script>
 <style>
+.fixButton {
+  background: white !important;
+  padding: 0 !important;
+}
 </style>

@@ -1,22 +1,20 @@
 import { login, userRegister } from '@/api/UserApi';
 import { getListMember } from '@/api/MemberApi';
 
-// const state = {
-//     token: getToken(),
-//     name: '',
-//     avatar: '',
-//     introduction: '',
-//     roles: []
-// }
-
 const state = {
     token: localStorage.getItem('token') || '',
     secure: localStorage.getItem('secure') || '',
     status: '',
-    checkAccount: false
+    checkAccount: false,
+    avatar: '',
+    // username: '',
+    // password: ''
 }
 
 const mutations = {
+    auth_image(state, img) {
+        state.avatar = img
+    },
     auth_request(state) {
         state.status = 'loading'
     },
@@ -42,11 +40,12 @@ const actions = {
                 .then(resp => {
                     if (resp.data.code === 9999) {
                         commit('auth_error')
-                        setTimeout(function(){
+                        setTimeout(function () {
                             commit('auth_error')
                         }, 3000);
                     } else {
                         const user = resp.data.payload
+                        console.log(user)
                         var encrypted = CryptoJS.AES.encrypt(user.account.role, "secure");
                         // console.log("encrypted :" + encrypted)
                         // var decrypted = CryptoJS.AES.decrypt(encrypted,"secure");
@@ -54,6 +53,10 @@ const actions = {
                         localStorage.setItem('token', user.token);
                         localStorage.setItem('secure', encrypted);
                         commit('auth_success', user);
+                        if(user.account.profile.avatar != null){
+                            commit('auth_image', user.account.profile.avatar)
+                        }
+                        
                         resolve(resp)
                     }
                 })

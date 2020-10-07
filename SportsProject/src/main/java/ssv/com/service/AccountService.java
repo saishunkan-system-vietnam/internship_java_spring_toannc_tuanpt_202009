@@ -21,7 +21,7 @@ public class AccountService {
 	public Account loadUserByUsername(String username) {
 		for (Account account : accountRepository.findAll()) {
 			if (account.getUsername().equals(username)) {
-				return account;
+				return accountRepository.findById(account.getId());
 			}
 		}
 		return null;
