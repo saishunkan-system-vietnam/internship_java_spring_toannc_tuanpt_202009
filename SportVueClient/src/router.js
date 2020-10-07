@@ -22,8 +22,11 @@ import Teams from '@/views/admin/team/Teams'
 import CreateTeam from '@/views/admin/team/TeamCreate'
 import TeamDetail from '@/views/admin/team/TeamDetail'
 
-import AllSports from '@/views/web/contents/AllSports' 
+import AllSports from '@/views/web/contents/AllSports'
 import Soccer from '@/views/web/contents/Soccer'
+import DetailSoccer from './views/web/contents/Soccer/DetailSoccer'
+import LayoutSoccer from './views/web/contents/Soccer/LayoutSoccer'
+import DetailTournametSoccer from './views/web/contents/Soccer/DetailTournametSoccer'
 Vue.use(Router)
 
 let routes = [
@@ -31,7 +34,7 @@ let routes = [
     path: '/',
     name: 'web',
     component: Web,
-    children:[
+    children: [
       {
         path: '/sports',
         name: 'allsports',
@@ -41,16 +44,35 @@ let routes = [
         path: '/soccer',
         name: 'soccer',
         component: Soccer,
+        children: [
+          {
+            path: '/',
+            name: 'LayoutSoccer',
+            component: LayoutSoccer
+          },
+          {
+            path:'/DetailTournametSoccer/:id',
+            name:'DetailTournametSoccer',
+            component:DetailTournametSoccer
+          }
+        ]
       },
+      
+
     ]
+  },
+  {
+    path: '/soccer/detail/:id',
+    name: 'detailSoccer',
+    component: DetailSoccer
   },
   {
     path: '/admin/login',
     name: 'login',
     component: AdminLogin
   },
-   
-  
+
+
   {
     path: '/admin/home',
     name: 'Home',

@@ -30,3 +30,6 @@ export function edit(tournament){
 export function getByStatus(status){
     return Api.get('/tournament/getByStatus',{params:{status:status}})
 }
+export function getByType(type){
+    return Api.get('/tournament/getByType',{params:{type:type}})
+}

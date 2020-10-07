@@ -32,3 +32,6 @@ export function updateShedule(bodyFormData) {
 export function upcomingMatch(){
   return Api.get('/schedule/upcomingMatch')
 }
+export function relate(data){
+  return Api.get('/schedule/related',{params:{idTour:data.idTour,idTeam1:data.idTeam1,idTeam2:data.idTeam2}})
+}

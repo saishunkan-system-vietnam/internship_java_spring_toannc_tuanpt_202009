@@ -38,7 +38,7 @@ public class TournamentService {
 		if (tournamentDto.getTimeEnd().compareTo(tournamentDto.getTimeStart()) > 0) {
 			Tournament tournament = modelMapper.map(tournamentDto, Tournament.class);
 			for (Tournament tournament2 : tournamentRepository.getAll()) {
-				if(tournament2.getNameTour().equalsIgnoreCase(tournamentDto.getNameTour())) {
+				if (tournament2.getNameTour().equalsIgnoreCase(tournamentDto.getNameTour())) {
 					return "Trung ten giai dau";
 				}
 			}
@@ -76,7 +76,7 @@ public class TournamentService {
 
 	public String addTeam(int idTour, int idTeam) {
 		if (teamService.getById(idTeam).getIdTour() == 0) {
-			teamService.addTour(idTour,idTeam);
+			teamService.addTour(idTour, idTeam);
 			for (Profile profile : teamService.getById(idTeam).getProfile()) {
 				historyRepository.addTeamTournament(profile.getId(), idTour, idTeam);
 			}
@@ -99,8 +99,8 @@ public class TournamentService {
 	public String deleteTeam(int idTeam) {
 		if (tournamentRepository.getById(teamService.getById(idTeam).getIdTour()).getStatus() == 0) {
 			int idTour = teamService.getById(idTeam).getIdTour();
-			teamService.formatTourById(idTour,idTeam);
-			scheduleService.deleteData(idTour,idTeam);
+			teamService.formatTourById(idTour, idTeam);
+			scheduleService.deleteData(idTour, idTeam);
 			historyRepository.deleteTeamTournament(idTour, idTeam);
 			return "Xóa thành công";
 		}
@@ -108,10 +108,10 @@ public class TournamentService {
 	}
 
 	public String edit(Tournament tournament) {
-		if(tournamentRepository.getById(tournament.getIdTour()).getStatus()!=0) {
+		if (tournamentRepository.getById(tournament.getIdTour()).getStatus() != 0) {
 			return "Giải đấu đang diễn ra";
 		}
-			tournamentRepository.edit(tournament);
+		tournamentRepository.edit(tournament);
 		return "edit";
 	}
 
@@ -120,5 +120,9 @@ public class TournamentService {
 		return tournamentRepository.getByStatus(status);
 	}
 
+	public List<Tournament> getByType(String type) {
+		// TODO Auto-generated method stub
+		return tournamentRepository.getByType(type);
+	}
 
 }

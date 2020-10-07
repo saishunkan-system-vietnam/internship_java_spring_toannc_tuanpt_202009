@@ -195,4 +195,12 @@
 		Where
 		id_team=${idTeam};
 	</update>
+	<select id="relate" resultMap="scheduleMapping" >
+		Select * from schedule_tbl inner join
+		team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team
+		or
+		schedule_tbl.schedule_team2=team_tbl.id_team
+		
+		where (schedule_team1=${idTeam1} or schedule_team2=${idTeam2} or schedule_team1=${idTeam2} or schedule_team2=${idTeam1}) and schedule_tour=${idTour}
+	</select>
 </mapper>

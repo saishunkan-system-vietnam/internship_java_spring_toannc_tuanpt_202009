@@ -12,12 +12,12 @@ import ssv.com.mapper.TournamentMapper;
 
 @Repository
 public class TournamentRepository {
-	
+
 	@Autowired
 	private TournamentMapper tournamentMapper;
 
 	public void add(Tournament tournament) {
-		 tournamentMapper.add(tournament);
+		tournamentMapper.add(tournament);
 	}
 
 	public List<Tournament> getAll() {
@@ -33,7 +33,7 @@ public class TournamentRepository {
 	}
 
 	public void updateStatus(int idTour, int status) {
-		tournamentMapper.updateStatus(idTour,status);
+		tournamentMapper.updateStatus(idTour, status);
 	}
 
 	public List<Tournament> getTourAction() {
@@ -41,11 +41,16 @@ public class TournamentRepository {
 	}
 
 	public void edit(Tournament tournament) {
-		tournamentMapper.edit(tournament);	
+		tournamentMapper.edit(tournament);
 	}
 
 	public List<Tournament> getByStatus(int status) {
 		// TODO Auto-generated method stub
 		return tournamentMapper.getByStatus(status);
+	}
+
+	public List<Tournament> getByType(String type) {
+		// TODO Auto-generated method stub
+		return tournamentMapper.getByType(type);
 	}
 }
