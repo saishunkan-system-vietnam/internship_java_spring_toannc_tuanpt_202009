@@ -55,7 +55,6 @@
                       <v-icon right>exit_to_app</v-icon>
                     </v-btn>
                   </template>
-
                   <Login
                     :closeLoginDialog="closeLoginDialog"
                     :checkProfile="checkProfile"
