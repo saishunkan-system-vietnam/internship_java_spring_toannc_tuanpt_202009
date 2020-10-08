@@ -101,11 +101,9 @@ export default {
     };
   },
   mounted() {
-    // console.log(this.$route)
   },
   computed: {
     isProfile: function () {
-      // console.log(this.$store.state.user.isProfile)
       return this.$store.state.user.isProfile;
     },
 
@@ -115,7 +113,6 @@ export default {
       console.log(setAvatar)
       if (setAvatar == null) {
         let firstAvatar = this.$store.state.auth.avatar
-        console.log(firstAvatar)
         return firstAvatar
       } else {
         return setAvatar;

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,7 +66,7 @@ public class AccountController {
 				}
 			} catch (Exception ex) {
 
-				return ResponseQuery.faild("INTERNAL_SERVER_ERROR",null);
+				return ResponseQuery.faild("INTERNAL_SERVER_ERROR", null);
 			}
 		}
 		return ResponseQuery.faild("Wrong input data", null);
@@ -81,13 +82,13 @@ public class AccountController {
 			} else if (accountService.checkUser(acount) == false) {
 				return ResponseQuery.faild("Username has exists", 1);
 			} else {
-				//create account
+				// create account
 				String hash = BCrypt.hashpw(acount.getPassword(), BCrypt.gensalt(12));
 				acount.setPassword(hash);
 				acount.setRole("ROLE_USER");
 				accountService.add(acount);
 
-				//create default profile
+				// create default profile
 				Profile profile = new Profile();
 				profile.setEmail(acount.getEmail());
 				profile.setAvatar("http://localhost:8090/images/defaultuser.png");
@@ -99,10 +100,11 @@ public class AccountController {
 		return ResponseQuery.faild("Form data has wrong type value", acount);
 
 	}
-	@PostMapping(value="/passToken")
-	public ResponseEntity<?> passToken(@RequestParam String token){
-		String username=jwtService.getUsernameFromToken(token);
-		return new ResponseEntity<Account>(accountService.findByUsername(username),HttpStatus.OK);
+
+	@PostMapping(value = "/autoLogin")
+	public ResponseQuery<?> autoLogin(HttpServletRequest request) {
+		Account account = (Account) request.getSession().getAttribute("userInfo");
+		return ResponseQuery.success("Recivce Success", account);
 	}
 
 	@RequestMapping(value = "/forget/{email}", method = RequestMethod.POST)
@@ -168,7 +170,7 @@ public class AccountController {
 
 	@GetMapping(value = "/getByUsername/{username}")
 	public ResponseQuery<?> findByUsername(@PathVariable(value = "username") String username) {
-		return ResponseQuery.success("Get Info Success",accountService.findByUsername(username));
+		return ResponseQuery.success("Get Info Success", accountService.findByUsername(username));
 	}
 
 	@GetMapping(value = "/search")
