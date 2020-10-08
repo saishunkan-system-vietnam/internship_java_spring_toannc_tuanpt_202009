@@ -48,19 +48,12 @@
               required
             ></v-text-field>
           </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" md="9">
-            <v-text-field
-              v-model="address"
-              label="Address"
-              required
-            ></v-text-field>
-          </v-col>
           <v-col cols="12" md="3">
             <v-file-input v-model="fileImage" label="Add Avatar"></v-file-input>
           </v-col>
         </v-row>
+
+        <v-text-field v-model="address" label="Address" required></v-text-field>
       </v-card-text>
       <v-card-actions>
         <v-spacer> </v-spacer>
@@ -127,7 +120,7 @@ export default {
       defaultGender: ["Male", "Female", "Orther"],
     };
   },
-  mounted(){
+  mounted() {
     //  console.log(this.passSelectedType);
   },
   watch: {
@@ -142,7 +135,7 @@ export default {
     onSubmit() {
       console.log("submit");
       let self = this;
-       
+
       var memberForm = new FormData();
       memberForm.append("name", this.name);
       memberForm.append("email", this.email);
@@ -161,7 +154,9 @@ export default {
           self.changeButton = !self.changeButton;
           // console.log(res.data);
           if (res.data.code === 9999) {
-            self.emailRules = [(v) => !self.email || "Email has already exists"];
+            self.emailRules = [
+              (v) => !self.email || "Email has already exists",
+            ];
           } else {
             self.isOpenModalMember();
             self.loadMemberAfterCreate(res.data.payload);
