@@ -101,6 +101,7 @@ export default {
   props: {
     schedule: Object,
     callback: Function,
+    loadData:Function,
   },
   data: () => ({
     score1h1: "",
@@ -170,6 +171,7 @@ export default {
                     alert(response.data);
                     this.reset();
                     this.callback();
+                    this.loadData();
                   });
               });
           });
