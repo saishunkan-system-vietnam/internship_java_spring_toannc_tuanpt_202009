@@ -4,7 +4,7 @@
       <div class="container">
         <v-row>
           <v-col class="pt-4 pb-3">
-            <v-toolbar-title><a>Dash Board</a></v-toolbar-title>
+            <v-toolbar-title class="pl-6"><a>Dash Board</a></v-toolbar-title>
           </v-col>
           <v-spacer></v-spacer>
           <template v-if="isProfile">
@@ -55,7 +55,6 @@
                       <v-icon right>exit_to_app</v-icon>
                     </v-btn>
                   </template>
-
                   <Login
                     :closeLoginDialog="closeLoginDialog"
                     :checkProfile="checkProfile"
@@ -102,11 +101,9 @@ export default {
     };
   },
   mounted() {
-    // console.log(this.$route)
   },
   computed: {
     isProfile: function () {
-      // console.log(this.$store.state.user.isProfile)
       return this.$store.state.user.isProfile;
     },
 
@@ -116,7 +113,6 @@ export default {
       console.log(setAvatar)
       if (setAvatar == null) {
         let firstAvatar = this.$store.state.auth.avatar
-        console.log(firstAvatar)
         return firstAvatar
       } else {
         return setAvatar;

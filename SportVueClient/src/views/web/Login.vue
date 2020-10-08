@@ -87,7 +87,6 @@ export default {
           if (userInfo.role === null || userInfo.role === undefined) {
             console.log("Failed")
           } else if (userInfo.role === "ROLE_USER" || userInfo.role === "ROLE_MEMBER") {
-            console.log("run here")
             self.checkProfile();
             self.closeLoginDialog()
             self.username = "";

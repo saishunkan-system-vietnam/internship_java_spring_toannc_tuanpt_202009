@@ -38,8 +38,8 @@ export default {
   data() {
     return {
       user: {
-        username: "Admin",
-        password: "123",
+        username: "admin",
+        password: "admin",
       },
     };
   },
@@ -53,12 +53,14 @@ export default {
       this.$store
         .dispatch("auth/login", this.user)
         .then((res) => {
-          const status = localStorage.getItem("secure");
-          // console.log(status);
-          //var decrypted = CryptoJS.AES.decrypt(status, "secure");
+
+          const status = localStorage.getItem("token");
+          // var decrypted = CryptoJS.AES.decrypt(status, "secure");
           // console.log(decrypted.toString(CryptoJS.enc.Utf8));
-          //var role = decrypted.toString(CryptoJS.enc.Utf8);
-          var role = res.data.payload.account.role;
+          // var role = decrypted.toString(CryptoJS.enc.Utf8);
+          var role = res.data.payload.account.role
+          console.log(role)
+
           if (status === null || status === undefined) {
             this.$router.push("/admin/login");
           } else if (role === "ROLE_ADMIN") {

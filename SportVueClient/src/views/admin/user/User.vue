@@ -105,7 +105,7 @@ export default {
       };
 
       this.$store.dispatch("user/searchUser", params).then((response) => {
-        console.log(response);
+        // console.log(response);
         this.user = response.data.account;
         this.pages = response.data.totalPage;
       });

@@ -88,6 +88,7 @@
         <CreateMember
           :isOpenModalMember="isOpenModalMember"
           :loadMemberAfterCreate="loadMemberAfterCreate"
+          :passSelectedType = "passSelectedType"
         />
       </v-dialog>
     </v-row>

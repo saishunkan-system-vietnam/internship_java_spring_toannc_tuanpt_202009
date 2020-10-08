@@ -3,16 +3,12 @@ import { getListMember } from '@/api/MemberApi';
 
 const state = {
     token: localStorage.getItem('token') || '',
-    secure: localStorage.getItem('secure') || '',
     status: '',
     checkAccount: false,
-    avatar: '',
 }
 
 const mutations = {
-    auth_image(state, img) {
-        state.avatar = img
-    },
+
     auth_request(state) {
         state.status = 'loading'
     },
@@ -43,15 +39,11 @@ const actions = {
                         }, 3000);
                     } else {
                         const user = resp.data.payload
-                        // console.log(user)
-                        var encrypted = CryptoJS.AES.encrypt(user.account.username, "secure");
-                        // console.log("encrypted :" + encrypted)
-                        // var decrypted = CryptoJS.AES.decrypt(encrypted,"secure");
-                        // console.log(decrypted.toString(CryptoJS.enc.Utf8))
+
                         localStorage.setItem('token', user.token);
-                        localStorage.setItem('secure', encrypted);
+
                         commit('auth_success', user);
-                        commit('auth_image', user.account.profile.avatar)
+
                         resolve(resp)
                     }
                 })
