@@ -99,6 +99,11 @@ public class AccountController {
 		return ResponseQuery.faild("Form data has wrong type value", acount);
 
 	}
+	@PostMapping(value="/passToken")
+	public ResponseEntity<?> passToken(@RequestParam String token){
+		String username=jwtService.getUsernameFromToken(token);
+		return new ResponseEntity<Account>(accountService.findByUsername(username),HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/forget/{email}", method = RequestMethod.POST)
 	public ResponseEntity<String> forget(@PathVariable String email) {
