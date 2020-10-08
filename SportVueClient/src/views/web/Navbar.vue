@@ -100,8 +100,7 @@ export default {
       showMenu: false,
     };
   },
-  mounted() {
-  },
+  mounted() {},
   computed: {
     isProfile: function () {
       return this.$store.state.user.isProfile;
@@ -109,13 +108,14 @@ export default {
 
     //do this need to check bind (:) in html up
     avatar: function () {
-      let setAvatar = this.$store.state.user.userInfo.profile.avatar;
-      console.log(setAvatar)
-      if (setAvatar == null) {
-        let firstAvatar = this.$store.state.auth.avatar
-        return firstAvatar
+        console.log("Should run second")
+      console.log(this.$store.state.auth.userProfile.profile)
+      if (this.$store.state.user.userInfo == null) {
+        let firstAvatar = this.$store.state.auth.userProfile.profile.avatar;
+        return firstAvatar;
       } else {
-        return setAvatar;
+        let avatarAuto = this.$store.state.user.userInfo.profile.avatar;
+        return avatarAuto
       }
     },
   },

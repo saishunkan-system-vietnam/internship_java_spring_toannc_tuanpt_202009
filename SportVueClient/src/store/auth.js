@@ -3,12 +3,13 @@ import { getListMember } from '@/api/MemberApi';
 
 const state = {
     token: localStorage.getItem('token') || '',
+    secure: localStorage.getItem('secure') || '',
     status: '',
     checkAccount: false,
+    avatar: '',
 }
 
 const mutations = {
-
     auth_request(state) {
         state.status = 'loading'
     },
@@ -39,11 +40,9 @@ const actions = {
                         }, 3000);
                     } else {
                         const user = resp.data.payload
-
+                          
                         localStorage.setItem('token', user.token);
-
                         commit('auth_success', user);
-
                         resolve(resp)
                     }
                 })

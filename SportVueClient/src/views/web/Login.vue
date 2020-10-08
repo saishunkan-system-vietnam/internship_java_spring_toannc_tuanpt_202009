@@ -44,6 +44,7 @@
         </form>
       </v-container>
     </v-card-text>
+    
   </v-card>
 </template>
 <script>
@@ -52,20 +53,21 @@ export default {
     closeLoginDialog: {
       type: Function,
     },
-    checkProfile:{
-      type: Function
-    }
+    checkProfile: {
+      type: Function,
+    },
   },
   data() {
     return {
       user: {
-        username: "Create1",
-        password: "123",
+        username: "admin",
+        password: "admin",
       },
+    
     };
   },
   mounted() {
-    console.log(this.$store.state.auth.checkAccount);
+    // console.log(this.$store.state.auth.checkAccount);
   },
   computed: {
     checkAccount: function () {
@@ -75,31 +77,44 @@ export default {
       return this.$store.getters.isLoggedIn;
     },
   },
+  watch: {
+    // overlay(val) {
+    //   val &&
+    //     setTimeout(() => {
+    //       this.overlay = false;
+    //     }, 3000);
+    // },
+  },
   methods: {
     login: function () {
-      let self = this
-      // let userInfo = this.$store.state.user.userInfo;
+      let self = this;
+      // let userInfo = this.$store.state.user.userInfo;\
+      self.overlay = !self.overlay;
       this.$store
         .dispatch("auth/login", this.user)
         .then((res) => {
-          let userInfo = res.data.payload.account
-          // console.log(userInfo)
+          self.overlay = false;
+          let userInfo = res.data.payload.account;
           if (userInfo.role === null || userInfo.role === undefined) {
-            console.log("Failed")
-          } else if (userInfo.role === "ROLE_USER" || userInfo.role === "ROLE_MEMBER") {
+            console.log("Failed");
+          } else if (
+            userInfo.role === "ROLE_USER" ||
+            userInfo.role === "ROLE_MEMBER" ||
+            userInfo.role === "ROLE_ADMIN"
+          ) {
             self.checkProfile();
-            self.closeLoginDialog()
+            self.closeLoginDialog();
             self.username = "";
             self.password = "";
           } else {
-            console.log("Failed")
+            console.log("Failed");
           }
         })
         .catch((err) => console.log(err));
     },
-    // getMembers: function () {
-    //   this.$store.dispatch("auth/getMembers");
-    // },
+    getMembers: function () {
+      this.overlay = !this.overlay;
+    },
   },
 };
 </script>
