@@ -55,9 +55,6 @@ export default {
         .then((res) => {
 
           const status = localStorage.getItem("token");
-          // var decrypted = CryptoJS.AES.decrypt(status, "secure");
-          // console.log(decrypted.toString(CryptoJS.enc.Utf8));
-          // var role = decrypted.toString(CryptoJS.enc.Utf8);
           var role = res.data.payload.account.role
           console.log(role)
 
@@ -66,7 +63,7 @@ export default {
           } else if (role === "ROLE_ADMIN") {
             this.$router.push("/admin/home");
           } else {
-            //  this.$router.push('/');
+             this.$router.push('/');
           }
         })
         .catch((err) => console.log(err));
