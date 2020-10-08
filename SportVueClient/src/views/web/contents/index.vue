@@ -2,17 +2,23 @@
   <div class="container">
     <v-row class="fixLayout" justify="center" align="center">
       <v-col cols="12" sm="1"></v-col>
-      <v-col cols="12" sm="2" >
-        <router-link to="/sports"  style="color: white"> All Sport</router-link>
+      <v-col cols="12" sm="2">
+        <router-link to="/sports" style="color: white"> All Sport</router-link>
       </v-col>
       <v-col cols="12" sm="2"
-        ><router-link to="/soccer" style="color: white">Soccer</router-link></v-col
+        ><router-link to="/soccer" style="color: white"
+          >Soccer</router-link
+        ></v-col
       >
       <v-col cols="12" sm="2"
-        ><router-link to="/baskestBall" style="color: white">Baskest Ball</router-link></v-col
+        ><router-link to="/baskestBall" style="color: white"
+          >Baskest Ball</router-link
+        ></v-col
       >
       <v-col cols="12" sm="2"
-        ><router-link to="/tableTennis" style="color: white">Table Tennis </router-link></v-col
+        ><router-link to="/tableTennis" style="color: white"
+          >Table Tennis
+        </router-link></v-col
       >
       <v-col cols="12" sm="2"
         ><router-link to="/" style="color: white">Base Ball</router-link></v-col
