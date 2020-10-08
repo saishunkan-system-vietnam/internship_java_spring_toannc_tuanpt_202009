@@ -38,8 +38,8 @@ export default {
   data() {
     return {
       user: {
-        username: "Admin",
-        password: "123",
+        username: "admin",
+        password: "admin",
       },
     };
   },
@@ -53,7 +53,7 @@ export default {
       this.$store
         .dispatch("auth/login", this.user)
         .then((res) => {
-          const status = localStorage.getItem("secure");
+          const status = localStorage.getItem("token");
           // var decrypted = CryptoJS.AES.decrypt(status, "secure");
           // console.log(decrypted.toString(CryptoJS.enc.Utf8));
           // var role = decrypted.toString(CryptoJS.enc.Utf8);
