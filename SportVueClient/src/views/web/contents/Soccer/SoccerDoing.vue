@@ -2,8 +2,8 @@
   <div>
     <v-list dense>
       <div v-for="(items, index) in data" :key="index">
-        <v-subheader
-          ><h4 style="color: red; background: beige">
+        <v-subheader style="background: #FFE1AF"
+          ><h4 style="color: red; ">
             {{ items.nameTour }}
           </h4></v-subheader
         >

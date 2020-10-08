@@ -27,6 +27,9 @@ import AllSports from '@/views/web/contents/AllSports'
 import Soccer from '@/views/web/contents/Soccer'
 import BaskestBall from '@/views/web/contents/BaskestBall'
 import TableTennis from '@/views/web/contents/TableTennis'
+import DetailSoccer from './views/web/contents/Soccer/DetailSoccer'
+import LayoutSoccer from './views/web/contents/Soccer/LayoutSoccer'
+import DetailTournametSoccer from './views/web/contents/Soccer/DetailTournametSoccer'
 
 Vue.use(Router)
 
@@ -46,7 +49,21 @@ let routes = [
         path: '/soccer',
         name: 'soccer',
         component: Soccer,
+        children: [
+          {
+            path: '/',
+            name: 'LayoutSoccer',
+            component: LayoutSoccer
+          },
+          {
+            path:'/DetailTournametSoccer/:id',
+            name:'DetailTournametSoccer',
+            component:DetailTournametSoccer
+          }
+        ]
+
       },
+      
       {
         path: '/baskestBall',
         name: 'baskestBall',
@@ -59,6 +76,11 @@ let routes = [
       },
       
     ]
+  },
+  {
+    path: '/soccer/detail/:id',
+    name: 'detailSoccer',
+    component: DetailSoccer
   },
   {
     path: '/admin/login',
