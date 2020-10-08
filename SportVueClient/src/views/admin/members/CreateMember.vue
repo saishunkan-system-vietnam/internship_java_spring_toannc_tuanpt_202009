@@ -34,13 +34,6 @@
           </v-col>
           <v-col cols="12" md="3">
             <v-select
-              :rules="[(v) => !!v || 'Item is required']"
-              :items="type"
-              label="Sport Type"
-            ></v-select>
-          </v-col>
-          <v-col cols="12" md="3">
-            <v-select
               v-model="gender"
               :items="defaultGender"
               label="Gender"
@@ -90,6 +83,7 @@ import axios from "axios";
 
 export default {
   props: {
+    passSelectedType: String,
     isOpenModalMember: {
       type: Function,
     },
@@ -131,16 +125,11 @@ export default {
       ],
       gender: "",
       defaultGender: ["Male", "Female", "Orther"],
-      type: ["Football", "TableTennis" , "Baseball", "Basketball"],
-      selectedType: ''
     };
   },
-  //   created() {
-  //     console.log("sssacca");
-  //   },
-  //   mounted() {
-  //     console.log("sss");
-  //   },
+  mounted(){
+    //  console.log(this.passSelectedType);
+  },
   watch: {
     email() {
       this.emailRules = [
@@ -153,7 +142,7 @@ export default {
     onSubmit() {
       console.log("submit");
       let self = this;
-      //   console.log(this.fileImage);
+       
       var memberForm = new FormData();
       memberForm.append("name", this.name);
       memberForm.append("email", this.email);
@@ -161,6 +150,7 @@ export default {
       memberForm.append("age", this.age);
       memberForm.append("gender", this.gender);
       memberForm.append("address", this.address);
+      memberForm.append("type", this.passSelectedType);
       memberForm.append("file", this.fileImage);
       //   for (var value of memberForm.values()) {
       //     console.log(value);
