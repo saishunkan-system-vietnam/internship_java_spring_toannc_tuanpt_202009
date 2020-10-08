@@ -43,11 +43,7 @@ const actions = {
                         }, 3000);
                     } else {
                         const user = resp.data.payload
-                        // console.log(user)
-                        var encrypted = CryptoJS.AES.encrypt(user.account.username, "secure");
-                        // console.log("encrypted :" + encrypted)
-                        // var decrypted = CryptoJS.AES.decrypt(encrypted,"secure");
-                        // console.log(decrypted.toString(CryptoJS.enc.Utf8))
+                        var encrypted = CryptoJS.AES.encrypt(user.account.username, "secure");        
                         localStorage.setItem('token', user.token);
                         localStorage.setItem('secure', encrypted);
                         commit('auth_success', user);

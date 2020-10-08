@@ -52,13 +52,13 @@ export default {
     login: function () {
       this.$store
         .dispatch("auth/login", this.user)
-        .then(() => {
+        .then((res) => {
           const status = localStorage.getItem("secure");
-          // console.log(status);
-          var decrypted = CryptoJS.AES.decrypt(status, "secure");
+          // var decrypted = CryptoJS.AES.decrypt(status, "secure");
           // console.log(decrypted.toString(CryptoJS.enc.Utf8));
-          var role = decrypted.toString(CryptoJS.enc.Utf8);
-
+          // var role = decrypted.toString(CryptoJS.enc.Utf8);
+          var role = res.data.payload.account.role
+          console.log(role)
           if (status === null || status === undefined) {
             this.$router.push("/admin/login");
           } else if (role === "ROLE_ADMIN") {

@@ -238,7 +238,7 @@ router.beforeEach(async (to, from, next) => {
   if (store.state.auth.token != '' && store.state.user.userInfo == null) {
     store.commit('user/user_profile')
     store.dispatch("user/getByUsername", null)
-    // console.log(store.state.user.userInfo)
+    console.log(store.state.user.userInfo)
   }
   else {
     store.state.user.isProfile = false
