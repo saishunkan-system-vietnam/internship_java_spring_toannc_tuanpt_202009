@@ -4,7 +4,7 @@
       <div class="container">
         <v-row>
           <v-col class="pt-4 pb-3">
-            <v-toolbar-title><a>Dash Board</a></v-toolbar-title>
+            <v-toolbar-title class="pl-6"><a>Dash Board</a></v-toolbar-title>
           </v-col>
           <v-spacer></v-spacer>
           <template v-if="isProfile">

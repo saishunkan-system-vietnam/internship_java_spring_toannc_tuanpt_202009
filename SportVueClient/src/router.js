@@ -25,6 +25,8 @@ import TeamDetail from '@/views/admin/team/TeamDetail'
 
 import AllSports from '@/views/web/contents/AllSports'
 import Soccer from '@/views/web/contents/Soccer'
+import BaskestBall from '@/views/web/contents/BaskestBall'
+import TableTennis from '@/views/web/contents/TableTennis'
 
 Vue.use(Router)
 
@@ -45,6 +47,17 @@ let routes = [
         name: 'soccer',
         component: Soccer,
       },
+      {
+        path: '/baskestBall',
+        name: 'baskestBall',
+        component: BaskestBall,
+      },
+      {
+        path: '/tableTennis',
+        name: 'tableTennis',
+        component: TableTennis,
+      },
+      
     ]
   },
   {
