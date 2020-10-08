@@ -11,6 +11,7 @@
 <script>
 import Navbar from "@/views/web/Navbar";
 import TabHome from "@/views/web/contents";
+
 export default {
   name: "Web",
   components: { Navbar, TabHome },
