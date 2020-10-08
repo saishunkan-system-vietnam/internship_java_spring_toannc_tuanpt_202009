@@ -28,14 +28,14 @@
 			<result column="schedule_status" property="status" />
 			<result column="schedule_tour" property="idTour" />
 			<collection property="team" ofType="Team">
-			<id column="id_team" property="idTeam" />
-			<result column="team_name" property="nameTeam" />
-			<result column="team_totalmatch" property="totalmatch" />
-			<result column="team_totalwin" property="totalwin" />
-			<result column="team_type" property="type" />
-			<result column="team_description" property="description" />
-			<result column="team_logo" property="logo" />
-		</collection>
+				<id column="id_team" property="idTeam" />
+				<result column="team_name" property="nameTeam" />
+				<result column="team_totalmatch" property="totalmatch" />
+				<result column="team_totalwin" property="totalwin" />
+				<result column="team_type" property="type" />
+				<result column="team_description" property="description" />
+				<result column="team_logo" property="logo" />
+			</collection>
 		</collection>
 		<collection property="team" ofType="Team">
 			<id column="id_team" property="idTeam" />
@@ -60,13 +60,13 @@
 		</collection>
 	</resultMap>
 	<select id="getByStatus" resultMap="tournamentMapping">
-			SELECT * FROM
+		SELECT * FROM
 		sports.tournament_tbl p left join
 		(schedule_tbl c inner join
 		team_tbl on c.schedule_team1=team_tbl.id_team or
 		c.schedule_team2=team_tbl.id_team )on
 		p.id_tournament=c.schedule_tour
-		Where p.tournament_status=${status}
+		Where p.tournament_status=${status} and tournament_type='${type}'
 	</select>
 
 	<select id="getById" resultMap="tournamentMapping">
@@ -136,8 +136,14 @@
 		SELECT * FROM
 		sports.tournament_tbl where tournament_status!=2
 	</select>
-	<select id="getByType" resultMap="tournamentMapping" >
-		SELECT * FROM
-		sports.tournament_tbl where tournament_type='${type}'
+	<select id="getByType" resultMap="tournamentMapping">
+		SELECT *
+		FROM
+		sports.tournament_tbl p left join
+		(schedule_tbl c inner join
+		team_tbl on c.schedule_team1=team_tbl.id_team or
+		c.schedule_team2=team_tbl.id_team )on
+		p.id_tournament=c.schedule_tour
+		where tournament_type='${type}'
 	</select>
 </mapper>

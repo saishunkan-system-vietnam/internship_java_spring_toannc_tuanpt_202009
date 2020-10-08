@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import ssv.com.dto.Rank;
 import ssv.com.dto.TournamentDto;
 import ssv.com.entity.Tournament;
 import ssv.com.service.TournamentService;
@@ -100,13 +101,18 @@ public class TournamentController {
 	}
 	//lấy Data theo status
 	@GetMapping(value="getByStatus")
-	public ResponseEntity<List<Tournament>> getByStatus(@RequestParam int status){
-		return new ResponseEntity<List<Tournament>>(tournamentService.getByStatus(status),HttpStatus.OK);
+	public ResponseEntity<List<Tournament>> getByStatus(@RequestParam int status,@RequestParam String type){
+		return new ResponseEntity<List<Tournament>>(tournamentService.getByStatus(status,type),HttpStatus.OK);
 	}
 	//Lấy data theo thể loại
 	@GetMapping(value="getByType")
 	public ResponseEntity<List<Tournament>> getByType(@RequestParam String type){
 		return new ResponseEntity<List<Tournament>>(tournamentService.getByType(type),HttpStatus.OK);
+	}
+	//Hiển thị rank theo thể loại
+	@GetMapping(value="rank")
+	public ResponseEntity<List<Rank>> rank(@RequestParam String type){
+		return new ResponseEntity<List<Rank>>(tournamentService.rank(type),HttpStatus.OK);
 	}
 
 }

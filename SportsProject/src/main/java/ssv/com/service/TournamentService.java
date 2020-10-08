@@ -1,5 +1,8 @@
 package ssv.com.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -8,8 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import lombok.var;
+import ssv.com.dto.Rank;
 import ssv.com.dto.TournamentDto;
 import ssv.com.entity.Profile;
+import ssv.com.entity.Schedule;
 import ssv.com.entity.Team;
 import ssv.com.entity.Tournament;
 import ssv.com.repository.HistoryRepository;
@@ -87,7 +92,9 @@ public class TournamentService {
 
 	public void updateStatus(int idTour, int status) {
 		teamService.formatTotalMatch(idTour);
-		teamService.formatTour(idTour);
+		if(status==2) {
+			teamService.formatTour(idTour);
+		}
 		tournamentRepository.updateStatus(idTour, status);
 
 	}
@@ -115,9 +122,9 @@ public class TournamentService {
 		return "edit";
 	}
 
-	public List<Tournament> getByStatus(int status) {
+	public List<Tournament> getByStatus(int status, String type) {
 		// TODO Auto-generated method stub
-		return tournamentRepository.getByStatus(status);
+		return tournamentRepository.getByStatus(status,type);
 	}
 
 	public List<Tournament> getByType(String type) {
@@ -125,4 +132,30 @@ public class TournamentService {
 		return tournamentRepository.getByType(type);
 	}
 
+	public List<Rank> rank(String type) {
+		List<Rank> list=new ArrayList<Rank>();
+		for (Team team : teamService.getAllByType(type)) {
+			Rank rank=new Rank();
+			rank.setName(team.getNameTeam());
+			double numberRank =teamService.rank(team.getIdTeam());
+			rank.setRank(numberRank);
+			list.add(rank);
+		};
+		Collections.sort(list, new Comparator<Rank>() {
+
+			@Override
+			public int compare(Rank s1, Rank s2) {
+				if (s1.rank == s2.rank)
+					return 0;
+				else if (s1.rank > s2.rank)
+					return -1;
+				else
+					return 1;
+			}
+		});
+		 
+		return list;
+	}
+
 }
+

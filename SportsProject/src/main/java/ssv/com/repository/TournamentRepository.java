@@ -44,9 +44,9 @@ public class TournamentRepository {
 		tournamentMapper.edit(tournament);
 	}
 
-	public List<Tournament> getByStatus(int status) {
+	public List<Tournament> getByStatus(int status, String type) {
 		// TODO Auto-generated method stub
-		return tournamentMapper.getByStatus(status);
+		return tournamentMapper.getByStatus(status,type);
 	}
 
 	public List<Tournament> getByType(String type) {

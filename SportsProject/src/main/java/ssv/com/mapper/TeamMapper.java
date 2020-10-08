@@ -61,4 +61,6 @@ public interface TeamMapper {
 
 	public void updateTeam(@Param("id") int id, @Param("team") Team team);
 
+	public List<Team> getAllByType(String type);
+
 }

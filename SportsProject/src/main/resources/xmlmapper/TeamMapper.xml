@@ -22,7 +22,8 @@
 			<result property="title" column="tournament_title" />
 			<result property="description" column="tournament_description" />
 		</association>
-		<collection property="profile" ofType="Profile" notNullColumn="id">
+		<collection property="profile" ofType="Profile"
+			notNullColumn="id">
 			<id property="id" column="id" />
 			<result property="name" column="profile_name" />
 			<result property="email" column="profile_email" />
@@ -36,7 +37,8 @@
 
 	</resultMap>
 	<select id="getAll" resultMap="teamMapping">
-		SELECT p.*, t.*, c.* FROM team_tbl p
+		SELECT p.*, t.*, c.* FROM team_tbl
+		p
 		left join profile_tbl c on p.id_team = c.id_team
 		left join
 		tournament_tbl t on p.id_tour = t.id_tournament
@@ -148,15 +150,26 @@
 	</update>
 
 	<select id="teamTourHistory" resultMap="teamMapping">
-		SELECT * FROM sports.team_tbl inner join (history_tbl left join profile_tbl
-		c on history_tbl.id_member = c.id) on
-		history_tbl.id_team=team_tbl.id_team where
+		SELECT * FROM
+		sports.team_tbl inner join (history_tbl left join profile_tbl
+		c on
+		history_tbl.id_member = c.id) on
+		history_tbl.id_team=team_tbl.id_team
+		where
 		history_tbl.id_tour=${idTour} and team_tbl.id_team=${idTeam}
 	</select>
 
 	<update id="formatTotalMatch" parameterType="int">
-		Update team_tbl set team_totalmatch=0 where id_tour=${idTour}
+		Update team_tbl set
+		team_totalmatch=0 where id_tour=${idTour}
 	</update>
+	<select id="getAllByType" resultMap="teamMapping">
+		SELECT p.*, t.*, c.* FROM team_tbl p
+		left join profile_tbl c on p.id_team =
+		c.id_team
+		left join
+		tournament_tbl t on p.id_tour = t.id_tournament where p.team_type='${type}'
+	</select>
 
 
 </mapper>
