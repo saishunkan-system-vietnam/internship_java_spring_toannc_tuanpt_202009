@@ -1,6 +1,6 @@
 import { searchUser } from '@/api/UserApi'
 import { getById } from '../api/UserApi';
-import { getByUsername } from '../api/UserApi'
+import { autoLogin } from '../api/UserApi'
 
 const state = {
     userInfo: null,
@@ -10,9 +10,9 @@ const state = {
 const mutations = {
     user_info(state, user) {
         state.userInfo = user
+        // console.log(state.userInfo)
     },
-    user_profile(state){
-        console.log('user_profile');
+    user_profile(state) {
         state.isProfile = !state.isProfile
     }
 }
@@ -36,35 +36,15 @@ const actions = {
             })
         })
     },
-    getByUsername({ commit }, username) {
-        
-        commit('user_info', {
-            "id": 113,
-            "email": "Create1@gmail.com",
-            "password": "$2a$12$9kaVBBWMtQyy/0sPH9UBuOAlwxuvGwnSgREf6i33.zV160k89s1.a",
-            "role": "ROLE_USER",
-            "username": "Create1",
-            "profile": {
-                "id": null,
-                "name": null,
-                "email": "Create1@gmail.com",
-                "phone": null,
-                "age": null,
-                "gender": null,
-                "address": null,
-                "type": null,
-                "avatar": "http://localhost:8090/images/defaultuser.png",
-                "idTeam": 0,
-                "team": null
-            }
-        })
-        // return new Promise((resolve, reject) => {
-        //     getByUsername(username).then(res => {
-        //         resolve(res);
-        //     }).catch((err) => {
-        //         reject(err);
-        //     })
-        // })
+    async autoLogin({ commit },) {
+        try {
+            await autoLogin().then((res) => {
+                commit('user_info', res.data.payload)
+                return res
+            })
+        } catch (Ex) {
+            reject(err);
+        }
     },
 }
 

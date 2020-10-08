@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //
 //	        .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
 //	        .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
-//
+
 	  }
 
 }

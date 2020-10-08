@@ -47,6 +47,7 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
 	            null, userDetail.getAuthorities());
 	        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
 	        SecurityContextHolder.getContext().setAuthentication(authentication);
+	        httpRequest.getSession().setAttribute("userInfo", account);
 	      }
 	    }
 	    chain.doFilter(request, response);
