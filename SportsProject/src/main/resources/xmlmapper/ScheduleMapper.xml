@@ -149,25 +149,25 @@
 
 	<select id="sum" resultType="int">
 		Select COUNT(*) FROM
-		sports.schedule_tbl where schedule_team1=${idTeam} or
-		schedule_team2=${idTeam}
+		sports.schedule_tbl where (schedule_team1=${idTeam} or
+		schedule_team2=${idTeam}) and schedule_tbl.schedule_status=2
 	</select>
 
 	<select id="sumWin" resultType="int">
 		Select COUNT(*) FROM
-		sports.schedule_tbl where schedule_winner=${idTeam}
+		sports.schedule_tbl where schedule_winner=${idTeam}  and schedule_tbl.schedule_status=2
 	</select>
 
 	<select id="sumWinJoinByTour" resultType="int">
 		Select COUNT(*) FROM
-		sports.schedule_tbl where schedule_winner=${idTeam} and
+		sports.schedule_tbl where schedule_winner=${idTeam} and  schedule_tbl.schedule_status=2 and
 		schedule_tour=${idTour}
 	</select>
 
 	<select id="sumJoinByTour" resultType="int">
 		Select COUNT(*) FROM
 		sports.schedule_tbl where (schedule_team1=${idTeam} or
-		schedule_team2=${idTeam}) and schedule_tour=${idTour}
+		schedule_team2=${idTeam}) and schedule_tour=${idTour}  and schedule_tbl.schedule_status=2
 	</select>
 
 	<select id="upcomingMatch" resultMap="scheduleMapping">
@@ -203,4 +203,5 @@
 		
 		where (schedule_team1=${idTeam1} or schedule_team2=${idTeam2} or schedule_team1=${idTeam2} or schedule_team2=${idTeam1}) and schedule_tour=${idTour}
 	</select>
+	
 </mapper>

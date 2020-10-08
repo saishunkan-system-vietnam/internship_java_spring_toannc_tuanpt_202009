@@ -139,4 +139,6 @@ public class ScheduleService {
 		return scheduleReponsitory.relate(idTeam1,idTeam2,idTour);
 	}
 
+
+
 }

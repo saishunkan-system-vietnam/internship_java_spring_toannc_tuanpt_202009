@@ -24,7 +24,7 @@ public interface TournamentMapper {
 
 	public void edit(Tournament tournament);
 
-	public List<Tournament> getByStatus(int status);
+	public List<Tournament> getByStatus(int status, String type);
 
 	public List<Tournament> getByType(String type);
 

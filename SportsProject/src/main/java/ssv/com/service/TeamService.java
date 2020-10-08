@@ -156,4 +156,14 @@ public class TeamService {
 			teamRepository.updateTeam(id, team);
 	}
 
+	public List<Team> getAllByType(String type) {
+		// TODO Auto-generated method stub
+		return teamRepository.getAllByType(type);
+	}
+
+	public double rank(int i) {
+	
+		return (scheduleReponsitory.sumWin(i)*1.0)/scheduleReponsitory.sum(i);
+	}
+
 }

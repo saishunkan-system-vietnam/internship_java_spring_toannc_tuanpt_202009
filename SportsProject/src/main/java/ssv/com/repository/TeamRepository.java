@@ -116,5 +116,10 @@ public class TeamRepository {
 		 teamMapper.updateTeam(id, team);
 	}
 
+	public List<Team> getAllByType(String type) {
+		// TODO Auto-generated method stub
+		return teamMapper.getAllByType(type);
+	}
+
 
 }

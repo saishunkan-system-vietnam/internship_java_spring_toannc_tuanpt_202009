@@ -96,4 +96,6 @@ public class ScheduleReponsitory {
 		return scheduleMapper.relate(idTeam1,idTeam2,idTour);
 	}
 
+	
+
 }
