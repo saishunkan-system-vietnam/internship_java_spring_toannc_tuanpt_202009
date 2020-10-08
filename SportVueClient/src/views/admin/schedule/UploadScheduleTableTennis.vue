@@ -131,6 +131,7 @@ export default {
   props: {
     schedule: Object,
     callback: Function,
+    loadData: Function,
   },
   data: () => ({
     score1h1: "",
@@ -165,15 +166,26 @@ export default {
         console.log(this.schedule);
       } else {
         var bodyFormData = new FormData();
+        var score1 = 0;
+        var score2 = 0;
+        if (this.score1h1 > this.score2h1) {
+          score1++;
+        } else {
+          score2++;
+        }
+        if (this.score1h2 > this.score2h2) {
+          score1++;
+        } else {
+          score2++;
+        }
+        if (this.score1h3 > this.score2h3) {
+          score1++;
+        } else {
+          score2++;
+        }
         bodyFormData.append("idSchedule", this.data.idSchedule);
-        bodyFormData.append(
-          "scoreTeam1",
-          Number(this.score1h1) + Number(this.score1h2)
-        );
-        bodyFormData.append(
-          "scoreTeam2",
-          Number(this.score2h2) + Number(this.score2h2)
-        );
+        bodyFormData.append("scoreTeam1",score1);
+        bodyFormData.append("scoreTeam2",score2);
         bodyFormData.append("idTeam1", this.data.idTeam1);
         bodyFormData.append("idTeam2", this.data.idTeam2);
         bodyFormData.append("description", this.description4);
@@ -213,6 +225,7 @@ export default {
                         alert(response.data);
                         this.reset();
                         this.callback();
+                        this.loadData();
                       });
                   });
               });

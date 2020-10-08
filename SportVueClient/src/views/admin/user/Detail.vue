@@ -177,7 +177,7 @@ export default {
       .dispatch("user/getById", this.$route.params.id)
       .then((response) => {
         this.data = response.data;
-        this.avatar = "http://localhost:8090/" + response.data.profile.avatar;
+        this.avatar =response.data.profile.avatar;
         if (response.data.role == "ROLE_USER") {
           this.role = true;
         } else {
