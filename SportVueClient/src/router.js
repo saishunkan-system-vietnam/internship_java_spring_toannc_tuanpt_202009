@@ -238,12 +238,7 @@ router.beforeEach(async (to, from, next) => {
   if (store.state.auth.token != '' && store.state.user.userInfo == null) {
     store.commit('user/user_profile')
     store.dispatch("user/getByUsername", null)
-    console.log(store.state.user.userInfo)
   }
-  else {
-    store.state.user.isProfile = false
-  }
-  next()
 
   if (to.meta.requiredAuth) {
     //Check token
@@ -251,7 +246,6 @@ router.beforeEach(async (to, from, next) => {
     const status = localStorage.getItem('secure');
     var decrypted = CryptoJS.AES.decrypt(status, "secure");
     var info = decrypted.toString(CryptoJS.enc.Utf8)
-    store.dispatch()
     if (!authUser || !authUser.token) {
       next({ name: '/admin/login' })
     }
@@ -262,13 +256,6 @@ router.beforeEach(async (to, from, next) => {
         next('/admin/login')
       }
     }
-    // else if (to.meta.userAuth) {
-    //   if (role === 'ROLE_USER' || role === 'MEMBER' || role === "ADMIN") {
-    //     next()
-    //   } else {
-    //     next()
-    //   }
-    // }
   }
   else {
     next()
