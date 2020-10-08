@@ -29,41 +29,6 @@
           ></v-file-input>
         </v-col>
       </v-row>
-
-      <v-row>
-        <v-col cols="10">
-          <v-select
-            v-model="select"
-            :items="members"
-            item-text="name"
-            item-value="id"
-            :counter="50"
-            label="Select Members"
-            multiple
-          >
-            <template v-slot:selection="data">
-              <v-chip
-                :key="JSON.stringify(data.item)"
-                v-bind="data.attrs"
-                :input-value="data.selected"
-                :disabled="data.disabled"
-                @click:close="data.parent.selectItem(data.item)"
-              >
-                <v-avatar
-                  class="accent white--text"
-                  left
-                  v-text="data.item.name.slice(0, 1).toUpperCase()"
-                ></v-avatar>
-                {{ data.item.name }}
-              </v-chip>
-            </template>
-          </v-select>
-        </v-col>
-        <v-col cols="2">
-          <ListMember :passSelectedType="selectedType" />
-        </v-col>
-      </v-row>
-
       <v-textarea
         clearable
         v-model="description"

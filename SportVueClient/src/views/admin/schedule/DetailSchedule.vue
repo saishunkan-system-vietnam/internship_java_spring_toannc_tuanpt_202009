@@ -2,7 +2,7 @@
   <div>
     <div>
       <div v-if="schedule.status == 2">
-        <div v-if="(team1.type = 'Football')">
+        <div v-if="(team1.type == 'Football')">
           <v-btn color="green darken-1" text @click="dialogFootball = true">
             <b-icon-upload></b-icon-upload>upload
           </v-btn>
@@ -12,7 +12,7 @@
             color="green darken-1"
             text
             @click="dialogTableTennis = true"
-          ></v-btn>
+          ><b-icon-upload></b-icon-upload>upload</v-btn>
         </div>
       </div>
       <div v-else>
@@ -26,17 +26,19 @@
           <v-card-text>
             <UploadScheduleFootBall
               :schedule="schedule"
+              :loadData="getAll"
               :callback="hideModal"
             />
           </v-card-text>
         </v-card>
       </v-dialog>
-      <v-dialog v-model="dialogFootball" width="900px">
+      <v-dialog v-model="dialogTableTennis" width="900px">
         <v-card>
           <v-card-title class="headline"> Upload data </v-card-title>
           <v-card-text>
             <UploadScheduleTableTennis
               :schedule="schedule"
+              :loadData="getAll"
               :callback="hideModal"
             />
           </v-card-text>
@@ -136,6 +138,7 @@
         placeholder="Description"
         rows="5"
         no-resize
+        v-model="schedule.description"
         disabled
       ></b-form-textarea>
       <h4>
@@ -198,7 +201,7 @@ export default {
             })
             .then((response) => {
               this.team1 = response.data;
-              console.log(response);
+              ;
             });
           this.$store
             .dispatch("team/teamTourHistory", {
