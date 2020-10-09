@@ -27,6 +27,7 @@ public class Account {
 	  private String role;
 	  private String username;
 	  private Profile profile;
+	  private String token;
 	  public List<GrantedAuthority> getAuthorities() {
 		    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		      authorities.add(new SimpleGrantedAuthority(role));
