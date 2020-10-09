@@ -32,7 +32,8 @@ import LayoutSoccer from './views/web/contents/Soccer/LayoutSoccer'
 import DetailTournametSoccer from './views/web/contents/Soccer/DetailTournametSoccer'
 import LayoutTableTennis from './views/web/contents/TableTennis/LayoutTableTennis'
 import DetailTournametTableTennis from './views/web/contents/TableTennis/DetailTournametTableTennis'
-
+import LayoutAllSports from './views/web/contents/AllSports/LayoutAllSports'
+import DetailTournametSports from './views/web/contents/AllSports/DetailTournametSports'
 
 Vue.use(Router)
 const metaConfig = {
@@ -49,12 +50,22 @@ let routes = [
     children: [
       {
         path: '/sports',
-        name: 'allsports',
         component: AllSports,
+        children:[{
+          path:'/',
+          name:'LayoutAllSports',
+          component:LayoutAllSports
+        },
+        {
+          path: '/DetailTournametSports/:id',
+          name: 'DetailTournametSports',
+          component: DetailTournametSports
+        }
+        
+      ]
       },
       {
         path: '/soccer',
-        name: 'soccer',
         component: Soccer,
         children: [
           {
@@ -77,7 +88,6 @@ let routes = [
       },
       {
         path: '/tableTennis',
-        name: 'tableTennis',
         component: TableTennis,
         children: [
           {
@@ -177,7 +187,6 @@ let routes = [
       {
         path: "/LayoutTournament",
         component: LayoutTournament,
-        name: "LayoutTournament",
         children: [
           {
             path: "/",

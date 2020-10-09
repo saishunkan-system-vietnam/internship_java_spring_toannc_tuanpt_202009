@@ -1,6 +1,6 @@
 <template>
   <div>
-    
+    <v-container>
       <v-card>
         <h3>Giải đấu :{{ data.nameTour }}</h3>
 
@@ -95,6 +95,7 @@
           </v-tab-item>
         </v-tabs-items>
       </v-card>
+    </v-container>
   </div>
 </template>
 <script>

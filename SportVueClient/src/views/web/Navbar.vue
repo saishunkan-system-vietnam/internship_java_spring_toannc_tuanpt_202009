@@ -1,5 +1,5 @@
 <template>
-  <v-card color="grey lighten-4 mb-1" flat tile>
+  <v-card color="grey lighten-4 mb-1" flat tile >
     <v-toolbar>
       <div class="container">
         <v-row>
@@ -125,6 +125,7 @@ export default {
       this.$store.commit("user/user_profile");
     },
     logout() {
+      this.showMenu = false
       this.$store.dispatch("auth/logout").then(() => {
         this.checkProfile();
         this.LoginDialog = false;
