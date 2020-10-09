@@ -1,26 +1,11 @@
 <template>
   <div style="background-color: white; width: 600px">
     <div>
-      <v-icon
-        v-if="data.team[0].type == 'Football'"
-        large
-        color="green darken-2"
-      >
+      <v-icon v-if="data.type == 'Football'" large color="green darken-2">
         mdi-soccer
       </v-icon>
-      <v-icon
-        v-if="data.team[0].type == 'TableTennis'"
-        large
-        color="green darken-2"
-      >
-       sports_tennis
-      </v-icon>
-      <v-icon
-        v-if="data.team[0].type == 'Basketball'"
-        large
-        color="green darken-2"
-      >
-        sports_basketball
+      <v-icon v-if="data.type == 'TableTennis'" large color="blue darken-2">
+        sports_tennis
       </v-icon>
 
       {{ data.nameTour }}
@@ -111,17 +96,27 @@
                           >
                             Tỉ số
                           </div>
-                          <table class="table">
-                            <tbody>
-                              <tr v-for="(item, index) in data.round"
-                              :key="index">
-                                <td>{{ item.roundName }}</td>
-                                <td>{{ item.roundScore1 }}</td>
-                                <td>{{ item.roundScore2 }}</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                          
+                       
+                          <v-row>
+                            
+                            <v-col>
+                              <div>{{ data.team[0].nameTeam }}</div>
+                              <div>{{ data.team[1].nameTeam }}</div>
+                            </v-col>
+                            <v-col v-if="data.status == 2">
+                              <div>
+                                {{ data.round[0].roundScore1 }} &emsp;{{
+                                  data.round[1].roundScore1
+                                }}
+                                &emsp;<b>{{ data.scoreTeam1 }}</b>
+                              </div>
+                              <div>
+                                {{ data.round[0].roundScore2 }}&emsp;
+                                {{ data.round[1].roundScore2 }}&emsp;
+                                <b>{{ data.scoreTeam2 }}</b>
+                              </div>
+                            </v-col>
+                          </v-row>
                           <div
                             class="text-center"
                             style="background-color: #bcaaa4"
@@ -240,22 +235,22 @@
                                   v-bind:key="index"
                                 >
                                   <b-card-text>
-                                    <h4>Tỉ số :</h4>
+                                    Tỉ số :
                                     <b-row>
-                                      <b-col class="text-center"
+                                      <b-col
                                         ><b-avatar
                                           :src="team1.logo"
                                           size="6rem"
                                         ></b-avatar
                                       ></b-col>
-                                      <b-col class="text-center"
+                                      <b-col
                                         ><h1>
                                           {{ item.roundScore1 }}-{{
                                             item.roundScore2
                                           }}
                                         </h1></b-col
                                       >
-                                      <b-col class="text-center"
+                                      <b-col
                                         ><b-avatar
                                           :src="team1.logo"
                                           size="6rem"
@@ -371,7 +366,6 @@ export default {
       .dispatch("schedule/getById", this.$route.params.id)
       .then((response) => {
         this.data = response.data;
-        console.log(this.data);
         this.$store
           .dispatch("team/getDetail", {
             params: {

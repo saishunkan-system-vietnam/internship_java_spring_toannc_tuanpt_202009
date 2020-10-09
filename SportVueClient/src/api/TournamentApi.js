@@ -37,6 +37,16 @@ export function getByType(type){
 export function getRank(type){
     return Api.get('/tournament/rank',{params:{type:type}})
 }
+
 export function getRankByTour(idTour){
     return Api.get('/tournament/rankByTour',{params:{idTour:idTour}})
+
+
+export function rankAll(){
+    return Api.get('/tournament/rankAll')
+}
+
+export function getToursByType(){
+    return Api.get('/tournament/getToursByType')
+
 }

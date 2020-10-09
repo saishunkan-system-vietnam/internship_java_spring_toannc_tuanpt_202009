@@ -1,47 +1,16 @@
 <template>
   <v-row>
-    <v-col class="d-flex" cols="12" sm="2">Left</v-col>
-    <v-col class="d-flex" cols="12" sm="8"
-      ><v-card>
-        <v-toolbar>
-          <template v-slot:extension>
-            <v-tabs v-model="currentItem" fixed-tabs slider-color="white">
-              <v-tab v-for="item in items" :key="item" :href="'#tab-' + item">
-                {{ item }}
-              </v-tab>
 
-              <v-menu v-if="more.length" bottom left>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    text
-                    class="align-self-center mr-4"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    more
-                    <v-icon right> mdi-menu-down </v-icon>
-                  </v-btn>
-                </template>
-
-                <v-list class="grey lighten-3">
-                  <v-list-item
-                    v-for="item in more"
-                    :key="item"
-                    @click="addItem(item)"
-                  >
-                    {{ item }}
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </v-tabs>
-          </template>
-        </v-toolbar>
-
-        <v-tabs-items v-model="currentItem">
-          <v-tab-item
-            v-for="item in items.concat(more)"
-            :key="item"
-            :value="'tab-' + item"
+    <v-col class="pr-0" cols="12" sm="2">
+      <div style="margin-bottom: 15px !important" class="pl-15"> <v-icon large color="red darken-2">home_work</v-icon></div>
+      <v-expansion-panels multiple>
+        <v-expansion-panel v-for="(item, i) in tournaments" :key="i">
+          <v-expansion-panel-header disable-icon-rotate style="color: red">{{
+            item.type
+          }}</v-expansion-panel-header>
+          <v-expansion-panel-content
+            v-for="(tournament, t) in item.tournament"
+            :key="t"
           >
             <v-card flat>
               <v-card-text>
@@ -59,14 +28,27 @@
 <script>
 export default {
   data: () => ({
-    currentItem: "tab-Web",
-    items: ["Web", "Shopping", "Videos", "Images"],
-    more: ["News", "Maps", "Books", "Flights", "Apps"],
-    text:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    tournaments: [],
+    rank: [],
   }),
 
+  created() {
+    this.recivceData();
+    this.recivceRank();
+  },
   methods: {
+    recivceData() {
+      let self = this;
+      this.$store.dispatch("tournament/getToursByType").then((res) => {
+        self.tournaments = res.data;
+      });
+    },
+    recivceRank() {
+      let self = this;
+      this.$store.dispatch("tournament/rankAll").then((res) => {
+        self.rank = res.data;
+      });
+    },
     addItem(item) {
       const removed = this.items.splice(0, 1);
       this.items.push(...this.more.splice(this.more.indexOf(item), 1));
