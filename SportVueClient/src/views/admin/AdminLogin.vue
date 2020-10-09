@@ -56,8 +56,6 @@ export default {
 
           const status = localStorage.getItem("token");
           var role = res.data.payload.role
-          console.log(role)
-
           if (status === null || status === undefined) {
             this.$router.push("/admin/login");
           } else if (role === "ROLE_ADMIN") {

@@ -1,9 +1,12 @@
 <template>
   <v-row>
     <v-col class="pr-0" cols="12" sm="2">
+      <div style="margin-bottom: 15px !important" class="pl-15"> <v-icon large color="red darken-2">home_work</v-icon></div>
       <v-expansion-panels multiple>
         <v-expansion-panel v-for="(item, i) in tournaments" :key="i">
-          <v-expansion-panel-header>{{ item.type }}</v-expansion-panel-header>
+          <v-expansion-panel-header disable-icon-rotate style="color: red">{{
+            item.type
+          }}</v-expansion-panel-header>
           <v-expansion-panel-content
             v-for="(tournament, t) in item.tournament"
             :key="t"
@@ -46,9 +49,10 @@
       </v-card>
     </v-col>
     <v-col class="pl-0" cols="12" sm="2">
+      <div style="margin-bottom: 15px !important" class="pl-15"> <v-icon large color="green darken-2">military_tech</v-icon></div>
       <v-expansion-panels multiple>
         <v-expansion-panel v-for="(item1, y) in rank" :key="y">
-          <v-expansion-panel-header>{{ item1.type }}</v-expansion-panel-header>
+          <v-expansion-panel-header style="color: green">{{ item1.type }}</v-expansion-panel-header>
           <v-expansion-panel-content v-for="(team, s) in item1.list" :key="s">
             <p v-b-popover.hover.left="team.name">
               {{ s + 1 }} .
