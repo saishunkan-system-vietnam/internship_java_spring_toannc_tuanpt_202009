@@ -1,4 +1,4 @@
-import { detail, teamTourHistory, teamWait } from "../api/TeamApi";
+import { detail, teamTourHistory, teamWait,getById } from "../api/TeamApi";
 
 const actions={
     teamTourHistory({},data){
@@ -30,7 +30,7 @@ const actions={
     },
     getById({},id){
         return new Promise((resolve,reject)=>{
-            this.getById(id).then(res=>{
+            getById(id).then(res=>{
                 resolve(res);
             }).catch((err)=>{
                 reject(err);

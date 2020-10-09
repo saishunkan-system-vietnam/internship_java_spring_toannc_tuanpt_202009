@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ssv.com.dto.Rank;
+import ssv.com.dto.RankTeamsByType;
 import ssv.com.dto.TournamentDto;
 import ssv.com.dto.ToursByType;
 import ssv.com.entity.Tournament;
@@ -125,6 +126,10 @@ public class TournamentController {
 	public ResponseEntity<List<ToursByType>> getToursByType(){
 		return new ResponseEntity<List<ToursByType>>(tournamentService.getToursByType(),HttpStatus.OK);
 	}
-	
+	//Hiển thị rank của tất cả các thể loại
+	@GetMapping(value="rankAll")
+	public ResponseEntity<List<RankTeamsByType>>  rankAll(){
+		return new ResponseEntity<List<RankTeamsByType>>(tournamentService.rankAll(),HttpStatus.OK);
+	}
 
 }

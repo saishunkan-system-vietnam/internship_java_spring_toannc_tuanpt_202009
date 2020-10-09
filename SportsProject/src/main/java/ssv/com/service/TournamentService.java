@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.var;
 import ssv.com.dto.Rank;
+import ssv.com.dto.RankTeamsByType;
 import ssv.com.dto.TournamentDto;
 import ssv.com.dto.ToursByType;
 import ssv.com.entity.History;
@@ -199,6 +200,19 @@ public class TournamentService {
 			listsTours.add(toursByType);
 		}
 		return listsTours;
+	}
+
+	public List<RankTeamsByType> rankAll() {
+		List<RankTeamsByType> listTeam=new ArrayList<RankTeamsByType>();
+		List<String> lists=tournamentRepository.getTypeSport();
+		for (String type : lists) {
+			RankTeamsByType rankTeamsByType=new RankTeamsByType();
+			rankTeamsByType.setType(type);
+			rankTeamsByType.setList(rank(type));
+			listTeam.add(rankTeamsByType);
+		
+		}
+		return listTeam;
 	}
 
 }

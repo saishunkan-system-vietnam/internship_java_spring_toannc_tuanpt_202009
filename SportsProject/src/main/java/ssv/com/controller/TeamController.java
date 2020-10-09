@@ -54,7 +54,7 @@ public class TeamController {
 		return new ResponseEntity<Team>(teamService.getById(id), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/{teamId}")
+	@GetMapping(value = "{teamId}")
 	public ResponseEntity<Team> findById(@PathVariable(value = "teamId") int id) {
 		return new ResponseEntity<Team>(teamService.findById(id), HttpStatus.OK);
 	}

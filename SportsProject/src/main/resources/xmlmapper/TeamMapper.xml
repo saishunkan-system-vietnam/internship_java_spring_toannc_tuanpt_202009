@@ -36,6 +36,17 @@
 		</collection>
 
 	</resultMap>
+	<resultMap type="Team" id="teamMapping1">
+		<id column="id_team" property="idTeam" />
+		<result column="team_name" property="nameTeam" />
+		<result column="team_totalmatch" property="totalmatch" />
+		<result column="team_totalwin" property="totalwin" />
+		<result column="team_type" property="type" />
+		<result column="team_description" property="description" />
+		<result column="team_logo" property="logo" />
+		<result column="id_tour" property="idTour" />
+
+	</resultMap>
 	<select id="getAll" resultMap="teamMapping">
 		SELECT p.*, t.*, c.* FROM team_tbl
 		p
@@ -55,7 +66,7 @@
 		schedule_tbl where schedule_winner = ${idTeam}
 	</select>
 
-	<select id="findById" resultMap="teamMapping">
+	<select id="findById" resultMap="teamMapping1">
 		Select * from team_tbl where
 		id_team = ${teamId}
 	</select>
