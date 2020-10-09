@@ -178,6 +178,7 @@ export default {
     },
     getTournament() {
       this.$store.dispatch("tournament/getAction").then((response) => {
+
         this.tournament = response.data;
       });
     },
@@ -225,6 +226,7 @@ export default {
       this.$store
         .dispatch("tournament/getById", this.selectTournament)
         .then((response) => {
+
           this.team=response.data.team;
         });
     },
