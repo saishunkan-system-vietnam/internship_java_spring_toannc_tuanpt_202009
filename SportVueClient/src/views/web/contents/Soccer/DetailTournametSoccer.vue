@@ -43,6 +43,25 @@
                     </tbody>
                   </template>
                 </v-simple-table>
+                <h5 style="color: red">Bảng xếp hạng</h5>
+                <v-simple-table>
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">Hạng</th>
+                        <th class="text-left">Tên</th>
+                        <th class="text-left">Tỉ lệ thắng</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(item,index) in rank" :key="index">
+                        <td>{{ index }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.rank!='NaN'?item.rank*100:0 }}%</td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
               </v-card-text>
             </v-card>
           </v-tab-item>
@@ -101,6 +120,7 @@
 export default {
   data() {
     return {
+      rank:'',
       data: "",
       tab: null,
       open:false
@@ -115,6 +135,11 @@ export default {
         .dispatch("tournament/getById", this.$route.params.id)
         .then((response) => {
           this.data = response.data;
+        });
+        this.$store
+        .dispatch("tournament/getRankByTour", this.$route.params.id)
+        .then((response) => {
+          this.rank = response.data;
         });
     },
       detail(data) {

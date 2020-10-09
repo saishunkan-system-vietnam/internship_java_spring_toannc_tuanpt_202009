@@ -70,7 +70,6 @@ let routes = [
         children: [
           {
             path: '/',
-            name: 'LayoutSoccer',
             component: LayoutSoccer
           },
           {
@@ -92,7 +91,6 @@ let routes = [
         children: [
           {
             path: '/',
-            name: 'LayoutTableTennis',
             component: LayoutTableTennis
           },
           {

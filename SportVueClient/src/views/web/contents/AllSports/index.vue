@@ -63,6 +63,7 @@
   </v-container>
 </template>
 <script>
+
 import Sports from "./Sports";
 import OnGame from "./OnGame";
 
@@ -70,6 +71,7 @@ export default {
   components: {
     Sports,
     OnGame,
+
   },
   data: () => ({
     tab: null,

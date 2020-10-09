@@ -2,8 +2,8 @@
   <div>
     <v-list dense>
       <div v-for="(items, index) in data" :key="index">
-        <v-subheader style="background: #FFE1AF"
-          ><h4 style="color: red;">{{ items.nameTour }}</h4></v-subheader
+        <v-subheader style="background: rgb(226 221 214)"
+          ><h4 style="color: Blue">{{ items.nameTour }}</h4></v-subheader
         >
         <v-list-item-group
           v-for="(item, index) in items.schedule"
