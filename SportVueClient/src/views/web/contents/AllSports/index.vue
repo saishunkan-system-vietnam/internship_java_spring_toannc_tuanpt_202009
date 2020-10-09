@@ -1,14 +1,32 @@
 <template>
   <v-row>
-    <v-col class="d-flex pr-0" cols="12" sm="2">
-      <v-expansion-panels  multiple>
+    <v-col class="pr-0" cols="12" sm="2">
+      <v-expansion-panels max-height="10px" multiple>
         <v-expansion-panel v-for="(item, i) in tournaments" :key="i">
-          <v-expansion-panel-header>{{item.type}}</v-expansion-panel-header>
-          <v-expansion-panel-content>
-            {{item.nameTour}}
+          <v-expansion-panel-header>{{ item.type }}</v-expansion-panel-header>
+          <v-expansion-panel-content
+            v-for="(tournament, t) in item.tournament"
+            :key="t"
+          >
+            <router-link to="/"></router-link>
+            <a
+              v-b-popover.hover.left="tournament.nameTour"
+              :href="
+                $router.resolve({
+                  path: '/DetailTournametSoccer/' + item.idTour,
+                }).href
+              "
+              style="color: black; margin-left: -30px"
+            >
+              {{
+                tournament.nameTour.length < 10
+                  ? tournament.nameTour
+                  : tournament.nameTour.slice(0, 10) + "..."
+              }}</a
+            >
           </v-expansion-panel-content>
-        </v-expansion-panel> </v-expansion-panels
-      >.
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-col>
     <v-col cols="12" sm="8" class="pl-2">
       <v-card>
@@ -28,12 +46,29 @@
       </v-card>
     </v-col>
     <v-col class="d-flex pl-0" cols="12" sm="2">
-      <v-expansion-panels focusable>
-        <v-expansion-panel v-for="(item, i) in 5" :key="i">
-          <v-expansion-panel-header>Item</v-expansion-panel-header>
-          <v-expansion-panel-content>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      <v-expansion-panels max-height="10px" multiple>
+        <v-expansion-panel v-for="(item, i) in tournaments" :key="i">
+          <v-expansion-panel-header>{{ item.type }}</v-expansion-panel-header>
+          <v-expansion-panel-content
+            v-for="(tournament, t) in item.tournament"
+            :key="t"
+          >
+            <router-link to="/"></router-link>
+            <a
+              v-b-popover.hover.left="tournament.nameTour"
+              :href="
+                $router.resolve({
+                  path: '/DetailTournametSoccer/' + item.idTour,
+                }).href
+              "
+              style="color: black; margin-left: -30px"
+            >
+              {{
+                tournament.nameTour.length < 10
+                  ? tournament.nameTour
+                  : tournament.nameTour.slice(0, 10) + "..."
+              }}</a
+            >
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels></v-col
@@ -43,11 +78,8 @@
 <script>
 export default {
   data: () => ({
-    currentItem: "tab-Web",
     tournaments: [],
-    more: ["News", "Maps", "Books", "Flights", "Apps"],
-    text:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    rank: [],
   }),
   created() {
     this.recivceData();
@@ -55,9 +87,16 @@ export default {
   methods: {
     recivceData() {
       let self = this;
-      this.$store.dispatch("tournament/getAll").then((res) => {
+      this.$store.dispatch("tournament/getToursByType").then((res) => {
         console.log(res.data);
         self.tournaments = res.data;
+      });
+    },
+    recivceRank() {
+      let self = this;
+      this.$store.dispatch("tournament/getRank").then((res) => {
+        console.log(res.data);
+        self.rank = res.data;
       });
     },
     addItem(item) {
