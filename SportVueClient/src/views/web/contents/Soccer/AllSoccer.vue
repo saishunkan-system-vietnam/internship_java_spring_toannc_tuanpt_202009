@@ -61,10 +61,7 @@ export default {
       .dispatch("tournament/getByType", "Football")
       .then((response) => {
         this.data = response.data;
-<<<<<<< HEAD
-=======
         // console.log(this.data);
->>>>>>> 750eaa9a32807b42be0b19cd7f65e8dce36f31c7
       });
   },
   methods: {

@@ -5,8 +5,15 @@
         <h1>{{ data.nameTour }}</h1>
         <h3>Type of sports :{{ data.type }}</h3>
         {{ data.timeStart }}<b-icon-arrow-right></b-icon-arrow-right
-        >{{ data.timeEnd }}
+        >{{ data.timeEnd }}<br />
       </div>
+      <p v-if="data.status == 2">
+        <img
+          style="width: 50px"
+          src="https://image.freepik.com/free-vector/trophy-vector-icon-illustration-with-laurel-wreath_38841-83.jpg"
+        />{{ this.winner }}
+      </p>
+
       <b-container fluid style="margin-top: 100px">
         <v-card>
           <v-card-title>
@@ -200,7 +207,6 @@
     </v-dialog>
     <v-dialog v-model="dialogMemberTable" max-width="1000px">
       <MemberTable :teamData="teamData" />
-
     </v-dialog>
   </div>
 </template>
@@ -213,14 +219,14 @@ export default {
   components: {
     AddSchedule,
     MemberTable,
-    EditSchedule
-    
+    EditSchedule,
   },
   data() {
     return {
+      winner:'',
       teamIdProp: "",
-      dataEdit:'',
-      dialogEditSchedule:false,
+      dataEdit: "",
+      dialogEditSchedule: false,
       dialogMemberTable: false,
       dialogScheduleDelete: false,
       teamAdd: "",
@@ -271,10 +277,8 @@ export default {
     this.getTournamentTeam();
     this.getTournamentSchedule();
     this.getTeamWait(data1.type);
-    console.log(this.$route.params.id);
     this.idTour = this.$route.params.id;
   },
-  mounted() {},
   watch: {
     team() {
       if (this.type != "") {
@@ -282,7 +286,6 @@ export default {
       }
     },
   },
-  mounted() {},
   methods: {
     editSchedule(id) {
       this.dataEdit = id;
@@ -321,7 +324,6 @@ export default {
         .dispatch("schedule/getByIdTour", this.$route.params.id)
         .then((response) => {
           this.schedule = response.data;
-          console.log(response);
         });
     },
     hideModal() {
@@ -341,6 +343,11 @@ export default {
         .then((response) => {
           this.data = response.data;
           this.team = this.data.team;
+          if (response.data.winner != null) {
+            this.$store.dispatch("team/getById", response.data.winner).then(response=>{
+              this.winner=response.data.nameTeam
+            });
+          }
         });
     },
     getTeamWait(data) {
