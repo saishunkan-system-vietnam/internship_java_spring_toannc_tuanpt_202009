@@ -34,8 +34,13 @@ export function getByStatus(status){
 export function getByType(type){
     return Api.get('/tournament/getByType',{params:{type:type}})
 }
+
 export function getRank(type){
     return Api.get('/tournament/rank',{params:{type:type}})
+}
+
+export function rankAll(){
+    return Api.get('/tournament/rankAll')
 }
 
 export function getToursByType(){
