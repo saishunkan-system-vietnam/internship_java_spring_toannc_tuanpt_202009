@@ -19,6 +19,8 @@ public interface HistoryMapper {
 
 	void deleteTeamTournament(int idTour, int idTeam);
 
+	List<History> getTeamByTour(int idTour);
+
 
 
 }

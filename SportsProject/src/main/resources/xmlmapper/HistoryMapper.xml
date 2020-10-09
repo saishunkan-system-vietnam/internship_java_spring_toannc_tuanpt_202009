@@ -3,18 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ssv.com.mapper.HistoryMapper">
-<resultMap id="historyMapping" type="History">
+	<resultMap id="historyMapping" type="History">
 
-  <id property="idHistory" column="id" />
-  <result property="idTeam" column="id_team" />
-  <result property="idTour" column="id_tour" />
-  <result property="idMember" column="id_member" />
-  
-  
-</resultMap>
+		<id property="idHistory" column="id" />
+		<result property="idTeam" column="id_team" />
+		<result property="idTour" column="id_tour" />
+		<result property="idMember" column="id_member" />
+
+
+	</resultMap>
 	<insert id="addTournament">
-	SET @var_id := (SELECT MAX(id_tournament) from tournament_tbl);
-		INSERT INTO history_tbl(
+		SET @var_id := (SELECT MAX(id_tournament) from tournament_tbl);
+		INSERT
+		INTO history_tbl(
 		id_team,
 		id_tour,
 		id_member
@@ -24,14 +25,14 @@
 		${idMember}
 		)
 	</insert>
-	<delete id="deleteTournament" >
-	DELETE FROM history_tbl where id_tour=${idTour}
+	<delete id="deleteTournament">
+		DELETE FROM history_tbl where id_tour=${idTour}
 	</delete>
 	<delete id="deleteTeamTournament">
-	Delete from history_tbl where id_tour=${idTour} and id_team=${idTeam}
+		Delete from history_tbl where id_tour=${idTour} and id_team=${idTeam}
 	</delete>
 	<insert id="addTeamTournament">
-			INSERT INTO history_tbl(
+		INSERT INTO history_tbl(
 		id_team,
 		id_tour,
 		id_member
@@ -45,29 +46,40 @@
 
 
 
-<insert id="saveHistory" flushCache="true" statementType="PREPARED" useGeneratedKeys="true" keyColumn="id" keyProperty="id_history" >
+	<insert id="saveHistory" flushCache="true"
+		statementType="PREPARED" useGeneratedKeys="true" keyColumn="id"
+		keyProperty="id_history">
 		<!-- SET @var_id := (SELECT MAX(id) from profile_tbl); -->
 		<!-- VALUES (@var_id, #{team.id}); -->
 		INSERT INTO history_tbl (id_member, id_team, id_tour)
-		VALUES (#{id_member},#{id_team},#{id_tour});
+		VALUES
+		(#{id_member},#{id_team},#{id_tour});
 
 	</insert>
 
-	<select id="findMembersNotInTour" flushCache="true" statementType="PREPARED" resultType="History">
-		Select * from history_tbl where id_tour = 0
+	<select id="findMembersNotInTour" flushCache="true"
+		statementType="PREPARED" resultType="History">
+		Select * from history_tbl where
+		id_tour = 0
 	</select>
 
-	<select id="returnLatestMembers" resultType="History" >
-		SELECT * FROM history_tbl Where id_member = ${idMember} and id_team = ${idTeam}
+	<select id="returnLatestMembers" resultType="History">
+		SELECT *
+		FROM history_tbl Where id_member = ${idMember} and id_team = ${idTeam}
 		ORDER BY id_member DESC
 		LIMIT 1;
 	</select>
 
 	<select id="findById" flushCache="true" statementType="PREPARED"
 		resultType="History">
-		SELECT profile_name as name, profile_email as email, profile_phone as phone,
-				profile_age as age, profile_gender as gender, profile_address as address,
-				profile_avatar as avatar
+		SELECT profile_name as name, profile_email as email,
+		profile_phone as phone,
+		profile_age as age, profile_gender as gender, profile_address as address,
+		profile_avatar as avatar
 		FROM profile_tbl WHERE id= #{id}
 	</select>
+	<select id="getTeamByTour" resultMap="historyMapping">
+		SELECT distinct id_team FROM sports.history_tbl where id_tour =${idTournament};
+	</select>
+
 </mapper>

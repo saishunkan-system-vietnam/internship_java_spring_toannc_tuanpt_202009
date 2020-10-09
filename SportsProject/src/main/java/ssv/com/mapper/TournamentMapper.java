@@ -28,6 +28,10 @@ public interface TournamentMapper {
 
 	public List<Tournament> getByType(String type);
 
+	void updateWinner(int idTour, int idTeam);
+
+	public List<String> getTypeSport();
+
 
 	
 }

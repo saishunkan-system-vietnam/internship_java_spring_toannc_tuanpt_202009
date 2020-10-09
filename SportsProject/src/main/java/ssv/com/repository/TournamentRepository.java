@@ -53,4 +53,14 @@ public class TournamentRepository {
 		// TODO Auto-generated method stub
 		return tournamentMapper.getByType(type);
 	}
+
+	public void updateWinner(int idTour, int idTeam) {
+		 tournamentMapper.updateWinner(idTour,idTeam);
+		
+	}
+
+	public List<String> getTypeSport() {
+		// TODO Auto-generated method stub
+		return tournamentMapper.getTypeSport();
+	}
 }

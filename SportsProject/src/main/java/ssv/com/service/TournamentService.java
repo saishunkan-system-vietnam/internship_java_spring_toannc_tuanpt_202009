@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import lombok.var;
 import ssv.com.dto.Rank;
 import ssv.com.dto.TournamentDto;
+import ssv.com.dto.ToursByType;
+import ssv.com.entity.History;
 import ssv.com.entity.Profile;
 import ssv.com.entity.Schedule;
 import ssv.com.entity.Team;
@@ -92,8 +94,10 @@ public class TournamentService {
 
 	public void updateStatus(int idTour, int status) {
 		teamService.formatTotalMatch(idTour);
-		if(status==2) {
+		if (status == 2) {
 			teamService.formatTour(idTour);
+			var a=rankByTour(idTour).get(0).idTeam;
+			tournamentRepository.updateWinner(idTour, rankByTour(idTour).get(0).idTeam);
 		}
 		tournamentRepository.updateStatus(idTour, status);
 
@@ -123,24 +127,24 @@ public class TournamentService {
 	}
 
 	public List<Tournament> getByStatus(int status, String type) {
-		// TODO Auto-generated method stub
-		return tournamentRepository.getByStatus(status,type);
+		return tournamentRepository.getByStatus(status, type);
 	}
 
 	public List<Tournament> getByType(String type) {
-		// TODO Auto-generated method stub
 		return tournamentRepository.getByType(type);
 	}
 
 	public List<Rank> rank(String type) {
-		List<Rank> list=new ArrayList<Rank>();
+		List<Rank> list = new ArrayList<Rank>();
 		for (Team team : teamService.getAllByType(type)) {
-			Rank rank=new Rank();
+			Rank rank = new Rank();
 			rank.setName(team.getNameTeam());
-			double numberRank =teamService.rank(team.getIdTeam());
+			double numberRank = teamService.rank(team.getIdTeam());
 			rank.setRank(numberRank);
+			rank.setIdTeam(team.getIdTeam());
 			list.add(rank);
-		};
+		}
+		;
 		Collections.sort(list, new Comparator<Rank>() {
 
 			@Override
@@ -153,9 +157,48 @@ public class TournamentService {
 					return 1;
 			}
 		});
-		 
+
 		return list;
 	}
 
-}
+	public List<Rank> rankByTour(int idTour) {
+		List<Rank> list = new ArrayList<Rank>();
+		List<History> listHistory = new ArrayList<History>();
+		listHistory = historyRepository.getTeamByTour(idTour);
+		for (History history : listHistory) {
+			Rank rank = new Rank();
+			rank.setName(teamService.getById(history.getIdTeam()).getNameTeam());
+			double numberRank = teamService.rankByTour(history.getIdTeam(), idTour);
+			rank.setRank(numberRank);
+			rank.setIdTeam(history.getIdTeam());
+			list.add(rank);
+		}
+		Collections.sort(list, new Comparator<Rank>() {
 
+			@Override
+			public int compare(Rank s1, Rank s2) {
+				if (s1.rank == s2.rank)
+					return 0;
+				else if (s1.rank > s2.rank)
+					return -1;
+				else
+					return 1;
+			}
+		});
+		return list;
+	}
+
+	public List<ToursByType> getToursByType() {
+		List<ToursByType> listsTours=new ArrayList<ToursByType>();
+		List<String> lists=tournamentRepository.getTypeSport();
+		for (String type : lists) {
+			List<Tournament> listTour=tournamentRepository.getByType(type);
+			ToursByType toursByType=new ToursByType();
+			toursByType.setTournament(listTour);
+			toursByType.setType(type);
+			listsTours.add(toursByType);
+		}
+		return listsTours;
+	}
+
+}

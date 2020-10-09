@@ -71,7 +71,6 @@ public class TeamRepository {
 	}
 
 	public List<Team> getByTour(int idTournamet) {
-		// TODO Auto-generated method stub
 		return teamMapper.getByTour(idTournamet);
 	}
 
@@ -86,7 +85,6 @@ public class TeamRepository {
 	}
 
 	public List<Team> teamWait(String type) {
-		// TODO Auto-generated method stub
 		return teamMapper.teamWait(type);
 	}
 
@@ -100,7 +98,6 @@ public class TeamRepository {
 	}
 
 	public Team teamTourHistory(int idTeam, int idTour) {
-		// TODO Auto-generated method stub
 		return teamMapper.teamTourHistory(idTeam,idTour);
 
 	}
@@ -117,9 +114,10 @@ public class TeamRepository {
 	}
 
 	public List<Team> getAllByType(String type) {
-		// TODO Auto-generated method stub
 		return teamMapper.getAllByType(type);
 	}
+
+
 
 
 }

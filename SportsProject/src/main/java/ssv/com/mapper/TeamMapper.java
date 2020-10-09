@@ -63,4 +63,5 @@ public interface TeamMapper {
 
 	public List<Team> getAllByType(String type);
 
+
 }
