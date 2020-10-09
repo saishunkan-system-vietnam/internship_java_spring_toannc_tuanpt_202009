@@ -163,7 +163,7 @@ export default {
     submit() {
       if (!this.$refs.form.validate()) {
         this.$refs.form.validate();
-        // console.log(this.schedule);
+
       } else {
         var bodyFormData = new FormData();
         var score1 = 0;

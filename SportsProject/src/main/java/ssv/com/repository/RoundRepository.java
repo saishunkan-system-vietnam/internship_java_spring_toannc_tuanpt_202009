@@ -13,22 +13,27 @@ public class RoundRepository {
 
 	public void createFootball() {
 		roundMapper.createFootball();
-		
+
 	}
 
 	public void createTableBall() {
 		roundMapper.createTableBall();
-		
+
 	}
 
 	public void delete(int idSchedule) {
 		roundMapper.delete(idSchedule);
-		
+
 	}
 
 	public void uploadSchedule(Round round) {
 		roundMapper.uploadSchedule(round);
-		
+
+	}
+
+	public void createBaskestBall() {
+		roundMapper.createBaskestBall();
+
 	}
 
 }

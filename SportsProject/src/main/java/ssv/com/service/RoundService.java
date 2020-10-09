@@ -13,24 +13,27 @@ public class RoundService {
 
 	public void createFootball() {
 		roundRepository.createFootball();
-		
+
 	}
 
 	public void createTableBall() {
 		roundRepository.createTableBall();
-		
+
 	}
 
 	public void delete(int idSchedule) {
 		roundRepository.delete(idSchedule);
-		
+
 	}
 
 	public String uploadSchedule(Round round) {
-		 roundRepository.uploadSchedule(round);
-		 return "thành công";
+		roundRepository.uploadSchedule(round);
+		return "thành công";
 	}
 
-	
+	public void createBaskestBall() {
+		roundRepository.createBaskestBall();
+
+	}
 
 }
