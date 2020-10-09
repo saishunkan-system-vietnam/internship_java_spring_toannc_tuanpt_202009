@@ -88,17 +88,15 @@ export default {
   methods: {
     login: function () {
       let self = this;
-
-      // let userInfo = this.$store.state.user.userInfo;
-      this.$store.commit("auth/auth_overlay");
-
+      // let userInfo = this.$store.state.user.userInfo;\
+      self.overlay = !self.overlay;
       this.$store
         .dispatch("auth/login", this.user)
         .then((res) => {
           self.overlay = false;
           let userInfo = res.data.payload.account;
           if (userInfo.role === null || userInfo.role === undefined) {
-             this.$router.push('/');
+            console.log("Failed");
           } else if (
             userInfo.role === "ROLE_USER" ||
             userInfo.role === "ROLE_MEMBER" ||
@@ -108,6 +106,8 @@ export default {
             self.closeLoginDialog();
             self.username = "";
             self.password = "";
+          } else {
+            console.log("Failed");
           }
         })
         .catch((err) => console.log(err));

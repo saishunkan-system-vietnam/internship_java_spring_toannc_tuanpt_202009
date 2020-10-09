@@ -51,15 +51,15 @@ public class AccountController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseQuery<?> login(HttpServletRequest request, @RequestBody Account user) {
 		String result = "";
-		Account account = new Account();
+		JwtResponse jwtResponse = new JwtResponse();
 		if (!user.getUsername().isEmpty() && !user.getPassword().isEmpty()) {
 			try {
 				if (accountService.checkLogin(user)) {
 					result = jwtService.generateTokenLogin(user.getUsername());
-					account = accountService.loadUserByUsername(user.getUsername());
-					account.setToken(result);
+					jwtResponse.setAccount(accountService.loadUserByUsername(user.getUsername()));
+					jwtResponse.setToken(result);
 
-					return ResponseQuery.success("Login success", account);
+					return ResponseQuery.success("Login success", jwtResponse);
 				} else {
 					result = "Wrong info account";
 					return ResponseQuery.faild(result, null);
