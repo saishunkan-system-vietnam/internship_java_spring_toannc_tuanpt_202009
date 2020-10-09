@@ -193,7 +193,6 @@ export default {
         .dispatch("schedule/getById", this.$route.params.id)
         .then((response) => {
           this.schedule = response.data;
-          console.log(this.schedule);
           this.$store
             .dispatch("team/teamTourHistory", {
               idTour: response.data.idTour,

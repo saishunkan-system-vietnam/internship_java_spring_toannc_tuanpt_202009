@@ -178,6 +178,7 @@ export default {
     },
 
     reset() {
+
       this.$store
         .dispatch("tournament/getById", this.dataEdit.idTour)
         .then((response) => {

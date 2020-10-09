@@ -163,6 +163,7 @@ export default {
     submit() {
       if (!this.$refs.form.validate()) {
         this.$refs.form.validate();
+
       } else {
         var bodyFormData = new FormData();
         var score1 = 0;
