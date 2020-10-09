@@ -27,19 +27,11 @@
             required
             type="password"
           ></v-text-field>
-
           <v-row>
             <v-col>
               <v-btn type="submit" color="blue darken-1" text>Confirm</v-btn>
             </v-col>
-
             <v-spacer></v-spacer>
-
-            <v-col>
-              <v-btn @click.prevent="getMembers" color="blue darken-1" text
-                >Get Members</v-btn
-              >
-            </v-col>
           </v-row>
         </form>
       </v-container>
@@ -80,11 +72,11 @@ export default {
     login: function () {
       let self = this;
       // let userInfo = this.$store.state.user.userInfo;
-      this.$store.commit("auth/auth_overlay");
+      // this.$store.commit("auth/auth_overlay");
       this.$store
         .dispatch("auth/login", this.user)
         .then((res) => {
-          this.$store.commit("auth/auth_overlay");
+          // this.$store.commit("auth/auth_overlay");
           self.overlay = false;
           let userInfo = res.data.payload;
           if (userInfo.role === null || userInfo.role === undefined) {

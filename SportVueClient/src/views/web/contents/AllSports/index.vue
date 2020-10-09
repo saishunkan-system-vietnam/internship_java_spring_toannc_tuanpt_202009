@@ -1,7 +1,10 @@
 <template>
-  <v-row>
-    <v-col class="pr-0" cols="12" sm="2">
-      <div style="margin-bottom: 15px !important" class="pl-15"> <v-icon large color="red darken-2">home_work</v-icon></div>
+  <v-container class="pt-2">
+    <v-row>
+      <v-col cols="12" sm="2" style="padding: 5px" class="pr-2">
+        <div style="margin-bottom: 15px !important" class="pl-15">
+        <v-icon large color="red darken-2">home_work</v-icon>
+      </div>
       <v-expansion-panels multiple>
         <v-expansion-panel v-for="(item, i) in tournaments" :key="i">
           <v-expansion-panel-header disable-icon-rotate style="color: red">{{
@@ -16,7 +19,7 @@
               v-b-popover.hover.left="tournament.nameTour"
               :href="
                 $router.resolve({
-                  path: '/DetailTournametSoccer/' + item.idTour,
+                  path: '/DetailTournametSports/' + tournament.idTour,
                 }).href
               "
               style="color: black; margin-left: -30px"
@@ -30,29 +33,19 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
-    </v-col>
-    <v-col v-model="tab" cols="12" sm="8" class="pl-2">
-      <v-card>
-        <v-tabs fixed-tabs>
-          <v-tabs-slider></v-tabs-slider>
-          <v-tab>Tournaments</v-tab>
-          <v-tab>On Game</v-tab>
-          <v-tab>Ended</v-tab>
-          <v-tab>Upcomming</v-tab>
-        </v-tabs>
-        <v-tabs-items v-model="tab" style="margin-top: 50px">
-          <v-tab-item><Sports></Sports> </v-tab-item>
-          <v-tab-item> <OnGame></OnGame> </v-tab-item>
-          <v-tab-item> <SoccerEnd></SoccerEnd></v-tab-item>
-          <v-tab-item> <SoccerNot></SoccerNot></v-tab-item>
-        </v-tabs-items>
-      </v-card>
-    </v-col>
-    <v-col class="pl-0" cols="12" sm="2">
-      <div style="margin-bottom: 15px !important" class="pl-15"> <v-icon large color="green darken-2">military_tech</v-icon></div>
+      </v-col>
+      <v-col cols="12" sm="8" style="padding: 0px" class="pt-1"
+        ><router-view></router-view
+      ></v-col>
+      <v-col cols="12" sm="2" style="padding: 5px">
+       <div style="margin-bottom: 15px !important" class="pl-15">
+        <v-icon large color="green darken-2">military_tech</v-icon>
+      </div>
       <v-expansion-panels multiple>
         <v-expansion-panel v-for="(item1, y) in rank" :key="y">
-          <v-expansion-panel-header style="color: green">{{ item1.type }}</v-expansion-panel-header>
+          <v-expansion-panel-header style="color: green">{{
+            item1.type
+          }}</v-expansion-panel-header>
           <v-expansion-panel-content v-for="(team, s) in item1.list" :key="s">
             <p v-b-popover.hover.left="team.name">
               {{ s + 1 }} .
@@ -65,17 +58,20 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
-    </v-col>
-  </v-row>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
-import Sports from './Sports'
-import OnGame from './OnGame'
+
+import Sports from "./Sports";
+import OnGame from "./OnGame";
 
 export default {
-  components:{
+  components: {
     Sports,
-    OnGame
+    OnGame,
+
   },
   data: () => ({
     tab: null,
