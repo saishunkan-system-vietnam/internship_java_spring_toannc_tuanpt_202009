@@ -7,7 +7,6 @@ import vuetify from './plugins/vuetify';
 import "@babel/polyfill";
 import "mutationobserver-shim";
 import "./plugins/bootstrap-vue";
-
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.prototype.$http = Axios;

@@ -43,25 +43,6 @@
                     </tbody>
                   </template>
                 </v-simple-table>
-                <h5 style="color: red">Bảng xếp hạng</h5>
-                <v-simple-table>
-                  <template v-slot:default>
-                    <thead>
-                      <tr>
-                        <th class="text-left">Hạng</th>
-                        <th class="text-left">Tên</th>
-                        <th class="text-left">Tỉ lệ thắng</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(item, index) in rank" :key="index">
-                        <td>{{ index + 1 }}</td>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.rank!='NaN'?item.rank*100:0 }}%</td>
-                      </tr>
-                    </tbody>
-                  </template>
-                </v-simple-table>
               </v-card-text>
             </v-card>
           </v-tab-item>
@@ -107,6 +88,11 @@
               </v-card-text>
             </v-card>
           </v-tab-item>
+          <v-tab-item :value="'tab-3'">
+            <v-card flat>
+              <v-card-text>3</v-card-text>
+            </v-card>
+          </v-tab-item>
         </v-tabs-items>
       </v-card>
     </v-container>
@@ -118,8 +104,7 @@ export default {
     return {
       data: "",
       tab: null,
-      open: false,
-      rank: "",
+      open:false
     };
   },
   created() {
@@ -132,14 +117,8 @@ export default {
         .then((response) => {
           this.data = response.data;
         });
-      this.$store
-        .dispatch("tournament/getRankByTour", this.$route.params.id)
-        .then((response) => {
-          this.rank = response.data;
-          console.log(this.rank);
-        });
     },
-    detail(data) {
+      detail(data) {
       this.detailScore = data;
       this.open = true;
       var myWindow = window.open(
