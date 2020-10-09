@@ -18,7 +18,7 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-card
                     class="portrait mt-2"
-                    :img="profile.avatar"
+                    :img="avatar"
                     height="40"
                     width="40"
                     v-bind="attrs"
@@ -100,17 +100,22 @@ export default {
       showMenu: false,
     };
   },
+  mounted() {},
   computed: {
     isProfile: function () {
       return this.$store.state.user.isProfile;
     },
 
     //do this need to check bind (:) in html up
-    profile: function () {
-      if (this.$store.state.user.userInfo != null) {
-        return this.$store.state.user.userInfo.profile;
+    avatar: function () {
+        console.log("Should run second")
+      console.log(this.$store.state.auth.userProfile.profile)
+      if (this.$store.state.user.userInfo == null) {
+        let firstAvatar = this.$store.state.auth.userProfile.profile.avatar;
+        return firstAvatar;
       } else {
-        return null;
+        let avatarAuto = this.$store.state.user.userInfo.profile.avatar;
+        return avatarAuto
       }
     },
   },
@@ -123,6 +128,9 @@ export default {
     },
     checkProfile: function () {
       this.$store.commit("user/user_profile");
+    },
+    profile() {
+      alert("a");
     },
     logout() {
       this.$store.dispatch("auth/logout").then(() => {

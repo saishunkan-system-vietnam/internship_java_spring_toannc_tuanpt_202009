@@ -8,7 +8,6 @@ import vuetify from './plugins/vuetify';
 import "@babel/polyfill";
 import "mutationobserver-shim";
 import "./plugins/bootstrap-vue";
-import VueAxios from 'vue-axios'
 
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
@@ -21,7 +20,7 @@ if (token) {
 }
 
 Vue.config.productionTip = false
-Vue.use(VueAxios)
+
 
 new Vue({
   router,

@@ -6,7 +6,7 @@ const state = {
     secure: localStorage.getItem('secure') || '',
     status: '',
     checkAccount: false,
-    overlay: false,
+    avatar: '',
 }
 
 const mutations = {
@@ -23,9 +23,6 @@ const mutations = {
     logout(state) {
         state.status = ''
         state.token = ''
-    },
-    auth_overlay(state) {
-        state.overlay = !state.overlay
     }
 }
 
@@ -43,6 +40,7 @@ const actions = {
                         }, 3000);
                     } else {
                         const user = resp.data.payload
+                          
                         localStorage.setItem('token', user.token);
                         commit('auth_success', user);
                         resolve(resp)

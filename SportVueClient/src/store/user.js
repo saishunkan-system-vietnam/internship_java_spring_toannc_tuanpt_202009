@@ -9,9 +9,8 @@ const state = {
 
 const mutations = {
     user_info(state, user) {
-        console.log("Should run first")
         state.userInfo = user
-        console.log(state.userInfo)
+        // console.log(state.userInfo)
     },
     user_profile(state) {
         state.isProfile = !state.isProfile
