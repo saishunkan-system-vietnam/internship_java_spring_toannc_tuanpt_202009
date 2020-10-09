@@ -1,6 +1,6 @@
 
 
-import { rankAll, getToursByType, addTeam, getAction, addTour, deleteTeam, updateStatus, deleteTour, getAll, getById, edit, getByStatus, getByType, getRank } from "../api/TournamentApi";
+import { rankAll, getToursByType, addTeam, getAction, addTour, deleteTeam, updateStatus, deleteTour, getAll, getById, edit, getByStatus, getByType, getRank, getRankByTour } from "../api/TournamentApi";
 
 
 
@@ -120,6 +120,15 @@ const actions = {
     rankAll({ }) {
         return new Promise((resolve, reject) => {
             rankAll().then(res => {
+                resolve(res);
+            }).catch((err) => {
+                reject(err);
+            })
+        })
+    },
+    getRankByTour({ },idTour) {
+        return new Promise((resolve, reject) => {
+            getRankByTour(idTour).then(res => {
                 resolve(res);
             }).catch((err) => {
                 reject(err);

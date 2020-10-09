@@ -1,10 +1,10 @@
 <template>
   <div style="background-color: white; width: 600px">
     <div>
-      <v-icon v-if="data.type == 'Football'" large color="green darken-2">
+   <v-icon v-if="this.type == 'Football'" large color="green darken-2">
         mdi-soccer
       </v-icon>
-      <v-icon v-if="data.type == 'TableTennis'" large color="blue darken-2">
+      <v-icon v-if="this.type == 'TableTennis'" large color="blue darken-2">
         sports_tennis
       </v-icon>
 
@@ -22,15 +22,17 @@
       </span>
     </div>
     <div>
+       
+
       <v-row>
         <v-col class="text-center"
           ><b-img
             center
-            :src="data.team[0].logo"
+            :src="!!data?data.team[0].logo:''"
             style="width: 100px"
             alt="Center image"
           ></b-img>
-          <div>{{ data.team[0].nameTeam }}</div>
+          <div>{{ !!data?data.team[0].nameTeam:'' }}</div>
         </v-col>
         <v-col class="text-center" style="margin-top: 10px"
           ><div v-if="data.status == 0">
@@ -49,11 +51,11 @@
         <v-col class="text-center"
           ><b-img
             center
-            :src="data.team[1].logo"
+            :src="!!data?data.team[1].logo:''"
             style="width: 100px"
             alt="Center image"
           ></b-img>
-          <div class="text-center">{{ data.team[1].nameTeam }}</div>
+          <div class="text-center">{{ !!data?data.team[1].nameTeam:'' }}</div>
         </v-col>
       </v-row>
     </div>
@@ -96,27 +98,23 @@
                           >
                             Tỉ số
                           </div>
-                       
-                          <v-row>
-                            
-                            <v-col>
-                              <div>{{ data.team[0].nameTeam }}</div>
-                              <div>{{ data.team[1].nameTeam }}</div>
-                            </v-col>
-                            <v-col v-if="data.status == 2">
-                              <div>
-                                {{ data.round[0].roundScore1 }} &emsp;{{
-                                  data.round[1].roundScore1
-                                }}
-                                &emsp;<b>{{ data.scoreTeam1 }}</b>
-                              </div>
-                              <div>
-                                {{ data.round[0].roundScore2 }}&emsp;
-                                {{ data.round[1].roundScore2 }}&emsp;
-                                <b>{{ data.scoreTeam2 }}</b>
-                              </div>
-                            </v-col>
-                          </v-row>
+                          <table class="table">
+                           
+                            <tbody>
+                              <tr v-for="(item,index) in data.round" :key="index">
+                                <td>
+                                   {{ item.roundName}}
+                                </td>
+                                   <td>
+                                   {{ item.roundScore1}}
+                                </td>
+                                   <td>
+                                   {{ item.roundScore2}}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                         
                           <div
                             class="text-center"
                             style="background-color: #bcaaa4"
@@ -143,7 +141,7 @@
                             </v-col>
                             <v-col cols="12" sm="4">
                               <ul style="list-style: none">
-                                <b>{{ data.team[0].nameTeam }}</b>
+                                <b>{{ !!data?data.team[0].nameTeam:'' }}</b>
                                 <li>{{ inforTeam1.rate }}%</li>
                                 <li>{{ inforTeam1.sumJoinByTour }}</li>
                                 <li>{{ inforTeam1.sumWinJoinByTour }}</li>
@@ -153,7 +151,7 @@
                             </v-col>
                             <v-col cols="12" sm="4">
                               <ul style="list-style: none">
-                                <b>{{ data.team[1].nameTeam }}</b>
+                                <b>{{ !!data?data.team[1].nameTeam:'' }}</b>
                                 <li>{{ inforTeam2.rate }}%</li>
                                 <li>{{ inforTeam2.sumJoinByTour }}</li>
                                 <li>{{ inforTeam2.sumWinJoinByTour }}</li>
@@ -171,7 +169,7 @@
                           <v-textarea
                             name="input-7-1"
                             :value="data.description"
-                            disabled
+                            
                           ></v-textarea>
                         </v-card-text>
                       </v-card>
@@ -235,22 +233,22 @@
                                   v-bind:key="index"
                                 >
                                   <b-card-text>
-                                    Tỉ số :
+                                  <h3>  Tỉ số :</h3>
                                     <b-row>
-                                      <b-col
+                                      <b-col  class="text-center"
                                         ><b-avatar
                                           :src="team1.logo"
                                           size="6rem"
                                         ></b-avatar
                                       ></b-col>
-                                      <b-col
+                                      <b-col class="text-center"
                                         ><h1>
                                           {{ item.roundScore1 }}-{{
                                             item.roundScore2
                                           }}
                                         </h1></b-col
                                       >
-                                      <b-col
+                                      <b-col class="text-center"
                                         ><b-avatar
                                           :src="team1.logo"
                                           size="6rem"
@@ -303,7 +301,7 @@
                           <v-col>
                             <v-row>
                               <v-col cols="12" sm="4">
-                                {{ item.team[0].nameTeam }}
+                                {{ !!data?item.team[0].nameTeam:'' }}
                               </v-col>
                               <v-col cols="12" sm="4"
                                 >{{ item.status == 2 ? item.scoreTeam1 : "?" }}
@@ -311,7 +309,7 @@
                                 {{ item.status == 2 ? item.scoreTeam2 : "?" }}
                               </v-col>
                               <v-col cols="12" sm="4">
-                                {{ item.team[1].nameTeam }}</v-col
+                                {{ !!data?item.team[1].nameTeam :''}}</v-col
                               >
                             </v-row>
                           </v-col>
@@ -359,6 +357,7 @@ export default {
       team1: "",
       team2: "",
       related: "",
+      type:''
     };
   },
   created() {
@@ -366,11 +365,13 @@ export default {
       .dispatch("schedule/getById", this.$route.params.id)
       .then((response) => {
         this.data = response.data;
+        this.type=response.data.team[0].type
         this.$store
           .dispatch("team/getDetail", {
             params: {
               idTeam: response.data.team[0].idTeam,
               idTour: response.data.idTour,
+              
             },
           })
           .then((response) => {

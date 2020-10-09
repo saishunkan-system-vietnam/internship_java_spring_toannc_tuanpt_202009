@@ -54,12 +54,10 @@ let routes = [
       },
       {
         path: '/soccer',
-        name: 'soccer',
         component: Soccer,
         children: [
           {
             path: '/',
-            name: 'LayoutSoccer',
             component: LayoutSoccer
           },
           {
@@ -77,12 +75,10 @@ let routes = [
       },
       {
         path: '/tableTennis',
-        name: 'tableTennis',
         component: TableTennis,
         children: [
           {
             path: '/',
-            name: 'LayoutTableTennis',
             component: LayoutTableTennis
           },
           {
@@ -177,7 +173,6 @@ let routes = [
       {
         path: "/LayoutTournament",
         component: LayoutTournament,
-        name: "LayoutTournament",
         children: [
           {
             path: "/",
