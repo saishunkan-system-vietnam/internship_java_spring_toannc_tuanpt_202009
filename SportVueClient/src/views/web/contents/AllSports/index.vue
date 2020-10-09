@@ -1,5 +1,6 @@
 <template>
   <v-row>
+
     <v-col class="pr-0" cols="12" sm="2">
       <div style="margin-bottom: 15px !important" class="pl-15"> <v-icon large color="red darken-2">home_work</v-icon></div>
       <v-expansion-panels multiple>
@@ -71,9 +72,13 @@
 <script>
 export default {
   data: () => ({
-    tournaments: [],
-    rank: [],
+    currentItem: "tab-Web",
+    items: ["Web", "Shopping", "Videos", "Images"],
+    more: ["News", "Maps", "Books", "Flights", "Apps"],
+    text:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
   }),
+
   created() {
     this.recivceData();
     this.recivceRank();
@@ -91,6 +96,7 @@ export default {
         self.rank = res.data;
       });
     },
+
     addItem(item) {
       const removed = this.items.splice(0, 1);
       this.items.push(...this.more.splice(this.more.indexOf(item), 1));

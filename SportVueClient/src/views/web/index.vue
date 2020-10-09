@@ -5,12 +5,6 @@
     <v-main>
       <tab-home />
     </v-main>
-    <v-overlay :value="overlay">
-      <v-progress-circular
-        indeterminate
-        size="64"
-      ></v-progress-circular>
-    </v-overlay>
   </v-app>
 </template>
 
@@ -38,11 +32,6 @@ export default {
       // console.log(response.data);
     });
   },
-  computed:{
-    overlay(){
-      return this.$store.state.auth.overlay;
-    }
-  }
 };
 </script>
 <style>

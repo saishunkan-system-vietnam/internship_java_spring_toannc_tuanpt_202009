@@ -44,6 +44,7 @@
         </form>
       </v-container>
     </v-card-text>
+    
   </v-card>
 </template>
 <script>
@@ -62,6 +63,7 @@ export default {
         username: "admin",
         password: "admin",
       },
+    
     };
   },
   mounted() {
@@ -75,18 +77,26 @@ export default {
       return this.$store.getters.isLoggedIn;
     },
   },
-  watch: {},
+  watch: {
+    // overlay(val) {
+    //   val &&
+    //     setTimeout(() => {
+    //       this.overlay = false;
+    //     }, 3000);
+    // },
+  },
   methods: {
     login: function () {
       let self = this;
+
       // let userInfo = this.$store.state.user.userInfo;
       this.$store.commit("auth/auth_overlay");
+
       this.$store
         .dispatch("auth/login", this.user)
         .then((res) => {
-          this.$store.commit("auth/auth_overlay");
           self.overlay = false;
-          let userInfo = res.data.payload;
+          let userInfo = res.data.payload.account;
           if (userInfo.role === null || userInfo.role === undefined) {
              this.$router.push('/');
           } else if (
@@ -94,7 +104,6 @@ export default {
             userInfo.role === "ROLE_MEMBER" ||
             userInfo.role === "ROLE_ADMIN"
           ) {
-            self.$store.commit("user/user_info", res.data.payload);
             self.checkProfile();
             self.closeLoginDialog();
             self.username = "";
@@ -103,7 +112,9 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    getMembers: function () {},
+    getMembers: function () {
+      this.overlay = !this.overlay;
+    },
   },
 };
 </script>
