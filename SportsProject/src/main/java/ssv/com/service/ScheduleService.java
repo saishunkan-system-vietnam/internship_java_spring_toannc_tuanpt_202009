@@ -96,8 +96,11 @@ public class ScheduleService {
 		if(tournamentService.getById(schedule.getIdTour()).getType().equals("Football")) {
 			roundService.createFootball();
 		}
-		else {
+		else if(tournamentService.getById(schedule.getIdTour()).getType().equals("TableTennis"))  {
 			roundService.createTableBall();
+		}
+		else {
+			roundService.createBaskestBall();
 		}
 		scheduleReponsitory.setTotalMatch(scheduleReponsitory.sumJoinByTour(schedule.getIdTeam1(), schedule.getIdTour()),schedule.getIdTeam1());
 		scheduleReponsitory.setTotalMatch(scheduleReponsitory.sumJoinByTour(schedule.getIdTeam2(), schedule.getIdTour()),schedule.getIdTeam2());

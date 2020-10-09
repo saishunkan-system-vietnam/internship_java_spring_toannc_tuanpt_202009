@@ -78,6 +78,31 @@
 		round_tbl set round_score1=#{roundScore1},round_score2=#{roundScore2},
 		round_description=#{roundDescription} where round_schedule=#{roundSchedule} and round_name=#{roundName}
 	</update>
+	<insert id="createBaskestBall">
+	SET @var_id := (SELECT
+		MAX(id_schedule) from schedule_tbl);
+		INSERT INTO
+		round_tbl (
+		round_name,
+		round_schedule
+		)
+		VALUES(
+		'Hiệp 1',
+		@var_id
+		),	(
+		'Hiệp 2',
+		@var_id
+		),	(
+		'Hiệp 3',
+		@var_id
+		),	(
+		'Hiệp 4',
+		@var_id
+		),	(
+		'Hiệp 5',
+		@var_id
+		)
+	</insert>
 	
 	
 </mapper>

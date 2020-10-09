@@ -15,5 +15,7 @@ public interface RoundMapper {
 
 	void uploadSchedule(Round round);
 
+	void createBaskestBall();
+
 
 }

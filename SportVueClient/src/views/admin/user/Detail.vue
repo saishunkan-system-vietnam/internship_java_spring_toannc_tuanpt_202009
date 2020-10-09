@@ -57,7 +57,7 @@
                               v-if="
                                 data &&
                                 data.profile &&
-                                data.profile.gender == 'nam'
+                                data.profile.gender == 'Male'
                               "
                             >
                               Nam

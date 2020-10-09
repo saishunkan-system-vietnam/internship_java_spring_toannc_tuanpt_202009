@@ -58,7 +58,6 @@ const actions = {
         })
     },
     editSchedule({ }, schedule) {
-        console.log(schedule)
         return new Promise((resolve, reject) => {
             edit(schedule).then(res => {
                 resolve(res);

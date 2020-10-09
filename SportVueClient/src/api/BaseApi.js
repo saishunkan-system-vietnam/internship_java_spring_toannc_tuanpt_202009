@@ -9,7 +9,6 @@ instance.interceptors.request.use(request => {
     request.headers.Authorization = store.state.auth != undefined ? store.state.auth.token : '';
     return request;
 }, error => {
-    console.log(error);
     return Promise.reject(error);
 });
 
