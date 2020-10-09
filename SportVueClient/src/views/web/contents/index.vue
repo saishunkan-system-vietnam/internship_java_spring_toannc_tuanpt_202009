@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" style="min-height=700px">
     <v-row class="fixLayout" style="margin: 0">
         <v-col cols="12" sm="1" style="text-align: center" >
       </v-col>
