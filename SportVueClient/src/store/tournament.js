@@ -1,4 +1,5 @@
 
+
 import { rankAll, getToursByType, addTeam, getAction, addTour, deleteTeam, updateStatus, deleteTour, getAll, getById, edit, getByStatus, getByType, getRank } from "../api/TournamentApi";
 
 
@@ -115,6 +116,7 @@ const actions = {
         })
     },
 
+
     rankAll({ }) {
         return new Promise((resolve, reject) => {
             rankAll().then(res => {
@@ -128,6 +130,7 @@ const actions = {
     getToursByType({ }) {
         return new Promise((resolve, reject) => {
             getToursByType().then(res => {
+
                 resolve(res);
             }).catch((err) => {
                 reject(err);
