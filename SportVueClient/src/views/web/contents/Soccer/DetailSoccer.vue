@@ -359,7 +359,6 @@ export default {
       .dispatch("schedule/getById", this.$route.params.id)
       .then((response) => {
         this.data = response.data;
-        console.log(this.data);
         this.$store
           .dispatch("team/getDetail", {
             params: {
@@ -377,7 +376,6 @@ export default {
           })
           .then((response) => {
             this.team1 = response.data;
-            console.log(this.team1);
           });
         this.$store
           .dispatch("team/teamTourHistory", {
@@ -397,9 +395,7 @@ export default {
           .then((response) => {
             this.inforTeam2 = response.data;
           });
-        console.log(response.data.idTour);
-        console.log(response.data.idTeam1);
-        console.log(response.data.idTeam2);
+    
         this.$store
           .dispatch("schedule/related", {
             idTour: response.data.idTour,
@@ -408,7 +404,6 @@ export default {
           })
           .then((response) => {
             this.related = response.data;
-            console.log(this.related);
           });
       });
   },

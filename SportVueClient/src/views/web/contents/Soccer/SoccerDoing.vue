@@ -56,7 +56,6 @@ export default {
       .dispatch("tournament/getByStatus", { status: "1", type: "Football" })
       .then((response) => {
         this.data = response.data;
-        console.log(this.data);
       });
   },
   methods: {
