@@ -32,7 +32,7 @@ export function getByStatus(status){
     return Api.get('/tournament/getByStatus',{params:{status:status.status,type:status.type}})
 }
 export function getByType(type){
-    return Api.get('/tournament/getByType',{params:{type:type}})
+    return Api.get('/tournament/',{params:{type:type}})
 }
 export function getRank(type){
     return Api.get('/tournament/rank',{params:{type:type}})
