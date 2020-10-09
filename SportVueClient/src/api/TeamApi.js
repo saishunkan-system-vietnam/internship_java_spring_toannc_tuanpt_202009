@@ -9,4 +9,7 @@ export function detail(params){
 export function teamWait(type){
     return Api.get('/team/teamWait',{params:{type:type}});
 }
+export function getById(id){
+    return Api.get('/team/'+id);
+}
 

@@ -11,6 +11,7 @@
 		<result property="timeStart" column="tournament_start" />
 		<result property="type" column="tournament_type" />
 		<result property="title" column="tournament_title" />
+		<result property="winner" column="tournament_winner"/>
 		<result property="description" column="tournament_description" />
 		<collection property="schedule" javaType="ArrayList"
 			ofType="Schedule">
@@ -145,5 +146,13 @@
 		c.schedule_team2=team_tbl.id_team )on
 		p.id_tournament=c.schedule_tour
 		where tournament_type='${type}'
+	</select>
+	<update id="updateWinner">
+		Update tournament_tbl set tournament_winner=${idTeam}
+		where
+		id_tournament=${idTour}
+	</update>
+	<select id="getTypeSport" resultType="java.lang.String">
+		select distinct tournament_type from tournament_tbl
 	</select>
 </mapper>

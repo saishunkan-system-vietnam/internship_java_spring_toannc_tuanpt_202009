@@ -1,8 +1,11 @@
 package ssv.com.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ssv.com.entity.History;
 import ssv.com.mapper.HistoryMapper;
 
 @Repository
@@ -30,6 +33,10 @@ public class HistoryRepository {
 
 		historyMapper.deleteTeamTournament(idTour, idTeam);
 
+	}
+
+	public List<History> getTeamByTour(int idTour) {
+		return historyMapper.getTeamByTour(idTour);
 	}
 
 }

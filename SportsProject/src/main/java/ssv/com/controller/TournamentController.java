@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ssv.com.dto.Rank;
 import ssv.com.dto.TournamentDto;
+import ssv.com.dto.ToursByType;
 import ssv.com.entity.Tournament;
 import ssv.com.service.TournamentService;
 
@@ -114,5 +115,16 @@ public class TournamentController {
 	public ResponseEntity<List<Rank>> rank(@RequestParam String type){
 		return new ResponseEntity<List<Rank>>(tournamentService.rank(type),HttpStatus.OK);
 	}
+	//Rank theo tour
+	@GetMapping(value="rankByTour")
+	public ResponseEntity<List<Rank>> rankByTour(@RequestParam int idTour){
+		return new ResponseEntity<List<Rank>>(tournamentService.rankByTour(idTour),HttpStatus.OK);
+	}
+	//Hiển thị tất cả các giải đấu theo thể loại
+	@GetMapping(value="getToursByType")
+	public ResponseEntity<List<ToursByType>> getToursByType(){
+		return new ResponseEntity<List<ToursByType>>(tournamentService.getToursByType(),HttpStatus.OK);
+	}
+	
 
 }

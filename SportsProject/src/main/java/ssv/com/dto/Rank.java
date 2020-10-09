@@ -10,5 +10,6 @@ import lombok.Setter;
 public class Rank {
 	private String name;
 	public double rank;
+	public int idTeam;
 	
 }

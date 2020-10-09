@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import ssv.com.controller.form.TeamForm;
+import ssv.com.dto.Rank;
 import ssv.com.dto.ScheduleDto;
 import ssv.com.dto.TeamDetail;
 import ssv.com.dto.TeamDto;
@@ -143,17 +144,17 @@ public class TeamService {
 
 	public void addTour(int idTour, int idTeam) {
 
-		teamRepository.addTour(idTour,idTeam);
+		teamRepository.addTour(idTour, idTeam);
 
 	}
 
 	public void formatTotalMatch(int idTour) {
 		teamRepository.formatTotalMatch(idTour);
-		
+
 	}
 
 	public void updateTeam(int id, Team team) {
-			teamRepository.updateTeam(id, team);
+		teamRepository.updateTeam(id, team);
 	}
 
 	public List<Team> getAllByType(String type) {
@@ -162,8 +163,16 @@ public class TeamService {
 	}
 
 	public double rank(int i) {
-	
-		return (scheduleReponsitory.sumWin(i)*1.0)/scheduleReponsitory.sum(i);
+
+		return (scheduleReponsitory.sumWin(i) * 1.0) / scheduleReponsitory.sum(i);
 	}
+
+	public double rankByTour(int idTeam, int idTour) {
+
+		return (scheduleReponsitory.sumWinJoinByTour(idTeam, idTour) * 1.0
+				/ scheduleReponsitory.sumJoinByTour(idTeam, idTour));
+	}
+
+	
 
 }

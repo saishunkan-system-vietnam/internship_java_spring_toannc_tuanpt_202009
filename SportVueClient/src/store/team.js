@@ -1,4 +1,3 @@
-import { getByIdTour } from "../api/ScheduleApi";
 import { detail, teamTourHistory, teamWait } from "../api/TeamApi";
 
 const actions={
@@ -23,6 +22,15 @@ const actions={
     teamWait({},type){
         return new Promise((resolve,reject)=>{
             teamWait(type).then(res=>{
+                resolve(res);
+            }).catch((err)=>{
+                reject(err);
+            })
+        })
+    },
+    getById({},id){
+        return new Promise((resolve,reject)=>{
+            this.getById(id).then(res=>{
                 resolve(res);
             }).catch((err)=>{
                 reject(err);

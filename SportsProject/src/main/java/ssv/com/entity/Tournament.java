@@ -23,4 +23,5 @@ public class Tournament {
 	private String title;
 	private List<Schedule> schedule;
 	private List<Team> team;
+	private int winner;
 }

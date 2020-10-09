@@ -58,7 +58,6 @@ export default {
         .dispatch("tournament/getRank", "Football")
         .then((response) => {
           this.rank = response.data;
-          console.log(this.rank);
         });
     },
   },
