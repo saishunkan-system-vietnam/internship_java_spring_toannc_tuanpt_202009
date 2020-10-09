@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col class="pr-0" cols="12" sm="2">
-      <v-expansion-panels max-height="10px" multiple>
+      <v-expansion-panels multiple>
         <v-expansion-panel v-for="(item, i) in tournaments" :key="i">
           <v-expansion-panel-header>{{ item.type }}</v-expansion-panel-header>
           <v-expansion-panel-content
@@ -30,14 +30,14 @@
     </v-col>
     <v-col cols="12" sm="8" class="pl-2">
       <v-card>
-        <v-tabs v-model="tab" fixed-tabs>
+        <v-tabs fixed-tabs>
           <v-tabs-slider></v-tabs-slider>
           <v-tab>Tournaments</v-tab>
           <v-tab>On Game</v-tab>
           <v-tab>Ended</v-tab>
           <v-tab>Upcomming</v-tab>
         </v-tabs>
-        <v-tabs-items v-model="tab" style="margin-top: 50px">
+        <v-tabs-items style="margin-top: 50px">
           <v-tab-item><AllSoccer></AllSoccer> </v-tab-item>
           <v-tab-item> <SoccerDoing></SoccerDoing> </v-tab-item>
           <v-tab-item> <SoccerEnd></SoccerEnd></v-tab-item>
@@ -45,34 +45,23 @@
         </v-tabs-items>
       </v-card>
     </v-col>
-    <v-col class="d-flex pl-0" cols="12" sm="2">
-      <v-expansion-panels max-height="10px" multiple>
-        <v-expansion-panel v-for="(item, i) in tournaments" :key="i">
-          <v-expansion-panel-header>{{ item.type }}</v-expansion-panel-header>
-          <v-expansion-panel-content
-            v-for="(tournament, t) in item.tournament"
-            :key="t"
-          >
-            <router-link to="/"></router-link>
-            <a
-              v-b-popover.hover.left="tournament.nameTour"
-              :href="
-                $router.resolve({
-                  path: '/DetailTournametSoccer/' + item.idTour,
-                }).href
-              "
-              style="color: black; margin-left: -30px"
-            >
+    <v-col class="pl-0" cols="12" sm="2">
+      <v-expansion-panels multiple>
+        <v-expansion-panel v-for="(item1, y) in rank" :key="y">
+          <v-expansion-panel-header>{{ item1.type }}</v-expansion-panel-header>
+          <v-expansion-panel-content v-for="(team, s) in item1.list" :key="s">
+            <p v-b-popover.hover.left="team.name">
+              {{ s + 1 }} .
               {{
-                tournament.nameTour.length < 10
-                  ? tournament.nameTour
-                  : tournament.nameTour.slice(0, 10) + "..."
-              }}</a
-            >
+                team.name.length < 10
+                  ? team.name
+                  : team.name.slice(0, 10) + "..."
+              }}
+            </p>
           </v-expansion-panel-content>
         </v-expansion-panel>
-      </v-expansion-panels></v-col
-    >
+      </v-expansion-panels>
+    </v-col>
   </v-row>
 </template>
 <script>
@@ -83,19 +72,18 @@ export default {
   }),
   created() {
     this.recivceData();
+    this.recivceRank();
   },
   methods: {
     recivceData() {
       let self = this;
       this.$store.dispatch("tournament/getToursByType").then((res) => {
-        console.log(res.data);
         self.tournaments = res.data;
       });
     },
     recivceRank() {
       let self = this;
-      this.$store.dispatch("tournament/getRank").then((res) => {
-        console.log(res.data);
+      this.$store.dispatch("tournament/rankAll").then((res) => {
         self.rank = res.data;
       });
     },
