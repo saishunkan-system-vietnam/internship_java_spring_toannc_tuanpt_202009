@@ -35,7 +35,11 @@ import DetailTournametTableTennis from './views/web/contents/TableTennis/DetailT
 
 
 Vue.use(Router)
-
+const metaConfig = {
+  requiredAuth: true,
+  adminAuth: true,
+  userAuth: false
+}
 let routes = [
   {
     path: '/',
@@ -64,7 +68,6 @@ let routes = [
             component: DetailTournametSoccer
           }
         ]
-
       },
 
       {
@@ -102,8 +105,6 @@ let routes = [
     name: 'login',
     component: AdminLogin
   },
-
-
   {
     path: '/admin/home',
     name: 'Home',
@@ -118,29 +119,17 @@ let routes = [
             path: "/",
             component: User,
             name: "User",
-            meta: {
-              requiredAuth: true,
-              adminAuth: true,
-              userAuth: false
-            }
+            meta: metaConfig
           },
           {
             path: "/Detail/:id",
             component: Detail,
-            meta: {
-              requiredAuth: true,
-              adminAuth: true,
-              userAuth: false
-            }
+            meta:
+              metaConfig
           }
         ],
-        meta: {
-          requiredAuth: true,
-          adminAuth: true,
-          userAuth: false
-        }
+        meta: metaConfig
       },
-
       {
         path: "/LayoutSchedule",
         component: LayoutSchedule,
@@ -149,30 +138,16 @@ let routes = [
             path: "/",
             component: Schedule,
             name: 'Schedule',
-            meta: {
-              requiredAuth: true,
-              adminAuth: true,
-              userAuth: false
-            }
+            meta: metaConfig
           },
           {
             path: "/DetailSchedule/:id",
             component: DetailSchedule,
-            meta: { requiresAuth: true },
-            meta: {
-              requiredAuth: true,
-              adminAuth: true,
-              userAuth: false
-            }
+            meta: metaConfig
           }
 
         ],
-        meta: {
-          requiredAuth: true,
-          adminAuth: true,
-          userAuth: false
-        }
-
+        meta: metaConfig
       },
       {
         path: "/LayoutTeam",
@@ -182,38 +157,22 @@ let routes = [
             path: "/",
             component: Teams,
             name: "Teams",
-            meta: {
-              requiredAuth: true,
-              adminAuth: true,
-              userAuth: false
-            }
+            meta: metaConfig
           },
           {
             path: "/create",
             component: CreateTeam,
             name: "CreateTeam",
-            meta: {
-              requiredAuth: true,
-              adminAuth: true,
-              userAuth: false
-            }
+            meta: metaConfig
           },
           {
             path: "/edit/:id",
             component: TeamDetail,
             name: "TeamDetail",
-            meta: {
-              requiredAuth: true,
-              adminAuth: true,
-              userAuth: false
-            }
+            meta: metaConfig
           }
         ],
-        meta: {
-          requiredAuth: true,
-          adminAuth: true,
-          userAuth: false
-        }
+        meta: metaConfig
       },
       {
         path: "/LayoutTournament",
@@ -224,35 +183,19 @@ let routes = [
             path: "/",
             component: Tournament,
             name: "Tournament",
-            meta: {
-              requiredAuth: true,
-              adminAuth: true,
-              userAuth: false
-            }
+            meta: metaConfig
           },
           {
             path: "/DetailTournament/:id",
             component: DetailTournament,
             name: "DetailTournament",
-            meta: {
-              requiredAuth: true,
-              adminAuth: true,
-              userAuth: false
-            }
+            meta: metaConfig
           }
         ],
-        meta: {
-          requiredAuth: true,
-          adminAuth: true,
-          userAuth: false
-        }
+        meta: metaConfig
       }
     ],
-    meta: {
-      requiredAuth: true,
-      adminAuth: true,
-      userAuth: false
-    }
+    meta: metaConfig
   }
 ]
 const router = new Router({

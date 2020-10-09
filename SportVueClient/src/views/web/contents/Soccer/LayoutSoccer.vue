@@ -1,6 +1,6 @@
 <template>
-<v-card>
-    <v-tabs v-model="tab" fixed-tabs>
+  <v-card>
+    <v-tabs v-model="tab" class="p-1" fixed-tabs>
       <v-tabs-slider></v-tabs-slider>
       <v-tab>Các giải đấu</v-tab>
       <v-tab>Đang diễn ra</v-tab>
@@ -14,8 +14,6 @@
       <v-tab-item> <SoccerNot></SoccerNot></v-tab-item>
     </v-tabs-items>
   </v-card>
-    
-  
 </template>
 <script>
 import AllSoccer from "./AllSoccer";
@@ -41,8 +39,6 @@ export default {
       this.tournamet = response.data;
     });
   },
-  methods: {
-   
-  },
+  methods: {},
 };
 </script>

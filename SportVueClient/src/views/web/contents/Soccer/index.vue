@@ -1,8 +1,8 @@
 <template>
-  <v-container style="padding-top: 0px">
+  <v-container class="pt-2">
     <v-row>
-      <v-col cols="12" sm="2" style="padding: 5px">
-        <v-card>
+      <v-col cols="12" sm="2" style="padding: 5px" class="pr-2">
+        <v-card >
           <v-list style="background-color: #f0f0f0">
             <v-subheader><b style="color: #878787">Các giải đấu</b></v-subheader>
             <v-list-item v-for="item in items" :key="item.title">
@@ -15,7 +15,7 @@
           </v-list>
         </v-card>
       </v-col>
-      <v-col cols="12" sm="8" style="padding: 0px"
+      <v-col cols="12" sm="8" style="padding: 0px" class="pt-1"
         ><router-view></router-view
       ></v-col>
       <v-col cols="12" sm="2" style="padding: 5px">
