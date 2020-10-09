@@ -1,7 +1,13 @@
 <template>
   <div style="background-color: white; width: 600px">
     <div>
-      <v-icon large color="green darken-2"> mdi-soccer </v-icon>
+      <v-icon v-if="data.type == 'Football'" large color="green darken-2">
+        mdi-soccer
+      </v-icon>
+      <v-icon v-if="data.type == 'TableTennis'" large color="blue darken-2">
+        sports_tennis
+      </v-icon>
+
       {{ data.nameTour }}
       <span
         style="
@@ -90,7 +96,9 @@
                           >
                             Tỉ số
                           </div>
+                       
                           <v-row>
+                            
                             <v-col>
                               <div>{{ data.team[0].nameTeam }}</div>
                               <div>{{ data.team[1].nameTeam }}</div>
@@ -134,7 +142,7 @@
                               </ul>
                             </v-col>
                             <v-col cols="12" sm="4">
-                              <ul>
+                              <ul style="list-style: none">
                                 <b>{{ data.team[0].nameTeam }}</b>
                                 <li>{{ inforTeam1.rate }}%</li>
                                 <li>{{ inforTeam1.sumJoinByTour }}</li>
@@ -144,7 +152,7 @@
                               </ul>
                             </v-col>
                             <v-col cols="12" sm="4">
-                              <ul>
+                              <ul style="list-style: none">
                                 <b>{{ data.team[1].nameTeam }}</b>
                                 <li>{{ inforTeam2.rate }}%</li>
                                 <li>{{ inforTeam2.sumJoinByTour }}</li>
@@ -282,7 +290,7 @@
                   <v-list-item>
                     <v-list-item-content>
                       <v-list-item-title>
-                        <v-row 
+                        <v-row
                           v-b-popover.hover.bottom="'Kích vào để xem chi tiết'"
                         >
                           <v-col cols="12" sm="4">{{
@@ -297,17 +305,16 @@
                               <v-col cols="12" sm="4">
                                 {{ item.team[0].nameTeam }}
                               </v-col>
-                              <v-col cols="12" sm="4">{{
-                              item.status == 2 ? item.scoreTeam1 : "?"
-                            }}
-                            -
-                            {{
-                              item.status == 2 ? item.scoreTeam2 : "?"
-                            }} </v-col>
-                              <v-col cols="12" sm="4"> {{ item.team[1].nameTeam }}</v-col>
+                              <v-col cols="12" sm="4"
+                                >{{ item.status == 2 ? item.scoreTeam1 : "?" }}
+                                -
+                                {{ item.status == 2 ? item.scoreTeam2 : "?" }}
+                              </v-col>
+                              <v-col cols="12" sm="4">
+                                {{ item.team[1].nameTeam }}</v-col
+                              >
                             </v-row>
                           </v-col>
-                       
                         </v-row>
                       </v-list-item-title>
                     </v-list-item-content>
@@ -395,7 +402,7 @@ export default {
           .then((response) => {
             this.inforTeam2 = response.data;
           });
-    
+
         this.$store
           .dispatch("schedule/related", {
             idTour: response.data.idTour,

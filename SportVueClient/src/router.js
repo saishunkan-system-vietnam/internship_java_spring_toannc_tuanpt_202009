@@ -30,6 +30,9 @@ import TableTennis from '@/views/web/contents/TableTennis'
 import DetailSoccer from './views/web/contents/Soccer/DetailSoccer'
 import LayoutSoccer from './views/web/contents/Soccer/LayoutSoccer'
 import DetailTournametSoccer from './views/web/contents/Soccer/DetailTournametSoccer'
+import LayoutTableTennis from './views/web/contents/TableTennis/LayoutTableTennis'
+import DetailTournametTableTennis from './views/web/contents/TableTennis/DetailTournametTableTennis'
+
 
 Vue.use(Router)
 const metaConfig = {
@@ -66,6 +69,7 @@ let routes = [
           }
         ]
       },
+
       {
         path: '/baskestBall',
         name: 'baskestBall',
@@ -75,6 +79,18 @@ let routes = [
         path: '/tableTennis',
         name: 'tableTennis',
         component: TableTennis,
+        children: [
+          {
+            path: '/',
+            name: 'LayoutTableTennis',
+            component: LayoutTableTennis
+          },
+          {
+            path: '/DetailTournametTableTennis/:id',
+            name: 'DetailTournametTableTennis',
+            component: DetailTournametTableTennis
+          }
+        ]
       },
 
     ]
