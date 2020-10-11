@@ -5,6 +5,8 @@ import Web from '@/views/web'
 
 import AdminLogin from './views/admin/AdminLogin.vue'
 import AdminHome from './views/admin/Home.vue'
+import HomeAdmin from './views/admin/HomeAdmin.vue'
+
 
 import LayoutUser from '@/views/admin/user/LayoutUser'
 import User from '@/views/admin/user/User'
@@ -29,11 +31,13 @@ import BaskestBall from '@/views/web/contents/BaskestBall'
 import TableTennis from '@/views/web/contents/TableTennis'
 import DetailSoccer from './views/web/contents/Soccer/DetailSoccer'
 import LayoutSoccer from './views/web/contents/Soccer/LayoutSoccer'
-import DetailTournametSoccer from './views/web/contents/Soccer/DetailTournametSoccer'
+import DetailTournamentSoccer from './views/web/contents/Soccer/DetailTournamentSoccer'
 import LayoutTableTennis from './views/web/contents/TableTennis/LayoutTableTennis'
-import DetailTournametTableTennis from './views/web/contents/TableTennis/DetailTournametTableTennis'
+import DetailTournamentTableTennis from './views/web/contents/TableTennis/DetailTournamentTableTennis'
 import LayoutAllSports from './views/web/contents/AllSports/LayoutAllSports'
 import DetailTournametSports from './views/web/contents/AllSports/DetailTournametSports'
+import LayoutBaskestBall from './views/web/contents/BaskestBall/LayoutBaskestBall'
+import DetailTournamentBaskestBall from './views/web/contents/BaskestBall/DetailTournamentBaskestBall'
 
 Vue.use(Router)
 const metaConfig = {
@@ -73,17 +77,27 @@ let routes = [
             component: LayoutSoccer
           },
           {
-            path: '/DetailTournametSoccer/:id',
-            name: 'DetailTournametSoccer',
-            component: DetailTournametSoccer
+            path: '/DetailTournamentSoccer/:id',
+            name: 'DetailTournamentSoccer',
+            component: DetailTournamentSoccer
           }
         ]
       },
 
       {
         path: '/baskestBall',
-        name: 'baskestBall',
         component: BaskestBall,
+        children: [
+          {
+            path: '/',
+            component: LayoutBaskestBall
+          },
+          {
+            path: '/DetailTournamentBaskestBall/:id',
+            name: 'DetailTournamentBaskestBall',
+            component: DetailTournamentBaskestBall
+          }
+        ]
       },
       {
         path: '/tableTennis',
@@ -94,9 +108,9 @@ let routes = [
             component: LayoutTableTennis
           },
           {
-            path: '/DetailTournametTableTennis/:id',
-            name: 'DetailTournametTableTennis',
-            component: DetailTournametTableTennis
+            path: '/DetailTournamentTableTennis/:id',
+            name: 'DetailTournamentTableTennis',
+            component: DetailTournamentTableTennis
           }
         ]
       },
@@ -117,8 +131,13 @@ let routes = [
     path: '/admin/home',
     name: 'Home',
     component: AdminHome,
-    redirect: '/LayoutUser',
+    redirect: '/admin/home',
     children: [
+      {
+        path:'/',
+        component:HomeAdmin,
+        name:'HomeAdmin'
+      },
       {
         path: "/LayoutUser",
         component: LayoutUser,
