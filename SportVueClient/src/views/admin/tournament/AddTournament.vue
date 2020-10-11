@@ -138,7 +138,7 @@ export default {
   data: () => ({
     Tournament: new Tournament(),
     value: [],
-    sports: ["Football", "TableTennis", "Baseball", "Basketball"],
+    sports: ["Football", "TableTennis", "Basketball"],
     items: [],
     timeStart: new Date().toISOString().substr(0, 10),
     timeEnd: new Date().toISOString().substr(0, 10),

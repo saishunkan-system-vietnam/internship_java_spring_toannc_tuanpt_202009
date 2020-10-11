@@ -1,13 +1,13 @@
 <template>
-  <v-container style="padding-top: 0px">
+  <v-container class="pt-2">
     <v-row>
-      <v-col cols="12" sm="2" style="padding: 5px">
-        <v-card>
-          <v-list style="background-color: #f0f0f0">
-            <v-subheader><b style="color: #878787">Các giải đấu</b></v-subheader>
+      <v-col cols="12" sm="2" style="padding: 5px" class="pr-2">
+        <v-card >
+          <v-list style="background-color: white">
+            <v-subheader><b style="color: red">Các giải đấu</b></v-subheader>
             <v-list-item v-for="item in items" :key="item.title">
               <v-list-item-content>
-                <a :href="$router.resolve({path: '/DetailTournametTableTennis/' + item.idTour}).href" style="color:black">               
+                <a :href="$router.resolve({path: '/DetailTournametSoccer/' + item.idTour}).href" style="color:black">               
                   <v-list-item-title v-text="item.nameTour"></v-list-item-title
                 ></a>
               </v-list-item-content>
@@ -15,13 +15,13 @@
           </v-list>
         </v-card>
       </v-col>
-      <v-col cols="12" sm="8" style="padding: 0px"
+      <v-col cols="12" sm="8" style="padding: 0px" class="pt-1"
         ><router-view></router-view
       ></v-col>
       <v-col cols="12" sm="2" style="padding: 5px">
         <v-card>
-          <v-list style="background-color: #f0f0f0">
-            <v-subheader><b style="color: #878787">BẢNG XẾP HẠNG</b></v-subheader>
+          <v-list style="background-color: white">
+            <v-subheader><b style="color: green">BẢNG XẾP HẠNG</b></v-subheader>
             <v-list-item v-for="(item, index) in rank" :key="index">
               <v-list-item-content>
                 {{ index + 1 }}.{{ item.name }}
