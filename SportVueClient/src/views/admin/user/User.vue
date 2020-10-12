@@ -105,18 +105,17 @@ export default {
       };
 
       this.$store.dispatch("user/searchUser", params).then((response) => {
-        // console.log(response);
         this.user = response.data.account;
         this.pages = response.data.totalPage;
       });
     },
     Search() {
       this.getListUser();
+      this.loadingSearch=true
     },
   },
   watch: {
     page() {
-      console.log(this.$route.matched);
       if (!this.loadingSearch) {
         (this.nameSearch = ""), (this.type = "");
       }

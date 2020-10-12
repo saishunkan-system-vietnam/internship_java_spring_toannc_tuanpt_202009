@@ -1,7 +1,7 @@
 <template>
   <div style="background-color: white; width: 600px">
     <div>
-   <v-icon v-if="this.type == 'Football'" large color="green darken-2">
+      <v-icon v-if="this.type == 'Football'" large color="green darken-2">
         mdi-soccer
       </v-icon>
       <v-icon v-if="this.type == 'TableTennis'" large color="blue darken-2">
@@ -22,17 +22,15 @@
       </span>
     </div>
     <div>
-       
-
       <v-row>
         <v-col class="text-center"
           ><b-img
             center
-            :src="!!data?data.team[0].logo:''"
+            :src="!!data ? data.team[0].logo : ''"
             style="width: 100px"
             alt="Center image"
           ></b-img>
-          <div>{{ !!data?data.team[0].nameTeam:'' }}</div>
+          <div>{{ !!data ? data.team[0].nameTeam : "" }}</div>
         </v-col>
         <v-col class="text-center" style="margin-top: 10px"
           ><div v-if="data.status == 0">
@@ -51,11 +49,13 @@
         <v-col class="text-center"
           ><b-img
             center
-            :src="!!data?data.team[1].logo:''"
+            :src="!!data ? data.team[1].logo : ''"
             style="width: 100px"
             alt="Center image"
           ></b-img>
-          <div class="text-center">{{ !!data?data.team[1].nameTeam:'' }}</div>
+          <div class="text-center">
+            {{ !!data ? data.team[1].nameTeam : "" }}
+          </div>
         </v-col>
       </v-row>
     </div>
@@ -99,22 +99,24 @@
                             Tỉ số
                           </div>
                           <table class="table">
-                           
                             <tbody>
-                              <tr v-for="(item,index) in data.round" :key="index">
+                              <tr
+                                v-for="(item, index) in data.round"
+                                :key="index"
+                              >
                                 <td>
-                                   {{ item.roundName}}
+                                  {{ item.roundName }}
                                 </td>
-                                   <td>
-                                   {{ item.roundScore1}}
+                                <td>
+                                  {{ item.roundScore1 }}
                                 </td>
-                                   <td>
-                                   {{ item.roundScore2}}
+                                <td>
+                                  {{ item.roundScore2 }}
                                 </td>
                               </tr>
                             </tbody>
                           </table>
-                         
+
                           <div
                             class="text-center"
                             style="background-color: #bcaaa4"
@@ -141,7 +143,7 @@
                             </v-col>
                             <v-col cols="12" sm="4">
                               <ul style="list-style: none">
-                                <b>{{ !!data?data.team[0].nameTeam:'' }}</b>
+                                <b>{{ !!data ? data.team[0].nameTeam : "" }}</b>
                                 <li>{{ inforTeam1.rate }}%</li>
                                 <li>{{ inforTeam1.sumJoinByTour }}</li>
                                 <li>{{ inforTeam1.sumWinJoinByTour }}</li>
@@ -151,7 +153,7 @@
                             </v-col>
                             <v-col cols="12" sm="4">
                               <ul style="list-style: none">
-                                <b>{{ !!data?data.team[1].nameTeam:'' }}</b>
+                                <b>{{ !!data ? data.team[1].nameTeam : "" }}</b>
                                 <li>{{ inforTeam2.rate }}%</li>
                                 <li>{{ inforTeam2.sumJoinByTour }}</li>
                                 <li>{{ inforTeam2.sumWinJoinByTour }}</li>
@@ -169,8 +171,44 @@
                           <v-textarea
                             name="input-7-1"
                             :value="data.description"
-                            
                           ></v-textarea>
+                          <div
+                            class="text-center"
+                            style="background-color: #bcaaa4"
+                          >
+                            Bình luận
+                          </div>
+                          <v-textarea
+                            v-model="textComment"
+                            style="margin-top: 20px"
+                            solo
+                            name="input-7-4"
+                            height="30px"
+                            placeholder="comment"
+                          ></v-textarea>
+                          <v-btn
+                            depressed
+                            color="success"
+                            @click="commentSubmit"
+                          >
+                            Bình luận
+                          </v-btn>
+                          <v-card>
+                            <v-card-text>
+                              <div v-for="(item, i) in comment" :key="i">
+                                <template v-if="i < number">
+                                  <p>{{ item.nameProfile }}</p>
+                                  <li>{{ item.text }}</li>
+                                </template>
+                              </div>
+                              <div
+                                class="text-center"
+                                v-if="comment.length > 5"
+                              >
+                                <a style="color: blue">Hiển thị thêm</a>
+                              </div>
+                            </v-card-text>
+                          </v-card>
                         </v-card-text>
                       </v-card>
                     </v-tab-item>
@@ -233,9 +271,9 @@
                                   v-bind:key="index"
                                 >
                                   <b-card-text>
-                                  <h3>  Tỉ số :</h3>
+                                    <h3>Tỉ số :</h3>
                                     <b-row>
-                                      <b-col  class="text-center"
+                                      <b-col class="text-center"
                                         ><b-avatar
                                           :src="team1.logo"
                                           size="6rem"
@@ -301,7 +339,7 @@
                           <v-col>
                             <v-row>
                               <v-col cols="12" sm="4">
-                                {{ !!data?item.team[0].nameTeam:'' }}
+                                {{ !!data ? item.team[0].nameTeam : "" }}
                               </v-col>
                               <v-col cols="12" sm="4"
                                 >{{ item.status == 2 ? item.scoreTeam1 : "?" }}
@@ -309,7 +347,7 @@
                                 {{ item.status == 2 ? item.scoreTeam2 : "?" }}
                               </v-col>
                               <v-col cols="12" sm="4">
-                                {{ !!data?item.team[1].nameTeam :''}}</v-col
+                                {{ !!data ? item.team[1].nameTeam : "" }}</v-col
                               >
                             </v-row>
                           </v-col>
@@ -357,7 +395,10 @@ export default {
       team1: "",
       team2: "",
       related: "",
-      type:''
+      type: "",
+      number: 5,
+      textComment: "",
+      comment: [],
     };
   },
   created() {
@@ -365,13 +406,12 @@ export default {
       .dispatch("schedule/getById", this.$route.params.id)
       .then((response) => {
         this.data = response.data;
-        this.type=response.data.team[0].type
+        this.type = response.data.team[0].type;
         this.$store
           .dispatch("team/getDetail", {
             params: {
               idTeam: response.data.team[0].idTeam,
               idTour: response.data.idTour,
-              
             },
           })
           .then((response) => {
@@ -413,7 +453,40 @@ export default {
           .then((response) => {
             this.related = response.data;
           });
+        this.$store
+          .dispatch("comment/getAll", this.$route.params.id)
+          .then((response) => {
+            this.comment = response.data;
+          });
       });
+  },
+  methods: {
+    getComment() {
+      this.$store
+        .dispatch("comment/getAll", this.$route.params.id)
+        .then((response) => {
+          this.comment = response.data;
+        });
+    },
+    commentSubmit() {
+    
+      if (this.$store.state.user.userInfo == null) {
+        alert("cần đăng nhập");
+      } else {
+        if (this.textComment != "") {
+          this.$store
+            .dispatch("comment/addComment", {
+              text: this.textComment,
+              idSchedule: this.data.idSchedule,
+              nameProfile: this.$store.state.user.userInfo.profile.name,
+            })
+            .then((response) => {
+              this.getComment();
+              this.textComment=''
+            });
+        }
+      }
+    },
   },
 };
 </script>
