@@ -2,12 +2,20 @@
   <v-container class="pt-2">
     <v-row>
       <v-col cols="12" sm="2" style="padding: 5px" class="pr-2">
-        <v-card >
+        <v-card>
           <v-list style="background-color: white">
             <v-subheader><b style="color: red">Các giải đấu</b></v-subheader>
             <v-list-item v-for="item in items" :key="item.title">
               <v-list-item-content>
-                <a :href="$router.resolve({path: '/DetailTournametSoccer/' + item.idTour}).href" style="color:black">               
+                <a
+                  :href="
+                    $router.resolve({
+                      path: '/DetailTournamentSoccer/' + item.idTour,
+                    }).href
+                  "
+                  style="color: black"
+                >
+                
                   <v-list-item-title v-text="item.nameTour"></v-list-item-title
                 ></a>
               </v-list-item-content>
