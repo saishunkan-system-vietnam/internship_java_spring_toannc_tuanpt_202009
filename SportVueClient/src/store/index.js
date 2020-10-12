@@ -6,6 +6,7 @@ import schedule from '@/store/schedule'
 import team from '@/store/team'
 import tournament from '@/store/tournament'
 import round from '@/store/round'
+import comment from '@/store/comment'
 
 
 Vue.use(Vuex)
@@ -17,6 +18,7 @@ export default new Vuex.Store({
 		schedule,
 		team,
 		tournament,
-		round	
+		round	,
+		comment
 	},
 })

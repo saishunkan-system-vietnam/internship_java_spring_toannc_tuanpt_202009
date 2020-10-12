@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ssv.com.mapper.CommentMapper">
+
+	<resultMap type="Comment" id="commentMapping">
+		<id column="id_comment" property="idComment" />
+		<result column="comment_text" property="text" />
+		<result column="comment_scheduleid" property="idSchedule" />
+		<result column="comment_nameprofile" property="nameProfile"/>
+	</resultMap>
+	<select id="getBySchedule" resultMap="commentMapping">
+	Select *from comment_tbl where comment_scheduleid=${idSchedule}
+	</select>
+	<insert id="addComment">
+		INSERT
+		INTO comment_tbl(
+		comment_text,
+		comment_scheduleid,
+		comment_nameprofile
+		) VALUES(
+		#{text},
+		#{idSchedule},
+		#{nameProfile}
+		) 
+	</insert>
+	
+	
+</mapper>

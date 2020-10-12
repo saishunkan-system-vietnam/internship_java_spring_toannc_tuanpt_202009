@@ -46,11 +46,15 @@
                 </v-list-item-group>
               </v-list>
             </v-expansion-panel-content>
-          </v-expansion-panel> </v-expansion-panels
-      ></v-tab-item>
+          </v-expansion-panel>
+        </v-expansion-panels></v-tab-item
+      >
       <v-tab-item>
         <v-expansion-panels v-model="panel" multiple>
-          <v-expansion-panel v-for="(tournament, i) in tournamentsLive" :key="i">
+          <v-expansion-panel
+            v-for="(tournament, i) in tournamentsLive"
+            :key="i"
+          >
             <v-expansion-panel-header class="header"
               ><h5>{{ tournament.nameTour }}</h5></v-expansion-panel-header
             >
@@ -86,9 +90,11 @@
                 </v-list-item-group>
               </v-list>
             </v-expansion-panel-content>
-          </v-expansion-panel> </v-expansion-panels
-      ></v-tab-item>
-      <v-tab-item> <v-expansion-panels v-model="panel" multiple>
+          </v-expansion-panel>
+        </v-expansion-panels></v-tab-item
+      >
+      <v-tab-item>
+        <v-expansion-panels v-model="panel" multiple>
           <v-expansion-panel v-for="(tournament, i) in tournamentsEnd" :key="i">
             <v-expansion-panel-header class="header"
               ><h5>{{ tournament.nameTour }}</h5></v-expansion-panel-header
@@ -125,11 +131,15 @@
                 </v-list-item-group>
               </v-list>
             </v-expansion-panel-content>
-          </v-expansion-panel> </v-expansion-panels
-      ></v-tab-item>
-       <v-tab-item>
+          </v-expansion-panel>
+        </v-expansion-panels></v-tab-item
+      >
+      <v-tab-item>
         <v-expansion-panels v-model="panel" multiple>
-          <v-expansion-panel v-for="(tournament, i) in tournamentsUpcoming" :key="i">
+          <v-expansion-panel
+            v-for="(tournament, i) in tournamentsUpcoming"
+            :key="i"
+          >
             <v-expansion-panel-header class="header"
               ><h5>{{ tournament.nameTour }}</h5></v-expansion-panel-header
             >
@@ -165,8 +175,9 @@
                 </v-list-item-group>
               </v-list>
             </v-expansion-panel-content>
-          </v-expansion-panel> </v-expansion-panels
-      ></v-tab-item>
+          </v-expansion-panel>
+        </v-expansion-panels></v-tab-item
+      >
     </v-tabs-items>
   </v-card>
 </template>
@@ -180,6 +191,8 @@ export default {
       tournamentsUpcoming:'',
       tournamentsLive:'',
       tournamentsEnd:'',
+      open: false,
+
     };
   },
   created() {

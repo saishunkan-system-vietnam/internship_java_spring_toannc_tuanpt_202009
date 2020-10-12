@@ -180,6 +180,7 @@ export default {
       tournamentsUpcoming:'',
       tournamentsLive:'',
       tournamentsEnd:'',
+      open : false,
     };
   },
   created() {

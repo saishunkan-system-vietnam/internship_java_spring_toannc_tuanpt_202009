@@ -2,7 +2,7 @@
   <div>
     
       <v-card>
-        <h3>Giải đấu :{{ data.nameTour }}</h3>
+        <h3>Giải đấu :{{ tournament.nameTour }}</h3>
 
         <v-tabs v-model="tab">
           <v-tabs-slider></v-tabs-slider>
@@ -30,7 +30,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="item in data.team" :key="item.name">
+                      <tr v-for="item in tournament.team" :key="item.name">
                         <td>{{ item.nameTeam }}</td>
                         <td>
                           <v-avatar>
@@ -70,7 +70,7 @@
               <v-card-text>
                 <v-list dense>
                   <v-list-item-group
-                    v-for="(item, index) in data.schedule"
+                    v-for="(item, index) in tournament.schedule"
                     color="primary"
                     :key="index"
                   >
@@ -121,32 +121,32 @@ export default {
   data() {
     return {
       rank:'',
-      data: "",
+      tournament: "",
       tab: null,
       open:false
     };
   },
   created() {
-    this.getdata();
+    this.gettournament();
   },
   methods: {
-    getdata() {
+    gettournament() {
       this.$store
         .dispatch("tournament/getById", this.$route.params.id)
         .then((response) => {
-          this.data = response.data;
+          this.tournament = response.tournament;
         });
         this.$store
         .dispatch("tournament/getRankByTour", this.$route.params.id)
         .then((response) => {
-          this.rank = response.data;
+          this.rank = response.tournament;
         });
     },
-      detail(data) {
-      this.detailScore = data;
+      detail(tournament) {
+      this.detailScore = tournament;
       this.open = true;
       var myWindow = window.open(
-        "http://localhost:8080/soccer/detail/" + data.idSchedule,
+        "http://localhost:8080/soccer/detail/" + tournament.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );
