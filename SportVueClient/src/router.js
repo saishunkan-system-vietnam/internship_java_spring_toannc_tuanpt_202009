@@ -55,18 +55,18 @@ let routes = [
       {
         path: '/sports',
         component: AllSports,
-        children:[{
-          path:'/',
-          name:'LayoutAllSports',
-          component:LayoutAllSports
+        children: [{
+          path: '/',
+          name: 'LayoutAllSports',
+          component: LayoutAllSports
         },
         {
           path: '/DetailTournametSports/:id',
           name: 'DetailTournametSports',
           component: DetailTournametSports
         }
-        
-      ]
+
+        ]
       },
       {
         path: '/soccer',
@@ -125,8 +125,10 @@ let routes = [
   {
     path: '/admin/login',
     name: 'login',
-    component: AdminLogin
+    component: AdminLogin,
+    meta : { requiredAuth: false }
   },
+
   {
     path: '/admin/home',
     name: 'Home',
@@ -134,9 +136,9 @@ let routes = [
     redirect: '/admin/home',
     children: [
       {
-        path:'/',
-        component:HomeAdmin,
-        name:'HomeAdmin'
+        path: '/',
+        component: HomeAdmin,
+        name: 'HomeAdmin'
       },
       {
         path: "/LayoutUser",
@@ -242,8 +244,7 @@ router.beforeEach(async (to, from, next) => {
     if (!authUser || !authUser.token) {
       next()
     }
-
-    if (to.meta.adminAuth) {
+    else if (to.meta.adminAuth) {
       let role = store.state.user.userInfo.role;
       if (role === 'ROLE_ADMIN') {
         next()
