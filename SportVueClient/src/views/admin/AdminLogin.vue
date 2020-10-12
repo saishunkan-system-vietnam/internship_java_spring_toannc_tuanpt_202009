@@ -53,10 +53,10 @@ export default {
       this.$store
         .dispatch("auth/login", this.user)
         .then((res) => {
-
+          console.log(res.data)
           const status = localStorage.getItem("token");
 
-          var role = res.data.payload.role
+          var role = res.data.payload.account.role
           if (status === null || status === undefined) {
             this.$router.push("/admin/login");
           } else if (role === "ROLE_ADMIN") {

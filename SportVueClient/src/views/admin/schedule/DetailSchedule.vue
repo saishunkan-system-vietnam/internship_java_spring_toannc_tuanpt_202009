@@ -105,15 +105,15 @@
                 <b-card-text>
                   Tỉ số :
                   <b-row>
-                    <b-col
+                    <b-col class="text-center"
                       ><b-avatar :src="team1.logo" size="6rem"></b-avatar
                     ></b-col>
-                    <b-col
+                    <b-col class="text-center"
                       ><h1>
                         {{ item.roundScore1 }}-{{ item.roundScore2 }}
                       </h1></b-col
                     >
-                    <b-col
+                    <b-col class="text-center"
                       ><b-avatar :src="team1.logo" size="6rem"></b-avatar
                     ></b-col>
                   </b-row>

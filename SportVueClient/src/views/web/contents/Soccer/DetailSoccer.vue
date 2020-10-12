@@ -7,6 +7,9 @@
       <v-icon v-if="this.type == 'TableTennis'" large color="blue darken-2">
         sports_tennis
       </v-icon>
+       <v-icon v-if="this.type == 'Basketball'" large color="blue darken-2">
+        sports_basketball
+      </v-icon>
 
       {{ data.nameTour }}
       <span

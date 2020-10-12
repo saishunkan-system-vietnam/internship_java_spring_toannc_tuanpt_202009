@@ -58,7 +58,7 @@ public class ScheduleController {
 			scheduleService.createSchedule(schedule);
 			return new ResponseEntity<String>("create",HttpStatus.OK);
 		}
-		String result=tournamnetService.getById(schedule.getIdTour()).getTimeEnd()+"->"+tournamnetService.getById(schedule.getIdTour()).getTimeStart();
+		String result=tournamnetService.getById(schedule.getIdTour()).getTimeStart()+"->"+tournamnetService.getById(schedule.getIdTour()).getTimeEnd();
 		return new ResponseEntity<String>("trùng lịch ! Thời gian của giải đấu là " + result,HttpStatus.OK);
 	}
 
