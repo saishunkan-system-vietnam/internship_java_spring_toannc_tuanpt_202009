@@ -6,7 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import ssv.com.controller.form.TeamForm;
+import ssv.com.controller.form.PaginateForm;
 import ssv.com.entity.Profile;
 import ssv.com.entity.Schedule;
 import ssv.com.entity.Team;
@@ -36,7 +36,6 @@ public class TeamRepository {
 		teamMapper.save(team);
 	}
 
-
 	public void updateTournew(int id) {
 		teamMapper.updateTourNew(id);
 
@@ -48,12 +47,12 @@ public class TeamRepository {
 	}
 
 	public void addMember(Profile profile, int idTeam) {
-		teamMapper.addMember(profile.getId(),idTeam);
+		teamMapper.addMember(profile.getId(), idTeam);
 
 	}
 
 	public void updateTour(int idTour, int idTeam) {
-		teamMapper.updateTour(idTeam,idTour);
+		teamMapper.updateTour(idTeam, idTour);
 
 	}
 
@@ -62,11 +61,11 @@ public class TeamRepository {
 
 	}
 
-	public Set<Schedule> selectAllMatchsByTeam(int id){
+	public Set<Schedule> selectAllMatchsByTeam(int id) {
 		return teamMapper.selectAllMatchsByTeam(id);
 	}
 
-	public Set<Schedule> selectAllMatchsWinByTeam(int id){
+	public Set<Schedule> selectAllMatchsWinByTeam(int id) {
 		return teamMapper.selectAllMatchsByTeam(id);
 	}
 
@@ -75,13 +74,12 @@ public class TeamRepository {
 	}
 
 	public int searchTotal(String nameSearch, String type) {
-		return teamMapper.searchTotal(nameSearch,type);
+		return teamMapper.searchTotal(nameSearch, type);
 	}
 
 	public List<Team> search(int page, int pageSize, String nameSearch, String type, String sorts) {
 
-
-		return teamMapper.search(page,pageSize,nameSearch,type,sorts);
+		return teamMapper.search(page, pageSize, nameSearch, type, sorts);
 	}
 
 	public List<Team> teamWait(String type) {
@@ -89,35 +87,37 @@ public class TeamRepository {
 	}
 
 	public void formatTourById(int idTour, int idTeam) {
-		teamMapper.formatTourById(idTour,idTeam);
+		teamMapper.formatTourById(idTour, idTeam);
 	}
 
 	public void addTour(int idTour, int idTeam) {
-		teamMapper.addTour(idTour,idTeam);
+		teamMapper.addTour(idTour, idTeam);
 
 	}
 
 	public Team teamTourHistory(int idTeam, int idTour) {
-		return teamMapper.teamTourHistory(idTeam,idTour);
+		return teamMapper.teamTourHistory(idTeam, idTour);
 
 	}
-
 
 	public void formatTotalMatch(int idTour) {
 		teamMapper.formatTotalMatch(idTour);
-		
+
 	}
 
-
 	public void updateTeam(int id, Team team) {
-		 teamMapper.updateTeam(id, team);
+		teamMapper.updateTeam(id, team);
 	}
 
 	public List<Team> getAllByType(String type) {
 		return teamMapper.getAllByType(type);
 	}
 
+	public List<Team> search(PaginateForm form) {
+		return teamMapper.search(form);
+	}
 
-
-
+	public Integer getCountAll() {
+		return teamMapper.getCountAll();
+	}
 }
