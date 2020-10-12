@@ -172,38 +172,31 @@ export default {
 
     loadTeamById(id) {
       let self = this;
-      axios
-        .get(`http://localhost:8090/api/v1/team/findDetail/${id}`)
-        .then(function (response) {
-          self.team = response.data;
-        })
-        .catch(function (error) {});
+      this.$store.dispatch("team/findTeamAndMembers", id).then((response) => {
+        self.team = response.data;
+      });
     },
 
     loadListMember(id) {
       let self = this;
-      axios
-        .get(`http://localhost:8090/api/v1/team/findDetail/${id}`)
-        .then(function (response) {
-          self.teamDetail = response.data;
-          self.desserts = self.teamDetail.profile;
-          // console.log(self.desserts);
-        })
-        .catch(function (error) {});
+      this.$store.dispatch("team/findTeamAndMembers", id).then((response) => {
+        self.teamDetail = response.data;
+        self.desserts = self.teamDetail.profile;
+      });
     },
 
     updateTeam() {
       let self = this;
       this.teamDetail.profile = this.desserts;
-      axios
-        .post(`http://localhost:8090/api/v1/team/update`, this.teamDetail)
+        this.$store
+        .dispatch("team/updateMembersInTeam", this.teamDetail)
         .then(function (response) {})
         .catch(function (error) {});
     },
 
     removeMember(member) {
-      console.log(this.desserts);
-      console.log("Removed");
+      // console.log(this.desserts);
+      // console.log("Removed");
       let data = this.desserts.map((element, index) => {
         if (element.id === member.id) {
           element.idTeam = 0;
@@ -218,7 +211,7 @@ export default {
     addedMember(member) {
       member.idTeam = this.$route.params.id;
       this.desserts.push(member);
-      console.log(member.idTeam);
+      // console.log(member.idTeam);
     },
 
     openEditTeam: function () {

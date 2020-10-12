@@ -112,7 +112,7 @@ public class TeamController {
 		return new ResponseEntity<List<Team>>(teamService.teamWait(type), HttpStatus.OK);
 	}
 
-	@PostMapping(value = "update")
+	@PostMapping(value = "updateMembersInTeam")
 	public ResponseQuery<?> update(@RequestBody Team team) {
 		profileService.updateMembersInTeam(team);
 		return ResponseQuery.success("Update Success", null);
