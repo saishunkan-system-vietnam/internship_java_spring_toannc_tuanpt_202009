@@ -5,8 +5,9 @@ import java.util.Set;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
+import ssv.com.controller.form.PaginateForm;
 import ssv.com.controller.form.TeamForm;
+import ssv.com.dto.PaginateDto;
 import ssv.com.entity.Schedule;
 import ssv.com.entity.Team;
 
@@ -28,7 +29,6 @@ public interface TeamMapper {
 
 	public void deleteTeam(int id);
 
-
 	public Team findByName(String name);
 
 	public void addMember(Long idProfile, int idTeam);
@@ -49,7 +49,6 @@ public interface TeamMapper {
 
 	public List<Team> teamWait(String type);
 
-
 	public void formatTourById(int idTour, int idTeam);
 
 	public void addTour(int idTour, int idTeam);
@@ -58,10 +57,12 @@ public interface TeamMapper {
 
 	public void formatTotalMatch(int idTour);
 
-
 	public void updateTeam(@Param("id") int id, @Param("team") Team team);
 
 	public List<Team> getAllByType(String type);
 
+	public List<Team> search(PaginateForm form);
+
+	public Integer getCountAll();
 
 }

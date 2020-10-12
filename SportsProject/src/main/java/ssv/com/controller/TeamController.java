@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ssv.com.controller.form.PaginateForm;
 import ssv.com.controller.form.TeamForm;
-
+import ssv.com.dto.PaginateDto;
 import ssv.com.dto.ResponseQuery;
 import ssv.com.dto.ScheduleDto;
 
@@ -90,17 +91,17 @@ public class TeamController {
 	}
 
 
-	@GetMapping(value = "search")
-	public ResponseEntity<TeamDto> search(@RequestParam int page, @RequestParam int pageSize,
-			@RequestParam String nameSearch, @RequestParam String type, @RequestParam String sorts) {
-		if (type == "") {
-			type = "id_schedule";
-		}
-		;
-		return new ResponseEntity<TeamDto>(teamService.search(page, pageSize * 2, nameSearch, type, sorts),
-				HttpStatus.OK);
-
-	}
+//	@GetMapping(value = "search")
+//	public ResponseEntity<TeamDto> search(@RequestParam int page, @RequestParam int pageSize,
+//			@RequestParam String nameSearch, @RequestParam String type, @RequestParam String sorts) {
+//		if (type == "") {
+//			type = "id_schedule";
+//		}
+//		;
+//		return new ResponseEntity<TeamDto>(teamService.search(page, pageSize * 2, nameSearch, type, sorts),
+//				HttpStatus.OK);
+//
+//	}
 
 	@GetMapping(value = "detail")
 	public ResponseEntity<TeamDetail> detailTeam(@RequestParam int idTeam, @RequestParam int idTour) {
@@ -137,5 +138,15 @@ public class TeamController {
 	@GetMapping(value = "teamTourHistory")
 	public ResponseEntity<Team> teamTourHistory(@RequestParam int idTeam, @RequestParam int idTour) {
 		return new ResponseEntity<Team>(teamService.teamTourHistory(idTeam, idTour), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "search")
+	public ResponseQuery<PaginateDto<List<Team>>> search(@RequestBody PaginateForm form){
+		PaginateDto<List<Team>> pages = new PaginateDto<List<Team>>();
+		List<Team> teams = teamService.search(form);
+		pages.setData(teams);
+		pages.setCurrentPage(form.getCurrentPage());
+		pages.setTotalPage(teamService.getCountAll());
+		return ResponseQuery.success("Success", pages);
 	}
 }

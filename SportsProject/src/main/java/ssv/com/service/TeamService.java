@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import ssv.com.controller.form.PaginateForm;
 import ssv.com.controller.form.TeamForm;
 import ssv.com.dto.Rank;
 import ssv.com.dto.ScheduleDto;
@@ -173,6 +174,12 @@ public class TeamService {
 				/ scheduleReponsitory.sumJoinByTour(idTeam, idTour));
 	}
 
-	
 
+	public List<Team> search(PaginateForm form){
+		return teamRepository.search(form);
+	}
+
+	public Integer getCountAll() {
+		return teamRepository.getCountAll();
+	}
 }

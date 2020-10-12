@@ -47,12 +47,26 @@
 		<result column="id_tour" property="idTour" />
 
 	</resultMap>
+
 	<select id="getAll" resultMap="teamMapping">
 		SELECT p.*, t.*, c.* FROM team_tbl
 		p
 		left join profile_tbl c on p.id_team = c.id_team
 		left join
 		tournament_tbl t on p.id_tour = t.id_tournament
+	</select>
+
+	<select id="getCountAll">
+		select count(*) from team_tbl
+	</select>
+
+	<select id="search" resultMap="teamMapping">
+		SELECT p.*, t.*, c.* FROM team_tbl
+		p
+		left join profile_tbl c on p.id_team = c.id_team
+		left join
+		tournament_tbl t on p.id_tour = t.id_tournament
+		limit #{limit} offset #{offset};
 	</select>
 
 	<select id="selectAllMatchsByTeam" resultMap="teamMapping">
