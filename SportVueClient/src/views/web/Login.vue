@@ -78,9 +78,11 @@ export default {
         .then((res) => {
           // this.$store.commit("auth/auth_overlay");
           self.overlay = false;
-          let userInfo = res.data.payload;
+          let userInfo = res.data.payload.account;
+          console.log(userInfo)
           if (userInfo.role === null || userInfo.role === undefined) {
              this.$router.push('/');
+          
           } else if (
             userInfo.role === "ROLE_USER" ||
             userInfo.role === "ROLE_MEMBER" ||

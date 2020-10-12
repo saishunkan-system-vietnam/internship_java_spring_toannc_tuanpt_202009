@@ -5,20 +5,20 @@
       <v-col>
         <v-text-field
           v-model="score1h1"
-          label="Bàn thắng team 1 "
+          label="Team 1 Goals "
           :rules="[
-            (v) => Number.isInteger(Number(v)) || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
       <v-col>
         <v-text-field
           v-model="score2h1"
-          label="Bàn thắng team 2"
+          label="Team 2 Goals"
           :rules="[
-            (v) => Number.isInteger(Number(v)) || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
@@ -26,31 +26,31 @@
     <v-textarea
       v-model="description1"
       name="input-7-1"
-      label="Diễn biến set 1"
+      label="Development of set 1"
       required
-      :rules="[(v) => v != '' || 'Không để trống']"
+      :rules="[(v) => v != '' || 'Do not leave blank']"
     ></v-textarea>
     <h3>Set 2</h3>
     <v-row>
       <v-col>
         <v-text-field
           v-model="score1h2"
-          label="Bàn thắng team 1 "
+          label="Team 1 Goals "
           required
           :rules="[
-            (v) => Number.isInteger(Number(v)) == true || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) == true || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
       <v-col>
         <v-text-field
           v-model="score2h2"
-          label="Bàn thắng team 2"
+          label="Team 2 Goals"
           required
           :rules="[
-            (v) => Number.isInteger(Number(v)) == true || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) == true || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
@@ -58,29 +58,29 @@
     <v-textarea
       v-model="description2"
       name="input-7-1"
-      label="Diễn biến set 2"
+      label="Development of set 2"
       required
-      :rules="[(v) => v != '' || 'Không để trống']"
+      :rules="[(v) => v != '' || 'Do not leave blank']"
     ></v-textarea>
     <h3>Set 3</h3>
     <v-row>
       <v-col>
         <v-text-field
           v-model="score1h3"
-          label="Bàn thắng team 1 "
+          label="Team 1 Goals "
           :rules="[
-            (v) => Number.isInteger(Number(v)) || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
       <v-col>
         <v-text-field
           v-model="score2h3"
-          label="Bàn thắng team 2"
+          label="Team 2 Goals"
           :rules="[
-            (v) => Number.isInteger(Number(v)) || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
@@ -88,17 +88,17 @@
     <v-textarea
       v-model="description1"
       name="input-7-1"
-      label="Diễn biến set 3"
+      label="Development of set 3"
       required
-      :rules="[(v) => v != '' || 'Không để trống']"
+      :rules="[(v) => v != '' || 'Do not leave blank']"
     ></v-textarea>
     <h3>Kết thúc</h3>
     <v-textarea
       v-model="description3"
       name="input-7-1"
-      label="Đánh giá khách quan"
+      label="Objective assessment"
       required
-      :rules="[(v) => v != '' || 'Không để trống']"
+      :rules="[(v) => v != '' || 'Do not leave blank']"
     ></v-textarea>
     <v-file-input
       v-model="fileImage"

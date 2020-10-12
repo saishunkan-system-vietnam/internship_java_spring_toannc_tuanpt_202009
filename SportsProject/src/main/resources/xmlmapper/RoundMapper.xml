@@ -13,7 +13,7 @@
 		<result property="roundSchedule" column="round_schedule" />
 	</resultMap>
 	<insert id="createFootball" parameterType="Round">
-		SET @var_id := (SELECT
+		Set @var_id := (SELECT
 		MAX(id_schedule) from schedule_tbl);
 		INSERT INTO
 		round_tbl (
@@ -21,7 +21,7 @@
 		round_schedule
 		)
 		VALUES(
-		'Hiệp 1',
+		'Set 1',
 		@var_id
 		);
 		INSERT INTO
@@ -30,12 +30,12 @@
 		round_schedule
 		)
 		VALUES(
-		'Hiệp 2',
+		'Set 2',
 		@var_id
 		)
 	</insert>
 	<insert id="createTableBall" parameterType="Round">
-		SET @var_id :=
+		Set @var_id :=
 		(SELECT
 		MAX(id_schedule) from schedule_tbl);
 		INSERT INTO
@@ -75,11 +75,11 @@
 	</delete>
 	<update id="uploadSchedule" parameterType="Round">
 		Update
-		round_tbl set round_score1=#{roundScore1},round_score2=#{roundScore2},
+		round_tbl Set round_score1=#{roundScore1},round_score2=#{roundScore2},
 		round_description=#{roundDescription} where round_schedule=#{roundSchedule} and round_name=#{roundName}
 	</update>
 	<insert id="createBaskestBall">
-	SET @var_id := (SELECT
+	Set @var_id := (SELECT
 		MAX(id_schedule) from schedule_tbl);
 		INSERT INTO
 		round_tbl (
@@ -87,19 +87,19 @@
 		round_schedule
 		)
 		VALUES(
-		'Hiệp 1',
+		'Set 1',
 		@var_id
 		),	(
-		'Hiệp 2',
+		'Set 2',
 		@var_id
 		),	(
-		'Hiệp 3',
+		'Set 3',
 		@var_id
 		),	(
-		'Hiệp 4',
+		'Set 4',
 		@var_id
 		),	(
-		'Hiệp 5',
+		'Set 5',
 		@var_id
 		)
 	</insert>

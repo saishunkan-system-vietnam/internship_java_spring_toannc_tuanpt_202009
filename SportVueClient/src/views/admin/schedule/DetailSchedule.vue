@@ -2,21 +2,19 @@
   <div>
     <div>
       <div v-if="schedule.status == 2">
-        <div v-if="(team1.type == 'Football')">
+        <div v-if="team1.type == 'Football'">
           <v-btn color="green darken-1" text @click="dialogFootball = true">
             <b-icon-upload></b-icon-upload>upload
           </v-btn>
         </div>
         <div v-else>
-          <v-btn
-            color="green darken-1"
-            text
-            @click="dialogTableTennis = true"
-          ><b-icon-upload></b-icon-upload>upload</v-btn>
+          <v-btn color="green darken-1" text @click="dialogTableTennis = true"
+            ><b-icon-upload></b-icon-upload>upload</v-btn
+          >
         </div>
       </div>
       <div v-else>
-        <p class="text-danger">Giải đấu chưa kết thúc</p>
+        <p class="text-danger">The tournament is not over yet</p>
       </div>
     </div>
     <v-row justify="center">
@@ -46,49 +44,57 @@
       </v-dialog>
     </v-row>
     <b-container>
-      <h1 style="color: red">Giải Đấu :{{ schedule.nameTour }}</h1>
+      <h1 style="color: red">Tournament :{{ schedule.nameTour }}</h1>
 
       <b-row>
         <b-col>
           <h3 style="color: Blue">Team 1: {{ team1.nameTeam }}</h3>
           <b-img :src="team1.logo" fluid alt="Responsive image"></b-img>
 
-          <h4 style="color: Blue">Thành viên :</h4>
+          <h4 style="color: Blue">Member :</h4>
           <ol v-for="(item, index) in team1.profile" v-bind:key="index">
             <li>
               {{ item.name }} - {{ item.age }} year old -{{ item.address }}
             </li>
           </ol>
-          <h4 style="color: Blue">Thông số kỹ thuật :</h4>
+          <h4 style="color: Blue">Technical specifications :</h4>
           <ul>
-            <li>Tỉ lệ thắng : {{ inforTeam1.rate }}%</li>
-            <li>Tổng số trận trong giải : {{ inforTeam1.sumJoinByTour }}</li>
+            <li>Win rate : {{ inforTeam1.rate }}%</li>
             <li>
-              Tổng số trận thắng trong giải: {{ inforTeam1.sumWinJoinByTour }}
+              Total number of games in the tournament :
+              {{ inforTeam1.sumJoinByTour }}
             </li>
-            <li>Tổng số trận tham gia : {{ inforTeam1.sum }}</li>
-            <li>Tổng số trận thắng : {{ inforTeam1.sumWin }}</li>
+            <li>
+              Total number of wins in the tournament:
+              {{ inforTeam1.sumWinJoinByTour }}
+            </li>
+            <li>Total number of games participating : {{ inforTeam1.sum }}</li>
+            <li>Total number of wins : {{ inforTeam1.sumWin }}</li>
           </ul>
         </b-col>
         <b-col>
           <h3 style="color: Blue">Team 2: {{ team2.nameTeam }}</h3>
           <b-img :src="team1.logo" fluid alt="Responsive image"></b-img>
 
-          <h4 style="color: Blue">Thành viên :</h4>
+          <h4 style="color: Blue">Member:</h4>
           <ol v-for="(item, index) in team2.profile" v-bind:key="index">
             <li>
               {{ item.name }} - {{ item.age }} year old -{{ item.address }}
             </li>
           </ol>
-          <h4 style="color: Blue">Thông số kỹ thuật :</h4>
+          <h4 style="color: Blue">Technical specifications :</h4>
           <ul>
-            <li>Tỉ lệ thắng : {{ inforTeam1.rate }}%</li>
-            <li>Tổng số trận trong giải : {{ inforTeam2.sumJoinByTour }}</li>
+            <li>Win rate : {{ inforTeam1.rate }}%</li>
             <li>
-              Tổng số trận thắng trong giải: {{ inforTeam2.sumWinJoinByTour }}
+              Total number of games in the tournament :
+              {{ inforTeam2.sumJoinByTour }}
             </li>
-            <li>Tổng số trận tham gia : {{ inforTeam2.sum }}</li>
-            <li>Tổng số trận thắng : {{ inforTeam2.sumWin }}</li>
+            <li>
+              Total number of wins in the tournament:
+              {{ inforTeam2.sumWinJoinByTour }}
+            </li>
+            <li>Total number of games participating : {{ inforTeam2.sum }}</li>
+            <li>Total number of wins: {{ inforTeam2.sumWin }}</li>
           </ul>
         </b-col>
       </b-row>
@@ -132,7 +138,7 @@
           </b-card>
         </div>
       </div>
-      <h2 style="color: blue">Tổng kết</h2>
+      <h2 style="color: blue">Summary</h2>
       <b-form-textarea
         id="textarea-no-resize"
         placeholder="Description"
@@ -141,12 +147,10 @@
         v-model="schedule.description"
         disabled
       ></b-form-textarea>
-      <h4>
-        Tỉ số chung cuộc: {{ schedule.scoreTeam1 }}-{{ schedule.scoreTeam2 }}
-      </h4>
+      <h4>Final score : {{ schedule.scoreTeam1 }}-{{ schedule.scoreTeam2 }}</h4>
       <div class="text-center">
-        <h3 style="color: Blue">Ảnh và video trận đấu</h3>
-        <h5>Ảnh</h5>
+        <h3 style="color: Blue">Match photos and videos</h3>
+        <h5>Photos</h5>
         <b-img
           :src="schedule.image"
           alt="Responsive image"
@@ -200,7 +204,6 @@ export default {
             })
             .then((response) => {
               this.team1 = response.data;
-              ;
             });
           this.$store
             .dispatch("team/teamTourHistory", {
