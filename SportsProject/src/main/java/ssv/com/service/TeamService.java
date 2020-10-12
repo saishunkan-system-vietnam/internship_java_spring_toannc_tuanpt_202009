@@ -124,7 +124,13 @@ public class TeamService {
 		detail.setSumWin(scheduleReponsitory.sumWin(idTeam));
 		detail.setSumJoinByTour(scheduleReponsitory.sumJoinByTour(idTeam, idTour));
 		detail.setSumWinJoinByTour(scheduleReponsitory.sumWinJoinByTour(idTeam, idTour));
-		detail.setRate(detail.getSumWin() * 100 / detail.getSum());
+		if(detail.getSum()==0) {
+			detail.setRate(0);
+		}
+		else {
+			detail.setRate(detail.getSumWin() * 100 / detail.getSum());
+
+		}
 		return detail;
 	}
 
