@@ -93,7 +93,7 @@ export default {
 
   methods: {
     editTeam(item) {
-      console.log(item);
+      // console.log(item);
       this.$router.push({ name: "TeamDetail", params: { id: item.idTeam } });
     },
   },

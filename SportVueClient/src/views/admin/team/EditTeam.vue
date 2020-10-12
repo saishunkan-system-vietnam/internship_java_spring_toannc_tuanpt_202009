@@ -1,34 +1,37 @@
 <template>
-<v-card>
-  <v-container fluid>
-    <h1>Edit Team</h1>
-    <v-form ref="form" v-model="valid" lazy-validation>
-      <v-row align="center">
-        <v-col class="d-flex" cols="12" sm="4">
-          <v-text-field
-            v-model="name"
-            :counter="21"
-            :rules="nameRules"
-            label="Team name"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col class="d-flex" cols="12" sm="4">
-          <v-select
-            :rules="[(v) => !!v || 'Item is required']"
-            :items="type"
-            v-model="selectedType"
-            label="Type"
-            dense
-          ></v-select>
-        </v-col>
+  <v-card>
+    <v-container fluid>
+      <h1>Edit Team</h1>
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <v-row align="center">
+          <v-col class="d-flex" cols="12" sm="4">
+            <v-text-field
+              v-model="name"
+              :counter="21"
+              :rules="nameRules"
+              label="Team name"
+              required
+            ></v-text-field>
+          </v-col>
+          <v-col class="d-flex" cols="12" sm="4">
+            <v-select
+              :rules="[(v) => !!v || 'Item is required']"
+              :items="type"
+              v-model="selectedType"
+              label="Type"
+              dense
+            ></v-select>
+          </v-col>
 
-        <v-col class="d-flex" cols="12" sm="4">
-          <v-file-input v-model="fileImage" label="Change Logo"></v-file-input>
-        </v-col>
-      </v-row>
+          <v-col class="d-flex" cols="12" sm="4">
+            <v-file-input
+              v-model="fileImage"
+              label="Change Logo"
+            ></v-file-input>
+          </v-col>
+        </v-row>
 
-      <!-- <v-row>
+        <!-- <v-row>
         <v-col cols="10">
           <v-select
             v-model="select"
@@ -63,31 +66,31 @@
         </v-col>
       </v-row> -->
 
-      <v-textarea
-        clearable
-        v-model="description"
-        clear-icon="mdi-close-circle"
-        label="Description"
-        value="Something about team"
-      ></v-textarea>
+        <v-textarea
+          clearable
+          v-model="description"
+          clear-icon="mdi-close-circle"
+          label="Description"
+          value="Something about team"
+        ></v-textarea>
 
-      <v-card-actions>
-        <v-btn color="primary" x-large text @click="openEditTeam">
-          Close
-        </v-btn>
-        <v-spacer> </v-spacer>
-        <v-btn
-          color="primary"
-          x-large
-          text
-          @click.prevent="onSubmit(team.props.idTeam)"
-          v-if="changeButton"
-          >Update</v-btn
-        >
-        <v-btn disabled v-else>Processing</v-btn>
-      </v-card-actions>
-    </v-form>
-  </v-container>
+        <v-card-actions>
+          <v-btn color="primary" x-large text @click="openEditTeam">
+            Close
+          </v-btn>
+          <v-spacer> </v-spacer>
+          <v-btn
+            color="primary"
+            x-large
+            text
+            @click.prevent="onSubmit(teamProps.idTeam)"
+            v-if="changeButton"
+            >Update</v-btn
+          >
+          <v-btn disabled v-else>Processing</v-btn>
+        </v-card-actions>
+      </v-form>
+    </v-container>
   </v-card>
 </template>
 
@@ -99,14 +102,14 @@ export default {
     openEditTeam: {
       type: Function,
     },
-    teamProps: Object,
+    teamProps: { type: Object },
   },
   data() {
     return {
       changeButton: true,
       valid: true,
       name: this.teamProps.nameTeam,
-      type: ["S1", "S2", "S3"],
+      type: ["Football", "TableTennis", "Baseball", "Basketball"],
       selectedType: this.teamProps.type,
       logo: "",
       description: this.teamProps.description,
@@ -117,19 +120,11 @@ export default {
       select: [],
       items: [],
       members: [],
-      fileImage: ''
+      fileImage: {},
     };
   },
   mounted() {
-    // let self = this;
-    // axios
-    //   .get("http://localhost:8090/api/v1/profiles/members")
-    //   .then(function (response) {
-    //     self.items = response.data;
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    console.log(this.teamProps);
   },
   watch: {
     selectedType() {
@@ -137,11 +132,12 @@ export default {
       this.members = this.items.filter((item) => {
         return item.type === this.selectedType && item.idTeam != 0;
       });
-      console.log(this.members);
+      // console.log(this.members);
     },
   },
   methods: {
     onSubmit(id) {
+      let self = this
       //   console.log("submit");
       //   console.log(this.fileImage);
       var teamForm = new FormData();

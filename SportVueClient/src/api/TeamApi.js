@@ -13,3 +13,14 @@ export function getById(id){
     return Api.get('/team/'+id);
 }
 
+export function findTeamAndMembers(id){
+    return Api.get('/team/findDetail/' + id)
+}
+
+export function updateMembersInTeam(bodyFormData){
+    return Api.post('/team/updateMembersInTeam', bodyFormData)
+}
+
+export function updateTeam(id, bodyFormData){
+    return Api.post(`/team/updateInfo/${id}`, bodyFormData)
+}
