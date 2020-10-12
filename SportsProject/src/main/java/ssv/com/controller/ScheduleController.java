@@ -59,7 +59,7 @@ public class ScheduleController {
 			return new ResponseEntity<String>("create",HttpStatus.OK);
 		}
 		String result=tournamnetService.getById(schedule.getIdTour()).getTimeStart()+"->"+tournamnetService.getById(schedule.getIdTour()).getTimeEnd();
-		return new ResponseEntity<String>("trùng lịch ! Thời gian của giải đấu là " + result,HttpStatus.OK);
+		return new ResponseEntity<String>("On the same date with ! The time of the tournament is " + result,HttpStatus.OK);
 	}
 
 	@DeleteMapping(value="delete/{idSchedule}")
@@ -68,9 +68,9 @@ public class ScheduleController {
 		if(scheduleService.getById(idSchedule).getStatus()==0 ) {
 			roundService.delete(idSchedule);
 			scheduleService.delete(idSchedule);
-			return new ResponseEntity<String>("xoa thanh cong", HttpStatus.OK);
+			return new ResponseEntity<String>("deleted successfully", HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("xoa khong thanh cong", HttpStatus.OK);
+		return new ResponseEntity<String>("Deletion failed", HttpStatus.OK);
 
 	}
 	
@@ -78,9 +78,9 @@ public class ScheduleController {
 	public ResponseEntity<String> updateShedule(@ModelAttribute ScheduleForm scheduleForm) throws Exception{
 		if(scheduleService.getById(scheduleForm.getIdSchedule()).getStatus()==2) {
 			scheduleService.updateShedule(scheduleForm);
-			return new ResponseEntity<String>("update thanh cong", HttpStatus.OK);
+			return new ResponseEntity<String>("successfully updated", HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("Chưa kết thúc không thể update", HttpStatus.OK);
+		return new ResponseEntity<String>("cannot update", HttpStatus.OK);
 
 	}
 	

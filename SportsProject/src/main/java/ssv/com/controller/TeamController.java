@@ -69,13 +69,13 @@ public class TeamController {
 			team.setLogo(path);
 			if (!teamService.checkTeam(team)) {
 				teamService.save(team);
-				return new ResponseEntity<String>("thanh cong", HttpStatus.OK);
+				return new ResponseEntity<String>("success", HttpStatus.OK);
 			}
-			return new ResponseEntity<String>("trung ten", HttpStatus.OK);
+			return new ResponseEntity<String>("namesake", HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ResponseEntity<String>("loi", HttpStatus.OK);
+		return new ResponseEntity<String>("fail", HttpStatus.OK);
 
 	}
 
@@ -83,7 +83,7 @@ public class TeamController {
 	public ResponseEntity<String> delteMember(@RequestBody Profile profile, @RequestParam int idTeam) {
 		if (teamService.checkMemberTeam(profile, idTeam)) {
 			teamService.deleteMember(profile);
-			return new ResponseEntity<String>("thanh cong", HttpStatus.OK);
+			return new ResponseEntity<String>("success", HttpStatus.OK);
 
 		}
 		return new ResponseEntity<String>("fail", HttpStatus.OK);

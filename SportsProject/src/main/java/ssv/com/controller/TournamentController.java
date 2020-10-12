@@ -43,7 +43,8 @@ public class TournamentController {
 		return new ResponseEntity<List<Tournament>>(tournamentService.getAll(), HttpStatus.OK);
 
 	}
-	//hien thi nhung tour chua bat dau
+
+	// hien thi nhung tour chua bat dau
 	@GetMapping(value = "getTourAction")
 	public ResponseEntity<List<Tournament>> getTourAction() {
 		return new ResponseEntity<List<Tournament>>(tournamentService.getTourAction(), HttpStatus.OK);
@@ -60,9 +61,9 @@ public class TournamentController {
 		if (tournamentService.getById(idTour).getStatus() == 0) {
 			tournamentService.delete(idTour);
 
-			return new ResponseEntity<String>("xoa thanh cong", HttpStatus.OK);
+			return new ResponseEntity<String>("Remove tournament", HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("Giai dau da ket thuc hoac dang dien ra", HttpStatus.OK);
+		return new ResponseEntity<String>("Tournaments are ongoing or ending", HttpStatus.OK);
 	}
 
 	@DeleteMapping(value = "deleteTeam")
@@ -101,35 +102,41 @@ public class TournamentController {
 		}
 		return new ResponseEntity<String>("ok", HttpStatus.OK);
 	}
-	//lấy Data theo status
-	@GetMapping(value="getByStatus")
-	public ResponseEntity<List<Tournament>> getByStatus(@RequestParam int status,@RequestParam String type){
-		return new ResponseEntity<List<Tournament>>(tournamentService.getByStatus(status,type),HttpStatus.OK);
+
+	// lấy Data theo status
+	@GetMapping(value = "getByStatus")
+	public ResponseEntity<List<Tournament>> getByStatus(@RequestParam int status, @RequestParam String type) {
+		return new ResponseEntity<List<Tournament>>(tournamentService.getByStatus(status, type), HttpStatus.OK);
 	}
-	//Lấy data theo thể loại
-	@GetMapping(value="getByType")
-	public ResponseEntity<List<Tournament>> getByType(@RequestParam String type){
-		return new ResponseEntity<List<Tournament>>(tournamentService.getByType(type),HttpStatus.OK);
+
+	// Lấy data theo thể loại
+	@GetMapping(value = "getByType")
+	public ResponseEntity<List<Tournament>> getByType(@RequestParam String type) {
+		return new ResponseEntity<List<Tournament>>(tournamentService.getByType(type), HttpStatus.OK);
 	}
-	//Hiển thị rank theo thể loại
-	@GetMapping(value="rank")
-	public ResponseEntity<List<Rank>> rank(@RequestParam String type){
-		return new ResponseEntity<List<Rank>>(tournamentService.rank(type),HttpStatus.OK);
+
+	// Hiển thị rank theo thể loại
+	@GetMapping(value = "rank")
+	public ResponseEntity<List<Rank>> rank(@RequestParam String type) {
+		return new ResponseEntity<List<Rank>>(tournamentService.rank(type), HttpStatus.OK);
 	}
-	//Rank theo tour
-	@GetMapping(value="rankByTour")
-	public ResponseEntity<List<Rank>> rankByTour(@RequestParam int idTour){
-		return new ResponseEntity<List<Rank>>(tournamentService.rankByTour(idTour),HttpStatus.OK);
+
+	// Rank theo tour
+	@GetMapping(value = "rankByTour")
+	public ResponseEntity<List<Rank>> rankByTour(@RequestParam int idTour) {
+		return new ResponseEntity<List<Rank>>(tournamentService.rankByTour(idTour), HttpStatus.OK);
 	}
-	//Hiển thị tất cả các giải đấu theo thể loại
-	@GetMapping(value="getToursByType")
-	public ResponseEntity<List<ToursByType>> getToursByType(){
-		return new ResponseEntity<List<ToursByType>>(tournamentService.getToursByType(),HttpStatus.OK);
+
+	// Hiển thị tất cả các giải đấu theo thể loại
+	@GetMapping(value = "getToursByType")
+	public ResponseEntity<List<ToursByType>> getToursByType() {
+		return new ResponseEntity<List<ToursByType>>(tournamentService.getToursByType(), HttpStatus.OK);
 	}
-	//Hiển thị rank của tất cả các thể loại
-	@GetMapping(value="rankAll")
-	public ResponseEntity<List<RankTeamsByType>>  rankAll(){
-		return new ResponseEntity<List<RankTeamsByType>>(tournamentService.rankAll(),HttpStatus.OK);
+
+	// Hiển thị rank của tất cả các thể loại
+	@GetMapping(value = "rankAll")
+	public ResponseEntity<List<RankTeamsByType>> rankAll() {
+		return new ResponseEntity<List<RankTeamsByType>>(tournamentService.rankAll(), HttpStatus.OK);
 	}
 
 }
