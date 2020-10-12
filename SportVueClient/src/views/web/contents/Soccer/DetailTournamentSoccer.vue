@@ -11,7 +11,6 @@
 
           <v-tab href="#tab-2"> Các trận đấu </v-tab>
 
-          <v-tab href="#tab-3"> </v-tab>
         </v-tabs>
 
         <v-tabs-items v-model="tab">
@@ -107,11 +106,6 @@
               </v-card-text>
             </v-card>
           </v-tab-item>
-          <v-tab-item :value="'tab-3'">
-            <v-card flat>
-              <v-card-text>3</v-card-text>
-            </v-card>
-          </v-tab-item>
         </v-tabs-items>
       </v-card>
   </div>
@@ -126,7 +120,7 @@ export default {
       open:false
     };
   },
-  created() {
+    created() {
     this.gettournament();
   },
   methods: {
@@ -134,12 +128,12 @@ export default {
       this.$store
         .dispatch("tournament/getById", this.$route.params.id)
         .then((response) => {
-          this.tournament = response.tournament;
+          this.tournament = response.data;
         });
         this.$store
         .dispatch("tournament/getRankByTour", this.$route.params.id)
         .then((response) => {
-          this.rank = response.tournament;
+          this.rank = response.data;
         });
     },
       detail(tournament) {

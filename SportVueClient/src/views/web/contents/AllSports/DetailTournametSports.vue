@@ -88,11 +88,7 @@
               </v-card-text>
             </v-card>
           </v-tab-item>
-          <v-tab-item :value="'tab-3'">
-            <v-card flat>
-              <v-card-text>3</v-card-text>
-            </v-card>
-          </v-tab-item>
+        
         </v-tabs-items>
       </v-card>
     </v-container>

@@ -7,7 +7,7 @@
             <v-subheader><b style="color: red">Các giải đấu</b></v-subheader>
             <v-list-item v-for="item in items" :key="item.title">
               <v-list-item-content>
-                <a :href="$router.resolve({path: '/DetailTournametSoccer/' + item.idTour}).href" style="color:black">               
+                <a :href="$router.resolve({path: '/DetailTournamentBaskesBall/' + item.idTour}).href" style="color:black">               
                   <v-list-item-title v-text="item.nameTour"></v-list-item-title
                 ></a>
               </v-list-item-content>
