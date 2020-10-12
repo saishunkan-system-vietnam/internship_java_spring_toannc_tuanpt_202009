@@ -35,7 +35,12 @@ public class TeamService {
 	private ModelMapper modelMapper;
 
 	public List<Team> getAll() {
-		return teamRepository.getAll();
+		List<Team> list= teamRepository.getAll();
+		for (Team team : list) {
+			team.setTotalmatch(scheduleReponsitory.sum(team.getIdTeam()));
+			team.setTotalwin(scheduleReponsitory.sumWin(team.getIdTeam()));
+		}
+		return list;
 	}
 
 	public Team getById(int id) {
