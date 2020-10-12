@@ -4,7 +4,7 @@
       <h1>Edit Team</h1>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-row align="center">
-          <v-col class="d-flex" cols="12" sm="4">
+          <v-col class="d-flex" cols="12" sm="6">
             <v-text-field
               v-model="name"
               :counter="21"
@@ -13,7 +13,7 @@
               required
             ></v-text-field>
           </v-col>
-          <v-col class="d-flex" cols="12" sm="4">
+          <v-col class="d-flex" cols="12" sm="6">
             <v-select
               :rules="[(v) => !!v || 'Item is required']"
               :items="type"
@@ -22,13 +22,14 @@
               dense
             ></v-select>
           </v-col>
-
+          <!-- 
           <v-col class="d-flex" cols="12" sm="4">
             <v-file-input
               v-model="fileImage"
+              :rules="imgRules"
               label="Change Logo"
             ></v-file-input>
-          </v-col>
+          </v-col> -->
         </v-row>
 
         <!-- <v-row>
@@ -121,10 +122,11 @@ export default {
       items: [],
       members: [],
       fileImage: {},
+      imgRules: [(v) => !!v || "Img is required"],
     };
   },
   mounted() {
-    console.log(this.teamProps);
+    // console.log(this.teamProps);
   },
   watch: {
     selectedType() {
@@ -137,14 +139,14 @@ export default {
   },
   methods: {
     onSubmit(id) {
-      let self = this
+      let self = this;
       //   console.log("submit");
       //   console.log(this.fileImage);
       var teamForm = new FormData();
       teamForm.append("nameTeam", this.name);
       teamForm.append("type", this.selectedType);
       teamForm.append("description", this.description);
-      teamForm.append("file", this.fileImage);
+      // teamForm.append("file", this.fileImage);
       //   for (var value of teamForm.values()) {
       //     console.log(value);
       //   }

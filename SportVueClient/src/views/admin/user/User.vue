@@ -112,6 +112,7 @@ export default {
     },
     Search() {
       this.getListUser();
+      this.loadingSearch=true
     },
   },
   watch: {

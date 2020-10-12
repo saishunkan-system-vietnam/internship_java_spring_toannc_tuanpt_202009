@@ -111,6 +111,7 @@ export default {
     updateTeam: {
       type: Function,
     },
+    idTeam: String
   },
   data() {
     return {
@@ -138,7 +139,9 @@ export default {
       members: [],
     };
   },
-  mounted() {},
+  computed:{
+   
+  },
   watch: {
     memberProp: {
       immediate: true,
@@ -176,6 +179,7 @@ export default {
         .catch(function (error) {});
     },
     addMember(member) {
+      
       this.checkAdd = false;
       let indexRemove = 0;
       this.addedMember(member);
@@ -194,7 +198,7 @@ export default {
     },
     confirmList() {
       this.dialogMemberTable = !this.dialogMemberTable;
-      this.updateTeam();
+      this.updateTeam(this.idTeam);
     },
   },
 };

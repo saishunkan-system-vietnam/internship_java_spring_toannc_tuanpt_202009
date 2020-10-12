@@ -56,6 +56,7 @@
               :memberProp="memberProp"
               :addedMember="addedMember"
               :updateTeam="updateTeam"
+              :idTeam="$route.params.id"
             />
 
             <v-divider class="mx-4" inset vertical></v-divider>
@@ -106,7 +107,11 @@
             Disagree
           </v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="confirmUpdate">
+          <v-btn
+            color="green darken-1"
+            text
+            @click="confirmUpdate($route.params.id)"
+          >
             Agree
           </v-btn>
         </v-card-actions>
@@ -181,16 +186,21 @@ export default {
       let self = this;
       this.$store.dispatch("team/findTeamAndMembers", id).then((response) => {
         self.teamDetail = response.data;
+        console.log(response.data);
         self.desserts = self.teamDetail.profile;
+        console.log(self.teamDetail);
+        console.log(self.desserts);
       });
     },
 
-    updateTeam() {
+    updateTeam(id) {
       let self = this;
       this.teamDetail.profile = this.desserts;
-        this.$store
+      this.$store
         .dispatch("team/updateMembersInTeam", this.teamDetail)
-        .then(function (response) {})
+        .then(function (response) {
+          self.loadListMember(id);
+        })
         .catch(function (error) {});
     },
 
@@ -218,9 +228,9 @@ export default {
       this.dialogEditTeam = !this.dialogEditTeam;
     },
 
-    confirmUpdate: function () {
+    confirmUpdate: function (id) {
       this.dialogConfirm = false;
-      this.updateTeam();
+      this.updateTeam(id);
     },
   },
 };
