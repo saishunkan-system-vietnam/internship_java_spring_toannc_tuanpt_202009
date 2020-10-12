@@ -1,6 +1,6 @@
 <template>
   <v-expansion-panels multiple>
-    <v-expansion-panel v-for="(item, i) in tournaments" :key="i">
+    <v-expansion-panel v-for="(item, i) in upComingMatch" :key="i">
       <v-expansion-panel-header disable-icon-rotate
         ><template v-if="item.type === 'Football'"
           ><v-icon style="max-width: 30px" medium color="green darken-2">
@@ -42,13 +42,7 @@
                         @click="detail(item)"
                         v-model="open"
                       >
-                        <v-col cols="12" sm="4">{{
-                          item.status == 0
-                            ? "UPCOMING"
-                            : item.status == 1
-                            ? "ON LIVE"
-                            : "FINISHED"
-                        }}</v-col>
+                        <v-col cols="12" sm="4">Up Coming</v-col>
                         <v-col cols="12" sm="8">
                           <v-row>
                             <v-col> {{ item.team[0].nameTeam }}</v-col>
@@ -74,25 +68,42 @@
   </v-expansion-panels>
 </template>
 <script>
+import Schedule from "../../../../models/schedule";
 export default {
   data() {
     return {
       disabled: false,
       open: false,
-      tournaments: []
+      upComingMatch: [],
     };
   },
   mounted() {
-    // console.log(this.tournaments);
+    // console.log("Run upcoming");
     this.recivceData();
+    // console.log(this.upComingMatch);
   },
   methods: {
     recivceData() {
       let self = this;
       this.$store.dispatch("tournament/getToursByType").then((res) => {
-        self.tournaments = res.data;
+        self.upComingMatch = res.data.map((v) => {
+          let newTournament = v.tournament
+            .filter((i) => {
+              return i.status != 2;
+            })
+            .map((k) => {
+              let newSchedule = k.schedule.filter((j) => {
+                return j.status == 0;
+              });
+              k.schedule = newSchedule;
+              return k;
+            });
+          v["tournament"] = newTournament;
+          return v;
+        });
       });
     },
+
     detail(item) {
       this.detailScore = item;
       this.open = true;
