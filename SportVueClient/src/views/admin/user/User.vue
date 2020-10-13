@@ -44,10 +44,10 @@
             <td>
               {{
                 user.role == "ROLE_USER"
-                  ? "USER"
+                  ? "Người dùng hệ thống"
                   : user.role == "ROLE_ADMIN"
-                  ? "ADMIN"
-                  : "MEMBER"
+                  ? "Người điều hành"
+                  : "Thành viên trong đội thể thao"
               }}
             </td>
 

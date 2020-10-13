@@ -15,7 +15,7 @@
 
         <v-list-item>
           <v-list-item-action>
-            <v-icon>mdi-account</v-icon>
+            <v-icon>mdi-email</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>
@@ -75,6 +75,12 @@
     <v-footer color="indigo" app>
       <span class="white--text">&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
+    <v-overlay :value="$store.state.auth.overlay">
+      <v-progress-circular
+        indeterminate
+        size="64"
+      ></v-progress-circular>
+    </v-overlay>
   </v-app>
 </template>
            

@@ -40,7 +40,16 @@
                   item.team[1].nameTeam
                 }}
               </td>
-              <td><a :href="$router.resolve({ path: '/DetailSchedule/' + item.idSchedule }).href">Update Now </a></td>
+              <td>
+                <a
+                  :href="
+                    $router.resolve({
+                      path: '/DetailSchedule/' + item.idSchedule,
+                    }).href
+                  "
+                  >Update Now
+                </a>
+              </td>
             </template>
           </tr>
         </tbody>
@@ -62,7 +71,7 @@ export default {
     });
     this.$store.dispatch("schedule/getAll").then((response) => {
       this.schedule = response.data;
-      console.log(this.schedule);
+      // console.log(this.schedule);
     });
   },
 };

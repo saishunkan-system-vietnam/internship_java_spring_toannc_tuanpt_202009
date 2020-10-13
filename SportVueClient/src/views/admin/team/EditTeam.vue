@@ -4,7 +4,7 @@
       <h1>Edit Team</h1>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-row align="center">
-          <v-col class="d-flex" cols="12" sm="6">
+          <v-col class="d-flex" cols="12" sm="4">
             <v-text-field
               v-model="name"
               :counter="21"
@@ -13,7 +13,7 @@
               required
             ></v-text-field>
           </v-col>
-          <v-col class="d-flex" cols="12" sm="6">
+          <v-col class="d-flex" cols="12" sm="4">
             <v-select
               :rules="[(v) => !!v || 'Item is required']"
               :items="type"
@@ -22,14 +22,22 @@
               dense
             ></v-select>
           </v-col>
-          <!-- 
           <v-col class="d-flex" cols="12" sm="4">
             <v-file-input
               v-model="fileImage"
               :rules="imgRules"
               label="Change Logo"
+              required
             ></v-file-input>
-          </v-col> -->
+            <h6
+              style="color: red"
+              align="center"
+              justify="center"
+              v-if="checkLogo"
+            >
+              Logo is required
+            </h6>
+          </v-col>
         </v-row>
 
         <!-- <v-row>
@@ -84,7 +92,8 @@
             color="primary"
             x-large
             text
-            @click.prevent="onSubmit(teamProps.idTeam)"
+            :disabled="!valid"
+            @click="validate"
             v-if="changeButton"
             >Update</v-btn
           >
@@ -92,6 +101,26 @@
         </v-card-actions>
       </v-form>
     </v-container>
+    <v-dialog v-model="dialogConfirm" max-width="500">
+      <v-card class="container">
+        <v-card-title class="headline">
+          Confirm update this information?
+        </v-card-title>
+        <v-card-actions>
+          <v-btn color="green darken-1" text @click="dialogConfirm = false">
+            Disagree
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="onSubmit(teamProps.idTeam)"
+          >
+            Agree
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -104,9 +133,15 @@ export default {
       type: Function,
     },
     teamProps: { type: Object },
+    removeMember: {
+      type: Function,
+    },
   },
   data() {
     return {
+      valid: true,
+      checkLogo: false,
+      dialogConfirm: false,
       changeButton: true,
       valid: true,
       name: this.teamProps.nameTeam,
@@ -140,24 +175,65 @@ export default {
   methods: {
     onSubmit(id) {
       let self = this;
-      //   console.log("submit");
-      //   console.log(this.fileImage);
       var teamForm = new FormData();
       teamForm.append("nameTeam", this.name);
       teamForm.append("type", this.selectedType);
       teamForm.append("description", this.description);
-      // teamForm.append("file", this.fileImage);
-      //   for (var value of teamForm.values()) {
-      //     console.log(value);
-      //   }
+      teamForm.append("file", this.fileImage);
+      for (var value of teamForm.values()) {
+        console.log(value);
+      }
+      if (teamForm.get("type") != self.teamProps.type) {
+        // console.log(self.teamProps);
+        // setTimeout(() => {
+        self.teamProps.profile.forEach((member) => {
+          member.idTeam = 0;
+          self.teamProps.profile.splice(member);
+        });
+
+        // },10000);
+        this.removeMembers(self.teamProps);
+      }
       axios
         .post(`http://localhost:8090/api/v1/team/updateInfo/${id}`, teamForm)
         .then((res) => {
+          console.log("run here");
           self.openEditTeam();
         })
         .catch((e) => {
-          console.log(e);
+          // console.log(e);
         });
+    },
+
+    removeMembers(team) {
+      let self = this;
+      console.log(team);
+      this.$store.commit("auth/auth_overlay");
+      this.$store
+        .dispatch("team/updateMembersInTeam", team)
+        .then(function (response) {
+          window.location.reload();
+          self.$store.commit("auth/auth_overlay");
+        })
+        .catch(function (error) {});
+    },
+    validateButton() {
+      let self = this;
+      if (this.fileImage.name == undefined) {
+        this.checkLogoFunction();
+        setTimeout(function () {
+          self.checkLogoFunction();
+        }, 3000);
+      } else {
+        this.dialogConfirm = true;
+      }
+    },
+    checkLogoFunction() {
+      this.checkLogo = !this.checkLogo;
+    },
+    validate() {
+      this.$refs.form.validate();
+      this.validateButton();
     },
   },
 };

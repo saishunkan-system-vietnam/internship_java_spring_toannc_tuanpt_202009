@@ -111,7 +111,7 @@ export default {
     updateTeam: {
       type: Function,
     },
-    idTeam: String
+    idTeam: Number
   },
   data() {
     return {

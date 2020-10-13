@@ -13,6 +13,7 @@
         <Finished/>
         <Upcomming/>
        </v-tabs-items>
+
   </v-card>
 </template>
 <script>
@@ -33,5 +34,6 @@ export default {
       tournaments: "",
     };
   },
+
 };
 </script>

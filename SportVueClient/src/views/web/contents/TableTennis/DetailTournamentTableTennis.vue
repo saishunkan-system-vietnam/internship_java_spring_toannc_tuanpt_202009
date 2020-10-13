@@ -54,7 +54,7 @@
                     </thead>
                     <tbody>
                       <tr v-for="(item,index) in rank" :key="index">
-                        <td>{{ index +1}}</td>
+                        <td>{{ index }}</td>
                         <td>{{ item.name }}</td>
                         <td>{{ item.rank!='NaN'?item.rank*100:0 }}%</td>
                       </tr>

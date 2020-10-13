@@ -141,7 +141,17 @@
 		team_tbl.id_tour=tournament_tbl.id_touranment where ${type} LIKE
 		'%${nameSearch}%'
 	</select>
-	
+	<!-- <select id="search" resultMap="teamMapping">
+		SELECT * FROM sports.team_tbl left
+		join tournament_tbl on
+
+		team_tbl.id_tour=tournament_tbl.id_tournamet
+
+		where
+		${type} LIKE '%${nameSearch}%' ORDER BY id_schedule ${sorts}
+		LIMIT
+		${page},${pageSize} ;
+	</select> -->
 	<select id="teamWait" resultMap="teamMapping">
 
 		SELECT *FROM team_tbl inner join

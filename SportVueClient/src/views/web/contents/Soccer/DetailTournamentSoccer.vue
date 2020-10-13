@@ -57,8 +57,9 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(item, index) in rank" :key="index" :style="index==0?'background:#8fbc8f':index==1?'background:#ddd':index==rank.length-1?'color:red':''">
+    <tr v-for="(item, index) in rank" :key="index" :style="index==0?'background:#8fbc8f':index==1?'background:#ddd':index==rank.length-1?'color:red':''">
                         <td>{{ index + 1 }}</td>
+
                         <td>{{ item.name }}</td>
                         <td>{{ item.rank != "NaN" ? item.rank * 100 : 0 }}%</td>
                         <td>

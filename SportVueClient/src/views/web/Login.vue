@@ -79,25 +79,27 @@ export default {
           // this.$store.commit("auth/auth_overlay");
           self.overlay = false;
           let userInfo = res.data.payload.account;
-          console.log(userInfo)
+          // console.log(userInfo);
+          console.log(userInfo.role);
           if (userInfo.role === null || userInfo.role === undefined) {
-             this.$router.push('/');
-          
+            self.checkProfile();
           } else if (
             userInfo.role === "ROLE_USER" ||
             userInfo.role === "ROLE_MEMBER" ||
             userInfo.role === "ROLE_ADMIN"
           ) {
-            self.$store.commit("user/user_info", res.data.payload);
-            self.checkProfile();
-            self.closeLoginDialog();
-            self.username = "";
-            self.password = "";
+            self.commonLogin(userInfo);
           }
         })
         .catch((err) => console.log(err));
     },
-    getMembers: function () {},
+    commonLogin(userInfo) {
+      this.$store.commit("user/user_info", userInfo);
+      this.checkProfile();
+      this.closeLoginDialog();
+      this.username = "";
+      this.password = "";
+    },
   },
 };
 </script>
