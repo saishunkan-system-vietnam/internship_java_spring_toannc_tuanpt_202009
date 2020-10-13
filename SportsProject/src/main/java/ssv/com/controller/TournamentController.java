@@ -144,6 +144,7 @@ public class TournamentController {
 		return new ResponseEntity<List<Tournament>>(tournamentService.getTourByTeam(idTeam), HttpStatus.OK);
 
 	}
+	//Hiiển thị tất cả các trận đấu
 	@GetMapping(value="getFixtures")
 	public ResponseEntity<List<Tournament>> getFixtures(@RequestParam int idTeam){
 		return new ResponseEntity<List<Tournament>>(tournamentService.getFixtures(idTeam), HttpStatus.OK);
