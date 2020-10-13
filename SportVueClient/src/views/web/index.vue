@@ -1,6 +1,5 @@
 <template>
   <v-app class="grey lighten-4 fixHeight">
-    <div class="space"></div>
     <navbar class="header" />
     <v-main>
       <tab-home />

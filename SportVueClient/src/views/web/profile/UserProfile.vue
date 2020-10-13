@@ -22,7 +22,16 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="blue darken-1" text @click="dialog = false"> OK </v-btn>
+      <v-btn color="blue darken-1" text @click="controlModalUser"> OK </v-btn>
     </v-card-actions>
   </v-card>
 </template>
+<script>
+export default {
+  props:{
+    controlModalUser:{
+      type: Function
+    }
+  }
+}
+</script>
