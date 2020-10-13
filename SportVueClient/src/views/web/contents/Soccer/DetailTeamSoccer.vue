@@ -36,38 +36,67 @@
           <v-tab-item>
             <v-container>
               <h4>Lastest Scores</h4>
-
+    
               <div v-for="(item, index1) in results" :key="index1">
-                <template v-if="index1 < 5">
+                <template v-if="index1 < 3" >
                     {{item.nameTour}}
-                  <v-simple-table>
-                    <template v-slot:default>
-                      <tbody>
+                  <v-simple-table style="width: 1221px;" >
+                      <tbody >
                         <tr
                           v-for="(item, index2) in item.schedule"
                           color="primary"
                           :key="index2"
-                          v-b-popover.hover.bottom="'Kích vào để xem chi tiết'"
-                          @click="relatedMatch(item.idSchedule)"
+                    
                         >
                           <template v-if="index2 < 5">
                            <td>
-                               {{item.timeEnd}}
+                               {{item.timeEnd}}  
                             </td>
                             <td>
-                                {{item.team[0].nameTeam}}
+                                {{!!item?item.team[0].nameTeam:''}}
                             </td>
                             <td>
-                              {{ item.status == 2 ? item.scoreTeam1 : "?" }}
+                              {{ item.status == 2  ? item.scoreTeam1 : "?" }}
                               -
-                              {{ item.status == 2 ? item.scoreTeam2 : "?" }}
+                              {{ item.status == 2  ? item.scoreTeam2 : "?" }}
                             </td>
-                            <td>  {{item.team[0].nameTeam}}
+                            <td>  {{!!item?item.team[1].nameTeam:''}}
                             </td>
                           </template>
                         </tr>
                       </tbody>
-                    </template>
+                  </v-simple-table>
+                </template>
+              </div>
+               <h4>Schedule</h4>
+             <div v-for="(item, index1) in results" :key="index1">
+                <template v-if="index1 < 3" >
+                    {{item.nameTour}}
+                  <v-simple-table style="width: 1221px;" >
+                      <tbody >
+                        <tr
+                          v-for="(item, index2) in item.schedule"
+                          color="primary"
+                          :key="index2"
+                    
+                        >
+                          <template v-if="index2 < 5">
+                           <td>
+                               {{item.timeEnd}}  
+                            </td>
+                            <td>
+                                {{!!item?item.team[0].nameTeam:''}}
+                            </td>
+                            <td>
+                              {{ item.status == 2  ? item.scoreTeam1 : "?" }}
+                              -
+                              {{ item.status == 2  ? item.scoreTeam2 : "?" }}
+                            </td>
+                            <td>  {{!!item?item.team[1].nameTeam:''}}
+                            </td>
+                          </template>
+                        </tr>
+                      </tbody>
                   </v-simple-table>
                 </template>
               </div>

@@ -101,7 +101,7 @@
                             class="text-center"
                             style="background-color: #bcaaa4"
                           >
-                            Tỉ số
+                            Score
                           </div>
                           <table class="table">
                             <tbody>

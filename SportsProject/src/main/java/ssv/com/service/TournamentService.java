@@ -234,4 +234,17 @@ public class TournamentService {
 		return list;
 	}
 
+	public List<Tournament> getFixtures(int idTeam) {
+		List<Tournament> list=tournamentRepository.getFixtures(idTeam);
+		for (Tournament tournament : list) {
+			for (Schedule schedule : tournament.getSchedule()) {
+				List<Team> listTeam=new ArrayList<Team>();
+				listTeam.add(teamService.getById(schedule.getIdTeam1()));
+				listTeam.add(teamService.getById(schedule.getIdTeam2()));
+				schedule.setTeam(listTeam);
+			}
+		}
+		return list;
+	}
+
 }
