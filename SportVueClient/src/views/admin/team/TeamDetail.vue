@@ -1,7 +1,6 @@
 <template>
-  <v-card class="mx-auto my-12" max-width="60%">
+  <v-card class="mx-auto my-12 container" max-width="60%">
     <v-img height="250" :src="team.logo"></v-img>
-
     <v-row>
       <v-card-title
         ><h1>{{ team.nameTeam }}</h1></v-card-title
@@ -11,7 +10,7 @@
         ><h1>Win: {{ team.totalwin }}</h1></v-card-title
       >
     </v-row>
-    <v-card-text>
+    <v-card-text >
       <v-row>
         <h3>{{ team.type }}</h3>
 
@@ -22,8 +21,7 @@
     <v-card-text>
       <v-row>
         <div class="my-4 subtitle-1">
-          {{ team.description }} Small plates, salads & sandwiches - an intimate
-          setting with 12 indoor seats plus patio seating.
+          {{ team.description }}
         </div>
         <v-spacer></v-spacer>
 
@@ -56,12 +54,10 @@
               :memberProp="memberProp"
               :addedMember="addedMember"
               :updateTeam="updateTeam"
-              :idTeam="$route.params.id"
+              :idTeam="parseInt($route.params.id)"
             />
-
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
-
             <v-text-field
               v-model="search"
               append-icon="mdi-magnify"
@@ -94,11 +90,11 @@
     </v-card-actions>
 
     <v-dialog v-model="dialogEditTeam" max-width="60%">
-      <EditTeam :openEditTeam="openEditTeam" :teamProps="team" />
+      <EditTeam :openEditTeam="openEditTeam" :teamProps="team" :desserts="desserts"/>
     </v-dialog>
 
     <v-dialog v-model="dialogConfirm" max-width="350">
-      <v-card>
+      <v-card class="container">
         <v-card-title class="headline">
           Confirm Apply This List ?
         </v-card-title>
@@ -186,16 +182,17 @@ export default {
       let self = this;
       this.$store.dispatch("team/findTeamAndMembers", id).then((response) => {
         self.teamDetail = response.data;
-        console.log(response.data);
+        // console.log(response.data);
         self.desserts = self.teamDetail.profile;
-        console.log(self.teamDetail);
-        console.log(self.desserts);
+        // console.log(self.teamDetail);
+        // console.log(self.desserts);
       });
     },
 
     updateTeam(id) {
       let self = this;
       this.teamDetail.profile = this.desserts;
+      console.log(this.teamDetail)
       this.$store
         .dispatch("team/updateMembersInTeam", this.teamDetail)
         .then(function (response) {

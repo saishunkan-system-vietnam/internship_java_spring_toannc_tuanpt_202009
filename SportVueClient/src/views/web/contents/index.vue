@@ -30,14 +30,11 @@
         </router-link></v-col
       >
 
-      <v-col cols="12" sm="2"
+      <!-- <v-col cols="12" sm="2"
         ><router-link to="/tableTennis">More</router-link></v-col
-      >
+      > -->
     </v-row>
-    <div
-      style="background-color: white; padding-top: 0px;min-height: 750px;
-"
-    >
+    <div style="background-color: white; padding-top: 0px; min-height: 750px">
       <router-view></router-view>
     </div>
   </div>

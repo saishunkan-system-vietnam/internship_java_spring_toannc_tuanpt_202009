@@ -53,16 +53,14 @@ export default {
       this.$store
         .dispatch("auth/login", this.user)
         .then((res) => {
-          console.log(res.data)
           const status = localStorage.getItem("token");
-
-          var role = res.data.payload.account.role
+          var role = res.data.payload.account.role;
           if (status === null || status === undefined) {
-            this.$router.push("/admin/login");
+           self.$store.state.auth.checkAccount()
           } else if (role === "ROLE_ADMIN") {
             this.$router.push("/admin/home");
           } else {
-             this.$router.push('/');
+            self.$store.state.auth.checkAccount()
           }
         })
         .catch((err) => console.log(err));

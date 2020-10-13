@@ -81,8 +81,7 @@ export default {
           let userInfo = res.data.payload.account;
           console.log(userInfo)
           if (userInfo.role === null || userInfo.role === undefined) {
-             this.$router.push('/');
-          
+            self.checkProfile();
           } else if (
             userInfo.role === "ROLE_USER" ||
             userInfo.role === "ROLE_MEMBER" ||
@@ -97,7 +96,6 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    getMembers: function () {},
   },
 };
 </script>
