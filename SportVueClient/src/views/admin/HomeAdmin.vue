@@ -1,17 +1,17 @@
 <template>
   <div>
     <v-row>
-      <v-col
+      <v-col @click="tournament1"
         ><div class="border1" style="background-color: green">
           <h3 class="text-center">{{ this.tournament.length }} TOURNAMENT</h3>
         </div></v-col
       >
-      <v-col
+      <v-col @click="schedule1"
         ><div class="border1" style="background-color: blue">
           <h3 class="text-center">{{ this.schedule.length }} SCHEDULE</h3>
         </div></v-col
       >
-      <v-col
+      <v-col @click="team"
         ><div class="border1" style="background-color: red">
           <h3 class="text-center">20 TEAM</h3>
         </div></v-col
@@ -74,6 +74,18 @@ export default {
       // console.log(this.schedule);
     });
   },
+  methods:{
+    tournament1(){
+      this.$router.push('/LayoutTournament')
+        
+    },
+    schedule1(){
+this.$router.push('/LayoutSchedule')
+    },
+    team(){
+this.$router.push('/LayoutTeam')
+    },
+  }
 };
 </script>
 <style>

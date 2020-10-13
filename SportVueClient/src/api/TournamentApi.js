@@ -53,3 +53,6 @@ export function getToursByType() {
 export function getTourByTeam(idTeam){
     return Api.get('/tournament/getTourByTeam',{params:{idTeam:idTeam}})
   }
+  export function getFixtures(idTeam){
+    return Api.get('/tournament/getFixtures',{params:{idTeam:idTeam}})
+  }

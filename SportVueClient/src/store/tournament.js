@@ -1,6 +1,6 @@
 
 
-import { rankAll, getToursByType, addTeam, getAction, addTour, deleteTeam, updateStatus, deleteTour, getAll, getById, edit, getByStatus, getByType, getRank, getRankByTour, getTourByTeam } from "../api/TournamentApi";
+import { rankAll, getToursByType, addTeam, getAction, addTour, deleteTeam, updateStatus, deleteTour, getAll, getById, edit, getByStatus, getByType, getRank, getRankByTour, getTourByTeam, getFixtures } from "../api/TournamentApi";
 
 
 
@@ -149,6 +149,15 @@ const actions = {
     getTourByTeam({ },idTeam) {
         return new Promise((resolve, reject) => {
             getTourByTeam(idTeam).then(res => {
+                resolve(res);
+            }).catch((err) => {
+                reject(err);
+            })
+        })
+    },
+    getFixtures({ },idTeam) {
+        return new Promise((resolve, reject) => {
+            getFixtures(idTeam).then(res => {
                 resolve(res);
             }).catch((err) => {
                 reject(err);
