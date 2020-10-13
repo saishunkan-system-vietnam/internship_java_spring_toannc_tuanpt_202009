@@ -62,7 +62,7 @@ export default {
     });
     this.$store.dispatch("schedule/getAll").then((response) => {
       this.schedule = response.data;
-      console.log(this.schedule);
+      // console.log(this.schedule);
     });
   },
 };

@@ -80,7 +80,7 @@ export default {
           self.overlay = false;
           let userInfo = res.data.payload;
           if (userInfo.role === null || userInfo.role === undefined) {
-             this.$router.push('/');
+            self.checkProfile();
           } else if (
             userInfo.role === "ROLE_USER" ||
             userInfo.role === "ROLE_MEMBER" ||
