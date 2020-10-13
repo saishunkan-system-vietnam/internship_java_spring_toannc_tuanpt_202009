@@ -34,6 +34,8 @@ public interface TournamentMapper {
 
 	public List<Tournament> getTourByTeam(int idTeam);
 
+	public List<Tournament> getFixtures(int idTeam);
+
 
 	
 }

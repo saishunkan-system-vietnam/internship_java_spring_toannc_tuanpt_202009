@@ -186,6 +186,11 @@
 	<select id="getTourByTeam" resultMap="tournamentMapping1">
 		SELECT * FROM sports.tournament_tbl inner join (history_tbl inner join team_tbl on history_tbl.id_team=team_tbl.id_team  ) on history_tbl.id_tour=tournament_tbl.id_tournament
 inner join schedule_tbl on schedule_tbl.schedule_tour = tournament_tbl.id_tournament 
- where team_tbl.id_team=39 and(schedule_team1=39 or schedule_team2=39) and schedule_tbl.schedule_status=2 and schedule_tbl.schedule_video!='' order by schedule_tbl.schedule_end  DESC;
+ where team_tbl.id_team=${idTeam} and(schedule_team1=${idTeam} or schedule_team2=${idTeam}) and schedule_tbl.schedule_status=2 and schedule_tbl.schedule_video!='' order by schedule_tbl.schedule_end  DESC;
+	</select>
+	<select id="getFixtures" resultMap="tournamentMapping1">
+		SELECT * FROM sports.tournament_tbl inner join (history_tbl inner join team_tbl on history_tbl.id_team=team_tbl.id_team  ) on history_tbl.id_tour=tournament_tbl.id_tournament
+inner join schedule_tbl on schedule_tbl.schedule_tour = tournament_tbl.id_tournament 
+ where team_tbl.id_team=${idTeam} and(schedule_team1=${idTeam} or schedule_team2=${idTeam}) and schedule_tbl.schedule_status!=2  order by schedule_tbl.schedule_end  DESC;
 	</select>
 </mapper>

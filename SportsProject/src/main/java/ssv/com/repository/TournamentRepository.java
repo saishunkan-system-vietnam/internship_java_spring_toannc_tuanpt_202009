@@ -68,4 +68,9 @@ public class TournamentRepository {
 		// TODO Auto-generated method stub
 		return tournamentMapper.getTourByTeam(idTeam);
 	}
+
+	public List<Tournament> getFixtures(int idTeam) {
+		// TODO Auto-generated method stub
+		return tournamentMapper.getFixtures(idTeam);
+	}
 }

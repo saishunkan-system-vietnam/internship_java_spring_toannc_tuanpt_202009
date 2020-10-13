@@ -14,6 +14,7 @@
                 v-b-popover.hover.top="'Click to see details'"
                 @click="detail(item)"
               >
+              <template v-if="index<5">
                 <td
                   width="180px"
                   :style="
@@ -33,6 +34,7 @@
                   }}
                 </td>
                 <td>
+                
                   <v-row>
                     <v-col>{{ item.team[0].nameTeam }}</v-col>
                     <v-col 
@@ -42,6 +44,7 @@
                     <v-col>{{ item.team[1].nameTeam }}</v-col>
                   </v-row>
                 </td>
+              </template>
               </tr>
             </tbody>
           </v-simple-table>
