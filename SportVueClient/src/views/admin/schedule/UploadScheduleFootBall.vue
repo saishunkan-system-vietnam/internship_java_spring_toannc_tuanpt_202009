@@ -1,6 +1,6 @@
 <template>
   <v-form ref="form" lazy-validation>
-    <h3>Set 1</h3>
+    <h3>Hiệp 1</h3>
     <v-row>
       <v-col>
         <v-text-field
@@ -26,11 +26,11 @@
     <v-textarea
       v-model="description1"
       name="input-7-1"
-      label="Diễn biến Set 1"
+      label="Diễn biến hiệp 1"
       required
       :rules="[(v) => v != '' || 'Không để trống']"
     ></v-textarea>
-    <h3>Set 2</h3>
+    <h3>Hiệp 2</h3>
     <v-row>
       <v-col>
         <v-text-field
@@ -58,7 +58,7 @@
     <v-textarea
       v-model="description2"
       name="input-7-1"
-      label="Diễn biến Set 2"
+      label="Diễn biến hiệp 2"
       required
       :rules="[(v) => v != '' || 'Không để trống']"
     ></v-textarea>
@@ -149,7 +149,7 @@ export default {
 
         this.$store
           .dispatch("round/uploadSchedule", {
-            roundName: "Set 1",
+            roundName: "Hiệp 1",
             roundScore1: this.score1h1,
             roundScore2: this.score2h1,
             roundDescription: this.description1,
@@ -158,7 +158,7 @@ export default {
           .then((response) => {
             this.$store
               .dispatch("round/uploadSchedule", {
-                roundName: "Set 2",
+                roundName: "Hiệp 2",
                 roundScore1: this.score1h2,
                 roundScore2: this.score2h2,
                 roundDescription: this.description2,

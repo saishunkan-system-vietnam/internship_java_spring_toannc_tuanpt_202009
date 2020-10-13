@@ -62,7 +62,7 @@ export default {
         },
         { text: "Team Name", value: "nameTeam" },
         { text: "Type", value: "type" },
-        { text: "Current Tournament", value: "nameTour" },
+        { text: "Current Tournament", value: "tourName" },
         { text: "Total Matchs", value: "totalmatch" },
         { text: "Total Wins", value: "totalwin" },
         { text: "Team Detail", value: "actions", sortable: false },

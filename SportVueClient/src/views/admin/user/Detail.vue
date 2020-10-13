@@ -24,8 +24,8 @@
                         {{ data && data.profile ? data.profile.name : "" }}
                       </h2>
                       <br />
-                      <h6 v-show="role">User</h6>
-                      <h6 v-show="!role">Member</h6>
+                      <h6 v-show="role">Người Dùng Hệ thống</h6>
+                      <h6 v-show="!role">Thành Viên Trong Hệ Thống</h6>
                     </div>
                   </div>
                   <div class="col-md-4"></div>
@@ -60,9 +60,9 @@
                                 data.profile.gender == 'Male'
                               "
                             >
-                              Male
+                              Nam
                             </p>
-                            <p v-else>Female</p>
+                            <p v-else>Nữ</p>
                           </div>
                         </div>
                         <div class="row">

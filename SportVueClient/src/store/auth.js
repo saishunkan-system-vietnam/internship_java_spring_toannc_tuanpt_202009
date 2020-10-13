@@ -67,8 +67,6 @@ const actions = {
                     localStorage.removeItem('token')
                     reject(err)
                 })
-
-
         })
     },
 
@@ -76,7 +74,6 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit('logout')
             localStorage.removeItem('token')
-            localStorage.removeItem('secure')
             resolve()
         })
     },

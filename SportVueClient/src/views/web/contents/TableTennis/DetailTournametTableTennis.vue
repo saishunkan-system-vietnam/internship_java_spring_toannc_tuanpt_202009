@@ -1,8 +1,8 @@
 <template>
   <div>
-    
+    <v-container>
       <v-card>
-        <h3>Giải đấu :{{ tournament.nameTour }}</h3>
+        <h3>Giải đấu :{{ data.nameTour }}</h3>
 
         <v-tabs v-model="tab">
           <v-tabs-slider></v-tabs-slider>
@@ -11,6 +11,7 @@
 
           <v-tab href="#tab-2"> Các trận đấu </v-tab>
 
+          <v-tab href="#tab-3"> </v-tab>
         </v-tabs>
 
         <v-tabs-items v-model="tab">
@@ -29,7 +30,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="item in tournament.team" :key="item.name">
+                      <tr v-for="item in data.team" :key="item.name">
                         <td>{{ item.nameTeam }}</td>
                         <td>
                           <v-avatar>
@@ -42,25 +43,6 @@
                     </tbody>
                   </template>
                 </v-simple-table>
-                <h5 style="color: red">Bảng xếp hạng</h5>
-                <v-simple-table>
-                  <template v-slot:default>
-                    <thead>
-                      <tr>
-                        <th class="text-left">Hạng</th>
-                        <th class="text-left">Tên</th>
-                        <th class="text-left">Tỉ lệ thắng</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(item,index) in rank" :key="index">
-                        <td>{{ index }}</td>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.rank!='NaN'?item.rank*100:0 }}%</td>
-                      </tr>
-                    </tbody>
-                  </template>
-                </v-simple-table>
               </v-card-text>
             </v-card>
           </v-tab-item>
@@ -69,7 +51,7 @@
               <v-card-text>
                 <v-list dense>
                   <v-list-item-group
-                    v-for="(item, index) in tournament.schedule"
+                    v-for="(item, index) in data.schedule"
                     color="primary"
                     :key="index"
                   >
@@ -106,41 +88,41 @@
               </v-card-text>
             </v-card>
           </v-tab-item>
+          <v-tab-item :value="'tab-3'">
+            <v-card flat>
+              <v-card-text>3</v-card-text>
+            </v-card>
+          </v-tab-item>
         </v-tabs-items>
       </v-card>
+    </v-container>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      rank:'',
-      tournament: "",
+      data: "",
       tab: null,
       open:false
     };
   },
-    created() {
-    this.gettournament();
+  created() {
+    this.getdata();
   },
   methods: {
-    gettournament() {
+    getdata() {
       this.$store
         .dispatch("tournament/getById", this.$route.params.id)
         .then((response) => {
-          this.tournament = response.data;
-        });
-        this.$store
-        .dispatch("tournament/getRankByTour", this.$route.params.id)
-        .then((response) => {
-          this.rank = response.data;
+          this.data = response.data;
         });
     },
-      detail(tournament) {
-      this.detailScore = tournament;
+      detail(data) {
+      this.detailScore = data;
       this.open = true;
       var myWindow = window.open(
-        "http://localhost:8080/soccer/detail/" + tournament.idSchedule,
+        "http://localhost:8080/soccer/detail/" + data.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );
