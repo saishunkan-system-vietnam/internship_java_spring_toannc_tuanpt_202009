@@ -30,7 +30,10 @@
                 <v-list>
                   <v-list-item>
                     <v-list-item-title>
-                      <v-btn class="fixButton">
+                      <v-btn
+                        class="fixButton"
+                        @click="roleFunction(profile.role)"
+                      >
                         Profile
                       </v-btn>
                     </v-list-item-title>
@@ -80,6 +83,18 @@
         </v-row>
       </div>
     </v-toolbar>
+
+    <v-dialog
+      v-model="modalMember"
+      hide-overlay
+      width="1200px"
+    >
+      <MemberProfile :controlModalMember="controlModalMember" />
+    </v-dialog>
+
+    <v-dialog v-model="modalUser" max-width="600px">
+      <UserProfile />
+    </v-dialog>
   </v-card>
 </template>
 
@@ -87,15 +102,21 @@
 import Register from "@/views/web/Register.vue";
 import Login from "@/views/web/Login.vue";
 import store from "@/store";
+import MemberProfile from "@/views/web/profile/MemberProfile";
+import UserProfile from "@/views/web/profile/UserProfile";
 
 export default {
   name: "navbar",
   components: {
     Login,
     Register,
+    MemberProfile,
+    UserProfile,
   },
   data() {
     return {
+      modalMember: false,
+      modalUser: false,
       LoginDialog: false,
       RegisterDialog: false,
       showMenu: false,
@@ -107,7 +128,7 @@ export default {
     },
     //do this need to check bind (:) in html up
     profile: function () {
-      // console.log(this.$store.state.user.userInfo)
+      console.log(this.$store.state.user.userInfo);
       if (this.$store.state.user.userInfo != null) {
         return this.$store.state.user.userInfo;
       } else {
@@ -115,7 +136,7 @@ export default {
       }
     },
   },
-  mounted(){
+  mounted() {
     // console.log(this.$store.state.user.userInfo.profile)
   },
   methods: {
@@ -133,8 +154,22 @@ export default {
       this.$store.dispatch("auth/logout").then(() => {
         this.checkProfile();
         this.LoginDialog = false;
-        this.$router.push('/').catch(err => {})
+        this.$router.push("/").catch((err) => {});
       });
+    },
+    roleFunction(role) {
+      console.log(role);
+      if (role === "ROLE_MEMBER") {
+        this.controlModalMember();
+      } else {
+        this.controlModalUser();
+      }
+    },
+    controlModalMember() {
+      this.modalMember = !this.modalMember;
+    },
+    controlModalUser() {
+      this.modalUser = !this.modalUser;
     },
     // setBlank() {
     //   console.log(this.$refs);
