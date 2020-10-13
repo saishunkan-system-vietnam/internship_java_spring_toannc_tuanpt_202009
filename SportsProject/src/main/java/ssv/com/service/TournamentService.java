@@ -47,12 +47,12 @@ public class TournamentService {
 			Tournament tournament = modelMapper.map(tournamentDto, Tournament.class);
 			for (Tournament tournament2 : tournamentRepository.getAll()) {
 				if (tournament2.getNameTour().equalsIgnoreCase(tournamentDto.getNameTour())) {
-					return "Trung ten giai dau";
+					return "Namesake";
 				}
 			}
 			for (int i = 0; i < tournamentDto.getListIdTeam().length; i++) {
 				if (teamService.getById(tournamentDto.getListIdTeam()[i]) == null) {
-					return "Team khong co thanh vien";
+					return "The group has no members";
 				}
 			}
 			tournamentRepository.add(tournament);
@@ -63,7 +63,7 @@ public class TournamentService {
 			}
 			return "create";
 		} else {
-			return "Lỗi về thời gian";
+			return "time error";
 		}
 	}
 
@@ -88,9 +88,9 @@ public class TournamentService {
 			for (Profile profile : teamService.getById(idTeam).getProfile()) {
 				historyRepository.addTeamTournament(profile.getId(), idTour, idTeam);
 			}
-			return "Add thanh cong";
+			return "More success";
 		}
-		return "Đã có Tour";
+		return "had tournaments";
 	}
 
 	public void updateStatus(int idTour, int status) {
@@ -114,14 +114,14 @@ public class TournamentService {
 			teamService.formatTourById(idTour, idTeam);
 			scheduleService.deleteData(idTour, idTeam);
 			historyRepository.deleteTeamTournament(idTour, idTeam);
-			return "Xóa thành công";
+			return "deleted successfully";
 		}
-		return "Giải đấu đang được diễn ra hoặc đã kết thúc";
+		return "Tournaments are in progress or ended";
 	}
 
 	public String edit(Tournament tournament) {
 		if (tournamentRepository.getById(tournament.getIdTour()).getStatus() != 0) {
-			return "Giải đấu đang diễn ra";
+			return "Tournaments are going on";
 		}
 		tournamentRepository.edit(tournament);
 		return "edit";

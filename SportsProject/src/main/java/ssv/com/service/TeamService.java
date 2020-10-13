@@ -35,7 +35,12 @@ public class TeamService {
 	private ModelMapper modelMapper;
 
 	public List<Team> getAll() {
-		return teamRepository.getAll();
+		List<Team> list= teamRepository.getAll();
+		for (Team team : list) {
+			team.setTotalmatch(scheduleReponsitory.sum(team.getIdTeam()));
+			team.setTotalwin(scheduleReponsitory.sumWin(team.getIdTeam()));
+		}
+		return list;
 	}
 
 	public Team getById(int id) {
@@ -124,7 +129,13 @@ public class TeamService {
 		detail.setSumWin(scheduleReponsitory.sumWin(idTeam));
 		detail.setSumJoinByTour(scheduleReponsitory.sumJoinByTour(idTeam, idTour));
 		detail.setSumWinJoinByTour(scheduleReponsitory.sumWinJoinByTour(idTeam, idTour));
-		detail.setRate(detail.getSumWin() * 100 / detail.getSum());
+		if(detail.getSum()==0) {
+			detail.setRate(0);
+		}
+		else {
+			detail.setRate(detail.getSumWin() * 100 / detail.getSum());
+
+		}
 		return detail;
 	}
 

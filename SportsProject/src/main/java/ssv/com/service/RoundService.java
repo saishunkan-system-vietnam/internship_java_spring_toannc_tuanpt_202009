@@ -28,7 +28,7 @@ public class RoundService {
 
 	public String uploadSchedule(Round round) {
 		roundRepository.uploadSchedule(round);
-		return "thành công";
+		return "success";
 	}
 
 	public void createBaskestBall() {
