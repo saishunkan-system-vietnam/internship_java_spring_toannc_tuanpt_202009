@@ -38,6 +38,7 @@ import LayoutAllSports from './views/web/contents/AllSports/LayoutAllSports'
 import DetailTournametSports from './views/web/contents/AllSports/DetailTournametSports'
 import LayoutBaskestBall from './views/web/contents/BaskestBall/LayoutBaskestBall'
 import DetailTournamentBaskestBall from './views/web/contents/BaskestBall/DetailTournamentBaskestBall'
+import DetailTeamSoccer from  './views/web/contents/Soccer/DetailTeamSoccer'
 
 Vue.use(Router)
 const metaConfig = {
@@ -63,7 +64,8 @@ let routes = [
         {
           path: '/DetailTournametSports/:id',
           name: 'DetailTournametSports',
-          component: DetailTournametSports
+          component: DetailTournametSports,
+          meta : { requiredAuth: false }
         }
 
         ]
@@ -80,7 +82,12 @@ let routes = [
             path: '/DetailTournamentSoccer/:id',
             name: 'DetailTournamentSoccer',
             component: DetailTournamentSoccer
-          }
+          },
+          {
+            path: '/DetailTeamSoccer/:id',
+            name: 'DetailTeamSoccer',
+            component: DetailTeamSoccer
+          },
         ]
       },
 
