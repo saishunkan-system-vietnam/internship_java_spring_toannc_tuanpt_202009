@@ -1,5 +1,5 @@
 <template>
-  <v-card color="grey lighten-4 mb-1" flat tile >
+  <v-card color="grey lighten-4 mb-1" flat tile>
     <v-toolbar>
       <div class="container">
         <v-row>
@@ -16,9 +16,10 @@
                 style="max-width: 600px"
               >
                 <template v-slot:activator="{ on, attrs }">
+                  <p class="pt-4 pr-2">{{ profile.profile.name }}</p>
                   <v-card
                     class="portrait mt-2"
-                    :img="profile.avatar"
+                    :img="profile.profile.avatar"
                     height="40"
                     width="40"
                     v-bind="attrs"
@@ -28,11 +29,11 @@
 
                 <v-list>
                   <v-list-item>
-                    <v-list-item-title
-                      ><v-btn class="fixButton" @click="profile"
-                        >Profile</v-btn
-                      ></v-list-item-title
-                    >
+                    <v-list-item-title>
+                      <v-btn class="fixButton">
+                        Profile
+                      </v-btn>
+                    </v-list-item-title>
                   </v-list-item>
                   <v-list-item>
                     <v-list-item-title
@@ -104,15 +105,18 @@ export default {
     isProfile: function () {
       return this.$store.state.user.isProfile;
     },
-
     //do this need to check bind (:) in html up
     profile: function () {
+      // console.log(this.$store.state.user.userInfo)
       if (this.$store.state.user.userInfo != null) {
-        return this.$store.state.user.userInfo.profile;
+        return this.$store.state.user.userInfo;
       } else {
         return null;
       }
     },
+  },
+  mounted(){
+    // console.log(this.$store.state.user.userInfo.profile)
   },
   methods: {
     closeLoginDialog() {
@@ -125,10 +129,11 @@ export default {
       this.$store.commit("user/user_profile");
     },
     logout() {
-      this.showMenu = false
+      this.showMenu = false;
       this.$store.dispatch("auth/logout").then(() => {
         this.checkProfile();
         this.LoginDialog = false;
+        this.$router.push('/').catch(err => {})
       });
     },
     // setBlank() {
