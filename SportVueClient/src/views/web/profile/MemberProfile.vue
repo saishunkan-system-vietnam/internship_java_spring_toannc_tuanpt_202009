@@ -14,6 +14,7 @@
       <v-subheader class="mt-5"><h2>My Schedule Appointment</h2></v-subheader>
       <v-list-item>
         <v-list-item-content>
+          <v-list-item-title><h4>Img</h4></v-list-item-title>
           <v-list-item-title><h4>Team:</h4></v-list-item-title>
           <v-list-item-subtitle>Name Team</v-list-item-subtitle>
         </v-list-item-content>
