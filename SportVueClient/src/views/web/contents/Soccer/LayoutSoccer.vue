@@ -27,7 +27,13 @@
                         @click="detail(item)"
                         v-model="open"
                       >
-                        <v-col cols="12" sm="4">Đang diễn ra</v-col>
+                        <v-col cols="12" sm="4">{{
+                          item.status == 0
+                            ? "Sap dien ra"
+                            : item.status == 1
+                            ? "Dang dien ra"
+                            : "Ket thuc"
+                        }} </v-col>
                         <v-col cols="12" sm="8">
                           <v-row>
                             <v-col> {{ item.team[0].nameTeam }}</v-col>
@@ -46,11 +52,15 @@
                 </v-list-item-group>
               </v-list>
             </v-expansion-panel-content>
-          </v-expansion-panel> </v-expansion-panels
-      ></v-tab-item>
+          </v-expansion-panel>
+        </v-expansion-panels></v-tab-item
+      >
       <v-tab-item>
         <v-expansion-panels v-model="panel" multiple>
-          <v-expansion-panel v-for="(tournament, i) in tournamentsLive" :key="i">
+          <v-expansion-panel
+            v-for="(tournament, i) in tournamentsLive"
+            :key="i"
+          >
             <v-expansion-panel-header class="header"
               ><h5>{{ tournament.nameTour }}</h5></v-expansion-panel-header
             >
@@ -67,7 +77,13 @@
                         @click="detail(item)"
                         v-model="open"
                       >
-                        <v-col cols="12" sm="4">Đang diễn ra</v-col>
+                        <v-col cols="12" sm="4">{{
+                          item.status == 0
+                            ? "Sap dien ra"
+                            : item.status == 1
+                            ? "Dang dien ra"
+                            : "Ket thuc"
+                        }}</v-col>
                         <v-col cols="12" sm="8">
                           <v-row>
                             <v-col> {{ item.team[0].nameTeam }}</v-col>
@@ -86,9 +102,11 @@
                 </v-list-item-group>
               </v-list>
             </v-expansion-panel-content>
-          </v-expansion-panel> </v-expansion-panels
-      ></v-tab-item>
-      <v-tab-item> <v-expansion-panels v-model="panel" multiple>
+          </v-expansion-panel>
+        </v-expansion-panels></v-tab-item
+      >
+      <v-tab-item>
+        <v-expansion-panels v-model="panel" multiple>
           <v-expansion-panel v-for="(tournament, i) in tournamentsEnd" :key="i">
             <v-expansion-panel-header class="header"
               ><h5>{{ tournament.nameTour }}</h5></v-expansion-panel-header
@@ -106,7 +124,13 @@
                         @click="detail(item)"
                         v-model="open"
                       >
-                        <v-col cols="12" sm="4">Đang diễn ra</v-col>
+                        <v-col cols="12" sm="4">{{
+                          item.status == 0
+                            ? "Sap dien ra"
+                            : item.status == 1
+                            ? "Dang dien ra"
+                            : "Ket thuc"
+                        }}</v-col>
                         <v-col cols="12" sm="8">
                           <v-row>
                             <v-col> {{ item.team[0].nameTeam }}</v-col>
@@ -125,11 +149,15 @@
                 </v-list-item-group>
               </v-list>
             </v-expansion-panel-content>
-          </v-expansion-panel> </v-expansion-panels
-      ></v-tab-item>
-       <v-tab-item>
+          </v-expansion-panel>
+        </v-expansion-panels></v-tab-item
+      >
+      <v-tab-item>
         <v-expansion-panels v-model="panel" multiple>
-          <v-expansion-panel v-for="(tournament, i) in tournamentsUpcoming" :key="i">
+          <v-expansion-panel
+            v-for="(tournament, i) in tournamentsUpcoming"
+            :key="i"
+          >
             <v-expansion-panel-header class="header"
               ><h5>{{ tournament.nameTour }}</h5></v-expansion-panel-header
             >
@@ -146,7 +174,13 @@
                         @click="detail(item)"
                         v-model="open"
                       >
-                        <v-col cols="12" sm="4">Đang diễn ra</v-col>
+                        <v-col cols="12" sm="4">{{
+                          item.status == 0
+                            ? "Sap dien ra"
+                            : item.status == 1
+                            ? "Dang dien ra"
+                            : "Ket thuc"
+                        }}</v-col>
                         <v-col cols="12" sm="8">
                           <v-row>
                             <v-col> {{ item.team[0].nameTeam }}</v-col>
@@ -165,8 +199,9 @@
                 </v-list-item-group>
               </v-list>
             </v-expansion-panel-content>
-          </v-expansion-panel> </v-expansion-panels
-      ></v-tab-item>
+          </v-expansion-panel>
+        </v-expansion-panels></v-tab-item
+      >
     </v-tabs-items>
   </v-card>
 </template>
@@ -177,10 +212,10 @@ export default {
       tab: null,
       tournaments: "",
       panel: [0, 1, 2, 3, 4, 5],
-      tournamentsUpcoming:'',
-      tournamentsLive:'',
-      tournamentsEnd:'',
-      open : false,
+      tournamentsUpcoming: "",
+      tournamentsLive: "",
+      tournamentsEnd: "",
+      open: false,
     };
   },
   created() {
@@ -205,7 +240,7 @@ export default {
         this.tournamentsEnd = response.data;
       });
   },
-   methods: {
+  methods: {
     detail(data) {
       this.detailScore = data;
       this.open = true;

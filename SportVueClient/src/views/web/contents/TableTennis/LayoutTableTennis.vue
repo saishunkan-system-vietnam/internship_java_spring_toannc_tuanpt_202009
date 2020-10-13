@@ -112,7 +112,7 @@
                         @click="detail(item)"
                         v-model="open"
                       >
-                        <v-col cols="12" sm="4">Đang diễn ra</v-col>
+                        <v-col cols="12" sm="4">Kết thúc</v-col>
                         <v-col cols="12" sm="8">
                           <v-row>
                             <v-col> {{ item.team[0].nameTeam }}</v-col>
@@ -156,7 +156,7 @@
                         @click="detail(item)"
                         v-model="open"
                       >
-                        <v-col cols="12" sm="4">Đang diễn ra</v-col>
+                        <v-col cols="12" sm="4">Sắp diễn ra</v-col>
                         <v-col cols="12" sm="8">
                           <v-row>
                             <v-col> {{ item.team[0].nameTeam }}</v-col>

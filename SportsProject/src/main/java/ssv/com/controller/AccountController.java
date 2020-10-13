@@ -144,16 +144,14 @@ public class AccountController {
 
 	@DeleteMapping(value = "/delete/{id}")
 	public ResponseEntity<String> delete(@PathVariable int id) {
-		if (accountService.checkid(id) && id != 1) {
+		String role = accountService.findById(id).getRole();
+		if (role == "ROLE_USER") {
 			accountService.delete(id);
-		} else if (id == 1) {
-			return new ResponseEntity<String>("tk mac dinh khong the xoa", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>("khong ton tai", HttpStatus.OK);
+			return new ResponseEntity<String>("Can not delete", HttpStatus.OK);
 		}
 
 		return new ResponseEntity<String>("Delete", HttpStatus.OK);
-
 	}
 
 	@GetMapping(value = "/getAll")

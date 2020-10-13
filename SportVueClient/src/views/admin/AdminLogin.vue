@@ -54,7 +54,6 @@ export default {
         .dispatch("auth/login", this.user)
         .then((res) => {
           const status = localStorage.getItem("token");
-
           var role = res.data.payload.account.role;
           if (status === null || status === undefined) {
            self.$store.state.auth.checkAccount()
