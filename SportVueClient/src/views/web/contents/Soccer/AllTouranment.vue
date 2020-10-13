@@ -74,7 +74,7 @@ export default {
   methods: {
     detail(data) {
       var myWindow = window.open(
-        "http://localhost:8080/soccer/detail/" + data.idSchedule,
+        "http://localhost:8080/detail/" + data.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );

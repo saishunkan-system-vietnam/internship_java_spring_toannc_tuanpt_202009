@@ -30,7 +30,7 @@
           <v-tab>Summary</v-tab>
           <v-tab>Fixtures</v-tab>
           <v-tab>Results</v-tab>
-          <v-tab>Squad</v-tab>
+          <v-tab>Member</v-tab>
         </v-tabs>
         <v-tabs-items v-model="tab" style="margin-top: 50px">
           <v-tab-item>

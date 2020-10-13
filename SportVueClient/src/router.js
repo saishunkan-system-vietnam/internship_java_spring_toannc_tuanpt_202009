@@ -29,7 +29,7 @@ import AllSports from '@/views/web/contents/AllSports'
 import Soccer from '@/views/web/contents/Soccer'
 import BaskestBall from '@/views/web/contents/BaskestBall'
 import TableTennis from '@/views/web/contents/TableTennis'
-import DetailSoccer from './views/web/contents/Soccer/DetailSoccer'
+import DetailScheduleView from './views/web/contents/DetailSchedule'
 import LayoutSoccer from './views/web/contents/Soccer/LayoutSoccer'
 import DetailTournamentSoccer from './views/web/contents/Soccer/DetailTournamentSoccer'
 import LayoutTableTennis from './views/web/contents/TableTennis/LayoutTableTennis'
@@ -39,6 +39,7 @@ import DetailTournametSports from './views/web/contents/AllSports/DetailTourname
 import LayoutBaskestBall from './views/web/contents/BaskestBall/LayoutBaskestBall'
 import DetailTournamentBaskestBall from './views/web/contents/BaskestBall/DetailTournamentBaskestBall'
 import DetailTeamSoccer from  './views/web/contents/Soccer/DetailTeamSoccer'
+import PlayerProfile from './views/web/profile/PlayerProfile'
 
 Vue.use(Router)
 const metaConfig = {
@@ -70,6 +71,11 @@ let routes = [
 
         ]
       },
+      {
+        path: '/PlayerProfile/:id',
+        component: PlayerProfile,
+      },
+
       {
         path: '/soccer',
         component: Soccer,
@@ -125,9 +131,9 @@ let routes = [
     ]
   },
   {
-    path: '/soccer/detail/:id',
-    name: 'detailSoccer',
-    component: DetailSoccer
+    path: '/detail/:id',
+    name: 'detailScheduleView',
+    component: DetailScheduleView
   },
   {
     path: '/admin/login',
