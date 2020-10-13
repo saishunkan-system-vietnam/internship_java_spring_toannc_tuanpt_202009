@@ -48,6 +48,8 @@ public interface ScheduleMapper {
 
 	public List<Schedule> relate(int idTeam1, int idTeam2, int idTour);
 
+	public List<Schedule> getRecently(int idTeam, int idTour);
+
 
 
 }

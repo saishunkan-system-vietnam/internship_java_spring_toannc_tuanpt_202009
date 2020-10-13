@@ -141,6 +141,10 @@ public class ScheduleService {
 		// TODO Auto-generated method stub
 		return scheduleReponsitory.relate(idTeam1,idTeam2,idTour);
 	}
+	//3 trận đấu gần nhất trong giải
+	public List<Schedule> getRecently(int idTeam, int idTour) {
+		return scheduleReponsitory.getRecently(idTeam,idTour);
+	}
 
 
 

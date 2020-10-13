@@ -1,5 +1,6 @@
 package ssv.com.service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -144,6 +145,9 @@ public class TournamentService {
 			rank.setRank(numberRank);
 			rank.setIdTeam(team.getIdTeam());
 			list.add(rank);
+			if(list.size()>4) {
+				break;
+			}
 		}
 		;
 		Collections.sort(list, new Comparator<Rank>() {
@@ -170,6 +174,7 @@ public class TournamentService {
 			Rank rank = new Rank();
 			rank.setName(teamService.getById(history.getIdTeam()).getNameTeam());
 			double numberRank = teamService.rankByTour(history.getIdTeam(), idTour);
+			rank.setList(scheduleService.getRecently(history.getIdTeam(),idTour));
 			rank.setRank(numberRank);
 			rank.setIdTeam(history.getIdTeam());
 			list.add(rank);
@@ -198,6 +203,7 @@ public class TournamentService {
 			toursByType.setTournament(listTour);
 			toursByType.setType(type);
 			listsTours.add(toursByType);
+		
 		}
 		return listsTours;
 	}
@@ -213,6 +219,19 @@ public class TournamentService {
 		
 		}
 		return listTeam;
+	}
+
+	public List<Tournament> getTourByTeam(int idTeam) {
+		List<Tournament> list=tournamentRepository.getTourByTeam(idTeam);
+		for (Tournament tournament : list) {
+			for (Schedule schedule : tournament.getSchedule()) {
+				List<Team> listTeam=new ArrayList<Team>();
+				listTeam.add(teamService.getById(schedule.getIdTeam1()));
+				listTeam.add(teamService.getById(schedule.getIdTeam2()));
+				schedule.setTeam(listTeam);
+			}
+		}
+		return list;
 	}
 
 }

@@ -63,4 +63,9 @@ public class TournamentRepository {
 		// TODO Auto-generated method stub
 		return tournamentMapper.getTypeSport();
 	}
+
+	public List<Tournament> getTourByTeam(int idTeam) {
+		// TODO Auto-generated method stub
+		return tournamentMapper.getTourByTeam(idTeam);
+	}
 }

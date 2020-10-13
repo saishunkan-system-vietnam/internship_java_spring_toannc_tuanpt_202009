@@ -48,7 +48,7 @@
 		schedule_tbl.schedule_team2=team_tbl.id_team inner join round_tbl on
 		schedule_tbl.id_schedule=round_tbl.round_schedule
 		where
-		schedule_tour=${idTour}
+		schedule_tour=${idTour} ORDER BY schedule_end DESC
 	</select>
 	<select id="getById" resultMap="scheduleMapping">
 		Select * FROM schedule_tbl inner
@@ -202,6 +202,9 @@
 		schedule_tbl.schedule_team2=team_tbl.id_team
 		
 		where (schedule_team1=${idTeam1} or schedule_team2=${idTeam2} or schedule_team1=${idTeam2} or schedule_team2=${idTeam1}) and schedule_tour=${idTour}
+	</select>
+	<select id="getRecently" resultMap="scheduleMapping">
+	Select *from schedule_tbl where (schedule_team1=${idTeam} or schedule_team2=${idTeam}) and schedule_tour=${idTour} and schedule_status=2 ORDER BY schedule_end DESC  Limit 3
 	</select>
 	
 </mapper>

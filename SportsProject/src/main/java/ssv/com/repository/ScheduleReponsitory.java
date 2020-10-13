@@ -96,6 +96,11 @@ public class ScheduleReponsitory {
 		return scheduleMapper.relate(idTeam1,idTeam2,idTour);
 	}
 
+	public List<Schedule> getRecently(int idTeam, int idTour) {
+		// TODO Auto-generated method stub
+		return scheduleMapper.getRecently(idTeam,idTour);
+	}
+
 	
 
 }

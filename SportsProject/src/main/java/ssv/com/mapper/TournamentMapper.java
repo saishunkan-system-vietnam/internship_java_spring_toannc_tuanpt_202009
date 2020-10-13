@@ -32,6 +32,8 @@ public interface TournamentMapper {
 
 	public List<String> getTypeSport();
 
+	public List<Tournament> getTourByTeam(int idTeam);
+
 
 	
 }
