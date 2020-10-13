@@ -40,7 +40,16 @@
                   item.team[1].nameTeam
                 }}
               </td>
-              <td><a :href="$router.resolve({ path: '/DetailSchedule/' + item.idSchedule }).href">Update Now </a></td>
+              <td>
+                <a
+                  :href="
+                    $router.resolve({
+                      path: '/DetailSchedule/' + item.idSchedule,
+                    }).href
+                  "
+                  >Update Now
+                </a>
+              </td>
             </template>
           </tr>
         </tbody>
