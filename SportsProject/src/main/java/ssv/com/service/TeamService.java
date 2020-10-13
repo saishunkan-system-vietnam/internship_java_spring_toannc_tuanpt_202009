@@ -1,5 +1,6 @@
 package ssv.com.service;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Set;
 
@@ -35,7 +36,7 @@ public class TeamService {
 	private ModelMapper modelMapper;
 
 	public List<Team> getAll() {
-		List<Team> list= teamRepository.getAll();
+		List<Team> list = teamRepository.getAll();
 		for (Team team : list) {
 			team.setTotalmatch(scheduleReponsitory.sum(team.getIdTeam()));
 			team.setTotalwin(scheduleReponsitory.sumWin(team.getIdTeam()));
@@ -129,10 +130,9 @@ public class TeamService {
 		detail.setSumWin(scheduleReponsitory.sumWin(idTeam));
 		detail.setSumJoinByTour(scheduleReponsitory.sumJoinByTour(idTeam, idTour));
 		detail.setSumWinJoinByTour(scheduleReponsitory.sumWinJoinByTour(idTeam, idTour));
-		if(detail.getSum()==0) {
+		if (detail.getSum() == 0) {
 			detail.setRate(0);
-		}
-		else {
+		} else {
 			detail.setRate(detail.getSumWin() * 100 / detail.getSum());
 
 		}
@@ -175,18 +175,22 @@ public class TeamService {
 	}
 
 	public double rank(int i) {
-
-		return (scheduleReponsitory.sumWin(i) * 1.0) / scheduleReponsitory.sum(i);
+		return Double.parseDouble(
+				new DecimalFormat("##.##").format((scheduleReponsitory.sumWin(i) * 1.0) / scheduleReponsitory.sum(i)));
 	}
 
 	public double rankByTour(int idTeam, int idTour) {
+		if(scheduleReponsitory.sumJoinByTour(idTeam, idTour)==0) {
+			return 0;
+		}
+		
+		return Double.parseDouble(
+				new DecimalFormat("##.##").format((scheduleReponsitory.sumWinJoinByTour(idTeam, idTour) * 1.0
+						/ scheduleReponsitory.sumJoinByTour(idTeam, idTour))));
+	}	
+				
 
-		return (scheduleReponsitory.sumWinJoinByTour(idTeam, idTour) * 1.0
-				/ scheduleReponsitory.sumJoinByTour(idTeam, idTour));
-	}
-
-
-	public List<Team> search(PaginateForm form){
+	public List<Team> search(PaginateForm form) {
 		return teamRepository.search(form);
 	}
 

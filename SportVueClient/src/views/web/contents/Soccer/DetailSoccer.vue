@@ -8,6 +8,11 @@
         sports_tennis
       </v-icon>
 
+      <v-icon v-if="this.type == 'Basketball'" large color="blue darken-2">
+        sports_basketball
+      </v-icon>
+
+
       {{ data.nameTour }}
       <span
         style="
@@ -35,15 +40,15 @@
         <v-col class="text-center" style="margin-top: 10px"
           ><div v-if="data.status == 0">
             <h1>?-?</h1>
-            Sắp diễn ra
+            upcomming
           </div>
           <div v-if="data.status == 1">
             <h1>?-?</h1>
-            Đang diễn ra
+            on game
           </div>
           <div v-if="data.status == 2">
             <h1>{{ data.scoreTeam1 }} - {{ data.scoreTeam2 }}</h1>
-            Kết thúc
+            finished
           </div></v-col
         >
         <v-col class="text-center"
@@ -64,11 +69,11 @@
         <v-tabs v-model="tab" dark flat>
           <v-tabs-slider></v-tabs-slider>
 
-          <v-tab href="#tab-1"> Trận đấu </v-tab>
+          <v-tab href="#tab-1"> Match </v-tab>
 
-          <v-tab href="#tab-2"> Các trận đấu liên quan </v-tab>
+          <v-tab href="#tab-2"> Related match </v-tab>
 
-          <v-tab href="#tab-3"> Hình ảnh </v-tab>
+          <v-tab href="#tab-3"> Photo</v-tab>
           <v-tab href="#tab-4"> Video </v-tab>
         </v-tabs>
 
@@ -80,11 +85,11 @@
                   <v-tabs v-model="tabb">
                     <v-tabs-slider></v-tabs-slider>
 
-                    <v-tab href="#tabb-1"> Thông tin trận đấu </v-tab>
+                    <v-tab href="#tabb-1"> Match information </v-tab>
 
-                    <v-tab href="#tabb-2"> Thống kê cầu thủ </v-tab>
+                    <v-tab href="#tabb-2"> Player </v-tab>
 
-                    <v-tab href="#tabb-3"> Lịch sử trận đấu </v-tab>
+                    <v-tab href="#tabb-3">Match history </v-tab>
                   </v-tabs>
 
                   <v-tabs-items v-model="tabb">
@@ -121,27 +126,27 @@
                             class="text-center"
                             style="background-color: #bcaaa4"
                           >
-                            Thông tin trận đấu
+                            Match information
                           </div>
-                          Địa điểm:{{ data.address }}
+                          Competition Venue :{{ data.address }}
                           <div
                             class="text-center"
                             style="background-color: #bcaaa4"
                           >
-                            Thống kê chỉ số
+                            Statistics index
                           </div>
                           <v-row>
-                            <v-col cols="12" sm="4">
+                            <v-col cols="12" sm="6">
                               <br />
                               <ul>
-                                <li>Tỉ lệ thắng</li>
-                                <li>Trận trong giải</li>
-                                <li>Trận thắng trong giải</li>
-                                <li>Trận tham gia</li>
-                                <li>Trận thắng</li>
+                                <li>Win rate</li>
+                                <li>Matches in the tournament</li>
+                                <li>Number won in the tournament</li>
+                                <li>Join the match number</li>
+                                <li>number of wins</li>
                               </ul>
                             </v-col>
-                            <v-col cols="12" sm="4">
+                            <v-col cols="12" sm="3">
                               <ul style="list-style: none">
                                 <b>{{ !!data ? data.team[0].nameTeam : "" }}</b>
                                 <li>{{ inforTeam1.rate }}%</li>
@@ -151,7 +156,7 @@
                                 <li>{{ inforTeam1.sumWin }}</li>
                               </ul>
                             </v-col>
-                            <v-col cols="12" sm="4">
+                            <v-col cols="12" sm="3">
                               <ul style="list-style: none">
                                 <b>{{ !!data ? data.team[1].nameTeam : "" }}</b>
                                 <li>{{ inforTeam2.rate }}%</li>
@@ -166,7 +171,7 @@
                             class="text-center"
                             style="background-color: #bcaaa4"
                           >
-                            Mô tả
+                            Description
                           </div>
                           <v-textarea
                             name="input-7-1"
@@ -176,7 +181,7 @@
                             class="text-center"
                             style="background-color: #bcaaa4"
                           >
-                            Bình luận
+                            Comment
                           </div>
                           <v-textarea
                             v-model="textComment"
@@ -191,7 +196,7 @@
                             color="success"
                             @click="commentSubmit"
                           >
-                            Bình luận
+                            comment
                           </v-btn>
                           <v-card>
                             <v-card-text>
@@ -216,14 +221,15 @@
                     <v-tab-item :value="'tabb-2'">
                       <v-card flat>
                         <v-card-text>
+                          <h3 style="color: blue">{{ team1.nameTeam }}</h3>
                           <v-simple-table>
                             <template v-slot:default>
                               <thead>
                                 <tr>
-                                  <th class="text-left">Ảnh đại diện</th>
-                                  <th class="text-left">Tên</th>
-                                  <th class="text-left">Đội tuyển</th>
-                                  <th class="text-left">Địa chỉ</th>
+                                  <th class="text-left">Avatar</th>
+                                  <th class="text-left">Name</th>
+                                  <th class="text-left">Team</th>
+                                  <th class="text-left">Address</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -232,7 +238,7 @@
                                   :key="index"
                                 >
                                   <td>
-                                    <v-avatar>
+                                    <v-avatar style="margin:5px">
                                       <img :src="item.avatar" alt="John" />
                                     </v-avatar>
                                   </td>
@@ -240,12 +246,29 @@
                                   <td>{{ team1.nameTeam }}</td>
                                   <td>{{ item.address }}</td>
                                 </tr>
+                              </tbody>
+                            </template>
+                          </v-simple-table>
+                          <h3 style="color: blue; margin-top: 50px">
+                            {{ team2.nameTeam }}
+                          </h3>
+                          <v-simple-table>
+                            <template v-slot:default>
+                              <thead>
+                                <tr>
+                                  <th class="text-left">Avatar</th>
+                                  <th class="text-left">Name</th>
+                                  <th class="text-left">Team</th>
+                                  <th class="text-left">Address</th>
+                                </tr>
+                              </thead>
+                              <tbody>
                                 <tr
                                   v-for="(item, index) in team2.profile"
                                   :key="index"
                                 >
                                   <td>
-                                    <v-avatar>
+                                    <v-avatar style="margin:5px">
                                       <img :src="item.avatar" alt="John" />
                                     </v-avatar>
                                   </td>
@@ -271,10 +294,10 @@
                                   v-bind:key="index"
                                 >
                                   <b-card-text>
-                                    <h3>Tỉ số :</h3>
+                                    <h3>Score :</h3>
                                     <b-row>
                                       <b-col class="text-center"
-                                        ><b-avatar
+                                        ><b-avatar 
                                           :src="team1.logo"
                                           size="6rem"
                                         ></b-avatar
@@ -293,7 +316,7 @@
                                         ></b-avatar
                                       ></b-col>
                                     </b-row>
-                                    Diễn biến :
+                                    Reported :
                                     <b-form-textarea
                                       id="textarea-no-resize"
                                       placeholder="Description"
@@ -318,44 +341,48 @@
           <v-tab-item :value="'tab-' + 2">
             <v-card flat>
               <v-card-text>
-                <v-list-item-group
-                  v-for="(item, index) in related"
-                  color="primary"
-                  :key="index"
-                >
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title>
-                        <v-row
-                          v-b-popover.hover.bottom="'Kích vào để xem chi tiết'"
-                        >
-                          <v-col cols="12" sm="4">{{
+                <v-simple-table>
+                  <template v-slot:default>
+                    <tbody>
+                      <tr
+                        v-for="(item, index) in related"
+                        color="primary"
+                        :key="index"
+                        v-b-popover.hover.bottom="'Kích vào để xem chi tiết'"
+                        @click="relatedMatch(item.idSchedule)"
+                      >
+                        <td
+                          :style="
                             item.status == 0
-                              ? "Sắp diễn ra"
+                              ? 'color:red'
                               : item.status == 1
-                              ? "Đang diễn ra"
-                              : "Kết thúc"
-                          }}</v-col>
-                          <v-col>
-                            <v-row>
-                              <v-col cols="12" sm="4">
-                                {{ !!data ? item.team[0].nameTeam : "" }}
-                              </v-col>
-                              <v-col cols="12" sm="4"
-                                >{{ item.status == 2 ? item.scoreTeam1 : "?" }}
-                                -
-                                {{ item.status == 2 ? item.scoreTeam2 : "?" }}
-                              </v-col>
-                              <v-col cols="12" sm="4">
-                                {{ !!data ? item.team[1].nameTeam : "" }}</v-col
-                              >
-                            </v-row>
-                          </v-col>
-                        </v-row>
-                      </v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list-item-group>
+                              ? 'color:blue'
+                              : 'color:#a99893'
+                          "
+                        >
+                          {{
+                            item.status == 0
+                              ? "UPCOMMING"
+                              : item.status == 1
+                              ? "ON GAME"
+                              : "FINSISHED"
+                          }}
+                        </td>
+                        <td>
+                          {{ !!data ? item.team[0].nameTeam : "" }}
+                        </td>
+                        <td>
+                          {{ item.status == 2 ? item.scoreTeam1 : "?" }}
+                          -
+                          {{ item.status == 2 ? item.scoreTeam2 : "?" }}
+                        </td>
+                        <td>
+                          {{ !!data ? item.team[1].nameTeam : "" }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
               </v-card-text>
             </v-card>
           </v-tab-item>
@@ -468,8 +495,14 @@ export default {
           this.comment = response.data;
         });
     },
+    relatedMatch(id) {
+      var myWindow = window.open(
+        "http://localhost:8080/soccer/detail/" + id,
+        "myWindow",
+        "width=600px,height=600"
+      );
+    },
     commentSubmit() {
-    
       if (this.$store.state.user.userInfo == null) {
         alert("cần đăng nhập");
       } else {
@@ -482,7 +515,7 @@ export default {
             })
             .then((response) => {
               this.getComment();
-              this.textComment=''
+              this.textComment = "";
             });
         }
       }

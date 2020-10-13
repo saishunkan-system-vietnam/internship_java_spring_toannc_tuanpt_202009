@@ -10,7 +10,7 @@ export function teamWait(type){
     return Api.get('/team/teamWait',{params:{type:type}});
 }
 export function getById(id){
-    return Api.get('/team/'+id);
+    return Api.get('/team/findDetail/'+id);
 }
 
 export function findTeamAndMembers(id){

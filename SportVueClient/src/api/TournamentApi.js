@@ -50,3 +50,6 @@ export function getToursByType() {
     return Api.get('/tournament/getToursByType')
 
 }
+export function getTourByTeam(idTeam){
+    return Api.get('/tournament/getTourByTeam',{params:{idTeam:idTeam}})
+  }

@@ -138,5 +138,11 @@ public class TournamentController {
 	public ResponseEntity<List<RankTeamsByType>> rankAll() {
 		return new ResponseEntity<List<RankTeamsByType>>(tournamentService.rankAll(), HttpStatus.OK);
 	}
+	//Hiển thị tất cả các giải đấu của team đã xong
+	@GetMapping(value="getTourByTeam")
+	public ResponseEntity<List<Tournament>> getTourByTeam(@RequestParam int idTeam){
+		return new ResponseEntity<List<Tournament>>(tournamentService.getTourByTeam(idTeam), HttpStatus.OK);
+
+	}
 
 }

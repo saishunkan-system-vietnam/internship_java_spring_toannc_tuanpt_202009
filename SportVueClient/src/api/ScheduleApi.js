@@ -35,3 +35,4 @@ export function upcomingMatch(){
 export function relate(data){
   return Api.get('/schedule/related',{params:{idTour:data.idTour,idTeam1:data.idTeam1,idTeam2:data.idTeam2}})
 }
+
