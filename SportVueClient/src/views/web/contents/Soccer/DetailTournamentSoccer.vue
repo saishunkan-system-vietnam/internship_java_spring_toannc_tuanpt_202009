@@ -210,7 +210,7 @@ export default {
       this.detailScore = tournament;
       this.open = true;
       var myWindow = window.open(
-        "http://localhost:8080/soccer/detail/" + tournament.idSchedule,
+        "http://localhost:8080/detail/" + tournament.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );

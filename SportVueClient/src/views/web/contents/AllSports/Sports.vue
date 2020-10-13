@@ -97,7 +97,7 @@ export default {
       this.detailScore = item;
       this.open = true;
       var myWindow = window.open(
-        "http://localhost:8080/soccer/detail/" + item.idSchedule,
+        "http://localhost:8080/detail/" + item.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );

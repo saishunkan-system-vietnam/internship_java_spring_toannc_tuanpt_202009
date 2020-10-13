@@ -497,7 +497,7 @@ export default {
     },
     relatedMatch(id) {
       var myWindow = window.open(
-        "http://localhost:8080/soccer/detail/" + id,
+        "http://localhost:8080/detail/" + id,
         "myWindow",
         "width=600px,height=600"
       );
