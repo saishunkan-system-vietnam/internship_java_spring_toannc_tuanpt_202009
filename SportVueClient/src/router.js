@@ -40,6 +40,7 @@ import LayoutBaskestBall from './views/web/contents/BaskestBall/LayoutBaskestBal
 import DetailTournamentBaskestBall from './views/web/contents/BaskestBall/DetailTournamentBaskestBall'
 import DetailTeamSoccer from  './views/web/contents/Soccer/DetailTeamSoccer'
 import PlayerProfile from './views/web/profile/PlayerProfile'
+import RankTournament from './views/web/contents/Soccer/RankTournament'
 
 Vue.use(Router)
 const metaConfig = {
@@ -94,6 +95,11 @@ let routes = [
             name: 'DetailTeamSoccer',
             component: DetailTeamSoccer
           },
+          {
+            path:'/RankTournament/Football',
+            name:'RankTournament',
+            component:RankTournament
+          }
         ]
       },
 

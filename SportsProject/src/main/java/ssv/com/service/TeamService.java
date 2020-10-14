@@ -30,6 +30,9 @@ public class TeamService {
 	private TeamRepository teamRepository;
 
 	@Autowired
+	private TournamentService tournamentService;
+
+	@Autowired
 	private ScheduleReponsitory scheduleReponsitory;
 
 	@Autowired
@@ -38,6 +41,9 @@ public class TeamService {
 	public List<Team> getAll() {
 		List<Team> list = teamRepository.getAll();
 		for (Team team : list) {
+			if (team.getIdTour() != 0) {
+				team.setTourName(tournamentService.getById(team.getIdTour()).getNameTour());
+			}
 			team.setTotalmatch(scheduleReponsitory.sum(team.getIdTeam()));
 			team.setTotalwin(scheduleReponsitory.sumWin(team.getIdTeam()));
 		}
@@ -45,11 +51,19 @@ public class TeamService {
 	}
 
 	public Team getById(int id) {
-		return teamRepository.getByID(id);
+		Team team = teamRepository.getByID(id);
+		team.setTourName(tournamentService.getById(team.getIdTour()).getNameTour());
+		team.setTotalmatch(scheduleReponsitory.sum(team.getIdTeam()));
+		team.setTotalwin(scheduleReponsitory.sumWin(team.getIdTeam()));
+		return team;
 	}
 
 	public Team findById(int id) {
-		return teamRepository.findById(id);
+		Team team = teamRepository.findById(id);
+		team.setTourName(tournamentService.getById(team.getIdTour()).getNameTour());
+		team.setTotalmatch(scheduleReponsitory.sum(team.getIdTeam()));
+		team.setTotalwin(scheduleReponsitory.sumWin(team.getIdTeam()));
+		return team;
 	}
 
 	public void save(Team team) {
@@ -180,15 +194,14 @@ public class TeamService {
 	}
 
 	public double rankByTour(int idTeam, int idTour) {
-		if(scheduleReponsitory.sumJoinByTour(idTeam, idTour)==0) {
+		if (scheduleReponsitory.sumJoinByTour(idTeam, idTour) == 0) {
 			return 0;
 		}
-		
-		return Double.parseDouble(
-				new DecimalFormat("##.##").format((scheduleReponsitory.sumWinJoinByTour(idTeam, idTour) * 1.0
-						/ scheduleReponsitory.sumJoinByTour(idTeam, idTour))));
-	}	
-				
+
+		return Double
+				.parseDouble(new DecimalFormat("##.##").format((scheduleReponsitory.sumWinJoinByTour(idTeam, idTour)
+						* 1.0 / scheduleReponsitory.sumJoinByTour(idTeam, idTour))));
+	}
 
 	public List<Team> search(PaginateForm form) {
 		return teamRepository.search(form);

@@ -5,6 +5,7 @@
       :items="desserts"
       :items-per-page="10"
       class="elevation-1"
+      width="1000px"
     ></v-data-table>
   </div>
 </template>

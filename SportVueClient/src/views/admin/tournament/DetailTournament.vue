@@ -43,11 +43,10 @@
                 <td>{{ row.item.nameTeam }}</td>
                 <td><b-avatar :src="row.item.logo" square></b-avatar></td>
                 <td>{{ row.item.profile.length }}</td>
-                <td>{{ row.item.totalmatch }}</td>
-                <td>{{ row.item.totalwin }}</td>
+                <td>{{ row.item.description }}</td>
                 <td>
                   <v-btn fab small @click="openMemberTable(row.item.idTeam)">
-                    H!<v-icon>mdi-forward</v-icon>
+                    <v-icon>mdi-forward</v-icon>
                   </v-btn>
 
                   <v-btn
@@ -223,7 +222,7 @@ export default {
   },
   data() {
     return {
-      winner:'',
+      winner: "",
       teamIdProp: "",
       dataEdit: "",
       dialogEditSchedule: false,
@@ -249,8 +248,7 @@ export default {
         },
         { text: "Logo", value: "logo", sortable: false },
         { text: "Total Member", value: "type" },
-        { text: "Total Match", value: "timeStart" },
-        { text: "Total Win", value: "timeEnd" },
+        { text: "Description", sortable: false },
         { text: "action", sortable: false },
       ],
       headersSchedule: [
@@ -343,10 +341,13 @@ export default {
         .then((response) => {
           this.data = response.data;
           this.team = this.data.team;
+          console.log(this.team);
           if (response.data.winner != null) {
-            this.$store.dispatch("team/getById", response.data.winner).then(response=>{
-              this.winner=response.data.nameTeam
-            });
+            this.$store
+              .dispatch("team/getById", response.data.winner)
+              .then((response) => {
+                this.winner = response.data.nameTeam;
+              });
           }
         });
     },

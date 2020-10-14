@@ -7,6 +7,7 @@ const state = {
     status: '',
     checkAccount: false,
     overlay: false,
+    
 }
 
 const mutations = {
