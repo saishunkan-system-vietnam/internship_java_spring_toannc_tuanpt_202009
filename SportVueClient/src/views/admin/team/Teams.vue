@@ -76,6 +76,7 @@ export default {
     axios
       .get("http://localhost:8090/api/v1/team/getAll")
       .then(function (response) {
+        console.log(response.data)
         self.desserts = response.data;
         self.maxTeamId =
           1 +
