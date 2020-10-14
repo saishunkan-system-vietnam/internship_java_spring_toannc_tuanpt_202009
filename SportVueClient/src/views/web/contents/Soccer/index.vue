@@ -15,7 +15,6 @@
                   "
                   style="color: black"
                 >
-                
                   <v-list-item-title v-text="item.nameTour"></v-list-item-title
                 ></a>
               </v-list-item-content>
@@ -32,7 +31,7 @@
             <v-subheader><b style="color: green">BẢNG XẾP HẠNG</b></v-subheader>
             <v-list-item v-for="(item, index) in rank" :key="index">
               <v-list-item-content>
-                {{ index + 1 }}.{{ item.name }}
+                <row><span> {{ index + 1 }}</span>.{{ item.name }}</row>
               </v-list-item-content>
             </v-list-item>
           </v-list>

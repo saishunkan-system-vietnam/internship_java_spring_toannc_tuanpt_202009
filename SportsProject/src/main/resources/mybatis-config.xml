@@ -12,7 +12,7 @@
 	<typeAlias type="ssv.com.entity.History" alias="History"/>
 	<typeAlias type="ssv.com.entity.Round" alias="Round"/>
 	<typeAlias type="ssv.com.entity.Comment" alias="Comment"/>
-	
+	<typeAlias type="ssv.com.dto.HistoryMemberDto" alias="HistoryMemberDto"/>
 </typeAliases>
 <mappers>
 	<mapper resource="xmlmapper/RoundMapper.xml"/>

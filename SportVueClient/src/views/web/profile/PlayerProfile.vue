@@ -30,6 +30,21 @@
       <v-divider></v-divider>
 
       <strong>Last Matches</strong>
+
+      <v-data-table
+        @click:row="handleRowClick"
+        :headers="headers"
+        :items="desserts"
+        :items-per-page="5"
+        class="elevation-1"
+      >
+        <template v-slot:[`item.finalScore`]="{ item }">
+         {{item.scoreTeam1}} - {{item.scoreTeam2}}
+        </template>
+         <template v-slot:[`item.result`]="{ item }">
+         {{item.idwinner}}
+        </template>
+      </v-data-table>
     </v-col>
     <v-col cols="12" sm="2" md="2"></v-col>
   </v-row>
@@ -54,6 +69,43 @@ export default {
         href: "/",
       },
     ],
+    headers: [
+      {
+        text: "Date",
+        align: "start",
+        value: "timeEnd",
+      },
+      { text: "Tournament", value: "" },
+      { text: "Team 1", value: "idTeam1" },
+      { text: "Team 2", value: "idTeam2" },
+      { text: "Final Score", value: "finalScore" },
+      { text: "Result", value: "result" },
+    ],
+    desserts: [],
   }),
+  mounted() {
+    this.historyMemberMatchs("14");
+  },
+  methods: {
+    historyMemberMatchs(id) {
+      let self = this;
+      this.$store
+        .dispatch("user/historyMemberMatchs", id)
+        .then(function (response) {
+          console.log(response.data.payload);
+          let arr = [];
+          response.data.payload.forEach((element) => {
+            console.log(element.schedules);
+            self.desserts = self.desserts.concat(element.schedules);
+          });
+
+          console.log(self.desserts);
+        })
+        .catch(function (error) {});
+    },
+    handleRowClick(item) {
+      alert("You clicked " + item.name);
+    },
+  },
 };
 </script>
