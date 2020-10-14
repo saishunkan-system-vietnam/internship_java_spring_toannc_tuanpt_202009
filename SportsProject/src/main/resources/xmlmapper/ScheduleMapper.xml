@@ -38,7 +38,7 @@
 			<result column="round_schedule" property="roundSchedule" />
 		</collection>
 	</resultMap>
-
+	
 	<select id="getByIdTour" resultMap="scheduleMapping">
 		Select * FROM schedule_tbl
 		join tournament_tbl on
@@ -54,9 +54,11 @@
 		Select * FROM schedule_tbl inner
 		join tournament_tbl on
 		schedule_tbl.schedule_tour=tournament_tbl.id_tournament
-		inner join round_tbl on
-		schedule_tbl.id_schedule=round_tbl.round_schedule
 		inner join
+		round_tbl on
+		schedule_tbl.id_schedule=round_tbl.round_schedule
+		inner
+		join
 		team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team
 		or
 		schedule_tbl.schedule_team2=team_tbl.id_team where
@@ -155,19 +157,22 @@
 
 	<select id="sumWin" resultType="int">
 		Select COUNT(*) FROM
-		sports.schedule_tbl where schedule_winner=${idTeam}  and schedule_tbl.schedule_status=2
+		sports.schedule_tbl where schedule_winner=${idTeam} and
+		schedule_tbl.schedule_status=2
 	</select>
 
 	<select id="sumWinJoinByTour" resultType="int">
 		Select COUNT(*) FROM
-		sports.schedule_tbl where schedule_winner=${idTeam} and  schedule_tbl.schedule_status=2 and
+		sports.schedule_tbl where schedule_winner=${idTeam} and
+		schedule_tbl.schedule_status=2 and
 		schedule_tour=${idTour}
 	</select>
 
 	<select id="sumJoinByTour" resultType="int">
 		Select COUNT(*) FROM
 		sports.schedule_tbl where (schedule_team1=${idTeam} or
-		schedule_team2=${idTeam}) and schedule_tour=${idTour}  and schedule_tbl.schedule_status=2
+		schedule_team2=${idTeam}) and schedule_tour=${idTour} and
+		schedule_tbl.schedule_status=2
 	</select>
 
 	<select id="upcomingMatch" resultMap="scheduleMapping">
@@ -195,16 +200,23 @@
 		Where
 		id_team=${idTeam};
 	</update>
-	<select id="relate" resultMap="scheduleMapping" >
-		Select * from schedule_tbl inner join
-		team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team
+	<select id="relate" resultMap="scheduleMapping">
+		Select * from
+		schedule_tbl inner join
+		team_tbl on
+		schedule_tbl.schedule_team1=team_tbl.id_team
 		or
 		schedule_tbl.schedule_team2=team_tbl.id_team
-		
-		where (schedule_team1=${idTeam1} or schedule_team2=${idTeam2} or schedule_team1=${idTeam2} or schedule_team2=${idTeam1}) and schedule_tour=${idTour}
+
+		where (schedule_team1=${idTeam1} or schedule_team2=${idTeam2} or
+		schedule_team1=${idTeam2} or schedule_team2=${idTeam1}) and
+		schedule_tour=${idTour}
 	</select>
 	<select id="getRecently" resultMap="scheduleMapping">
-	Select *from schedule_tbl where (schedule_team1=${idTeam} or schedule_team2=${idTeam}) and schedule_tour=${idTour} and schedule_status=2 ORDER BY schedule_end DESC  Limit 3
+		Select *from schedule_tbl where (schedule_team1=${idTeam} or
+		schedule_team2=${idTeam}) and schedule_tour=${idTour} and
+		schedule_status=2 ORDER BY schedule_end DESC Limit 3
 	</select>
+	
 	
 </mapper>

@@ -42,6 +42,7 @@
             >
             <v-list-item v-for="(item, index) in rank" :key="index">
               <v-list-item-content>
+
                 <a
                   :href="
                     $router.resolve({
@@ -64,6 +65,7 @@
                     </v-row>
                   </div>
                 </a>
+
               </v-list-item-content>
             </v-list-item>
           </v-list>

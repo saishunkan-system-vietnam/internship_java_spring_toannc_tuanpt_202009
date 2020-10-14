@@ -1,6 +1,7 @@
 import { searchUser } from '@/api/UserApi'
 import { getById } from '../api/UserApi';
 import { autoLogin } from '../api/UserApi'
+import {historyMemberMatchs} from '../api/MemberApi'
 
 const state = {
     userInfo: null,
@@ -45,6 +46,16 @@ const actions = {
         } catch (Ex) {
             reject(err);
         }
+    },
+
+    historyMemberMatchs({ },id) {
+        return new Promise((resolve, reject) => {
+            historyMemberMatchs(id).then(res => {
+                resolve(res);
+            }).catch((err) => {
+                reject(err);
+            })
+        })
     },
 }
 

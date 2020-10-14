@@ -4,22 +4,41 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ssv.com.mapper.HistoryMapper">
 	<resultMap id="historyMapping" type="History">
-
 		<id property="idHistory" column="id" />
 		<result property="idTeam" column="id_team" />
 		<result property="idTour" column="id_tour" />
 		<result property="idMember" column="id_member" />
-
-
 	</resultMap>
+
+	<resultMap id="memberHistoryMatchs" type="HistoryMemberDto">
+		<id column="id" property="id_memberHistoryDto" />
+		<result column="id_member" property="idMember" />
+		<result column="id_team" property="idTeam" />
+		<association property="tournaments">
+			<id column="id_tournament" property="idTour" />
+			<result column="tournament_name" property="nameTour" />
+		</association>
+		<collection property="schedules" ofType="Schedule">
+			<id column="id_schedule" property="idSchedule" />
+			<result column="schedule_end" property="timeEnd" />
+			<result column="schedule_team1" property="idTeam1" />
+			<result column="schedule_team2" property="idTeam2" />
+			<result column="schedule_score1" property="scoreTeam1" />
+			<result column="schedule_score2" property="scoreTeam2" />
+			<result column="schedule_winner" property="idwinner" />
+		</collection>
+	</resultMap>
+
 	<insert id="addTournament">
-		SET @var_id := (SELECT MAX(id_tournament) from tournament_tbl);
+		SET @var_id := (SELECT MAX(id_tournament) from
+		tournament_tbl);
 		INSERT
 		INTO history_tbl(
 		id_team,
 		id_tour,
 		id_member
-		) VALUES(
+		)
+		VALUES(
 		${idTeam},
 		@var_id,
 		${idMember}
@@ -29,22 +48,20 @@
 		DELETE FROM history_tbl where id_tour=${idTour}
 	</delete>
 	<delete id="deleteTeamTournament">
-		Delete from history_tbl where id_tour=${idTour} and id_team=${idTeam}
+		Delete from history_tbl where id_tour=${idTour} and
+		id_team=${idTeam}
 	</delete>
 	<insert id="addTeamTournament">
 		INSERT INTO history_tbl(
 		id_team,
 		id_tour,
 		id_member
-		) VALUES(
+		)
+		VALUES(
 		${idTeam},
 		${idTour},
 		${idMember})
 	</insert>
-
-
-
-
 
 	<insert id="saveHistory" flushCache="true"
 		statementType="PREPARED" useGeneratedKeys="true" keyColumn="id"
@@ -65,7 +82,8 @@
 
 	<select id="returnLatestMembers" resultType="History">
 		SELECT *
-		FROM history_tbl Where id_member = ${idMember} and id_team = ${idTeam}
+		FROM
+		history_tbl Where id_member = ${idMember} and id_team = ${idTeam}
 		ORDER BY id_member DESC
 		LIMIT 1;
 	</select>
@@ -74,12 +92,39 @@
 		resultType="History">
 		SELECT profile_name as name, profile_email as email,
 		profile_phone as phone,
-		profile_age as age, profile_gender as gender, profile_address as address,
+		profile_age as age, profile_gender as gender,
+		profile_address as address,
 		profile_avatar as avatar
-		FROM profile_tbl WHERE id= #{id}
-	</select>
-	<select id="getTeamByTour" resultMap="historyMapping">
-		SELECT distinct id_team FROM sports.history_tbl where id_tour =${idTournament};
+		FROM profile_tbl
+		WHERE id= #{id}
 	</select>
 
+	<select id="getTeamByTour" resultMap="historyMapping">
+		SELECT distinct id_team
+		FROM sports.history_tbl where id_tour =${idTournament};
+	</select>
+
+	<select id="memberHistoryMatchs" resultMap="memberHistoryMatchs">
+		select h.id,
+		h.id_member, h.id_team, t.id_tournament, t.tournament_name,
+		s.id_schedule,s.schedule_team1,
+		s.schedule_team2,s.schedule_score1,s.schedule_score2,
+		s.schedule_winner, s.schedule_end
+		from tournament_tbl t
+		right join
+		history_tbl h on
+		t.id_tournament = h.id_tour
+		left join schedule_tbl s on
+		t.id_tournament
+		= s.schedule_tour
+		left join team_tbl m on h.id_team =
+		m.id_team
+		where
+		h.id_member = ${idMember} and t.tournament_status != 0
+		and
+		s.schedule_status = 2 and s.schedule_video != '' and (h.id_team =
+		s.schedule_team1 or
+		h.id_team =
+		s.schedule_team2)
+	</select>
 </mapper>

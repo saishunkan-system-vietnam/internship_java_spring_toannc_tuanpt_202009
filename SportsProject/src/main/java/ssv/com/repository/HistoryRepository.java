@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ssv.com.dto.HistoryMemberDto;
 import ssv.com.entity.History;
 import ssv.com.mapper.HistoryMapper;
 
@@ -39,4 +40,7 @@ public class HistoryRepository {
 		return historyMapper.getTeamByTour(idTour);
 	}
 
+	public List<HistoryMemberDto> memberHistoryMatchs(int idMember){
+		return historyMapper.memberHistoryMatchs(idMember);
+	}
 }
