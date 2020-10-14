@@ -144,6 +144,7 @@ public class TournamentService {
 			double numberRank = teamService.rank(team.getIdTeam());
 			rank.setRank(numberRank);
 			rank.setIdTeam(team.getIdTeam());
+			rank.setTeam(teamService.findById(team.getIdTeam()));
 			list.add(rank);
 			if(list.size()>4) {
 				break;
@@ -162,6 +163,9 @@ public class TournamentService {
 					return 1;
 			}
 		});
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).setNumberRank(i+1);
+		}
 
 		return list;
 	}

@@ -1,5 +1,18 @@
 import {updateTeam, updateMembersInTeam, findTeamAndMembers, detail, teamTourHistory, teamWait, getById } from "../api/TeamApi";
 
+const state = {
+    idTeam:'',
+    
+}
+
+const mutations = {
+    team_openView(state,idTeam) {
+        state.idTeam = idTeam
+        console.log(idTeam)
+    },
+    
+}
+
 const actions = {
     teamTourHistory({ }, data) {
         return new Promise((resolve, reject) => {
@@ -69,4 +82,6 @@ const actions = {
 export default {
     namespaced: true,
     actions,
+    state,
+    mutations
 }

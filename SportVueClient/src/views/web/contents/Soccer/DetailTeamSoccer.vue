@@ -33,88 +33,170 @@
           <v-tab>Member</v-tab>
         </v-tabs>
         <v-tabs-items v-model="tab" style="margin-top: 50px">
-          <v-tab-item>
+          <v-tab-item style="min-height: 1000px">
             <v-container>
-              <h4>Lastest Scores</h4>
               <div>
-                <div v-for="(item, index1) in results" :key="index1">
-                  <template v-if="index1 < 3">
-                    {{ item.nameTour }}
-                    <v-simple-table style="width: 1221px">
-                      <tbody>
-                        <tr
-                          v-for="(item, index2) in item.schedule"
-                          color="primary"
-                          :key="index2"
-                          v-b-popover.hover.top="'Click to see details'"
-                          @click="detail(item)"
-                        >
-                          <template v-if="index2 < 5">
-                            <td>
-                              {{ item.timeEnd }}
-                            </td>
-                            <td>
-                              {{ !!item ? item.team[0].nameTeam : "" }}
-                            </td>
-                            <td>
-                              {{ item.status == 2 ? item.scoreTeam1 : "?" }}
-                              -
-                              {{ item.status == 2 ? item.scoreTeam2 : "?" }}
-                            </td>
-                            <td>{{ !!item ? item.team[1].nameTeam : "" }}</td>
-                          </template>
-                        </tr>
-                      </tbody>
-                    </v-simple-table>
-                  </template>
-                </div>
-
-                <div class="text-center" style="font-size: 15px" v-if="index1<4">
-                  <a href="#results" @click="tab = 1">
-                    Show more matchs <v-icon>mdi-arrow-down-thick</v-icon></a
+                <b-card no-body>
+                  <b-tabs
+                    card
+                    active-nav-item-class="font-weight-bold text-uppercase text-danger"
                   >
-                </div>
+                    <b-tab title="Information" active>
+                      <div>
+                        <v-simple-table style="width: 1221px">
+                          <tbody>
+                            <tr>
+                              <td>Total Member</td>
+                              <td>{{!!team.profile?team.profile.length:''}}</td>
+                            </tr>
+                             <tr>
+                              <td>Description</td>
+                              <td>{{team.description}}</td>
+                            </tr>
+                             <tr>
+                              <td>Total match</td>
+                              <td>{{team.totalmatch}}</td>
+                            </tr>
+                             <tr>
+                              <td>Total Win</td>
+                              <td>{{team.totalwin}}</td>
+                            </tr>
+                          </tbody>
+                        </v-simple-table>
+                      </div>
+                    </b-tab>
+                  </b-tabs>
+                </b-card>
               </div>
-              <div>
-                <h4>Schedule</h4>
-                <div v-for="(item2, index3) in fixtures" :key="index3">
-                  <template v-if="index3 < 3">
-                    {{ item2.nameTour }}
-                    <v-simple-table style="width: 1221px">
-                      <tbody>
-                        <tr
-                          v-for="(item2, index4) in item2.schedule"
-                          color="primary"
-                          :key="index4"
-                          v-b-popover.hover.top="'Click to see details'"
-                          @click="detail(item2)"
-                        >
-                          <template v-if="index4 < 5">
-                            <td>
-                              {{ item2.timeEnd }}
-                            </td>
-                            <td>
-                              {{ !!item2 ? item2.team[0].nameTeam : "" }}
-                            </td>
-                            <td>
-                              {{ item2.status == 2 ? item2.scoreTeam1 : "?" }}
-                              -
-                              {{ item2.status == 2 ? item2.scoreTeam2 : "?" }}
-                            </td>
-                            <td>{{ !!item2 ? item2.team[1].nameTeam : "" }}</td>
+              <div style="padding-top: 50px">
+                <b-card no-body>
+                  <b-tabs
+                    card
+                    active-nav-item-class="font-weight-bold text-uppercase text-danger"
+                  >
+                    <div v-if="results == ''">There is no Lastest Scores</div>
+
+                    <b-tab title="Lastest Scores" active>
+                      <div>
+                        <div v-for="(item, index1) in results" :key="index1">
+                          <template v-if="index1 < 3">
+                            <h5>{{ item.nameTour }}</h5>
+                            <v-simple-table style="width: 1221px">
+                              <tbody>
+                                <tr
+                                  v-for="(item, index2) in item.schedule"
+                                  color="primary"
+                                  :key="index2"
+                                  v-b-popover.hover.top="'Click to see details'"
+                                  @click="detail(item)"
+                                >
+                                  <template v-if="index2 < 5">
+                                    <td>
+                                      {{ item.timeEnd }}
+                                    </td>
+                                    <td>
+                                      {{ !!item ? item.team[0].nameTeam : "" }}
+                                    </td>
+                                    <td>
+                                      {{
+                                        item.status == 2 ? item.scoreTeam1 : "?"
+                                      }}
+                                      -
+                                      {{
+                                        item.status == 2 ? item.scoreTeam2 : "?"
+                                      }}
+                                    </td>
+                                    <td>
+                                      {{ !!item ? item.team[1].nameTeam : "" }}
+                                    </td>
+                                  </template>
+                                </tr>
+                              </tbody>
+                            </v-simple-table>
                           </template>
-                        </tr>
-                      </tbody>
-                    </v-simple-table>
-                  </template>
-                </div>
+                          <div
+                            class="text-center"
+                            style="font-size: 15px"
+                            v-if="index1 > 4"
+                          >
+                            <a href="#results" @click="tab = 1">
+                              Show more matchs
+                              <v-icon>mdi-arrow-down-thick</v-icon></a
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </b-tab>
+                  </b-tabs>
+                </b-card>
+              </div>
+              <div style="padding-top: 50px">
+                <b-card no-body>
+                  <b-tabs
+                    card
+                    active-nav-item-class="font-weight-bold text-uppercase text-danger"
+                  >
+                    <b-tab title="Schedule" active>
+                      <div v-if="fixtures == ''">There is no schedule</div>
+                      <div v-for="(item2, index3) in fixtures" :key="index3">
+                        <template v-if="index3 < 3">
+                          <h5>{{ item2.nameTour }}</h5>
+                          <v-simple-table style="width: 1221px">
+                            <tbody>
+                              <tr
+                                v-for="(item2, index4) in item2.schedule"
+                                color="primary"
+                                :key="index4"
+                                v-b-popover.hover.top="'Click to see details'"
+                                @click="detail(item2)"
+                              >
+                                <template v-if="index4 < 5">
+                                  <td>
+                                    {{ item2.timeEnd }}
+                                  </td>
+                                  <td>
+                                    {{ !!item2 ? item2.team[0].nameTeam : "" }}
+                                  </td>
+                                  <td>
+                                    {{
+                                      item2.status == 2 ? item2.scoreTeam1 : "?"
+                                    }}
+                                    -
+                                    {{
+                                      item2.status == 2 ? item2.scoreTeam2 : "?"
+                                    }}
+                                  </td>
+                                  <td>
+                                    {{ !!item2 ? item2.team[1].nameTeam : "" }}
+                                  </td>
+                                </template>
+                              </tr>
+                            </tbody>
+                          </v-simple-table>
+                        </template>
+                      </div>
+                    </b-tab>
+                  </b-tabs>
+                </b-card>
               </div>
             </v-container>
           </v-tab-item>
-          <v-tab-item>
+          <v-tab-item style="min-height: 1000px">
+            <div v-if="results == ''" class="text-center">
+              <div
+                class="d-flex flex-column justify-space-between align-center"
+              >
+                <v-img
+                  max-height="350"
+                  max-width="350"
+                  src="@/assets/soccer.png"
+                ></v-img>
+                No results
+              </div>
+            </div>
             <v-container>
               <div v-for="(item, index1) in results" :key="index1" id="results">
-                {{ item.nameTour }}
+                <h5>{{ item.nameTour }}</h5>
                 <v-simple-table style="width: 1221px">
                   <tbody>
                     <tr
@@ -142,38 +224,86 @@
               </div>
             </v-container>
           </v-tab-item>
-          <v-tab-item
-            ><div v-for="(item2, index3) in fixtures" :key="index3">
-              <template v-if="index3 < 3">
-                {{ item2.nameTour }}
-                <v-simple-table style="width: 1221px">
-                  <tbody>
-                    <tr
-                      v-for="(item2, index4) in item2.schedule"
-                      color="primary"
-                      :key="index4"
-                      v-b-popover.hover.top="'Click to see details'"
-                      @click="detail(item2)"
-                    >
-                      <template v-if="index4 < 5">
-                        <td>
-                          {{ item2.timeEnd }}
-                        </td>
-                        <td>
-                          {{ !!item2 ? item2.team[0].nameTeam : "" }}
-                        </td>
-                        <td>
-                          {{ item2.status == 2 ? item2.scoreTeam1 : "?" }}
-                          -
-                          {{ item2.status == 2 ? item2.scoreTeam2 : "?" }}
-                        </td>
-                        <td>{{ !!item2 ? item2.team[1].nameTeam : "" }}</td>
-                      </template>
-                    </tr>
-                  </tbody>
-                </v-simple-table>
-              </template>
-            </div>
+          <v-tab-item style="min-height: 1000px">
+            <v-container>
+              <div v-if="fixtures == ''" class="text-center">
+                <div
+                  class="d-flex flex-column justify-space-between align-center"
+                >
+                  <v-img
+                    max-height="350"
+                    max-width="350"
+                    src="@/assets/soccer.png"
+                  ></v-img>
+                  No match is fixtures
+                </div>
+              </div>
+              <div v-for="(item2, index3) in fixtures" :key="index3">
+                <template v-if="index3 < 3">
+                  <h5>{{ item2.nameTour }}</h5>
+                  <v-simple-table style="width: 1221px">
+                    <tbody>
+                      <tr
+                        v-for="(item2, index4) in item2.schedule"
+                        color="primary"
+                        :key="index4"
+                        v-b-popover.hover.top="'Click to see details'"
+                        @click="detail(item2)"
+                      >
+                        <template v-if="index4 < 5">
+                          <td>
+                            {{ item2.timeEnd }}
+                          </td>
+                          <td>
+                            {{ !!item2 ? item2.team[0].nameTeam : "" }}
+                          </td>
+                          <td>
+                            {{ item2.status == 2 ? item2.scoreTeam1 : "?" }}
+                            -
+                            {{ item2.status == 2 ? item2.scoreTeam2 : "?" }}
+                          </td>
+                          <td>{{ !!item2 ? item2.team[1].nameTeam : "" }}</td>
+                        </template>
+                      </tr>
+                    </tbody>
+                  </v-simple-table>
+                </template>
+              </div>
+            </v-container>
+          </v-tab-item>
+          <v-tab-item style="min-height: 1000px">
+            <v-container>
+              <v-simple-table style="width: 1221px">
+                <thead>
+                  <th class="text-center">Avatar</th>
+                  <th class="text-center">Name</th>
+                  <th class="text-center">Nation</th>
+                  <th class="text-center">Gender</th>
+                  <th class="text-center">Age</th>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(item, index) in team.profile"
+                    color="primary"
+                    :key="index"
+                    v-b-popover.hover.top="'Click to see details'"
+                    @click="detailMember(item)"
+                  >
+                    <td class="text-center">
+                      <v-avatar class="profile" color="grey" size="70" tile>
+                        <v-img
+                          src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
+                        ></v-img>
+                      </v-avatar>
+                    </td>
+                    <td class="text-center">{{ item.name }}</td>
+                    <td class="text-center">{{ item.address }}</td>
+                    <td class="text-center">{{ item.gender }}</td>
+                    <td class="text-center">{{ item.age }}</td>
+                  </tr>
+                </tbody>
+              </v-simple-table>
+            </v-container>
           </v-tab-item>
         </v-tabs-items>
       </b-row>
@@ -188,6 +318,7 @@ export default {
       team: "",
       results: "",
       fixtures: "",
+      detailTeam: "",
     };
   },
   created() {
@@ -201,6 +332,7 @@ export default {
         .dispatch("team/getById", this.$route.params.id)
         .then((res) => {
           this.team = res.data;
+          console.log(this.team);
         });
     },
     getTourByTeam() {
@@ -223,6 +355,9 @@ export default {
         "myWindow",
         "width=600px,height=600"
       );
+    },
+    detailMember(item) {
+      alert(item);
     },
   },
   watch: {

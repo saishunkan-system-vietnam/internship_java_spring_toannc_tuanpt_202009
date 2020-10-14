@@ -38,8 +38,14 @@
                       >
                         <td>{{ item.nameTeam }}</td>
                         <td class="text-center">
-                          <v-avatar style="margin: 5px">
-                            <img :src="item.logo" alt="John" />
+                          <v-avatar
+                            class="profile"
+                            color="grey"
+                            size="50"
+                            tile
+                            style="margin: 5px"
+                          >
+                            <v-img :src="item.logo"></v-img>
                           </v-avatar>
                         </td>
                         <td class="text-center">{{ item.profile.length }}</td>

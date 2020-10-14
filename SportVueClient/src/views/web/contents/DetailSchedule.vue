@@ -35,7 +35,7 @@
             style="width: 100px"
             alt="Center image"
           ></b-img>
-          <div>{{ !!data ? data.team[0].nameTeam : "" }}</div>
+          <button> <a :href="'http://localhost:8080/DetailTeamSoccer/'+data.team[0].idTeam" target="_blank">{{ !!data ? data.team[0].nameTeam : "" }}</a></button>
         </v-col>
         <v-col class="text-center" style="margin-top: 10px"
           ><div v-if="data.status == 0">
@@ -58,9 +58,9 @@
             style="width: 100px"
             alt="Center image"
           ></b-img>
-          <div class="text-center">
-            {{ !!data ? data.team[1].nameTeam : "" }}
-          </div>
+          <button class="text-center" ><a :href="'http://localhost:8080/DetailTeamSoccer/'+data.team[1].idTeam" target="_blank">
+            {{ !!data ? data.team[1].nameTeam : "" }}</a>
+          </button>
         </v-col>
       </v-row>
     </div>
@@ -501,10 +501,12 @@ export default {
         "myWindow",
         "width=600px,height=600"
       );
+    
     },
+     
     commentSubmit() {
       if (this.$store.state.user.userInfo == null) {
-        alert("cần đăng nhập");
+        alert("need to login");
       } else {
         if (this.textComment != "") {
           this.$store
@@ -521,5 +523,8 @@ export default {
       }
     },
   },
+  watch:{
+  
+  }
 };
 </script>
