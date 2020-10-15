@@ -50,6 +50,8 @@ public interface ScheduleMapper {
 
 	public List<Schedule> getRecently(int idTeam, int idTour);
 
+	public List<Schedule> profileSchedule(int idMember);
+
 
 
 }

@@ -24,3 +24,4 @@ export function getById(id) {
 export function autoLogin() {
     return Api.post('/account/autoLogin');
 }
+

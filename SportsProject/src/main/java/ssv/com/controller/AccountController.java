@@ -111,7 +111,7 @@ public class AccountController {
 	public ResponseEntity<String> forget(@PathVariable String email) {
 		String emailPattern = "\\w+@\\w+[.]\\w+";
 		if (email.isEmpty() && email.matches(emailPattern)) {
-			return new ResponseEntity<String>("nhap sai du lieu", HttpStatus.OK);
+			return new ResponseEntity<String>("Wrong", HttpStatus.OK);
 		}
 		String result = "";
 		HttpStatus httpStatus = null;

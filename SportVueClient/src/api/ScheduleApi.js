@@ -35,4 +35,7 @@ export function upcomingMatch(){
 export function relate(data){
   return Api.get('/schedule/related',{params:{idTour:data.idTour,idTeam1:data.idTeam1,idTeam2:data.idTeam2}})
 }
+export function profileSchedule(idMember){
+  return Api.get('/schedule/profileSchedule',{params:{idMember:idMember}})
+}
 

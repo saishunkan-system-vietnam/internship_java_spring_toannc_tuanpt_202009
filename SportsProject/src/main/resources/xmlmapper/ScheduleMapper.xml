@@ -38,7 +38,45 @@
 			<result column="round_schedule" property="roundSchedule" />
 		</collection>
 	</resultMap>
-	
+	<resultMap type="Schedule" id="scheduleMapping1">
+		<id column="id_schedule" property="idSchedule" />
+		<result column="schedule_start" property="timeStart" />
+		<result column="schedule_end" property="timeEnd" />
+		<result column="schedule_team1" property="idTeam1" />
+		<result column="schedule_team2" property="idTeam2" />
+		<result column="schedule_score1" property="scoreTeam1" />
+		<result column="schedule_score2" property="scoreTeam2" />
+		<result column="schedule_winner" property="idwinner" />
+		<result column="schedule_video" property="video" />
+		<result column="schedule_description" property="description" />
+		<result column="schedule_address" property="address" />
+		<result column="schedule_status" property="status" />
+		<result column="schedule_tour" property="idTour" />
+		<result column="schedule_image" property="image" />
+		<result column="schedule_title" property="title" />
+		<result column="tournament_name" property="nameTour" />
+		<collection property="team" ofType="Team">
+			<id column="id_team" property="idTeam" />
+			<result column="team_name" property="nameTeam" />
+			<result column="team_totalmatch" property="totalmatch" />
+			<result column="team_totalwin" property="totalwin" />
+			<result column="team_type" property="type" />
+			<result column="team_description" property="description" />
+			<result column="team_logo" property="logo" />
+			<collection property="profile" ofType="Profile">
+				<id property="id" column="id" />
+				<result property="name" column="profile_name" />
+				<result property="email" column="profile_email" />
+				<result property="phone" column="profile_phone" />
+				<result property="age" column="profile_age" />
+				<result property="gender" column="profile_gender" />
+				<result property="address" column="profile_address" />
+				<result property="avatar" column="profile_avatar" />
+				<result property="idTeam" column="id_team" />
+			</collection>
+		</collection>
+	</resultMap>
+
 	<select id="getByIdTour" resultMap="scheduleMapping">
 		Select * FROM schedule_tbl
 		join tournament_tbl on
@@ -202,21 +240,29 @@
 	</update>
 	<select id="relate" resultMap="scheduleMapping">
 		Select * from
-		schedule_tbl inner join
+		schedule_tbl inner
+		join
 		team_tbl on
 		schedule_tbl.schedule_team1=team_tbl.id_team
 		or
 		schedule_tbl.schedule_team2=team_tbl.id_team
 
-		where (schedule_team1=${idTeam1} or schedule_team2=${idTeam2} or
+		where
+		(schedule_team1=${idTeam1} or schedule_team2=${idTeam2} or
 		schedule_team1=${idTeam2} or schedule_team2=${idTeam1}) and
 		schedule_tour=${idTour}
 	</select>
 	<select id="getRecently" resultMap="scheduleMapping">
-		Select *from schedule_tbl where (schedule_team1=${idTeam} or
-		schedule_team2=${idTeam}) and schedule_tour=${idTour} and
-		schedule_status=2 ORDER BY schedule_end DESC Limit 3
+		Select *from schedule_tbl
+		where (schedule_team1=${idTeam} or
+		schedule_team2=${idTeam}) and
+		schedule_tour=${idTour} and
+		schedule_status=2 ORDER BY schedule_end
+		DESC Limit 3
 	</select>
-	
-	
+	<select id="profileSchedule" resultMap="scheduleMapping1">
+		SELECT p.*,s.* from profile_tbl p inner join (team_tbl t inner join schedule_tbl s on t.id_team =s.schedule_team1 or t.id_team=s.schedule_team2 ) on p.id_team = t.id_team where s.schedule_status!=2 and p.id=${idMember}
+	</select>
+
+
 </mapper>

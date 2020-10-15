@@ -87,7 +87,8 @@
     <v-dialog
       v-model="modalMember"
       hide-overlay
-      width="1200px"
+      max-width="1200px"
+      style="background: floralwhite"
     >
       <MemberProfile :controlModalMember="controlModalMember" />
     </v-dialog>
