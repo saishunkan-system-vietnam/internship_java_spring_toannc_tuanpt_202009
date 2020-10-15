@@ -18,7 +18,7 @@
           <p>
             {{ player.team != null ? player.team.nameTeam : "Not in Team" }}
           </p>
-          <p>Age: {{ player.age }}</p>
+          <p style="margin-bottom: 10px">Age: {{ player.age }}</p>
           <p>Country: {{ player.address }}</p>
         </v-col>
         <v-spacer></v-spacer>
@@ -170,6 +170,7 @@ export default {
     player: {},
   }),
   mounted() {
+    console.log(this.$route.params)
     this.historyMemberMatchs("14");
     this.playerInfo(14);
     this.upcommingMemberMatchs("14");

@@ -2,10 +2,7 @@
   <v-container class="pt-2">
     <v-row>
       <v-col cols="12" sm="2" style="padding: 5px" class="pr-2">
-        <div style="margin-bottom: 15px !important" class="pl-15">
-          <v-icon large color="red darken-2">home_work</v-icon>
-        </div>
-        <v-expansion-panels multiple>
+        <v-expansion-panels v-model="panel" multiple>
           <v-expansion-panel v-for="(item, i) in tournaments" :key="i">
             <v-expansion-panel-header disable-icon-rotate style="color: red">{{
               item.type
@@ -77,6 +74,7 @@ export default {
     tab: null,
     tournaments: [],
     rank: [],
+    panel: [0, 1, 2, 3, 4, 5, 6, 7, 8],
   }),
   created() {
     this.recivceData();
@@ -92,6 +90,7 @@ export default {
     recivceRank() {
       let self = this;
       this.$store.dispatch("tournament/rankAll").then((res) => {
+        console.log(res)
         self.rank = res.data;
       });
     },
