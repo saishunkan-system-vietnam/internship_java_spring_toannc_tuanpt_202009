@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ssv.com.mapper.ProfileMapper">
 	<resultMap type="Profile" id="profileMapping">
-
 		<id property="id" column="id" />
 		<result property="name" column="profile_name" />
 		<result property="email" column="profile_email" />
@@ -79,8 +78,7 @@
 
 	<select id="findById" flushCache="true" statementType="PREPARED"
 		resultMap="profileMapping">
-		SELECT *
-		FROM profile_tbl WHERE id= #{id}
+		SELECT p.*, t.* FROM profile_tbl p inner join team_tbl t on p.id_team = t.id_team WHERE id= #{id}
 	</select>
 
 	<select id="findAllByTeam" flushCache="true"

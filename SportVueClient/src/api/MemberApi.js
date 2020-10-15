@@ -7,3 +7,7 @@ export function getListMember(){
 export function historyMemberMatchs(id){
     return Api.get('/history/' + id)
 }
+
+export function getPlayerId(id){
+    return Api.get('/profiles/' + id)
+}
