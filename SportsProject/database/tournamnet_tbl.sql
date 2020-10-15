@@ -15,6 +15,6 @@ CREATE TABLE `tournament_tbl` (
 ) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 LOCK TABLES `tournament_tbl` WRITE;
-INSERT INTO `tournament_tbl` VALUES (118,'Ngoai hang anh',2,'2020-03-17','2020-03-09','Football',NULL,NULL,'Giai nuoc ngoai'),(119,'Bong ban SSV',2,'2020-02-24','2020-02-08','TableTennis',NULL,NULL,'Vui'),(120,'Cup C2',1,'2020-10-17','2020-10-08','Football',NULL,NULL,'Killer'),(122,'Viet Nam',0,'2020-11-20','2020-10-24','Football',NULL,NULL,'áda');
+INSERT INTO `tournament_tbl` VALUES (123,'UEFA Nations League',2,'2019-01-30','2018-10-15','Football',NULL,50,'Giải vô địch bóng đá các quốc gia châu âu 2019'),(124,'World Cup',1,'2021-01-01','2020-09-01','Football',NULL,NULL,'Super ');
 UNLOCK TABLES;
 

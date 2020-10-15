@@ -12,7 +12,6 @@
         sports_basketball
       </v-icon>
 
-
       {{ data.nameTour }}
       <span
         style="
@@ -35,7 +34,15 @@
             style="width: 100px"
             alt="Center image"
           ></b-img>
-          <button> <a :href="'http://localhost:8080/DetailTeamSoccer/'+data.team[0].idTeam" target="_blank">{{ !!data ? data.team[0].nameTeam : "" }}</a></button>
+          <button>
+            <a
+              :href="
+                'http://localhost:8080/DetailTeamSoccer/' + data.team[0].idTeam
+              "
+              target="_blank"
+              >{{ !!data ? data.team[0].nameTeam : "" }}</a
+            >
+          </button>
         </v-col>
         <v-col class="text-center" style="margin-top: 10px"
           ><div v-if="data.status == 0">
@@ -58,8 +65,15 @@
             style="width: 100px"
             alt="Center image"
           ></b-img>
-          <button class="text-center" ><a :href="'http://localhost:8080/DetailTeamSoccer/'+data.team[1].idTeam" target="_blank">
-            {{ !!data ? data.team[1].nameTeam : "" }}</a>
+          <button class="text-center">
+            <a
+              :href="
+                'http://localhost:8080/DetailTeamSoccer/' + data.team[1].idTeam
+              "
+              target="_blank"
+            >
+              {{ !!data ? data.team[1].nameTeam : "" }}</a
+            >
           </button>
         </v-col>
       </v-row>
@@ -238,7 +252,7 @@
                                   :key="index"
                                 >
                                   <td>
-                                    <v-avatar style="margin:5px">
+                                    <v-avatar style="margin: 5px">
                                       <img :src="item.avatar" alt="John" />
                                     </v-avatar>
                                   </td>
@@ -268,7 +282,7 @@
                                   :key="index"
                                 >
                                   <td>
-                                    <v-avatar style="margin:5px">
+                                    <v-avatar style="margin: 5px">
                                       <img :src="item.avatar" alt="John" />
                                     </v-avatar>
                                   </td>
@@ -297,7 +311,7 @@
                                     <h3>Score :</h3>
                                     <b-row>
                                       <b-col class="text-center"
-                                        ><b-avatar 
+                                        ><b-avatar
                                           :src="team1.logo"
                                           size="6rem"
                                         ></b-avatar
@@ -501,9 +515,8 @@ export default {
         "myWindow",
         "width=600px,height=600"
       );
-    
     },
-     
+
     commentSubmit() {
       if (this.$store.state.user.userInfo == null) {
         alert("need to login");
@@ -523,8 +536,6 @@ export default {
       }
     },
   },
-  watch:{
-  
-  }
+  watch: {},
 };
 </script>

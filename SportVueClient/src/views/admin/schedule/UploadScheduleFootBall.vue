@@ -1,24 +1,24 @@
 <template>
   <v-form ref="form" lazy-validation>
-    <h3>Hiệp 1</h3>
+    <h3>Set 1</h3>
     <v-row>
       <v-col>
         <v-text-field
           v-model="score1h1"
-          label="Bàn thắng team 1 "
+          label="Score Team 1 "
           :rules="[
-            (v) => Number.isInteger(Number(v)) || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
       <v-col>
         <v-text-field
           v-model="score2h1"
-          label="Bàn thắng team 2"
+          label="Score Team 2"
           :rules="[
-            (v) => Number.isInteger(Number(v)) || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
@@ -26,31 +26,31 @@
     <v-textarea
       v-model="description1"
       name="input-7-1"
-      label="Diễn biến hiệp 1"
+      label="Description set 1"
       required
-      :rules="[(v) => v != '' || 'Không để trống']"
+      :rules="[(v) => v != '' || 'Do not leave blank']"
     ></v-textarea>
     <h3>Hiệp 2</h3>
     <v-row>
       <v-col>
         <v-text-field
           v-model="score1h2"
-          label="Bàn thắng team 1 "
+          label="Score Team 1 "
           required
           :rules="[
-            (v) => Number.isInteger(Number(v)) == true || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) == true || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
       <v-col>
         <v-text-field
           v-model="score2h2"
-          label="Bàn thắng team 2"
+          label="Score Team 2"
           required
           :rules="[
-            (v) => Number.isInteger(Number(v)) == true || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) == true || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
@@ -58,17 +58,17 @@
     <v-textarea
       v-model="description2"
       name="input-7-1"
-      label="Diễn biến hiệp 2"
+      label="Description set 2"
       required
-      :rules="[(v) => v != '' || 'Không để trống']"
+      :rules="[(v) => v != '' || 'Do not leave blank']"
     ></v-textarea>
     <h3>Kết thúc</h3>
     <v-textarea
       v-model="description3"
       name="input-7-1"
-      label="Đánh giá khách quan"
+      label="Objective assessment"
       required
-      :rules="[(v) => v != '' || 'Không để trống']"
+      :rules="[(v) => v != '' || 'Do not leave blank']"
     ></v-textarea>
     <v-file-input
       v-model="fileImage"
@@ -80,7 +80,7 @@
     ></v-file-input>
     <v-file-input
       v-model="fileVideo"
-      accept="video/mp4"
+      accept="video/mp4,video/mov"
       :placeholder="'Pick an video'"
       prepend-icon="mdi-video"
       label="Video"
@@ -149,7 +149,7 @@ export default {
 
         this.$store
           .dispatch("round/uploadSchedule", {
-            roundName: "Hiệp 1",
+            roundName: "Set 1",
             roundScore1: this.score1h1,
             roundScore2: this.score2h1,
             roundDescription: this.description1,
@@ -158,7 +158,7 @@ export default {
           .then((response) => {
             this.$store
               .dispatch("round/uploadSchedule", {
-                roundName: "Hiệp 2",
+                roundName: "Set 2",
                 roundScore1: this.score1h2,
                 roundScore2: this.score2h2,
                 roundDescription: this.description2,

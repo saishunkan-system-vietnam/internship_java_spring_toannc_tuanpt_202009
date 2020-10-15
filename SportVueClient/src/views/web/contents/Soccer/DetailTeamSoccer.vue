@@ -292,7 +292,7 @@
                     <td class="text-center">
                       <v-avatar class="profile" color="grey" size="70" tile>
                         <v-img
-                          src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
+                          :src="item.avatar"
                         ></v-img>
                       </v-avatar>
                     </td>
