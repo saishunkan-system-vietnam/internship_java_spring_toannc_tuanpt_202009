@@ -26,6 +26,7 @@
 			<result column="schedule_score1" property="scoreTeam1" />
 			<result column="schedule_score2" property="scoreTeam2" />
 			<result column="schedule_winner" property="idwinner" />
+			<result column="schedule_tour" property="idTour" />
 		</collection>
 	</resultMap>
 
@@ -109,7 +110,7 @@
 		h.id_member, h.id_team, t.id_tournament, t.tournament_name,
 		s.id_schedule,s.schedule_team1,
 		s.schedule_team2,s.schedule_score1,s.schedule_score2,
-		s.schedule_winner, s.schedule_end
+		s.schedule_winner, s.schedule_end,s.schedule_tour
 		from tournament_tbl t
 		right join
 		history_tbl h on
