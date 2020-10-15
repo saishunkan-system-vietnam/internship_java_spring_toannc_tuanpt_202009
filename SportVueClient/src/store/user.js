@@ -1,8 +1,9 @@
 import { searchUser } from '@/api/UserApi'
 import { getById } from '../api/UserApi';
 import { autoLogin } from '../api/UserApi'
-import {historyMemberMatchs} from '../api/MemberApi'
-
+import {historyMemberMatchs,upcommingMemberMatchs} from '../api/MemberApi'
+import {getPlayerId} from '../api/MemberApi'
+ 
 const state = {
     userInfo: null,
     isProfile: false,
@@ -51,6 +52,26 @@ const actions = {
     historyMemberMatchs({ },id) {
         return new Promise((resolve, reject) => {
             historyMemberMatchs(id).then(res => {
+                resolve(res);
+            }).catch((err) => {
+                reject(err);
+            })
+        })
+    },
+
+    upcommingMemberMatchs({ },id) {
+        return new Promise((resolve, reject) => {
+            upcommingMemberMatchs(id).then(res => {
+                resolve(res);
+            }).catch((err) => {
+                reject(err);
+            })
+        })
+    },
+
+    getPlayerId({ }, id) {
+        return new Promise((resolve, reject) => {
+            getPlayerId(id).then(res => {
                 resolve(res);
             }).catch((err) => {
                 reject(err);

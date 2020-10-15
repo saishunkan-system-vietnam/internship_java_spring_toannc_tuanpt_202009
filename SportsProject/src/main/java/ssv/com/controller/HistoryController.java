@@ -23,4 +23,10 @@ public class HistoryController {
 		List<HistoryMemberDto> list = historyService.memberHistoryMatchs(idMember);
 		return ResponseQuery.success("Success", list);
 	}
+
+	@GetMapping(value = "upcomming/{idMember}")
+	public ResponseQuery<?> playerUpComingMatchs(@PathVariable int idMember){
+		List<HistoryMemberDto> list = historyService.playerUpCommingMatchs(idMember);
+		return ResponseQuery.success("Success", list);
+	}
 }

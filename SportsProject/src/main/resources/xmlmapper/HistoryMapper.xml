@@ -26,6 +26,24 @@
 			<result column="schedule_score1" property="scoreTeam1" />
 			<result column="schedule_score2" property="scoreTeam2" />
 			<result column="schedule_winner" property="idwinner" />
+			<result column="schedule_tour" property="idTour" />
+		</collection>
+	</resultMap>
+
+	<resultMap id="upComingMatchs" type="HistoryMemberDto">
+		<id column="id" property="id_memberHistoryDto" />
+		<result column="id_member" property="idMember" />
+		<result column="id_team" property="idTeam" />
+		<association property="tournaments">
+			<id column="id_tournament" property="idTour" />
+			<result column="tournament_name" property="nameTour" />
+		</association>
+		<collection property="schedules" ofType="Schedule">
+			<id column="id_schedule" property="idSchedule" />
+			<result column="schedule_start" property="timeStart" />
+			<result column="schedule_team1" property="idTeam1" />
+			<result column="schedule_team2" property="idTeam2" />
+			<result column="schedule_tour" property="idTour" />
 		</collection>
 	</resultMap>
 
@@ -109,22 +127,55 @@
 		h.id_member, h.id_team, t.id_tournament, t.tournament_name,
 		s.id_schedule,s.schedule_team1,
 		s.schedule_team2,s.schedule_score1,s.schedule_score2,
-		s.schedule_winner, s.schedule_end
+		s.schedule_winner, s.schedule_end,s.schedule_tour
 		from tournament_tbl t
 		right join
 		history_tbl h on
 		t.id_tournament = h.id_tour
-		left join schedule_tbl s on
+		left join
+		schedule_tbl s on
 		t.id_tournament
 		= s.schedule_tour
-		left join team_tbl m on h.id_team =
+		left join team_tbl m
+		on h.id_team =
 		m.id_team
 		where
-		h.id_member = ${idMember} and t.tournament_status != 0
+		h.id_member = ${idMember} and
+		t.tournament_status != 0
 		and
-		s.schedule_status = 2 and s.schedule_video != '' and (h.id_team =
+		s.schedule_status = 2 and s.schedule_video
+		!= '' and (h.id_team =
 		s.schedule_team1 or
 		h.id_team =
 		s.schedule_team2)
 	</select>
+
+	<select id="playerUpCommingMatchs" resultMap="upComingMatchs">
+		select h.id,
+		h.id_member, h.id_team, t.id_tournament, t.tournament_name,
+		s.id_schedule,s.schedule_team1,
+		s.schedule_team2,s.schedule_score1,s.schedule_score2,s.schedule_start,
+		s.schedule_winner, s.schedule_end,s.schedule_tour
+		from tournament_tbl t
+		right join
+		history_tbl h on
+		t.id_tournament = h.id_tour
+		left join
+		schedule_tbl s on
+		t.id_tournament
+		= s.schedule_tour
+		left join team_tbl m
+		on h.id_team =
+		m.id_team
+		where
+		h.id_member = #{14} and
+		t.tournament_status
+		!= 2
+		and
+		s.schedule_status = 0 and (h.id_team =
+		s.schedule_team1 or
+		h.id_team =
+		s.schedule_team2)
+	</select>
+
 </mapper>

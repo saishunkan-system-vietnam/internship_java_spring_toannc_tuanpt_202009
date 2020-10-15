@@ -20,6 +20,4 @@ public class HistoryMemberDto {
 	private int idTeam;
 	private Tournament tournaments;
 	private List<Schedule> schedules;
-//	private Team team1;
-//	private Team team2;
 }
