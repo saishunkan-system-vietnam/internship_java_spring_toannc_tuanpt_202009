@@ -1,5 +1,5 @@
 import { getById } from '@/api/ScheduleApi';
-import { create, deleteSchedule, edit, updateShedule, getByIdTour, statusNow, getAll, upcomingMatch, relate } from '../api/ScheduleApi';
+import { create, deleteSchedule, edit, updateShedule, getByIdTour, statusNow, getAll, upcomingMatch, relate, profileSchedule } from '../api/ScheduleApi';
 
 const actions = {
     getAll({ }) {
@@ -94,6 +94,15 @@ const actions = {
             })
         })
 
+    },
+    profileSchedule({},idMember){
+        return new Promise((resolve, reject) => {
+            profileSchedule(idMember).then(res => {
+                resolve(res)
+            }).catch((err) => {
+                reject(err);
+            })
+        })
     }
 
 }

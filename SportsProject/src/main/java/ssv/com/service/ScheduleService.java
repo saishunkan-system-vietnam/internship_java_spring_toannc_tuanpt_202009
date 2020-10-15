@@ -3,6 +3,7 @@ package ssv.com.service;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import lombok.var;
 import ssv.com.controller.form.ScheduleForm;
@@ -16,8 +17,13 @@ public class ScheduleService {
 
 	@Autowired
 	private ScheduleReponsitory scheduleReponsitory;
+
 	@Autowired
 	private TournamentService tournamentService;
+	
+	@Autowired
+	private TeamService teamService;
+
 	@Autowired
 	private RoundService roundService;
 
@@ -26,24 +32,24 @@ public class ScheduleService {
 	}
 
 	public boolean checkTime(Date timeStart, Date timeEnd, int idTour) {
-		Tournament tournament=tournamentService.getById(idTour);
-		if(tournamentService.getById(idTour).getTimeEnd().compareTo(timeEnd)>=0) {
+		Tournament tournament = tournamentService.getById(idTour);
+		if (tournamentService.getById(idTour).getTimeEnd().compareTo(timeEnd) >= 0) {
 			List<Schedule> list = scheduleReponsitory.getByIdTour(idTour);
 			if (timeEnd.compareTo(timeStart) > 0) {
 				if (list.isEmpty()) {
 					return true;
 				} else {
 					for (Schedule schedule : list) {
-						if ((timeStart.compareTo(schedule.getTimeEnd()) >0
-								||timeEnd.compareTo(schedule.getTimeStart())<0)
-								&&timeStart.compareTo(tournament.getTimeStart())>0
-								&&timeEnd.compareTo(tournament.getTimeEnd())<=0) {
+						if ((timeStart.compareTo(schedule.getTimeEnd()) > 0
+								|| timeEnd.compareTo(schedule.getTimeStart()) < 0)
+								&& timeStart.compareTo(tournament.getTimeStart()) > 0
+								&& timeEnd.compareTo(tournament.getTimeEnd()) <= 0) {
 							return true;
 						}
 					}
 				}
 			}
-		}		
+		}
 		return false;
 	}
 
@@ -56,10 +62,12 @@ public class ScheduleService {
 	}
 
 	public void delete(int idSchedule) {
-		Schedule schedule =scheduleReponsitory.getById(idSchedule);
+		Schedule schedule = scheduleReponsitory.getById(idSchedule);
 		scheduleReponsitory.delete(idSchedule);
-		scheduleReponsitory.setTotalMatch(scheduleReponsitory.sumJoinByTour(schedule.getIdTeam1(), schedule.getIdTour()),schedule.getIdTeam1());
-		scheduleReponsitory.setTotalMatch(scheduleReponsitory.sumJoinByTour(schedule.getIdTeam2(), schedule.getIdTour()),schedule.getIdTeam2());
+		scheduleReponsitory.setTotalMatch(
+				scheduleReponsitory.sumJoinByTour(schedule.getIdTeam1(), schedule.getIdTour()), schedule.getIdTeam1());
+		scheduleReponsitory.setTotalMatch(
+				scheduleReponsitory.sumJoinByTour(schedule.getIdTeam2(), schedule.getIdTour()), schedule.getIdTeam2());
 	}
 
 	public void updateShedule(ScheduleForm scheduleForm) throws Exception {
@@ -77,43 +85,42 @@ public class ScheduleService {
 			schedule.setIdwinner(schedule.getIdTeam2());
 		}
 		schedule.setDescription(scheduleForm.getDescription());
-		if(scheduleForm.getFileImage()==null&&scheduleForm.getFileVideo()==null) {
+		if (scheduleForm.getFileImage() == null && scheduleForm.getFileVideo() == null) {
 			scheduleReponsitory.updateSheduleNotFile(schedule);
-		}
-		else {
+		} else {
 			schedule.setImage(UploadFile.saveFile(scheduleForm.getFileImage()));
 			schedule.setVideo(UploadFile.saveVideo(scheduleForm.getFileVideo()));
 			scheduleReponsitory.updateShedule(schedule);
-		} 
+		}
 	}
-		
+
 	public void editShedule(Schedule schedule) {
 		scheduleReponsitory.editShedule(schedule);
 	}
 
 	public void createSchedule(Schedule schedule) {
 		scheduleReponsitory.create(schedule);
-		if(tournamentService.getById(schedule.getIdTour()).getType().equals("Football")) {
+		if (tournamentService.getById(schedule.getIdTour()).getType().equals("Football")) {
 			roundService.createFootball();
-		}
-		else if(tournamentService.getById(schedule.getIdTour()).getType().equals("TableTennis"))  {
+		} else if (tournamentService.getById(schedule.getIdTour()).getType().equals("TableTennis")) {
 			roundService.createTableBall();
-		}
-		else {
+		} else {
 			roundService.createBaskestBall();
 		}
-		scheduleReponsitory.setTotalMatch(scheduleReponsitory.sumJoinByTour(schedule.getIdTeam1(), schedule.getIdTour()),schedule.getIdTeam1());
-		scheduleReponsitory.setTotalMatch(scheduleReponsitory.sumJoinByTour(schedule.getIdTeam2(), schedule.getIdTour()),schedule.getIdTeam2());
+		scheduleReponsitory.setTotalMatch(
+				scheduleReponsitory.sumJoinByTour(schedule.getIdTeam1(), schedule.getIdTour()), schedule.getIdTeam1());
+		scheduleReponsitory.setTotalMatch(
+				scheduleReponsitory.sumJoinByTour(schedule.getIdTeam2(), schedule.getIdTour()), schedule.getIdTeam2());
 	}
 
 	public void statusCheck() {
 		long millis = System.currentTimeMillis();
 		Date date = new java.sql.Date(millis);
 		List<Schedule> list = scheduleReponsitory.getAll();
-		var a=date;
+		var a = date;
 		for (Schedule schedule : list) {
-			var b=schedule.getTimeStart();
-			System.out.println(a.compareTo(b)>0);
+			var b = schedule.getTimeStart();
+			System.out.println(a.compareTo(b) > 0);
 			if (schedule.getTimeStart().compareTo(date) <= 0 && schedule.getTimeEnd().compareTo(date) > 0) {
 				scheduleReponsitory.checkStatus(schedule.getIdSchedule(), 1);
 			} else if (schedule.getTimeEnd().compareTo(date) <= 0) {
@@ -133,19 +140,36 @@ public class ScheduleService {
 	}
 
 	public void deleteData(int idTour, int idTeam) {
-		scheduleReponsitory.deleteData(idTour,idTeam);
-		
+		scheduleReponsitory.deleteData(idTour, idTeam);
+
 	}
 
 	public List<Schedule> relate(int idTeam1, int idTeam2, int idTour) {
 		// TODO Auto-generated method stub
-		return scheduleReponsitory.relate(idTeam1,idTeam2,idTour);
+		return scheduleReponsitory.relate(idTeam1, idTeam2, idTour);
 	}
-	//3 trận đấu gần nhất trong giải
+
+	// 3 trận đấu gần nhất trong giải
 	public List<Schedule> getRecently(int idTeam, int idTour) {
-		return scheduleReponsitory.getRecently(idTeam,idTour);
+		return scheduleReponsitory.getRecently(idTeam, idTour);
 	}
 
+	public List<Schedule> profileSchedule(int idMember) {
+		List<Schedule> list=scheduleReponsitory.profileSchedule(idMember);
+		if(!list.isEmpty()) {
+			for (Schedule schedule : list) {
+				int idTeam =schedule.getTeam().get(0).getIdTeam();
+				if(schedule.getIdTeam1()!=idTeam) {
+					var a=teamService.getById(schedule.getIdTeam1());
+					schedule.getTeam().add(teamService.getById(schedule.getIdTeam1()));
+				}
+				else {
+					schedule.getTeam().add(teamService.getById(schedule.getIdTeam2()));
+				}
+			}
+		}
 
+		return list;
+	}
 
 }

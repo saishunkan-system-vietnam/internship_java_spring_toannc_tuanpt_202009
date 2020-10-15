@@ -101,6 +101,11 @@ public class ScheduleReponsitory {
 		return scheduleMapper.getRecently(idTeam,idTour);
 	}
 
+	public List<Schedule> profileSchedule(int idMember) {
+		// TODO Auto-generated method stub
+		return scheduleMapper.profileSchedule(idMember);
+	}
+
 	
 
 }

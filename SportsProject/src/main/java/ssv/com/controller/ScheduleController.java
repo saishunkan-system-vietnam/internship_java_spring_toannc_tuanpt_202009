@@ -107,6 +107,11 @@ public class ScheduleController {
 	public ResponseEntity<List<Schedule>> related(@RequestParam int idTeam1,@RequestParam int idTeam2,@RequestParam int idTour){
 		return new ResponseEntity<List<Schedule>>(scheduleService.relate(idTeam1,idTeam2,idTour),HttpStatus.OK);
 	}
+	//hiển thị lịch trình của member
+	@GetMapping(value="profileSchedule")
+	public ResponseEntity<List<Schedule>> profileSchedule(@RequestParam int idMember ){
+		return new ResponseEntity<List<Schedule>>(scheduleService.profileSchedule(idMember),HttpStatus.OK);
+	}
 	
 	
 
