@@ -1,8 +1,9 @@
 <template>
   <v-container>
+    <v-form ref="form">
     <v-flex>
       <v-sheet height="500">
-        <v-calendar v-model="today" :start="start" color="primary" ref="calendar">
+        <v-calendar v-model="today" :start="start" :end="end" color="primary" ref="calendar">
           <template v-slot:day="{ date }">
             <template v-for="event in eventsMap[date]">
               <v-menu :key="event.title" v-model="event.open">
@@ -37,6 +38,7 @@
         <v-icon right dark> keyboard_arrow_right </v-icon>
       </v-btn>
     </v-flex>
+    </v-form>
   </v-container>
 </template>
 <script>
@@ -44,9 +46,11 @@ export default {
   data: () => ({
     today: new Date().toISOString().substr(0, 10),
     events: [],
-    start:new Date().toISOString().substr(0, 10)
+    start:new Date().toISOString().substr(0, 10),
+    end:new Date().toISOString().substr(0, 10)
   }),
   created() {
+  this.$refs.form.reset()
     this.today=new Date().toISOString().substr(0, 10);
     console.log(this.$store.state.user.userInfo);
     this.$store
@@ -81,6 +85,7 @@ export default {
     },
     nextMonth() {
       this.$refs.calendar.next();
+      console.log()
     },
   },
 };
