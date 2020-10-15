@@ -1,5 +1,5 @@
 <template>
-  <v-expansion-panels multiple>
+  <v-expansion-panels v-model="panel" multiple>
     <v-expansion-panel v-for="(item, i) in tournaments" :key="i">
       <v-expansion-panel-header disable-icon-rotate
         ><template v-if="item.type === 'Football'"
@@ -21,7 +21,7 @@
       </v-expansion-panel-header>
 
       <v-expansion-panel-content>
-        <v-expansion-panels inset>
+        <v-expansion-panels v-model="panel" inset>
           <v-expansion-panel
             v-for="(tournament, t) in item.tournament"
             :key="t"
@@ -77,9 +77,9 @@
 export default {
   data() {
     return {
-      disabled: false,
       open: false,
-      tournaments: []
+      tournaments: [],
+      panel: [1 , 2 , 3 , 4 , 5]
     };
   },
   mounted() {

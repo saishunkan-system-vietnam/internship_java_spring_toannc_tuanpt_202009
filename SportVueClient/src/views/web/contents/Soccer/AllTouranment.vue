@@ -1,6 +1,6 @@
 <template>
   <div>
-     <div v-if="tournaments == ''" class="text-center">
+    <div v-if="tournaments == ''" class="text-center">
       <div class="d-flex flex-column justify-space-between align-center">
         <v-img
           max-height="350"
@@ -9,7 +9,6 @@
         ></v-img>
         No match
       </div>
-
     </div>
     <v-expansion-panels v-model="panel" multiple>
       <v-expansion-panel v-for="(tournament, i) in tournaments" :key="i">
@@ -77,20 +76,23 @@
         </template>
       </v-expansion-panel>
     </v-expansion-panels>
-     <div  class="text-center" v-if="tournaments.length>2 && number==2" @click="show" style="color:blue">
-           -- Show More --
-        </div>
+    <div
+      class="text-center"
+      v-if="tournaments.length > 2 && number == 2"
+      @click="show"
+      style="color: blue"
+    >
+      -- Show More --
+    </div>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      panel: [0, 1, 2, 3, 4, 5,6,7,8],
+      panel: [0, 1, 2, 3, 4, 5, 6, 7, 8],
       tournaments: "",
-      number:2,
-      
-      
+      number: 2,
     };
   },
   created() {
@@ -108,9 +110,9 @@ export default {
         "width=600px,height=600"
       );
     },
-    show(){
-      this.number=this.tournaments.length
-    }
+    show() {
+      this.number = this.tournaments.length;
+    },
   },
 };
 </script>

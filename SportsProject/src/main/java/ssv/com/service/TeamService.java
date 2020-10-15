@@ -60,7 +60,11 @@ public class TeamService {
 
 	public Team findById(int id) {
 		Team team = teamRepository.findById(id);
-		team.setTourName(tournamentService.getById(team.getIdTour()).getNameTour());
+		if(team.getIdTour()!=0) {
+			team.setTourName(tournamentService.getById(team.getIdTour()).getNameTour());
+
+		}
+
 		team.setTotalmatch(scheduleReponsitory.sum(team.getIdTeam()));
 		team.setTotalwin(scheduleReponsitory.sumWin(team.getIdTeam()));
 		return team;
