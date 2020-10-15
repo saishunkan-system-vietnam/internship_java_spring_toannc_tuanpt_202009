@@ -8,6 +8,10 @@ export function historyMemberMatchs(id){
     return Api.get('/history/' + id)
 }
 
+export function upcommingMemberMatchs(id){
+    return Api.get('/history/upcomming/' + id)
+}
+
 export function getPlayerId(id){
     return Api.get('/profiles/' + id)
 }

@@ -1,7 +1,7 @@
 import { searchUser } from '@/api/UserApi'
 import { getById } from '../api/UserApi';
 import { autoLogin } from '../api/UserApi'
-import {historyMemberMatchs} from '../api/MemberApi'
+import {historyMemberMatchs,upcommingMemberMatchs} from '../api/MemberApi'
 import {getPlayerId} from '../api/MemberApi'
  
 const state = {
@@ -58,6 +58,17 @@ const actions = {
             })
         })
     },
+
+    upcommingMemberMatchs({ },id) {
+        return new Promise((resolve, reject) => {
+            upcommingMemberMatchs(id).then(res => {
+                resolve(res);
+            }).catch((err) => {
+                reject(err);
+            })
+        })
+    },
+
     getPlayerId({ }, id) {
         return new Promise((resolve, reject) => {
             getPlayerId(id).then(res => {
