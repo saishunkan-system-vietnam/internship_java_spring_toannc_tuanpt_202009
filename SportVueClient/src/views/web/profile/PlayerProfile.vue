@@ -213,7 +213,11 @@ export default {
         .catch(function (error) {});
     },
     handleRowClick(item) {
-      alert("You clicked " + item.name);
+      var myWindow = window.open(
+        "http://localhost:8080/detail/" + item.idSchedule,
+        "myWindow",
+        "width=600px,height=600"
+      );
     },
   },
 };

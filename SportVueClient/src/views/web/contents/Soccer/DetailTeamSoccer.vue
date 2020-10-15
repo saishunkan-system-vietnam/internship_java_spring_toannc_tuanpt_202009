@@ -348,6 +348,7 @@ export default {
         .then((res) => {
           this.fixtures = res.data;
         });
+  
     },
     detail(data) {
       var myWindow = window.open(
@@ -357,7 +358,7 @@ export default {
       );
     },
     detailMember(item) {
-      alert(item);
+      this.$router.push({path:'/PlayerProfile/'+item.id});
     },
   },
   watch: {
