@@ -43,4 +43,8 @@ public class HistoryRepository {
 	public List<HistoryMemberDto> memberHistoryMatchs(int idMember){
 		return historyMapper.memberHistoryMatchs(idMember);
 	}
+
+	public List<HistoryMemberDto> playerUpCommingMatchs(int idMember){
+		return historyMapper.playerUpCommingMatchs(idMember);
+	}
 }

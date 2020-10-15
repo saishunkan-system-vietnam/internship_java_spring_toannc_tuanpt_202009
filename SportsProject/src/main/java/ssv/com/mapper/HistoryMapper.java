@@ -19,4 +19,5 @@ public interface HistoryMapper {
 
 	List<HistoryMemberDto> memberHistoryMatchs(int idMember);
 
+	List<HistoryMemberDto> playerUpCommingMatchs(int idMember);
 }

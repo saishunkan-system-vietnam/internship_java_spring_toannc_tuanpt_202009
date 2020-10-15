@@ -34,6 +34,19 @@ public class HistoryService {
 		}
 		return result;
 	}
+
+	public List<HistoryMemberDto> playerUpCommingMatchs(int idMember) {
+		List<HistoryMemberDto> result = historyRepository.playerUpCommingMatchs(idMember);
+		for (HistoryMemberDto historyMemberDto : result) {
+			historyMemberDto.getSchedules().forEach(s -> {
+				s.setNameTour(tournamentRepository.getById(s.getIdTour()).getNameTour());
+				s.setNameTeam1(teamRepository.getByID(s.getIdTeam1()).getNameTeam());
+				s.setNameTeam2(teamRepository.getByID(s.getIdTeam2()).getNameTeam());
+				s.setTeamPlayed(historyMemberDto.getIdTeam());
+			});
+		}
+		return result;
+	}
 }
 
 
