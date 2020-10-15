@@ -45,6 +45,8 @@
                           : "FINISHED"
                       }}
                     </td>
+                                        <td>{{ item.timeStart }}</td>
+
                     <td>
                       <v-row>
                         <v-col>{{ item.team[0].nameTeam }}</v-col>

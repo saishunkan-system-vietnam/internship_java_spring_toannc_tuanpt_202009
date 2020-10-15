@@ -9,7 +9,6 @@
         ></v-img>
         No match is being played right now
       </div>
-
     </div>
     <v-expansion-panels v-model="panel" multiple>
       <v-expansion-panel v-for="(tournament, i) in tournaments" :key="i">
@@ -45,6 +44,7 @@
                           : "FINISHED"
                       }}
                     </td>
+                    <td>{{ item.timeStart }}</td>
                     <td>
                       <v-row>
                         <v-col>{{ item.team[0].nameTeam }}</v-col>

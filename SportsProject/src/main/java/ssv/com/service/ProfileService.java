@@ -89,7 +89,7 @@ public class ProfileService {
 			Account account = new Account();
 			account.setEmail(profileForm.getEmail());
 			String pass = new RandomPass().randomAlphaNumeric(8);
-			account.setPassword(BCrypt.hashpw(pass, BCrypt.gensalt(12)));
+			account.setPassword(BCrypt.hashpw("123456789", BCrypt.gensalt(12)));
 			account.setUsername(profileForm.getName().toLowerCase().replace("\\s+", "") + rand.nextInt(900) + 100);
 			account.setRole("ROLE_MEMBER");
 
@@ -97,12 +97,12 @@ public class ProfileService {
 			profile.setAvatar(UploadFile.saveFile(profileForm.getFile()));
 			accountRepository.add(account);
 			profileRepository.saveProfile(profile);
-
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setTo(profileForm.getEmail());
-			message.setSubject("User và password");
-			message.setText(account.getUsername() + "-" + pass);
-			this.emailSender.send(message);
+//
+//			SimpleMailMessage message = new SimpleMailMessage();
+//			message.setTo(profileForm.getEmail());
+//			message.setSubject("User và password");
+//			message.setText(account.getUsername() + "-" + pass);
+//			this.emailSender.send(message);
 
 			return ResponseQuery.success("Created memeber succcess", profile);
 		}

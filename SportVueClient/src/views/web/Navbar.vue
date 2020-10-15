@@ -90,7 +90,7 @@
       max-width="1200px"
       style="background: floralwhite"
     >
-      <MemberProfile :controlModalMember="controlModalMember" />
+      <MemberProfile :controlModalMember="controlModalMember" :showMenu="showMenu" />
     </v-dialog>
 
     <v-dialog v-model="modalUser" max-width="600px">

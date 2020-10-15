@@ -52,8 +52,9 @@ public class TeamService {
 
 	public Team getById(int id) {
 		Team team = teamRepository.getByID(id);
-		team.setTourName(tournamentService.getById(team.getIdTour()).getNameTour());
-		team.setTotalmatch(scheduleReponsitory.sum(team.getIdTeam()));
+		if (team.getIdTour() != 0) {
+			team.setTourName(tournamentService.getById(team.getIdTour()).getNameTour());
+		}		team.setTotalmatch(scheduleReponsitory.sum(team.getIdTeam()));
 		team.setTotalwin(scheduleReponsitory.sumWin(team.getIdTeam()));
 		return team;
 	}
@@ -193,6 +194,9 @@ public class TeamService {
 	}
 
 	public double rank(int i) {
+		if(scheduleReponsitory.sum(i)==0) {
+			return 0;
+		}
 		return Double.parseDouble(
 				new DecimalFormat("##.##").format((scheduleReponsitory.sumWin(i) * 1.0) / scheduleReponsitory.sum(i)));
 	}
