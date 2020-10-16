@@ -49,16 +49,22 @@ public class ProfileController {
 	}
 
 	@PostMapping("/createUser")
-	public ResponseEntity<?> createProfile(@RequestBody Profile profile) {
+	public ResponseQuery<?> createProfile(@RequestBody Profile profile) {
 
 		Long profile2 = profileService.save(profile);
-		return new ResponseEntity<Long>(profile2, HttpStatus.CREATED);
+		if(profile2 != null) {
+			return ResponseQuery.success("Success", profile2);
+		}
+		return ResponseQuery.faild("Failed", null);
 	}
 	//Edit profile user
 	@PostMapping("/update")
 	public ResponseQuery<?> updateProfileUser(@ModelAttribute ProfileForm profileForm){
 		Account account = profileService.updateProfileUser(profileForm);
-		return ResponseQuery.success("Success", account);
+		if(account != null) {
+			return ResponseQuery.success("Success", account);
+		}
+		return ResponseQuery.faild("Failed", null);
 	}
 
 	@PostMapping("/createMember")

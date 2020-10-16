@@ -61,7 +61,7 @@ public class TeamController {
 	}
 
 	@PostMapping(value = "createTeam")
-	public ResponseEntity<String> createTeam(@ModelAttribute TeamForm teamForm) {
+	public ResponseQuery<?> createTeam(@ModelAttribute TeamForm teamForm) {
 		String path = "";
 		try {
 			path = UploadFile.saveFile(teamForm.getFile());
@@ -69,13 +69,13 @@ public class TeamController {
 			team.setLogo(path);
 			if (!teamService.checkTeam(team)) {
 				teamService.save(team);
-				return new ResponseEntity<String>("success", HttpStatus.OK);
+				return ResponseQuery.success("Success",team );
 			}
-			return new ResponseEntity<String>("namesake", HttpStatus.OK);
+			return ResponseQuery.faild("Name Team Taken", team);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ResponseEntity<String>("fail", HttpStatus.OK);
+		return ResponseQuery.faild("Create fail", null);
 
 	}
 
