@@ -1,15 +1,41 @@
 <template>
+  <div style="background: whitesmoke" >
   <v-container>
     <v-form ref="form">
       <v-flex>
+        <v-row>
+          <v-col cols="6">
+            <v-img
+              lazy-src="https://picsum.photos/id/11/10/6"
+              max-height="100"
+              max-width="100"
+              :src="info.profile.avatar"
+            ></v-img>
+          </v-col>
+          <v-col cols="12" sm="6" md="6">
+            <h3>{{ info.profile.name }}</h3>
+            <p>{{ info.profile.address }}</p>
+          </v-col>
+          <v-col cols="12" sm="6" md="6">
+            <v-icon>mdi-email</v-icon>{{ info.profile.email }}
+          </v-col>
+          <v-col cols="6">
+            <v-icon>mdi-phone</v-icon>{{ info.profile.phone }}
+          </v-col>
+          <v-col cols="6">
+            <v-icon>mdi-account</v-icon>{{ info.username }}
+          </v-col>
+          <v-col cols="6">
+            <v-icon>mdi-account-group</v-icon>{{ this.team.nameTeam }}
+                      </v-col>
+              <v-col cols="6">
+            <v-icon>mdi-tournament</v-icon>{{ this.team.tourName }}
+          </v-col>
+        </v-row>
+        <h3>Schedule</h3>
+        <h5>{{ this.start }}</h5>
         <v-sheet height="500">
-          <v-calendar
-            v-model="today"
-            :start="start"
-            :end="end"
-            color="primary"
-            ref="calendar"
-          >
+          <v-calendar v-model="today" color="primary" ref="calendar">
             <template v-slot:day="{ date }">
               <template v-for="event in eventsMap[date]">
                 <v-menu :key="event.title" v-model="event.open">
@@ -39,6 +65,10 @@
             </template>
           </v-calendar>
         </v-sheet>
+        <v-btn @click.prevent="prewMonth">
+          <v-icon right dark> keyboard_arrow_left </v-icon>
+          Prew
+        </v-btn>
         <v-btn @click.prevent="nextMonth">
           Next
           <v-icon right dark> keyboard_arrow_right </v-icon>
@@ -46,8 +76,11 @@
       </v-flex>
     </v-form>
   </v-container>
+  </div>
 </template>
 <script>
+const date = new Date().toISOString().substr(0, 10);
+
 export default {
   props: {
     showMenu: Boolean,
@@ -55,11 +88,14 @@ export default {
   data: () => ({
     today: new Date().toISOString().substr(0, 10),
     events: [],
-    start: new Date().toISOString().substr(0, 10),
-    end: new Date().toISOString().substr(0, 10),
+    start: "",
+    info: "",
+    team: "",
   }),
   created() {
-    console.log(this.$store.state.user.userInfo);
+    this.info = this.$store.state.user.userInfo;
+    console.log(this.info);
+    this.start = date.slice(0, 7);
     this.$store
       .dispatch(
         "schedule/profileSchedule",
@@ -67,7 +103,13 @@ export default {
       )
       .then((res) => {
         console.log(res.data);
-
+        if(res.data!=''){
+        this.$store
+          .dispatch("team/getTeam" , res.data[0].team[0].idTeam)
+          .then((res) => {
+            this.team = res.data;
+          });
+        }
         res.data.forEach((element) => {
           const a = {
             title: element.title,
@@ -92,11 +134,32 @@ export default {
     },
     nextMonth() {
       this.$refs.calendar.next();
-      console.log();
+      if (Number(this.start.substring(5, 7)) == 12) {
+        this.start = (Number(this.start.substring(0, 4)) + 1)
+          .toString()
+          .concat("-01");
+      } else {
+        this.start = this.start
+          .substring(0, 5)
+          .concat(Number(this.start.substring(5, 7)) + 1);
+      }
+    },
+    prewMonth() {
+      this.$refs.calendar.prev();
+      if (Number(this.start.substring(5, 7)) == 1) {
+        this.start = (Number(this.start.substring(0, 4)) - 1)
+          .toString()
+          .concat("-12");
+      } else {
+        this.start = this.start
+          .substring(0, 5)
+          .concat(Number(this.start.substring(5, 7)) - 1);
+      }
     },
   },
   watch: {
     showMenu() {
+      this.start = date.slice(0, 7);
       this.today = new Date().toISOString().substr(0, 10);
       (this.start = new Date().toISOString().substr(0, 10)),
         (this.end = new Date().toISOString().substr(0, 10));

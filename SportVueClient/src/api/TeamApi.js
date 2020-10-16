@@ -24,3 +24,6 @@ export function updateMembersInTeam(bodyFormData){
 export function updateTeam(id, bodyFormData){
     return Api.post(`/team/updateInfo/${id}`, bodyFormData)
 }
+export function getTeam(id){
+    return Api.get(`/team/`+id)
+}

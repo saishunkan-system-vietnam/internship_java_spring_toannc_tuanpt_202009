@@ -94,7 +94,7 @@
     </v-dialog>
 
     <v-dialog v-model="modalUser" max-width="600px">
-      <UserProfile :controlModalUser="controlModalUser"/>
+      <UserProfile :controlModalUser="controlModalUser" :showMenu="showMenu" />
     </v-dialog>
   </v-card>
 </template>

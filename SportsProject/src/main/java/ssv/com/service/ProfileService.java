@@ -90,14 +90,14 @@ public class ProfileService {
 			account.setEmail(profileForm.getEmail());
 			String pass = new RandomPass().randomAlphaNumeric(8);
 			account.setPassword(BCrypt.hashpw("123456789", BCrypt.gensalt(12)));
-			account.setUsername(profileForm.getName().toLowerCase().replace("\\s+", "") + rand.nextInt(900) + 100);
+			account.setUsername(profileForm.getName().toLowerCase().replace(" ", "") + rand.nextInt(900) + 100);
 			account.setRole("ROLE_MEMBER");
 
 			Profile profile = modelMapper.map(profileForm, Profile.class);
 			profile.setAvatar(UploadFile.saveFile(profileForm.getFile()));
 			accountRepository.add(account);
 			profileRepository.saveProfile(profile);
-//
+			
 //			SimpleMailMessage message = new SimpleMailMessage();
 //			message.setTo(profileForm.getEmail());
 //			message.setSubject("User và password");
@@ -126,5 +126,17 @@ public class ProfileService {
 
 	public void updateMembersInTeam(Team team) {
 		profileRepository.updateMembersInTeam(team);
+	}
+
+	public String updateProfileUser(ProfileForm profileForm) {
+		Profile profile = modelMapper.map(profileForm, Profile.class);
+		try {
+			profile.setAvatar(UploadFile.saveFile(profileForm.getFile()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		profileRepository.updateProfileUser(profile);
+		return "success";
 	}
 }

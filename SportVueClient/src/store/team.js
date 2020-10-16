@@ -1,4 +1,4 @@
-import {updateTeam, updateMembersInTeam, findTeamAndMembers, detail, teamTourHistory, teamWait, getById } from "../api/TeamApi";
+import {updateTeam, updateMembersInTeam, findTeamAndMembers, detail, teamTourHistory, teamWait, getById, getTeam } from "../api/TeamApi";
 
 const state = {
     idTeam:'',
@@ -71,6 +71,15 @@ const actions = {
     updateTeam({ }, id, data) {
         return new Promise((resolve, reject) => {
             updateTeam(id, data).then((res) => {
+                resolve(res);
+            }).catch((err) => {
+                reject(err);
+            })
+        })
+    },
+    getTeam({},id){
+        return new Promise((resolve, reject) => {
+            getTeam(id).then((res) => {
                 resolve(res);
             }).catch((err) => {
                 reject(err);

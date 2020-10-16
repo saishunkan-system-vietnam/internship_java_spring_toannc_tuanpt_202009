@@ -54,6 +54,11 @@ public class ProfileController {
 		Long profile2 = profileService.save(profile);
 		return new ResponseEntity<Long>(profile2, HttpStatus.CREATED);
 	}
+	//Edit profile user
+	@PostMapping("/update")
+	public ResponseEntity<?> updateProfileUser(@ModelAttribute ProfileForm profileForm){
+		return new ResponseEntity<String>(profileService.updateProfileUser(profileForm), HttpStatus.OK);
+	}
 
 	@PostMapping("/createMember")
 	public ResponseQuery<?> createMember(@ModelAttribute ProfileForm profileForm) throws Exception {

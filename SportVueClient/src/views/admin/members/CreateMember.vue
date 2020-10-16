@@ -161,6 +161,13 @@ export default {
             self.isOpenModalMember();
             self.loadMemberAfterCreate(res.data.payload);
           }
+          self.name = ''
+          self.email = ''
+          self.phone = ''
+          self.age = ''
+          self.gender = ''
+          self.address = ''
+          self.passSelectedType = ''
         })
         .catch((e) => {
           self.changeButton = !self.changeButton;

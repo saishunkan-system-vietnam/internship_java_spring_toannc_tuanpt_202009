@@ -51,6 +51,9 @@
 		#{avatar}
 		);
 	</insert>
+	<update id="updateProfileUser" parameterType="Profile">
+	update profile_tbl SET profile_name=#{name},profile_phone=#{phone},profile_avatar=#{avatar} where profile_email=#{email}
+	</update>
 
 	<select id="getMembers" resultMap="profileMapping">
 		SELECT p.*, t.*

@@ -518,7 +518,7 @@ export default {
     },
 
     commentSubmit() {
-      if (this.$store.state.user.userInfo == null) {
+      if (this.$store.state.user.userInfo == null ||this.$store.state.user.userInfo.profile.name==null || this.$store.state.user.userInfo.profile.name=="" ) {
         alert("need to login");
       } else {
         if (this.textComment != "") {

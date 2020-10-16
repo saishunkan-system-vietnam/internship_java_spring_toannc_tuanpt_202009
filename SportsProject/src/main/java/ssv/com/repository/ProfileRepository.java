@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
+import ssv.com.controller.form.ProfileForm;
 import ssv.com.entity.Account;
 import ssv.com.entity.Profile;
 import ssv.com.entity.Team;
@@ -62,6 +63,10 @@ public class ProfileRepository {
 
 	public void updateMembersInTeam(Team team) {
 		profileMapper.updateMembersInTeam(team);
+	}
+
+	public void updateProfileUser(Profile profile) {
+		profileMapper.updateProfileUser(profile);
 	}
 
 }

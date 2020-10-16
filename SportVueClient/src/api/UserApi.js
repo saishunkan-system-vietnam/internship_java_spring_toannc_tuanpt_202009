@@ -24,4 +24,7 @@ export function getById(id) {
 export function autoLogin() {
     return Api.post('/account/autoLogin');
 }
+export function updateProfileUser(bodyFormData){
+    return Api.post('/profiles/update',bodyFormData)
+}
 
