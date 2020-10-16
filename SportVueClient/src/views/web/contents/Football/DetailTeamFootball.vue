@@ -232,6 +232,7 @@
                 <div
                   class="d-flex flex-column justify-space-between align-center"
                 >
+                
                   <v-img
                     max-height="350"
                     max-width="350"

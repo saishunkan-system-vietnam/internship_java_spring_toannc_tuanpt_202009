@@ -10,7 +10,7 @@
                 <a
                   :href="
                     $router.resolve({
-                      path: '/DetailTournamentSoccer/' + item.idTour,
+                      path: '/DetailTournamentFootball/' + item.idTour,
                     }).href
                   "
                   style="color: black"
@@ -46,7 +46,7 @@
                 <a
                   :href="
                     $router.resolve({
-                      path: '/DetailTeamSoccer/' + item.idTeam,
+                      path: '/DetailTeamFootball/' + item.idTeam,
                     }).href
                   "
                   style="color: black"

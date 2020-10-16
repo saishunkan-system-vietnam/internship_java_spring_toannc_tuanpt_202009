@@ -8,9 +8,9 @@
         >
       </v-col>
       <v-col cols="12" sm="2" style="text-align: center"
-        ><router-link to="/soccer" style="color: white; text-decoration: none"
+        ><router-link to="/Football" style="color: white; text-decoration: none"
           ><v-icon medium color="green darken-2"> mdi-soccer </v-icon>
-          Soccer</router-link
+          Football</router-link
         ></v-col
       >
       <v-col cols="12" sm="2" style="text-align: center"

@@ -19,7 +19,7 @@
           <a
             :href="
               $router.resolve({
-                path: '/DetailTeamSoccer/' + item.team.idTeam,
+                path: '/DetailTeamFootball/' + item.team.idTeam,
               }).href
             "
             style="color: black; margin-left: -30px"

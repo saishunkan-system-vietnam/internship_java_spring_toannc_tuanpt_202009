@@ -69,7 +69,7 @@
             </v-simple-table>
 
             <div class="text-center" style="font-size: 12px; margin-top: 18px">
-              <router-link :to="'/DetailTournamentSoccer/' + tournament.idTour">
+              <router-link :to="'/DetailTournamentFootball/' + tournament.idTour">
                 ----- All Matches -----
               </router-link>
             </div>
