@@ -13,7 +13,19 @@
               :key="t"
             >
               <v-list-item-content>
-                {{ tour.nameTour }}
+                <a
+                  :href="
+                    $router.resolve({
+                      path: '/DetailTournament'+tour.type+'/' + tour.idTour,
+                    }).href
+                  "
+                  style="color: black"
+                >
+                  <v-list-item-title
+                    v-text="tour.nameTour"
+                    v-b-popover.hover.top="tour.nameTour"
+                  ></v-list-item-title
+                ></a>
               </v-list-item-content>
             </v-list-item-group>
           </v-list>
@@ -25,18 +37,28 @@
       <v-col cols="12" sm="2" style="padding: 5px">
         <v-expansion-panels v-model="panel" multiple>
           <v-expansion-panel v-for="(item1, y) in rank" :key="y">
-            <v-expansion-panel-header style="color: #252c35;font-weight: bold; font-size: 19px"
+            <v-expansion-panel-header
+              style="color: #252c35; font-weight: bold; font-size: 19px"
               >{{ item1.type }}
             </v-expansion-panel-header>
             <v-expansion-panel-content v-for="(team, s) in item1.list" :key="s">
-              <p v-b-popover.hover.left="team.name">
-                {{ s + 1 }}.
-                {{
-                  team.name.length < 10
-                    ? team.name
-                    : team.name.slice(0, 10) + "..."
-                }}
-              </p>
+              <a
+                :href="
+                  $router.resolve({
+                    path: '/DetailTeam'+team.team.type+'/' + team.idTeam,
+                  }).href
+                "
+                style="color: black"
+              >
+                <p v-b-popover.hover.left="team.name">
+                  {{ s + 1 }}.
+                  {{
+                    team.name.length < 10
+                      ? team.name
+                      : team.name.slice(0, 10) + "..."
+                  }}
+                </p></a
+              >
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>

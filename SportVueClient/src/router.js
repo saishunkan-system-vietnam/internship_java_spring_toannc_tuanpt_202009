@@ -26,21 +26,20 @@ import CreateTeam from '@/views/admin/team/TeamCreate'
 import TeamDetail from '@/views/admin/team/TeamDetail'
 
 import AllSports from '@/views/web/contents/AllSports'
-import Soccer from '@/views/web/contents/Soccer'
+import Football from '@/views/web/contents/Football'
 import BaskestBall from '@/views/web/contents/BaskestBall'
 import TableTennis from '@/views/web/contents/TableTennis'
 import DetailScheduleView from './views/web/contents/DetailSchedule'
-import LayoutSoccer from './views/web/contents/Soccer/LayoutSoccer'
-import DetailTournamentSoccer from './views/web/contents/Soccer/DetailTournamentSoccer'
+import LayoutFootball from './views/web/contents/Football/LayoutFootball'
+import DetailTournamentFootball from './views/web/contents/Football/DetailTournamentFootball'
 import LayoutTableTennis from './views/web/contents/TableTennis/LayoutTableTennis'
 import DetailTournamentTableTennis from './views/web/contents/TableTennis/DetailTournamentTableTennis'
 import LayoutAllSports from './views/web/contents/AllSports/LayoutAllSports'
-import DetailTournametSports from './views/web/contents/AllSports/DetailTournametSports'
 import LayoutBaskestBall from './views/web/contents/BaskestBall/LayoutBaskestBall'
 import DetailTournamentBaskestBall from './views/web/contents/BaskestBall/DetailTournamentBaskestBall'
-import DetailTeamSoccer from  './views/web/contents/Soccer/DetailTeamSoccer'
+import DetailTeamFootball from  './views/web/contents/Football/DetailTeamFootball'
 import PlayerProfile from './views/web/profile/PlayerProfile'
-import RankTournament from './views/web/contents/Soccer/RankTournament'
+import RankTournament from './views/web/contents/Football/RankTournament'
 
 Vue.use(Router)
 const metaConfig = {
@@ -63,12 +62,7 @@ let routes = [
           name: 'LayoutAllSports',
           component: LayoutAllSports
         },
-        {
-          path: '/DetailTournametSports/:id',
-          name: 'DetailTournametSports',
-          component: DetailTournametSports,
-          meta : { requiredAuth: false }
-        }
+        
 
         ]
       },
@@ -78,22 +72,22 @@ let routes = [
       },
 
       {
-        path: '/soccer',
-        component: Soccer,
+        path: '/Football',
+        component: Football,
         children: [
           {
             path: '/',
-            component: LayoutSoccer
+            component: LayoutFootball
           },
           {
-            path: '/DetailTournamentSoccer/:id',
-            name: 'DetailTournamentSoccer',
-            component: DetailTournamentSoccer
+            path: '/DetailTournamentFootball/:id',
+            name: 'DetailTournamentFootball',
+            component: DetailTournamentFootball
           },
           {
-            path: '/DetailTeamSoccer/:id',
-            name: 'DetailTeamSoccer',
-            component: DetailTeamSoccer
+            path: '/DetailTeamFootball/:id',
+            name: 'DetailTeamFootball',
+            component: DetailTeamFootball
           },
           {
             path:'/RankTournament/Football',

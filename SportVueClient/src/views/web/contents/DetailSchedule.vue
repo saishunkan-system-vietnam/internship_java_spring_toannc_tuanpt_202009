@@ -37,7 +37,7 @@
           <button>
             <a
               :href="
-                'http://localhost:8080/DetailTeamSoccer/' + data.team[0].idTeam
+                'http://localhost:8080/DetailTeamFootball/' + data.team[0].idTeam
               "
               target="_blank"
               >{{ !!data ? data.team[0].nameTeam : "" }}</a
@@ -68,7 +68,7 @@
           <button class="text-center">
             <a
               :href="
-                'http://localhost:8080/DetailTeamSoccer/' + data.team[1].idTeam
+                'http://localhost:8080/DetailTeamFootball/' + data.team[1].idTeam
               "
               target="_blank"
             >
