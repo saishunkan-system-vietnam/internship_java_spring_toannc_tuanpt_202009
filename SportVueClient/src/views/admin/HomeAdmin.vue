@@ -93,7 +93,7 @@ this.$router.push('/LayoutTeam')
   border-radius: 30px;
   background-color: green;
   color: white;
-  width: 400px;
+  width: 300px;
   height: 100px;
   padding: 20px;
 }

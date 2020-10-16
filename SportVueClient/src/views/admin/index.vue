@@ -1,8 +1,10 @@
 <template>
   <v-app class="grey lighten-4">
-    <v-main>
-      <router-view />
-    </v-main>
+    <v-row>
+  
+      <v-col cols="12" sm="12"> <router-view /></v-col>
+    
+    </v-row>
   </v-app>
 </template>
 
