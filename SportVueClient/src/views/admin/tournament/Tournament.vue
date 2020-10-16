@@ -1,6 +1,5 @@
 <template>
   <b-container fluid>
- 
     <div class="text-center">
       <v-progress-circular
         v-if="loading == false"

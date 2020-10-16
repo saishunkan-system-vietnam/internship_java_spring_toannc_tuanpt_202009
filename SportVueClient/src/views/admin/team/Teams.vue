@@ -25,11 +25,10 @@
       </v-toolbar>
     </template>
     <template v-slot:[`item.nameTour`]="{ item }">
-      {{
-        item.idTour != 0 || item.idTour != null
-          ? item.tournament.nameTour
-          : "Available"
-      }}
+      <template  v-if="item.idTour != 0 && item.tournament != null">
+        {{item.tournament.nameTour}}
+      </template>
+      <template style="color: green" v-else> Available </template>
     </template>
     <template v-slot:[`item.logo`]="{ item }">
       <img
@@ -62,7 +61,7 @@ export default {
         },
         { text: "Team Name", value: "nameTeam" },
         { text: "Type", value: "type" },
-        { text: "Current Tournament", value: "tourName" },
+        { text: "Current Tournament", value: "nameTour" },
         { text: "Total Matchs", value: "totalmatch" },
         { text: "Total Wins", value: "totalwin" },
         { text: "Team Detail", value: "actions", sortable: false },

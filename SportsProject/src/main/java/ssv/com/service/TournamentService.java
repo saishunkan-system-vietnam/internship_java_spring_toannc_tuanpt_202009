@@ -99,7 +99,6 @@ public class TournamentService {
 	}
 
 	public void updateStatus(int idTour, int status) {
-		teamService.formatTotalMatch(idTour);
 		if (status == 2) {
 			teamService.formatTour(idTour);
 			var a=rankByTour(idTour).get(0).idTeam;

@@ -341,7 +341,7 @@ export default {
         .then((response) => {
           this.data = response.data;
           this.team = this.data.team;
-          console.log(this.team);
+          // console.log(this.team);
           if (response.data.winner != null) {
             this.$store
               .dispatch("team/getById", response.data.winner)

@@ -8,7 +8,7 @@
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>
-                <router-link to="/admin/home">Home</router-link>
+              <router-link to="/admin/home">Home</router-link>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -33,7 +33,7 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-         <v-list-item>
+        <v-list-item>
           <v-list-item-action>
             <v-icon>mdi-account-group</v-icon>
           </v-list-item-action>
@@ -43,7 +43,7 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-         <v-list-item>
+        <v-list-item>
           <v-list-item-action>
             <v-icon>mdi-tournament</v-icon>
           </v-list-item-action>
@@ -70,16 +70,13 @@
     </v-app-bar>
 
     <v-main>
-      <router-view />
+      <router-view class="container"/>
     </v-main>
     <v-footer color="indigo" app>
       <span class="white--text">&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
     <v-overlay :value="$store.state.auth.overlay">
-      <v-progress-circular
-        indeterminate
-        size="64"
-      ></v-progress-circular>
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
   </v-app>
 </template>
