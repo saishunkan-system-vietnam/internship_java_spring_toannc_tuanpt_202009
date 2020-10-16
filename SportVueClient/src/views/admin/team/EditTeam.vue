@@ -25,18 +25,12 @@
           <v-col class="d-flex" cols="12" sm="4">
             <v-file-input
               v-model="fileImage"
-              :rules="imgRules"
               label="Change Logo"
               required
+               accept="image/png, image/jpeg, image/bmp"
+              :rules="[(v) => !!v.name || 'Item is required']"
             ></v-file-input>
-            <h6
-              style="color: red"
-              align="center"
-              justify="center"
-              v-if="checkLogo"
-            >
-              Logo is required
-            </h6>
+           
           </v-col>
         </v-row>
 
@@ -157,7 +151,7 @@ export default {
       items: [],
       members: [],
       fileImage: {},
-      imgRules: [(v) => !!v || "Img is required"],
+
     };
   },
   mounted() {
@@ -174,6 +168,7 @@ export default {
   },
   methods: {
     onSubmit(id) {
+      this.$refs.form.validate();
       let self = this;
       var teamForm = new FormData();
       teamForm.append("nameTeam", this.name);

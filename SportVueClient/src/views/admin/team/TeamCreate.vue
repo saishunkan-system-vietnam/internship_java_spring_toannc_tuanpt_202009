@@ -93,6 +93,7 @@ export default {
     onSubmit() {
       // console.log("submit");
       // console.log(this.fileImage);
+      this.$refs.form.validate()
       var teamForm = new FormData();
       teamForm.append("nameTeam", this.name);
       teamForm.append("type", this.selectedType);
