@@ -27,23 +27,29 @@
           </v-col>
           <v-col cols="12" sm="6" md="6">
             <h4 v-if="edit == false">Name:{{ this.info.profile.name }}</h4>
-            <h4 v-else><v-text-field label="Name" v-model="name"></v-text-field></h4>
+            <h4 v-else>
+              <v-text-field label="Name" v-model="name"></v-text-field>
+            </h4>
           </v-col>
           <v-col cols="12" sm="6" md="6">
-              <v-icon>mdi-email</v-icon>{{ this.info.email }}
+            <v-icon>mdi-email</v-icon>{{ this.info.email }}
           </v-col>
           <v-col cols="6">
             <span v-if="edit == false">
               <v-icon>mdi-phone</v-icon>{{ this.info.profile.phone }}</span
             >
-            <span v-else><v-text-field label="Phone" v-model="phone"></v-text-field></span>
+            <span v-else
+              ><v-text-field label="Phone" v-model="phone"></v-text-field
+            ></span>
           </v-col>
         </v-row>
       </v-container>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="blue darken-1" text @click="Ok" v-if="edit==true"> OK </v-btn>
+      <v-btn color="blue darken-1" text @click="Ok" v-if="edit == true">
+        OK
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -53,40 +59,35 @@ export default {
     controlModalUser: {
       type: Function,
     },
-    showMenu:Boolean
+    showMenu: Boolean,
   },
   data() {
     return {
       info: "",
       edit: false,
-      image:{},
-      name:'',
-      phone:''
-
+      image: {},
+      name: "",
+      phone: "",
     };
   },
   created() {
     this.info = this.$store.state.user.userInfo;
     console.log(this.info);
   },
-  methods:{
-    Ok(){
-      
+  methods: {
+    Ok() {
       var profile = new FormData();
       profile.append("name", this.name);
       profile.append("phone", this.phone);
       profile.append("file", this.image);
-      profile.append("email",this.info.email)
-      this.$store.dispatch('user/updateProfileUser',profile).then(res=>{
-        this.image={},
-        this.name='',
-        this.phone='';
-        this.edit=false;
-      this.controlModalUser();
-
-      })
-    }
+      profile.append("email", this.info.email);
+      this.$store.dispatch("user/updateProfileUser", profile).then((res) => {
+        (this.image = {}), (this.name = ""), (this.phone = "");
+        this.edit = false;
+        this.controlModalUser();
+      });
+      
+    },
   },
- 
 };
 </script>

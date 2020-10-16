@@ -17,7 +17,7 @@
             sports_tennis
           </v-icon></template
         >
-        <h4 class="pt-3">{{ item.type }}</h4>
+        <h5 class="pt-3">{{ item.type }}</h5>
       </v-expansion-panel-header>
 
       <v-expansion-panel-content>

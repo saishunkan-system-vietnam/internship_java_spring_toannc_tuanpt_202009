@@ -12,7 +12,6 @@ const state = {
 const mutations = {
     user_info(state, user) {
         state.userInfo = user
-
     },
     user_profile(state) {
         state.isProfile = !state.isProfile
