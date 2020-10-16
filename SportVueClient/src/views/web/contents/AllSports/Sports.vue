@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panels v-model="panel" multiple>
     <v-expansion-panel v-for="(item, i) in tournaments" :key="i">
-      <v-expansion-panel-header disable-icon-rotate
+      <v-expansion-panel-header
         ><template v-if="item.type === 'Football'"
           ><v-icon style="max-width: 30px" medium color="green darken-2">
             mdi-soccer
@@ -17,55 +17,55 @@
             sports_tennis
           </v-icon></template
         >
-        <h4>{{ item.type }}</h4>
+        <h5 class="pt-3">{{ item.type }}</h5>
       </v-expansion-panel-header>
 
       <v-expansion-panel-content>
-        <v-expansion-panels v-model="panel" inset>
+        <v-expansion-panels v-model="panel1" multiple>
           <v-expansion-panel
             v-for="(tournament, t) in item.tournament"
             :key="t"
           >
-            <v-expansion-panel-header disable-icon-rotate>
+            <v-expansion-panel-header>
               <p style="font-weight: bold">{{ tournament.nameTour }}</p>
             </v-expansion-panel-header>
-            <v-expansion-panel-content
-              v-for="(item, s) in tournament.schedule"
-              :key="s"
-            >
-              <v-list dense>
-                <v-list-item-group color="primary">
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-row
-                        v-b-popover.hover.right="'Kích vào để xem chi tiết'"
-                        @click="detail(item)"
-                        v-model="open"
-                      >
-                        <v-col cols="12" sm="4">{{
-                          item.status == 0
-                            ? "UPCOMING"
-                            : item.status == 1
-                            ? "ON LIVE"
-                            : "FINISHED"
-                        }}</v-col>
-                        <v-col cols="12" sm="8">
-                          <v-row>
-                            <v-col> {{ item.team[0].nameTeam }}</v-col>
-                            <v-col
-                              >{{ item.status == 2 ? item.scoreTeam1 : "?" }}-
-                              {{
-                                item.status == 2 ? item.scoreTeam2 : "?"
-                              }}</v-col
-                            >
-                            <v-col>{{ item.team[1].nameTeam }}</v-col>
-                          </v-row></v-col
-                        >
-                      </v-row>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list-item-group>
-              </v-list>
+            <v-expansion-panel-content>
+              <v-data-table
+                @click:row="handleRowClick"
+                :headers="headers"
+                :items="tournament.schedule"
+                hide-default-footer
+                :items-per-page="100"
+                class="elevation-1"
+              >
+                <template v-slot:[`item.status`]="{ item }">
+                  <p
+                    style="color: red"
+                    class="mb-0"
+                    v-if="item.status === 2"
+                  >
+                    FINISHED
+                  </p>
+                  <p
+                    style="color: blue"
+                    class="mb-0"
+                    v-else-if="item.status === 1"
+                  >
+                    On Game
+                  </p>
+                  <p style="color: green" class="mb-0" v-else>Up Comming</p>
+                </template>
+                <template v-slot:[`item.score`]="{ item }">
+                  <p
+                    style="font-weight: bold"
+                    class="mb-0 pr-5"
+                    v-if="item.scoreTeam1 != 0 && item.scoreTeam2 != 0"
+                  >
+                    {{ item.scoreTeam1 }} - {{ item.scoreTeam2 }}
+                  </p>
+                  <p class="mb-0 pr-5" v-else>? - ?</p>
+                </template>
+              </v-data-table>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -73,24 +73,37 @@
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
+
 <script>
 export default {
   data() {
     return {
       open: false,
       tournaments: [],
-      panel: [1 , 2 , 3 , 4 , 5]
+      panel: [],
+      panel1: [],
+      headers: [
+        { text: "Date", value: "timeStart" },
+        { text: "Status", value: "status" },
+        { text: "Team 1", value: "nameTeam1" },
+        { text: "", value: "score", sortable: false },
+        { text: "Team 2", value: "nameTeam2" },
+      ],
+      desserts: [],
     };
   },
   mounted() {
     // console.log(this.tournaments);
     this.recivceData();
+    this.panel = Array.from(Array(10).keys());
+    this.panel1 = Array.from(Array(10).keys());
   },
   methods: {
     recivceData() {
       let self = this;
       this.$store.dispatch("tournament/getToursByType").then((res) => {
         self.tournaments = res.data;
+        console.log(self.tournaments);
       });
     },
     detail(item) {
@@ -102,8 +115,18 @@ export default {
         "width=600px,height=600"
       );
     },
+    handleRowClick(item) {
+      var myWindow = window.open(
+        "http://localhost:8080/detail/" + item.idSchedule,
+        "myWindow",
+        "width=600px,height=600"
+      );
+    },
   },
 };
 </script>
 <style>
+.v-expansion-panel-content {
+  padding: 0 !important;
+}
 </style>

@@ -2,52 +2,35 @@
   <v-container class="pt-2">
     <v-row>
       <v-col cols="12" sm="2" style="padding: 5px" class="pr-2">
-        <v-expansion-panels v-model="panel" multiple>
-          <v-expansion-panel v-for="(item, i) in tournaments" :key="i">
-            <v-expansion-panel-header disable-icon-rotate style="color: red">{{
-              item.type
-            }}</v-expansion-panel-header>
-            <v-expansion-panel-content
-              v-for="(tournament, t) in item.tournament"
+        <v-card class="mx-auto pt-3">
+          <v-list v-for="(tours, t) in tournaments" :key="t">
+            <h5 class="pl-3" style="color: #252c35">
+              {{ tours.type }}
+            </h5>
+            <v-list-item-group
+              class="pl-3"
+              v-for="(tour, t) in tours.tournament"
               :key="t"
             >
-              <router-link to="/"></router-link>
-              <a
-                v-b-popover.hover.left="tournament.nameTour"
-                :href="
-                  $router.resolve({
-                    path: '/DetailTournametSports/' + tournament.idTour,
-                  }).href
-                "
-                style="color: black; margin-left: -30px"
-              >
-                {{
-                  tournament.nameTour.length < 10
-                    ? tournament.nameTour
-                    : tournament.nameTour.slice(0, 10) + "..."
-                }}</a
-              >
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
+              <v-list-item-content>
+                {{ tour.nameTour }}
+              </v-list-item-content>
+            </v-list-item-group>
+          </v-list>
+        </v-card>
       </v-col>
       <v-col cols="12" sm="8" style="padding: 0px" class="pt-1"
         ><router-view></router-view
       ></v-col>
       <v-col cols="12" sm="2" style="padding: 5px">
-        <div style="margin-bottom: 15px !important" class="pl-15">
-          <a>
-            <v-icon large color="green darken-2">military_tech</v-icon>
-          </a>
-        </div>
-        <v-expansion-panels multiple>
+        <v-expansion-panels v-model="panel" multiple>
           <v-expansion-panel v-for="(item1, y) in rank" :key="y">
-            <v-expansion-panel-header style="color: green">{{
-              item1.type
-            }}</v-expansion-panel-header>
+            <v-expansion-panel-header style="color: #252c35;font-weight: bold; font-size: 19px"
+              >{{ item1.type }}
+            </v-expansion-panel-header>
             <v-expansion-panel-content v-for="(team, s) in item1.list" :key="s">
               <p v-b-popover.hover.left="team.name">
-                {{ s + 1 }} .
+                {{ s + 1 }}.
                 {{
                   team.name.length < 10
                     ? team.name
@@ -74,23 +57,24 @@ export default {
     tab: null,
     tournaments: [],
     rank: [],
-    panel: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    panel: [],
   }),
   created() {
     this.recivceData();
     this.recivceRank();
+    this.panel = Array.from(Array(10).keys());
   },
   methods: {
     recivceData() {
       let self = this;
       this.$store.dispatch("tournament/getToursByType").then((res) => {
         self.tournaments = res.data;
+        // console.log(self.tournaments);
       });
     },
     recivceRank() {
       let self = this;
       this.$store.dispatch("tournament/rankAll").then((res) => {
-        console.log(res)
         self.rank = res.data;
       });
     },

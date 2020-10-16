@@ -37,8 +37,12 @@ public class TournamentService {
 
 	@Autowired
 	private ScheduleService scheduleService;
+
 	@Autowired
 	private ProfileService profileService;
+
+	@Autowired
+	private TeamRepository teamRepository;
 
 	@Autowired
 	private HistoryRepository historyRepository;
@@ -206,8 +210,13 @@ public class TournamentService {
 			ToursByType toursByType=new ToursByType();
 			toursByType.setTournament(listTour);
 			toursByType.setType(type);
+			for(Tournament tour : listTour) {
+				tour.getSchedule().forEach(s -> {
+					s.setNameTeam1(teamRepository.getByID(s.getIdTeam1()).getNameTeam());
+					s.setNameTeam2(teamRepository.getByID(s.getIdTeam2()).getNameTeam());
+				});
+			}
 			listsTours.add(toursByType);
-		
 		}
 		return listsTours;
 	}
@@ -220,7 +229,7 @@ public class TournamentService {
 			rankTeamsByType.setType(type);
 			rankTeamsByType.setList(rank(type));
 			listTeam.add(rankTeamsByType);
-		
+
 		}
 		return listTeam;
 	}
