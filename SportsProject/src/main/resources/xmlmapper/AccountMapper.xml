@@ -33,17 +33,20 @@
 	</select>
 	<select id="findById" resultMap="accountMapping">
 		SELECT
-		a.id,a.account_username,a.account_email,a.account_password,a.account_role,b.id as id_profile,b.profile_name,b.profile_email,b.profile_phone,b.profile_age,b.profile_address,b.profile_gender,b.profile_avatar,b.id_team,b.profile_type
+		a.id,a.account_username,a.account_email,a.account_password,a.account_role,b.id
+		as
+		id_profile,b.profile_name,b.profile_email,b.profile_phone,b.profile_age,b.profile_address,b.profile_gender,b.profile_avatar,b.id_team,b.profile_type
 		From account_tbl a left join profile_tbl b on
 		a.account_email=b.profile_email
 		where a.id=${id}
 	</select>
 	<select id="findByUsername" resultMap="accountMapping">
 		SELECT
-		a.id,a.account_username,a.account_email,a.account_password,a.account_role,b.id as id_profile,b.profile_name,b.profile_email,b.profile_phone,b.profile_age,b.profile_gender,b.profile_avatar,b.id_team,b.profile_type
-		From account_tbl a left join profile_tbl b on
+		a.*, b.*
+		From
+		account_tbl a left join profile_tbl b on
 		a.account_email=b.profile_email
-		where a.account_username=#{username}
+		where a.account_email=#{email}
 	</select>
 	<insert id="add" parameterType="Account">
 		INSERT INTO account_tbl(

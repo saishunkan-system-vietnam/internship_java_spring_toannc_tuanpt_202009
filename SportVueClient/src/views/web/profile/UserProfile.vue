@@ -72,21 +72,22 @@ export default {
   },
   created() {
     this.info = this.$store.state.user.userInfo;
-    console.log(this.info);
+    // console.log(this.info);
   },
   methods: {
     Ok() {
+      let self = this
       var profile = new FormData();
       profile.append("name", this.name);
       profile.append("phone", this.phone);
       profile.append("file", this.image);
       profile.append("email", this.info.email);
       this.$store.dispatch("user/updateProfileUser", profile).then((res) => {
+        this.$store.commit("user/user_info", res.data.payload);
         (this.image = {}), (this.name = ""), (this.phone = "");
         this.edit = false;
         this.controlModalUser();
       });
-      
     },
   },
 };
