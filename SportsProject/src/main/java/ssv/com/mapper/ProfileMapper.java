@@ -3,6 +3,7 @@ package ssv.com.mapper;
 import java.util.List;
 import java.util.Optional;
 
+import ssv.com.controller.form.ProfileForm;
 import ssv.com.entity.Account;
 import ssv.com.entity.Profile;
 import ssv.com.entity.Team;
@@ -29,4 +30,6 @@ public interface ProfileMapper {
 	public List<Profile> getMembers();
 
 	public void updateMembersInTeam(Team team);
+
+	public void updateProfileUser(Profile profile);
 }

@@ -47,19 +47,21 @@
                           <tbody>
                             <tr>
                               <td>Total Member</td>
-                              <td>{{!!team.profile?team.profile.length:''}}</td>
+                              <td>
+                                {{ !!team.profile ? team.profile.length : "" }}
+                              </td>
                             </tr>
-                             <tr>
+                            <tr>
                               <td>Description</td>
-                              <td>{{team.description}}</td>
+                              <td>{{ team.description }}</td>
                             </tr>
-                             <tr>
+                            <tr>
                               <td>Total match</td>
-                              <td>{{team.totalmatch}}</td>
+                              <td>{{ team.totalmatch }}</td>
                             </tr>
-                             <tr>
+                            <tr>
                               <td>Total Win</td>
-                              <td>{{team.totalwin}}</td>
+                              <td>{{ team.totalwin }}</td>
                             </tr>
                           </tbody>
                         </v-simple-table>
@@ -206,13 +208,13 @@
                       v-b-popover.hover.top="'Click to see details'"
                       @click="detail(item)"
                     >
-                      <td>
+                      <td style="width: 250px">
                         {{ item.timeEnd }}
                       </td>
-                      <td>
+                      <td style="width: 150px">
                         {{ !!item ? item.team[0].nameTeam : "" }}
                       </td>
-                      <td>
+                      <td style="width: 150px">
                         {{ item.status == 2 ? item.scoreTeam1 : "?" }}
                         -
                         {{ item.status == 2 ? item.scoreTeam2 : "?" }}
@@ -291,9 +293,7 @@
                   >
                     <td class="text-center">
                       <v-avatar class="profile" color="grey" size="70" tile>
-                        <v-img
-                          :src="item.avatar"
-                        ></v-img>
+                        <v-img :src="item.avatar"></v-img>
                       </v-avatar>
                     </td>
                     <td class="text-center">{{ item.name }}</td>
@@ -348,7 +348,6 @@ export default {
         .then((res) => {
           this.fixtures = res.data;
         });
-  
     },
     detail(data) {
       var myWindow = window.open(
@@ -358,7 +357,7 @@ export default {
       );
     },
     detailMember(item) {
-      this.$router.push({path:'/PlayerProfile/'+item.id});
+      this.$router.push({ path: "/PlayerProfile/" + item.id });
     },
   },
   watch: {

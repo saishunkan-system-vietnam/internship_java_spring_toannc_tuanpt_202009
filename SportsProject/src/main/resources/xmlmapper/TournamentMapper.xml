@@ -123,7 +123,7 @@
 		profile_tbl e on q.id_member=e.id)on
 		p.id_tournament=q.id_tour left join
 		schedule_tbl c on
-		p.id_tournament=c.schedule_tour
+		p.id_tournament=c.schedule_tour ORDER BY tournament_start DESC
 	</select>
 
 	<insert id="add" parameterType="Tournament">
@@ -163,7 +163,7 @@
 
 	<select id="getTourAction" resultMap="tournamentMapping">
 		SELECT * FROM
-		sports.tournament_tbl where tournament_status!=2
+		sports.tournament_tbl where tournament_status!=2 ORDER BY tournament_start DESC
 	</select>
 	<select id="getByType" resultMap="tournamentMapping">
 		SELECT *
@@ -173,7 +173,7 @@
 		team_tbl on c.schedule_team1=team_tbl.id_team or
 		c.schedule_team2=team_tbl.id_team )on
 		p.id_tournament=c.schedule_tour
-		where tournament_type='${type}'
+		where tournament_type='${type}'  ORDER BY tournament_start DESC
 	</select>
 	<update id="updateWinner">
 		Update tournament_tbl set tournament_winner=${idTeam}

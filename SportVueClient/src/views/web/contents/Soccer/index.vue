@@ -15,7 +15,7 @@
                   "
                   style="color: black"
                 >
-                  <v-list-item-title v-text="item.nameTour"></v-list-item-title
+                  <v-list-item-title v-text="item.nameTour"   v-b-popover.hover.top="item.nameTour"></v-list-item-title
                 ></a>
               </v-list-item-content>
             </v-list-item>

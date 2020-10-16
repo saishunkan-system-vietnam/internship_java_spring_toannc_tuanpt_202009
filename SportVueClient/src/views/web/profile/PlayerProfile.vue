@@ -171,9 +171,9 @@ export default {
   }),
   mounted() {
     console.log(this.$route.params)
-    this.historyMemberMatchs("14");
-    this.playerInfo(14);
-    this.upcommingMemberMatchs("14");
+    this.historyMemberMatchs(this.$route.params.id);
+    this.playerInfo(this.$route.params.id);
+    this.upcommingMemberMatchs(this.$route.params.id);
   },
   methods: {
     historyMemberMatchs(id) {

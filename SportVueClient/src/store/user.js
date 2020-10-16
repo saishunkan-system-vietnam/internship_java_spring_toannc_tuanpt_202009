@@ -1,5 +1,5 @@
 import { searchUser } from '@/api/UserApi'
-import { getById } from '../api/UserApi';
+import { getById, updateProfileUser } from '../api/UserApi';
 import { autoLogin } from '../api/UserApi'
 import {historyMemberMatchs,upcommingMemberMatchs} from '../api/MemberApi'
 import {getPlayerId} from '../api/MemberApi'
@@ -78,6 +78,15 @@ const actions = {
             })
         })
     },
+    updateProfileUser({},bodyFromData){
+        return new Promise((resolve, reject) => {
+            updateProfileUser(bodyFromData).then(res => {
+                resolve(res);
+            }).catch((err) => {
+                reject(err);
+            })
+        })
+    }
 }
 
 export default {
