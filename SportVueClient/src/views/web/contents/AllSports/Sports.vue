@@ -29,7 +29,7 @@
             <v-expansion-panel-header>
               <p style="font-weight: bold">{{ tournament.nameTour }}</p>
             </v-expansion-panel-header>
-            <v-expansion-panel-content>
+            <v-expansion-panel-content class="remove-padding">
               <v-data-table
                 @click:row="handleRowClick"
                 :headers="headers"
@@ -126,7 +126,7 @@ export default {
 };
 </script>
 <style>
-/* .v-expansion-panel-content {
-  padding: 0 !important;
-} */
+  .remove-padding > div {
+    padding: 0;
+  }
 </style>
