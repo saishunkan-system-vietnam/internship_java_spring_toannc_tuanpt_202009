@@ -86,4 +86,9 @@ public class ProfileController {
 		list = profileService.pageProfile(page, pagesize, "%" + name + "%", nametype);
 		return new ResponseEntity<List<Account>>(list, HttpStatus.OK);
 	}
+	//tìm theo mail
+	@GetMapping(value = "/findByEmail")
+	public ResponseEntity<Profile> findbyEmail(@RequestParam String email){
+		return new ResponseEntity<Profile>(profileService.findByEmail(email),HttpStatus.OK);
+	}
 }

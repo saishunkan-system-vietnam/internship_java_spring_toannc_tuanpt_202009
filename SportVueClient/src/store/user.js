@@ -1,7 +1,7 @@
 import { searchUser } from '@/api/UserApi'
 import { getById, updateProfileUser } from '../api/UserApi';
 import { autoLogin } from '../api/UserApi'
-import {historyMemberMatchs,upcommingMemberMatchs} from '../api/MemberApi'
+import {findByEmail, historyMemberMatchs,upcommingMemberMatchs} from '../api/MemberApi'
 import {getPlayerId} from '../api/MemberApi'
  
 const state = {
@@ -81,6 +81,15 @@ const actions = {
     updateProfileUser({},bodyFromData){
         return new Promise((resolve, reject) => {
             updateProfileUser(bodyFromData).then(res => {
+                resolve(res);
+            }).catch((err) => {
+                reject(err);
+            })
+        })
+    },
+    findByEmail({},email){
+        return new Promise((resolve, reject) => {
+            findByEmail(email).then(res => {
                 resolve(res);
             }).catch((err) => {
                 reject(err);

@@ -69,11 +69,11 @@ public class ProfileService {
 		return members;
 	}
 
-	public void saveProfile(Profile profile){
+	public void saveProfile(Profile profile) {
 		try {
 			profileRepository.saveProfile(profile);
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			ResponseQuery.faild("Create profile failed", profile);
 		}
 
@@ -97,7 +97,7 @@ public class ProfileService {
 			profile.setAvatar(UploadFile.saveFile(profileForm.getFile()));
 			accountRepository.add(account);
 			profileRepository.saveProfile(profile);
-			
+
 //			SimpleMailMessage message = new SimpleMailMessage();
 //			message.setTo(profileForm.getEmail());
 //			message.setSubject("User và password");
@@ -138,5 +138,9 @@ public class ProfileService {
 		}
 		profileRepository.updateProfileUser(profile);
 		return "success";
+	}
+
+	public Profile findByEmail(String email) {
+		return profileRepository.getByEmail(email);
 	}
 }

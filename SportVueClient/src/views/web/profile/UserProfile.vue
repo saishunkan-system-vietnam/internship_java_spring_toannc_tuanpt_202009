@@ -82,6 +82,8 @@ export default {
         this.name='',
         this.phone='';
         this.edit=false;
+              this.info=this.$store.state.user.userInfo
+
       this.controlModalUser();
 
       })

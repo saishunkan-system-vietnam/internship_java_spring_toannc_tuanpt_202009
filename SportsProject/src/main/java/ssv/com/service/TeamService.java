@@ -30,6 +30,9 @@ public class TeamService {
 	private TeamRepository teamRepository;
 
 	@Autowired
+	private ProfileService profileService;
+	
+	@Autowired
 	private TournamentService tournamentService;
 
 	@Autowired
@@ -169,8 +172,11 @@ public class TeamService {
 	}
 
 	public Team teamTourHistory(int idTeam, int idTour) {
-		// TODO Auto-generated method stub
-		return teamRepository.teamTourHistory(idTeam, idTour);
+		Team team=teamRepository.teamTourHistory(idTeam, idTour);
+		for (Profile profile : team.getProfile()) {
+			profile.setId(profileService.findByEmail(profile.getEmail()).getId());
+		};
+		return team;
 	}
 
 	public void addTour(int idTour, int idTeam) {
