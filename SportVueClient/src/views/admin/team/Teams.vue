@@ -3,7 +3,7 @@
     :headers="headers"
     :items="desserts"
     sort-by="nameTeam"
-    class="elevation-1"
+    class="elevation-1 container"
     :search="search"
   >
     <template v-slot:top>
@@ -36,7 +36,7 @@
         :src="item.logo"
         alt=""
         width="100px"
-        height="50px"
+        height="70px"
         style="margin: 3px 0 3px 0"
       />
     </template>
@@ -76,7 +76,7 @@ export default {
     axios
       .get("http://localhost:8090/api/v1/team/getAll")
       .then(function (response) {
-        console.log(response.data)
+        // console.log(response.data)
         self.desserts = response.data;
         self.maxTeamId =
           1 +

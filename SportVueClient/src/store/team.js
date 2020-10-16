@@ -1,19 +1,19 @@
-import {updateTeam, updateMembersInTeam, findTeamAndMembers, detail, teamTourHistory, teamWait, getById, getTeam } from "../api/TeamApi";
+import { createTeam, updateTeam, updateMembersInTeam, findTeamAndMembers, detail, teamTourHistory, teamWait, getById, getTeam } from "../api/TeamApi";
 
 const state = {
-    idTeam:'',
-    
+    idTeam: '',
+
 }
 
 const mutations = {
-    team_openView(state,idTeam) {
+    team_openView(state, idTeam) {
         state.idTeam = idTeam
-        console.log(idTeam)
     },
-    
+
 }
 
 const actions = {
+
     teamTourHistory({ }, data) {
         return new Promise((resolve, reject) => {
             teamTourHistory(data).then(res => {
@@ -23,6 +23,7 @@ const actions = {
             })
         })
     },
+
     getDetail({ }, params) {
         return new Promise((resolve, reject) => {
             detail(params).then(res => {
@@ -32,6 +33,7 @@ const actions = {
             })
         })
     },
+
     teamWait({ }, type) {
         return new Promise((resolve, reject) => {
             teamWait(type).then(res => {
@@ -41,6 +43,7 @@ const actions = {
             })
         })
     },
+
     getById({ }, id) {
         return new Promise((resolve, reject) => {
             getById(id).then(res => {
@@ -50,6 +53,7 @@ const actions = {
             })
         })
     },
+
     findTeamAndMembers({ }, id) {
         return new Promise((resolve, reject) => {
             findTeamAndMembers(id).then(res => {
@@ -59,6 +63,7 @@ const actions = {
             })
         })
     },
+
     updateMembersInTeam({ }, data) {
         return new Promise((resolve, reject) => {
             updateMembersInTeam(data).then((res) => {
@@ -68,6 +73,7 @@ const actions = {
             })
         })
     },
+
     updateTeam({ }, id, data) {
         return new Promise((resolve, reject) => {
             updateTeam(id, data).then((res) => {
@@ -77,9 +83,20 @@ const actions = {
             })
         })
     },
-    getTeam({},id){
+
+    getTeam({ }, id) {
         return new Promise((resolve, reject) => {
             getTeam(id).then((res) => {
+                resolve(res);
+            }).catch((err) => {
+                reject(err);
+            })
+        })
+    },
+
+    createTeam({ }, teamForm) {
+        return new Promise((resolve, reject) => {
+            createTeam(teamForm).then((res) => {
                 resolve(res);
             }).catch((err) => {
                 reject(err);

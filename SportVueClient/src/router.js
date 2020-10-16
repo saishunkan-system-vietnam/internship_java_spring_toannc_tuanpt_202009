@@ -251,7 +251,6 @@ router.beforeEach(async (to, from, next) => {
   } else {
     next()
   }
-
   if (to.meta.requiredAuth) {
     const authUser = store.state.auth
     if (!authUser || !authUser.token) {
