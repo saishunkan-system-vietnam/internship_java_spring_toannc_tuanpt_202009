@@ -56,8 +56,9 @@ public class ProfileController {
 	}
 	//Edit profile user
 	@PostMapping("/update")
-	public ResponseEntity<?> updateProfileUser(@ModelAttribute ProfileForm profileForm){
-		return new ResponseEntity<String>(profileService.updateProfileUser(profileForm), HttpStatus.OK);
+	public ResponseQuery<?> updateProfileUser(@ModelAttribute ProfileForm profileForm){
+		Account account = profileService.updateProfileUser(profileForm);
+		return ResponseQuery.success("Success", account);
 	}
 
 	@PostMapping("/createMember")

@@ -130,6 +130,7 @@ export default {
     //do this need to check bind (:) in html up
     profile: function () {
       // console.log(this.$store.state.user.userInfo);
+      console.log("Should Run last")
       if (this.$store.state.user.userInfo != null) {
         return this.$store.state.user.userInfo;
       } else {

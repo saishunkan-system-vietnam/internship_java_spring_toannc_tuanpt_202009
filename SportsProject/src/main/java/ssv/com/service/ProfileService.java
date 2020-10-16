@@ -128,8 +128,9 @@ public class ProfileService {
 		profileRepository.updateMembersInTeam(team);
 	}
 
-	public String updateProfileUser(ProfileForm profileForm) {
+	public Account updateProfileUser(ProfileForm profileForm) {
 		Profile profile = modelMapper.map(profileForm, Profile.class);
+
 		try {
 			profile.setAvatar(UploadFile.saveFile(profileForm.getFile()));
 		} catch (Exception e) {
@@ -137,7 +138,8 @@ public class ProfileService {
 			e.printStackTrace();
 		}
 		profileRepository.updateProfileUser(profile);
-		return "success";
+		Account account = accountRepository.findByUsername(profile.getEmail());
+		return account;
 	}
 
 	public Profile findByEmail(String email) {
