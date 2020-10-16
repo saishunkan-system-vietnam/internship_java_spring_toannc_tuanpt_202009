@@ -26,20 +26,24 @@ import CreateTeam from '@/views/admin/team/TeamCreate'
 import TeamDetail from '@/views/admin/team/TeamDetail'
 
 import AllSports from '@/views/web/contents/AllSports'
-import Football from '@/views/web/contents/Football'
-import BaskestBall from '@/views/web/contents/BaskestBall'
-import TableTennis from '@/views/web/contents/TableTennis'
 import DetailScheduleView from './views/web/contents/DetailSchedule'
+import Football from '@/views/web/contents/Football'
 import LayoutFootball from './views/web/contents/Football/LayoutFootball'
 import DetailTournamentFootball from './views/web/contents/Football/DetailTournamentFootball'
+import DetailTeamFootball from './views/web/contents/Football/DetailTeamFootball'
+import RankTournament from './views/web/contents/Football/RankTournament'
+import TableTennis from '@/views/web/contents/TableTennis'
 import LayoutTableTennis from './views/web/contents/TableTennis/LayoutTableTennis'
 import DetailTournamentTableTennis from './views/web/contents/TableTennis/DetailTournamentTableTennis'
+import DetailTeamTableTennis from './views/web/contents/TableTennis/DetailTeamTableTennis'
+import RankTournamentTableTennis from './views/web/contents/TableTennis/RankTournament'
+import BasketBall from '@/views/web/contents/BasketBall'
+import LayoutBasketBall from './views/web/contents/BasketBall/LayoutBasketBall'
+import DetailTournamentBasketBall from './views/web/contents/BasketBall/DetailTournamentBasketBall'
+import DetailTeamBasketBall from './views/web/contents/BasketBall/DetailTeamBasketBall'
+import RankTournamentBasketBall from './views/web/contents/BasketBall/RankTournament'
 import LayoutAllSports from './views/web/contents/AllSports/LayoutAllSports'
-import LayoutBaskestBall from './views/web/contents/BaskestBall/LayoutBaskestBall'
-import DetailTournamentBaskestBall from './views/web/contents/BaskestBall/DetailTournamentBaskestBall'
-import DetailTeamFootball from  './views/web/contents/Football/DetailTeamFootball'
 import PlayerProfile from './views/web/profile/PlayerProfile'
-import RankTournament from './views/web/contents/Football/RankTournament'
 
 Vue.use(Router)
 const metaConfig = {
@@ -62,8 +66,6 @@ let routes = [
           name: 'LayoutAllSports',
           component: LayoutAllSports
         },
-        
-
         ]
       },
       {
@@ -90,26 +92,35 @@ let routes = [
             component: DetailTeamFootball
           },
           {
-            path:'/RankTournament/Football',
-            name:'RankTournament',
-            component:RankTournament
+            path: '/RankTournament/Football',
+            component: RankTournament
           }
         ]
       },
 
       {
-        path: '/baskestBall',
-        component: BaskestBall,
+        path: '/BasketBall',
+        component: BasketBall,
         children: [
           {
             path: '/',
-            component: LayoutBaskestBall
+            component: LayoutBasketBall
           },
           {
-            path: '/DetailTournamentBaskestBall/:id',
-            name: 'DetailTournamentBaskestBall',
-            component: DetailTournamentBaskestBall
+            path: '/DetailTournamentBasketBall/:id',
+            name: 'DetailTournamentBasketBall',
+            component: DetailTournamentBasketBall
+          },
+          {
+            path: '/DetailTeamBasketBall/:id',
+            name: 'DetailTeamBasketBall',
+            component: DetailTeamBasketBall
+          },
+          {
+            path: '/RankTournament/BasketBall',
+            component: RankTournamentBasketBall
           }
+
         ]
       },
       {
@@ -124,6 +135,16 @@ let routes = [
             path: '/DetailTournamentTableTennis/:id',
             name: 'DetailTournamentTableTennis',
             component: DetailTournamentTableTennis
+          },
+          {
+            path: '/DetailTeamTableTennis/:id',
+            name: 'DetailTeamTableTennis',
+            component: DetailTeamTableTennis
+          },
+          {
+            path: '/RankTournament/TableTennis',
+            name: 'RankTournament',
+            component: RankTournamentTableTennis
           }
         ]
       },
@@ -139,7 +160,7 @@ let routes = [
     path: '/admin/login',
     name: 'login',
     component: AdminLogin,
-    meta : { requiredAuth: false }
+    meta: { requiredAuth: false }
   },
 
   {

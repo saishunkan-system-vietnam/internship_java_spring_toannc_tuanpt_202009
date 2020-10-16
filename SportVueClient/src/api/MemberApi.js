@@ -15,3 +15,6 @@ export function upcommingMemberMatchs(id){
 export function getPlayerId(id){
     return Api.get('/profiles/' + id)
 }
+export function findByEmail(email){
+    return Api.get('/profiles/findByEmail',{params:{email:email}})
+}

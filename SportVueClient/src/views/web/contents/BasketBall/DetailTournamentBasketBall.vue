@@ -211,7 +211,7 @@ export default {
   },
   methods: {
     detailTeam(id) {
-      this.$router.push("/DetailTeamTableTennis/" + id);
+      this.$router.push("/DetailTeamFootball/" + id);
     },
     gettournament() {
       this.$store

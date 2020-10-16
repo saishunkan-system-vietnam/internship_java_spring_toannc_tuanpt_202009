@@ -37,8 +37,10 @@
           <button>
             <a
               :href="
-                'http://localhost:8080/DetailTeamFootball/' + data.team[0].idTeam
+                'http://localhost:8080/DetailTeamFootball/' +
+                data.team[0].idTeam
               "
+              @click="windowClose"
               target="_blank"
               >{{ !!data ? data.team[0].nameTeam : "" }}</a
             >
@@ -68,9 +70,12 @@
           <button class="text-center">
             <a
               :href="
-                'http://localhost:8080/DetailTeamFootball/' + data.team[1].idTeam
+                'http://localhost:8080/DetailTeamFootball/' +
+                data.team[1].idTeam
               "
               target="_blank"
+                            @click="windowClose"
+
             >
               {{ !!data ? data.team[1].nameTeam : "" }}</a
             >
@@ -236,6 +241,7 @@
                       <v-card flat>
                         <v-card-text>
                           <h3 style="color: blue">{{ team1.nameTeam }}</h3>
+
                           <v-simple-table>
                             <template v-slot:default>
                               <thead>
@@ -244,12 +250,14 @@
                                   <th class="text-left">Name</th>
                                   <th class="text-left">Team</th>
                                   <th class="text-left">Address</th>
+                                  <th class="text-left">Detail</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 <tr
                                   v-for="(item, index) in team1.profile"
                                   :key="index"
+                                  @click="detailMember(item)"
                                 >
                                   <td>
                                     <v-avatar style="margin: 5px">
@@ -259,6 +267,18 @@
                                   <td>{{ item.name }}</td>
                                   <td>{{ team1.nameTeam }}</td>
                                   <td>{{ item.address }}</td>
+                                  <td>
+                                    <a
+                                      :href="
+                                        'http://localhost:8080/PlayerProfile/' +
+                                        item.id
+                                      "
+                                      target="_blank"
+                                      @click="windowClose"
+                                    >
+                                      <v-icon> mdi-chevron-triple-right</v-icon>
+                                    </a>
+                                  </td>
                                 </tr>
                               </tbody>
                             </template>
@@ -362,7 +382,7 @@
                         v-for="(item, index) in related"
                         color="primary"
                         :key="index"
-                        v-b-popover.hover.bottom="'Kích vào để xem chi tiết'"
+                        v-b-popover.hover.bottom="'Click to see details'"
                         @click="relatedMatch(item.idSchedule)"
                       >
                         <td
@@ -465,6 +485,7 @@ export default {
           })
           .then((response) => {
             this.team1 = response.data;
+            console.log(this.team1);
           });
         this.$store
           .dispatch("team/teamTourHistory", {
@@ -518,7 +539,11 @@ export default {
     },
 
     commentSubmit() {
-      if (this.$store.state.user.userInfo == null ||this.$store.state.user.userInfo.profile.name==null || this.$store.state.user.userInfo.profile.name=="" ) {
+      if (
+        this.$store.state.user.userInfo == null ||
+        this.$store.state.user.userInfo.profile.name == null ||
+        this.$store.state.user.userInfo.profile.name == ""
+      ) {
         alert("need to login");
       } else {
         if (this.textComment != "") {
@@ -534,6 +559,9 @@ export default {
             });
         }
       }
+    },
+    windowClose() {
+      window.close();
     },
   },
   watch: {},

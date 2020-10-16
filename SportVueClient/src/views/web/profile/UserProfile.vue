@@ -81,6 +81,7 @@ export default {
       profile.append("name", this.name);
       profile.append("phone", this.phone);
       profile.append("file", this.image);
+
       profile.append("email", this.info.email);
       this.$store.dispatch("user/updateProfileUser", profile).then((res) => {
         this.$store.commit("user/user_info", res.data.payload);
@@ -89,6 +90,7 @@ export default {
         this.controlModalUser();
       });
     },
+
   },
 };
 </script>

@@ -76,7 +76,7 @@
 	<select id="findByEmail" flushCache="true"
 		statementType="PREPARED" resultType="Profile">
 		SELECT * FROM profile_tbl WHERE
-		profile_email=#{email}
+		profile_email='${email}'
 	</select>
 
 	<select id="findById" flushCache="true" statementType="PREPARED"

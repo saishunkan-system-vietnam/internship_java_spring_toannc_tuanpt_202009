@@ -69,4 +69,6 @@ public class ProfileRepository {
 		profileMapper.updateProfileUser(profile);
 	}
 
+	
+
 }

@@ -15,7 +15,7 @@
       >
       <v-col cols="12" sm="2" style="text-align: center"
         ><router-link
-          to="/baskestBall"
+          to="/basketBall"
           style="color: white; text-decoration: none"
           ><v-icon medium color="orange darken-2"> sports_basketball </v-icon>
           Baskest Ball</router-link

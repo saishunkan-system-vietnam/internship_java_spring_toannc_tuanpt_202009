@@ -15,7 +15,12 @@
                   "
                   style="color: black"
                 >
-                  <v-list-item-title v-text="item.nameTour"   v-b-popover.hover.top="item.nameTour"></v-list-item-title
+                  <v-list-item-title  v-b-popover.hover.top="item.nameTour">
+                     {{
+                    item.nameTour.length < 10
+                      ? item.nameTour
+                      : item.nameTour.slice(0, 15) + "..."
+                  }}</v-list-item-title
                 ></a>
               </v-list-item-content>
             </v-list-item>

@@ -69,11 +69,11 @@ public class ProfileService {
 		return members;
 	}
 
-	public void saveProfile(Profile profile){
+	public void saveProfile(Profile profile) {
 		try {
 			profileRepository.saveProfile(profile);
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			ResponseQuery.faild("Create profile failed", profile);
 		}
 
@@ -140,5 +140,9 @@ public class ProfileService {
 		profileRepository.updateProfileUser(profile);
 		Account account = accountRepository.findByUsername(profile.getEmail());
 		return account;
+	}
+
+	public Profile findByEmail(String email) {
+		return profileRepository.getByEmail(email);
 	}
 }
