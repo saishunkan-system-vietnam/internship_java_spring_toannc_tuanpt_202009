@@ -126,7 +126,7 @@ export default {
 };
 </script>
 <style>
-.v-expansion-panel-content {
+/* .v-expansion-panel-content {
   padding: 0 !important;
-}
+} */
 </style>
