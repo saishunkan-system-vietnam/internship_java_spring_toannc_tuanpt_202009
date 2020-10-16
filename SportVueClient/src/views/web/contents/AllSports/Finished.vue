@@ -1,7 +1,7 @@
 <template>
-  <v-expansion-panels multiple>
+  <v-expansion-panels v-model="panel" multiple>
     <v-expansion-panel v-for="(item, i) in finishedMatch" :key="i">
-      <v-expansion-panel-header disable-icon-rotate
+      <v-expansion-panel-header
         ><template v-if="item.type === 'Football'"
           ><v-icon style="max-width: 30px" medium color="green darken-2">
             mdi-soccer
@@ -17,49 +17,41 @@
             sports_tennis
           </v-icon></template
         >
-        <h4>{{ item.type }}</h4>
+        <h4 class="pt-3">{{ item.type }}</h4>
       </v-expansion-panel-header>
 
       <v-expansion-panel-content>
-        <v-expansion-panels inset>
+        <v-expansion-panels v-model="panel1" multiple>
           <v-expansion-panel
             v-for="(tournament, t) in item.tournament"
             :key="t"
           >
-            <v-expansion-panel-header disable-icon-rotate>
+            <v-expansion-panel-header>
               <p style="font-weight: bold">{{ tournament.nameTour }}</p>
             </v-expansion-panel-header>
-            <v-expansion-panel-content
-              v-for="(item, s) in tournament.schedule"
-              :key="s"
-            >
-              <v-list dense>
-                <v-list-item-group color="primary">
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-row
-                        v-b-popover.hover.right="'Kích vào để xem chi tiết'"
-                        @click="detail(item)"
-                        v-model="open"
-                      >
-                        <v-col cols="12" sm="4">Finished</v-col>
-                        <v-col cols="12" sm="8">
-                          <v-row>
-                            <v-col> {{ item.team[0].nameTeam }}</v-col>
-                            <v-col
-                              >{{ item.status == 2 ? item.scoreTeam1 : "?" }}-
-                              {{
-                                item.status == 2 ? item.scoreTeam2 : "?"
-                              }}</v-col
-                            >
-                            <v-col>{{ item.team[1].nameTeam }}</v-col>
-                          </v-row></v-col
-                        >
-                      </v-row>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list-item-group>
-              </v-list>
+            <v-expansion-panel-content>
+              <v-data-table
+                @click:row="handleRowClick"
+                :headers="headers"
+                :items="tournament.schedule"
+                hide-default-footer
+                :items-per-page="100"
+                class="elevation-1"
+              >
+                <template v-slot:[`item.status`]="{}">
+                  <p style="color: red" class="mb-0">Finished</p>
+                </template>
+                <template v-slot:[`item.score`]="{ item }">
+                  <p
+                    style="font-weight: bold"
+                    class="mb-0 pr-5"
+                    v-if="item.scoreTeam1 != 0 && item.scoreTeam2 != 0"
+                  >
+                    {{ item.scoreTeam1 }} - {{ item.scoreTeam2 }}
+                  </p>
+                  <p class="mb-0 pr-5" v-else>? - ?</p>
+                </template>
+              </v-data-table>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -67,6 +59,8 @@
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
+
+
 <script>
 import Schedule from "../../../../models/schedule";
 export default {
@@ -74,11 +68,23 @@ export default {
     return {
       disabled: false,
       open: false,
-      finishedMatch: []
+      finishedMatch: [],
+      panel: [],
+      panel1: [],
+      headers: [
+        { text: "Date", value: "timeStart" },
+        { text: "Status", value: "status" },
+        { text: "Team 1", value: "nameTeam1" },
+        { text: "", value: "score", sortable: false },
+        { text: "Team 2", value: "nameTeam2" },
+      ],
+      desserts: [],
     };
   },
   mounted() {
     this.recivceData();
+    this.panel = Array.from(Array(10).keys());
+    this.panel1 = Array.from(Array(10).keys());
   },
   methods: {
     recivceData() {
