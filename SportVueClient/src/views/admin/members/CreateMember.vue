@@ -49,7 +49,13 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="3">
-            <v-file-input v-model="fileImage" label="Add Avatar"></v-file-input>
+            <v-file-input
+              accept="image/png, image/jpeg, image/bmp"
+              :rules="[(v) => !!v.name || 'Item is required']"
+              v-model="fileImage"
+              label="Add Avatar"
+              
+            ></v-file-input>
           </v-col>
         </v-row>
 
@@ -120,9 +126,7 @@ export default {
       defaultGender: ["Male", "Female", "Orther"],
     };
   },
-  mounted() {
-    //  console.log(this.passSelectedType);
-  },
+  mounted() {},
   watch: {
     email() {
       this.emailRules = [
@@ -133,9 +137,8 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log("submit");
+      this.$refs.form.validate();
       let self = this;
-
       var memberForm = new FormData();
       memberForm.append("name", this.name);
       memberForm.append("email", this.email);
@@ -152,7 +155,6 @@ export default {
         .post("http://localhost:8090/api/v1/profiles/createMember", memberForm)
         .then((res) => {
           self.changeButton = !self.changeButton;
-          // console.log(res.data);
           if (res.data.code === 9999) {
             self.emailRules = [
               (v) => !self.email || "Email has already exists",
@@ -161,17 +163,16 @@ export default {
             self.isOpenModalMember();
             self.loadMemberAfterCreate(res.data.payload);
           }
-          self.name = ''
-          self.email = ''
-          self.phone = ''
-          self.age = ''
-          self.gender = ''
-          self.address = ''
-          self.passSelectedType = ''
+          self.name = "";
+          self.email = "";
+          self.phone = "";
+          self.age = "";
+          self.gender = "";
+          self.address = "";
+          self.passSelectedType = "";
         })
         .catch((e) => {
           self.changeButton = !self.changeButton;
-          console.log(e);
         });
 
       self.changeButton = !self.changeButton;

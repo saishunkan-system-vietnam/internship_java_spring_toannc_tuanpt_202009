@@ -110,7 +110,7 @@ export default {
       });
     },
     Search() {
-      this.getListUser();
+     
       this.loadingSearch=true
     },
   },
@@ -121,6 +121,9 @@ export default {
       }
       this.getListUser();
     },
+    nameSearch(){
+ this.getListUser();
+    }
   },
 };
 </script>
