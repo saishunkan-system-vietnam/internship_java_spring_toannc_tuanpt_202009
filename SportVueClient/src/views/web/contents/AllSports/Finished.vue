@@ -108,15 +108,14 @@ export default {
       });
     },
 
-    detail(item) {
-      this.detailScore = item;
-      this.open = true;
+    handleRowClick(item) {
       var myWindow = window.open(
         "http://localhost:8080/detail/" + item.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );
     },
+    
   },
 };
 </script>

@@ -116,11 +116,11 @@ export default {
     },
     handleRowClick(item) {
       alert(item);
-      // var myWindow = window.open(
-      //   "http://localhost:8080/detail/" + item.idSchedule,
-      //   "myWindow",
-      //   "width=600px,height=600"
-      // );
+      var myWindow = window.open(
+        "http://localhost:8080/detail/" + item.idSchedule,
+        "myWindow",
+        "width=600px,height=600"
+      );
     },
   },
 };
