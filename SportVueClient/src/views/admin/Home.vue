@@ -70,7 +70,9 @@
     </v-app-bar>
 
     <v-main>
-      <router-view class="container"/>
+      <v-container>
+      <router-view />
+      </v-container>
     </v-main>
     <v-footer color="indigo" app>
       <span class="white--text">&copy; {{ new Date().getFullYear() }}</span>

@@ -48,9 +48,10 @@ public class TournamentService {
 	private HistoryRepository historyRepository;
 
 	public String add(TournamentDto tournamentDto) {
+		
 		if (tournamentDto.getTimeEnd().compareTo(tournamentDto.getTimeStart()) > 0) {
 			Tournament tournament = modelMapper.map(tournamentDto, Tournament.class);
-			for (Tournament tournament2 : tournamentRepository.getAll()) {
+			for (Tournament tournament2 : tournamentRepository.getByType(tournamentDto.getType())) {
 				if (tournament2.getNameTour().equalsIgnoreCase(tournamentDto.getNameTour())) {
 					return "Namesake";
 				}
