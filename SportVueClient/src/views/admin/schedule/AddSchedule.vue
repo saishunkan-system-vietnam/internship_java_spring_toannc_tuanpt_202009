@@ -13,6 +13,7 @@
           (v) => v != '' || 'Item is required',
         ]"
       ></v-autocomplete>
+      
       <v-row>
         <v-col class="d-flex" cols="12" sm="6">
           <v-autocomplete
@@ -130,12 +131,34 @@
           ]"
         ></v-text-field>
       </div>
-      <v-btn class="mx-2" fab dark small color="blue-grey" @click="cancel">
+      <v-btn class="mx-2" fab dark small color="blue-grey" @click.stop="dialog = true">
         <v-icon dark> mdi-cancel </v-icon>
       </v-btn>
+       <v-dialog v-model="dialog" max-width="290">
+            <v-card>
+              <v-card-title class="headline"> Notification </v-card-title>
+
+              <v-card-text>
+                Do you want to exit without finishing importing?
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+
+                <v-btn color="green darken-1" text @click="dialog = false">
+                  Disagree
+                </v-btn>
+
+                <v-btn color="green darken-1" text @click="okCancel">
+                  Agree
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
       <v-btn class="mx-2" fab dark small color="primary" @click="submit">
         <v-icon dark> mdi-plus </v-icon>
       </v-btn>
+      
     </v-form>
   </div>
 </template>
@@ -153,6 +176,7 @@ export default {
     }
   },
   data: () => ({
+    dialog:false,
     schedule: new Schedule(),
     tournament: [],
     selectTournament: "",
@@ -172,7 +196,8 @@ export default {
     this.getTournament();
   },
   methods: {
-    cancel() {
+    okCancel() {
+      this.dialog=false,
       this.hideModal();
       this.reset();
     },
@@ -187,12 +212,9 @@ export default {
       (this.timeStart = new Date().toISOString().substr(0, 10)),
         (this.timeEnd = new Date().toISOString().substr(0, 10));
     },
-     reset() {
-      this.$refs.form.reset();
-      (this.timeStart = new Date().toISOString().substr(0, 10)),
-        (this.timeEnd = new Date().toISOString().substr(0, 10));
-    },
+  
     submit() {
+       this.rulesTimeEnd = [(v) => v > this.timeStart || "bigger time start"];
       if (this.$refs.form.validate() == true) {
         this.schedule.idTour = this.selectTournament;
         this.schedule.timeStart = this.timeStart;
@@ -205,7 +227,7 @@ export default {
           .dispatch("schedule/createSchedule", this.schedule)
           .then((response) => {
             if (response.data == "create") {
-              alert("thanh cong");
+              alert("Create");
               this.hideModal();
               this.reset();
               this.getData();
@@ -219,14 +241,10 @@ export default {
     },
   },
   watch: {
-    timeStart() {
-      this.rulesTimeEnd = [(v) => v > this.timeStart || "bigger time start"];
-    },
     selectTournament() {
       this.$store
         .dispatch("tournament/getById", this.selectTournament)
         .then((response) => {
-
           this.team=response.data.team;
         });
     },

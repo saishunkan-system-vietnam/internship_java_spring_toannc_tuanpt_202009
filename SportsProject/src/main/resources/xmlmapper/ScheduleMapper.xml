@@ -23,8 +23,6 @@
 		<collection property="team" ofType="Team">
 			<id column="id_team" property="idTeam" />
 			<result column="team_name" property="nameTeam" />
-			<result column="team_totalmatch" property="totalmatch" />
-			<result column="team_totalwin" property="totalwin" />
 			<result column="team_type" property="type" />
 			<result column="team_description" property="description" />
 			<result column="team_logo" property="logo" />
@@ -58,8 +56,6 @@
 		<collection property="team" ofType="Team">
 			<id column="id_team" property="idTeam" />
 			<result column="team_name" property="nameTeam" />
-			<result column="team_totalmatch" property="totalmatch" />
-			<result column="team_totalwin" property="totalwin" />
 			<result column="team_type" property="type" />
 			<result column="team_description" property="description" />
 			<result column="team_logo" property="logo" />
@@ -184,7 +180,7 @@
 		team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team
 		or
 		schedule_tbl.schedule_team2=team_tbl.id_team inner join round_tbl on
-		schedule_tbl.id_schedule=round_tbl.round_schedule
+		schedule_tbl.id_schedule=round_tbl.round_schedule ORDER BY schedule_tbl.schedule_start  DESC
 	</select>
 
 	<select id="sum" resultType="int">
@@ -232,12 +228,7 @@
 		schedule_tour=${idTour} And(schedule_team1=${idTeam} OR
 		schedule_team2=${idTeam})
 	</delete>
-	<update id="setTotalMatch" parameterType="int">
-		Update team_tbl set
-		team_totalmatch=${sumJoinByTour}
-		Where
-		id_team=${idTeam};
-	</update>
+
 	<select id="relate" resultMap="scheduleMapping">
 		Select * from
 		schedule_tbl inner

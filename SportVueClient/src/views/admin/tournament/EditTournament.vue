@@ -90,7 +90,7 @@
         ></v-textarea>
 
         <v-row align="center" justify="space-around">
-          <v-btn tile color="primary" @click="cancel">
+          <v-btn tile color="primary" @click.stop="dialog = true">
             <v-icon left> mdi-cancel </v-icon>
             Cancel
           </v-btn>
@@ -98,8 +98,30 @@
             <v-icon left> mdi-pencil </v-icon>
             Submit
           </v-btn>
+          
         </v-row>
       </v-form>
+     <v-dialog v-model="dialog" max-width="290">
+            <v-card>
+              <v-card-title class="headline"> Notification </v-card-title>
+
+              <v-card-text>
+                Do you want to exit without finishing importing?
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+
+                <v-btn color="green darken-1" text @click="dialog = false">
+                  Disagree
+                </v-btn>
+
+                <v-btn color="green darken-1" text @click="okCancel">
+                  Agree
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
       <v-progress-circular
         :size="50"
         color="primary"
@@ -136,6 +158,7 @@ export default {
     rulesTimeEnd: [],
     type: "",
     loading: true,
+    dialog:false
   }),
   methods: {
     clear() {
@@ -146,7 +169,8 @@ export default {
         (this.timeEnd = new Date().toISOString().substr(0, 10)),
         (this.timeStart = new Date().toISOString().substr(0, 10));
     },
-    cancel() {
+    okCancel() {
+      this.dialog=false
       this.clear();
       this.$refs.form.resetValidation();
       this.callback();

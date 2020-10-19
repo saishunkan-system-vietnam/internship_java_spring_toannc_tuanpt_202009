@@ -99,15 +99,38 @@
           item-value="idTeam"
           label="Team"
           multiple
-          :rules="[(v) => !!v || 'Item is required']"
+          :rules="rulesTeam"
           required
+            chips
+          
         ></v-select>
 
         <v-row align="center" justify="space-around">
-          <v-btn tile color="primary" @click="cancel">
+          <v-btn tile color="primary" @click.stop="dialog = true">
             <v-icon left> mdi-cancel </v-icon>
             Cancel
           </v-btn>
+          <v-dialog v-model="dialog" max-width="290">
+            <v-card>
+              <v-card-title class="headline"> Notification </v-card-title>
+
+              <v-card-text>
+                Do you want to exit without finishing importing?
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+
+                <v-btn color="green darken-1" text @click="dialog = false">
+                  Disagree
+                </v-btn>
+
+                <v-btn color="green darken-1" text @click="okCancel">
+                  Agree
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
           <v-btn tile color="success" @click.prevent="submit">
             <v-icon left> mdi-pencil </v-icon>
             Submit
@@ -136,6 +159,7 @@ export default {
     },
   },
   data: () => ({
+    dialog: false,
     Tournament: new Tournament(),
     value: [],
     sports: ["Football", "TableTennis", "Basketball"],
@@ -150,6 +174,7 @@ export default {
     rulesTimeEnd: [],
     type: "",
     loading: true,
+    rulesTeam: [],
   }),
   methods: {
     clear() {
@@ -160,12 +185,18 @@ export default {
         (this.timeEnd = new Date().toISOString().substr(0, 10)),
         (this.timeStart = new Date().toISOString().substr(0, 10));
     },
-    cancel() {
+    okCancel() {
+      this.dialog = false;
+      this.clear();
       this.$refs.form.resetValidation();
       this.callback();
     },
     submit() {
-      this.loading = false;
+      this.rulesTimeEnd = [(v) => v > this.timeStart || "bigger time start"];
+      this.rulesTeam = [
+        (v) => !!v || "Item is required",
+        (v) => v != "" || "Item is required",
+      ];
       this.Tournament.nameTour = this.nameTour;
       this.Tournament.timeEnd = this.timeEnd;
       this.Tournament.timeStart = this.timeStart;
@@ -180,13 +211,14 @@ export default {
               this.getList();
               this.callback();
               this.clear();
-              alert("thanh cong");
+              alert("success");
             } else {
               alert(response.data);
             }
             this.loading = true;
           });
       } else {
+        this.$refs.form.validate();
         this.loading = true;
       }
     },
@@ -202,9 +234,6 @@ export default {
     type() {
       this.value = [];
       this.getTeamWait();
-    },
-    timeStart() {
-      this.rulesTimeEnd = [(v) => v > this.timeStart || "bigger time start"];
     },
   },
 };

@@ -86,10 +86,7 @@ public class ScheduleReponsitory {
 		
 	}
 
-	public void setTotalMatch(int sumJoinByTour, int idTeam) {
-		scheduleMapper.setTotalMatch(sumJoinByTour,idTeam);
-		
-	}
+
 
 	public List<Schedule> relate(int idTeam1, int idTeam2, int idTour) {
 		// TODO Auto-generated method stub

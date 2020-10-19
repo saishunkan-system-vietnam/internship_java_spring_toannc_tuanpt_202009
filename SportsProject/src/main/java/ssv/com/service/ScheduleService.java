@@ -20,7 +20,7 @@ public class ScheduleService {
 
 	@Autowired
 	private TournamentService tournamentService;
-	
+
 	@Autowired
 	private TeamService teamService;
 
@@ -33,24 +33,24 @@ public class ScheduleService {
 
 	public boolean checkTime(Date timeStart, Date timeEnd, int idTour) {
 		Tournament tournament = tournamentService.getById(idTour);
-		if (tournamentService.getById(idTour).getTimeEnd().compareTo(timeEnd) >= 0) {
+		if (tournament.getTimeEnd().compareTo(timeEnd) >= 0 && tournament.getTimeStart().compareTo(timeStart) <= 0) {
 			List<Schedule> list = scheduleReponsitory.getByIdTour(idTour);
 			if (timeEnd.compareTo(timeStart) > 0) {
 				if (list.isEmpty()) {
-					return true;
+					return false;
 				} else {
 					for (Schedule schedule : list) {
-						if ((timeStart.compareTo(schedule.getTimeEnd()) > 0
-								|| timeEnd.compareTo(schedule.getTimeStart()) < 0)
-								&& timeStart.compareTo(tournament.getTimeStart()) > 0
-								&& timeEnd.compareTo(tournament.getTimeEnd()) <= 0) {
-							return true;
+						if ((timeStart.compareTo(schedule.getTimeEnd()) <= 0
+								&& timeStart.compareTo(schedule.getTimeStart()) >= 0)
+								|| ((timeEnd.compareTo(schedule.getTimeEnd()) <= 0
+										&& timeEnd.compareTo(schedule.getTimeStart()) >= 0))) {
+							return false;
 						}
 					}
 				}
 			}
 		}
-		return false;
+		return true;
 	}
 
 	public List<Schedule> getByIdTour(int idTour) {
@@ -62,12 +62,7 @@ public class ScheduleService {
 	}
 
 	public void delete(int idSchedule) {
-		Schedule schedule = scheduleReponsitory.getById(idSchedule);
 		scheduleReponsitory.delete(idSchedule);
-		scheduleReponsitory.setTotalMatch(
-				scheduleReponsitory.sumJoinByTour(schedule.getIdTeam1(), schedule.getIdTour()), schedule.getIdTeam1());
-		scheduleReponsitory.setTotalMatch(
-				scheduleReponsitory.sumJoinByTour(schedule.getIdTeam2(), schedule.getIdTour()), schedule.getIdTeam2());
 	}
 
 	public void updateShedule(ScheduleForm scheduleForm) throws Exception {
@@ -107,10 +102,6 @@ public class ScheduleService {
 		} else {
 			roundService.createBaskestBall();
 		}
-		scheduleReponsitory.setTotalMatch(
-				scheduleReponsitory.sumJoinByTour(schedule.getIdTeam1(), schedule.getIdTour()), schedule.getIdTeam1());
-		scheduleReponsitory.setTotalMatch(
-				scheduleReponsitory.sumJoinByTour(schedule.getIdTeam2(), schedule.getIdTour()), schedule.getIdTeam2());
 	}
 
 	public void statusCheck() {
@@ -155,15 +146,14 @@ public class ScheduleService {
 	}
 
 	public List<Schedule> profileSchedule(int idMember) {
-		List<Schedule> list=scheduleReponsitory.profileSchedule(idMember);
-		if(!list.isEmpty()) {
+		List<Schedule> list = scheduleReponsitory.profileSchedule(idMember);
+		if (!list.isEmpty()) {
 			for (Schedule schedule : list) {
-				int idTeam =schedule.getTeam().get(0).getIdTeam();
-				if(schedule.getIdTeam1()!=idTeam) {
-					var a=teamService.getById(schedule.getIdTeam1());
+				int idTeam = schedule.getTeam().get(0).getIdTeam();
+				if (schedule.getIdTeam1() != idTeam) {
+					var a = teamService.getById(schedule.getIdTeam1());
 					schedule.getTeam().add(teamService.getById(schedule.getIdTeam1()));
-				}
-				else {
+				} else {
 					schedule.getTeam().add(teamService.getById(schedule.getIdTeam2()));
 				}
 			}
