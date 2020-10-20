@@ -83,19 +83,23 @@ export default {
           console.log(userInfo.role);
           if (userInfo.role === null || userInfo.role === undefined) {
             self.checkProfile();
+          } else if (userInfo.role === "ROLE_ADMIN") {
+            console.log("Run here")
+            self.$store.commit("user/user_info", userInfo);
+            self.$store.commit("user/admin_profile");
+            self.commonLogin(userInfo);
           } else if (
             userInfo.role === "ROLE_USER" ||
-            userInfo.role === "ROLE_MEMBER" ||
-            userInfo.role === "ROLE_ADMIN"
+            userInfo.role === "ROLE_MEMBER"
           ) {
+            self.$store.commit("user/user_info", userInfo);
+            self.$store.commit("user/user_profile");
             self.commonLogin(userInfo);
           }
         })
         .catch((err) => console.log(err));
     },
     commonLogin(userInfo) {
-      this.$store.commit("user/user_info", userInfo);
-      this.checkProfile();
       this.closeLoginDialog();
       this.username = "";
       this.password = "";
