@@ -379,6 +379,7 @@
                   <template v-slot:default>
                     <tbody>
                       <tr
+                      style="cursor:pointer"
                         v-for="(item, index) in related"
                         color="primary"
                         :key="index"

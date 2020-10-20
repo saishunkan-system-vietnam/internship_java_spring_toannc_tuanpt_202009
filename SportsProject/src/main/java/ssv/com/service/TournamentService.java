@@ -167,9 +167,7 @@ public class TournamentService {
 					return 1;
 			}
 		});
-		for (int i = 0; i < list.size(); i++) {
-			list.get(i).setNumberRank(i+1);
-		}
+		
 
 		return list;
 	}
@@ -185,6 +183,8 @@ public class TournamentService {
 			rank.setList(scheduleService.getRecently(history.getIdTeam(),idTour));
 			rank.setRank(numberRank);
 			rank.setIdTeam(history.getIdTeam());
+			rank.setTeam(teamService.findTeamByTour(rank.getIdTeam(),idTour));
+			rank.setTotalGoals(scheduleService.totalGoalds(rank.getIdTeam(),idTour));
 			list.add(rank);
 		}
 		Collections.sort(list, new Comparator<Rank>() {

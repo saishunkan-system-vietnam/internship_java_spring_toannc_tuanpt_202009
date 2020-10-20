@@ -180,7 +180,8 @@
 		team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team
 		or
 		schedule_tbl.schedule_team2=team_tbl.id_team inner join round_tbl on
-		schedule_tbl.id_schedule=round_tbl.round_schedule ORDER BY schedule_tbl.schedule_start  DESC
+		schedule_tbl.id_schedule=round_tbl.round_schedule ORDER BY
+		schedule_tbl.schedule_start DESC
 	</select>
 
 	<select id="sum" resultType="int">
@@ -228,6 +229,16 @@
 		schedule_tour=${idTour} And(schedule_team1=${idTeam} OR
 		schedule_team2=${idTeam})
 	</delete>
+	<select id="findTeamTournament" resultMap="scheduleMapping">
+		Select * from 
+		schedule_tbl inner
+		join
+		team_tbl on schedule_tbl.schedule_team1=team_tbl.id_team
+		or
+		schedule_tbl.schedule_team2=team_tbl.id_team where schedule_tour=${idTour}
+		And(schedule_team1=${idTeam} OR
+		schedule_team2=${idTeam})
+	</select>
 
 	<select id="relate" resultMap="scheduleMapping">
 		Select * from
@@ -252,7 +263,10 @@
 		DESC Limit 3
 	</select>
 	<select id="profileSchedule" resultMap="scheduleMapping1">
-		SELECT p.*,s.* from profile_tbl p inner join (team_tbl t inner join schedule_tbl s on t.id_team =s.schedule_team1 or t.id_team=s.schedule_team2 ) on p.id_team = t.id_team where s.schedule_status!=2 and p.id=${idMember}
+		SELECT p.*,s.* from
+		profile_tbl p inner join (team_tbl t inner join schedule_tbl s on
+		t.id_team =s.schedule_team1 or t.id_team=s.schedule_team2 ) on
+		p.id_team = t.id_team where s.schedule_status!=2 and p.id=${idMember}
 	</select>
 
 
