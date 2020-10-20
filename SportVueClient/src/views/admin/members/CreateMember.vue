@@ -51,10 +51,9 @@
           <v-col cols="12" md="3">
             <v-file-input
               accept="image/png, image/jpeg, image/bmp"
-              :rules="[(v) => !!v.name || 'Item is required']"
+              :rules="[(v) => !!v.name || 'Avatar is required']"
               v-model="fileImage"
               label="Add Avatar"
-              
             ></v-file-input>
           </v-col>
         </v-row>
@@ -73,6 +72,9 @@
         >
         <v-btn disabled v-else>Processing</v-btn>
       </v-card-actions>
+      <v-alert class="mb-0" type="success" v-if="success">
+        Create Team Success!
+      </v-alert>
     </v-form>
   </v-card>
 </template>
@@ -93,6 +95,7 @@ export default {
 
   data() {
     return {
+      success: false,
       changeButton: true,
       valid: false,
       response: "",
@@ -160,22 +163,19 @@ export default {
               (v) => !self.email || "Email has already exists",
             ];
           } else {
-            self.isOpenModalMember();
-            self.loadMemberAfterCreate(res.data.payload);
+            self.success = true;
+            setTimeout(function () {
+              self.success = false;
+              self.isOpenModalMember();
+              self.loadMemberAfterCreate(res.data.payload);
+            }, 2100);
           }
-          self.name = "";
-          self.email = "";
-          self.phone = "";
-          self.age = "";
-          self.gender = "";
-          self.address = "";
-          self.passSelectedType = "";
         })
         .catch((e) => {
           self.changeButton = !self.changeButton;
         });
-
       self.changeButton = !self.changeButton;
+      self.reset();
     },
     reset() {
       this.$refs.form.reset();
