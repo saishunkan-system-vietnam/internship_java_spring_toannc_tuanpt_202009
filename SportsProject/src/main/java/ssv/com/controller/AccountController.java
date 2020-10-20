@@ -78,9 +78,9 @@ public class AccountController {
 		if (!acount.getUsername().isEmpty() && !acount.getPassword().isEmpty()
 				&& acount.getEmail().matches(emailPattern)) {
 			if (accountService.checkEmail(acount.getEmail()) == false) {
-				return ResponseQuery.faild("Email has exists", 0);
+				return ResponseQuery.faild("Email has existed", 0);
 			} else if (accountService.checkUser(acount) == false) {
-				return ResponseQuery.faild("Username has exists", 1);
+				return ResponseQuery.faild("Username has existed", 1);
 			} else {
 				// create account
 				String hash = BCrypt.hashpw(acount.getPassword(), BCrypt.gensalt(12));
@@ -90,6 +90,7 @@ public class AccountController {
 
 				// create default profile
 				Profile profile = new Profile();
+				profile.setName(acount.getUsername());
 				profile.setEmail(acount.getEmail());
 				profile.setAvatar("http://localhost:8090/images/defaultuser.png");
 				profileService.saveProfile(profile);
