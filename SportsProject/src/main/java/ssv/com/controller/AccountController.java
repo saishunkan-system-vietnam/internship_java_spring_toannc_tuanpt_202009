@@ -165,6 +165,11 @@ public class AccountController {
 	public ResponseEntity<Account> findById(@PathVariable(value = "id") int id) {
 		return new ResponseEntity<Account>(accountService.findById(id), HttpStatus.OK);
 	}
+	//lấy account theo mail
+	@GetMapping(value = "/getByMail")
+	public ResponseEntity<Account> findByEmail(@RequestParam String email) {
+		return new ResponseEntity<Account>(accountService.findByEmail(email), HttpStatus.OK);
+	}
 
 	@GetMapping(value = "/getByUsername/{username}")
 	public ResponseQuery<?> findByUsername(@PathVariable(value = "username") String username) {

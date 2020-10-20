@@ -10,7 +10,7 @@ import HomeAdmin from './views/admin/HomeAdmin.vue'
 
 import LayoutUser from '@/views/admin/user/LayoutUser'
 import User from '@/views/admin/user/User'
-import Detail from '@/views/admin/user/Detail'
+import DetailUser from '@/views/admin/user/Detail'
 
 import LayoutSchedule from '@/views/admin/schedule/LayoutSchedule'
 import Schedule from '@/views/admin/schedule/Schedule'
@@ -185,8 +185,8 @@ let routes = [
             meta: metaConfig
           },
           {
-            path: "/Detail/:id",
-            component: Detail,
+            path: "/DetailUser/:id",
+            component: DetailUser,
             meta:
               metaConfig
           }

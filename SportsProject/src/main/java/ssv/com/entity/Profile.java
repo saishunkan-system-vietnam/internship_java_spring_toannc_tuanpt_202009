@@ -21,4 +21,5 @@ public class Profile {
 	private String avatar;
 	private int idTeam;
 	private Team team;
+	private Account account;
 }

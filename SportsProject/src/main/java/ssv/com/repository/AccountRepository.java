@@ -50,4 +50,9 @@ public class AccountRepository {
 		return accountMapper.searchTotal(name, type);
 	}
 
+	public Account findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return accountMapper.findByEmail(email);
+	}
+
 }

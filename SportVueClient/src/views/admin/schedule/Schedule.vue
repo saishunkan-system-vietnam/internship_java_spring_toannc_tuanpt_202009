@@ -18,7 +18,7 @@
       >
       <b-row>
         <b-col cols="12" sm="3">
-          Name Tournament
+          Title Schedule
           <b-form-input
             v-model="textTitleSchedule"
             placeholder="Input Field"
@@ -276,7 +276,7 @@ export default {
       {
         if (this.textTitleSchedule != "") {
           this.schedule.forEach((element) => {
-            if (element.nameTour.includes(this.textTitleSchedule)) {
+            if (element.title.includes(this.textTitleSchedule)) {
               arrSearch.push(element);
             }
           });

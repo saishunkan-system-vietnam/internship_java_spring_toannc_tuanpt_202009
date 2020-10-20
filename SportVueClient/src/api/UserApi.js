@@ -17,6 +17,9 @@ export function searchUser(params) {
         },
     })
 }
+export function getAll(){
+    return Api.get('/account/getAll')
+}
 export function getById(id) {
     return Api.get('/account/getById/' + id);
 }
@@ -26,5 +29,8 @@ export function autoLogin() {
 }
 export function updateProfileUser(bodyFormData){
     return Api.post('/profiles/update',bodyFormData)
+}
+export function findByEmailUser(email){
+    return Api.get('/account/getByMail',{params:{email:email}})
 }
 
