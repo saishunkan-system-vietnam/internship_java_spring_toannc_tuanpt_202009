@@ -1,32 +1,54 @@
 <template>
   <v-data-table
+    @click:row="handleRowClick"
     :headers="headers"
     :items="desserts"
     sort-by="nameTeam"
-    class="elevation-1 container"
+    class="elevation-1 container row-pointer"
     :search="search"
+    :custom-sort="customSort"
   >
     <template v-slot:top>
       <v-toolbar flat color="white">
-        <router-link :to="{ path: '/create', query: { maxId: 'maxTeamId' } }">
-          <v-btn color="primary" dark class="mb-2"> New Team </v-btn>
-        </router-link>
-
-        <v-divider class="mx-4" inset vertical></v-divider>
-        <v-spacer></v-spacer>
-
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
+        <v-row>
+          <router-link :to="{ path: '/create', query: { maxId: 'maxTeamId' } }">
+            <v-btn color="primary" dark class="mb-2"> New Team </v-btn>
+          </router-link>
+          <v-divider class="mx-4" inset vertical></v-divider>
+          <v-spacer></v-spacer>
+        </v-row>
+        <v-row>
+          <v-col cols="12" sm="4" md="4">
+            <v-select
+              v-model="search"
+              :items="items"
+              label="Standard"
+            ></v-select>
+          </v-col>
+          <v-col cols="12" sm="4" md="4">
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" sm="4" md="4">
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+            ></v-text-field>
+          </v-col>
+        </v-row>
       </v-toolbar>
     </template>
     <template v-slot:[`item.nameTour`]="{ item }">
-      <template  v-if="item.idTour != 0 && item.tournament != null">
-        {{item.tournament.nameTour}}
+      <template v-if="item.idTour != 0 && item.tournament != null">
+        {{ item.tournament.nameTour }}
       </template>
       <template style="color: green" v-else> Available </template>
     </template>
@@ -68,6 +90,7 @@ export default {
       ],
       desserts: [],
       maxTeamId: 0,
+      items:["Football", "TableTennis", "Baseball", "Basketball"],
     };
   },
   mounted() {
@@ -90,15 +113,47 @@ export default {
         console.log(error);
       });
   },
-
+  watch: {
+    
+  },
   methods: {
     editTeam(item) {
       // console.log(item);
       this.$router.push({ name: "TeamDetail", params: { id: item.idTeam } });
     },
+    handleRowClick(item) {
+      this.editTeam(item);
+    },
+    customSort(items, index, isDesc) {
+      items.sort((a, b) => {
+        if (index === "date") {
+          if (!isDesc) {
+            return dateHelp.compare(a.date, b.date);
+          } else {
+            return dateHelp.compare(b.date, a.date);
+          }
+        } else {
+          if (!isDesc) {
+            return a[index] < b[index] ? -1 : 1;
+          } else {
+            return b[index] < a[index] ? -1 : 1;
+          }
+        }
+      });
+      return items;
+    },
   },
 };
 </script>
 
-<style>
+<style lang="css" scoped>
+.remove-padding > div {
+  padding: 0;
+}
+.row-pointer >>> tbody tr :hover {
+  cursor: pointer;
+}
+.v-data-table-header__icon {
+  opacity: 1;
+}
 </style>
