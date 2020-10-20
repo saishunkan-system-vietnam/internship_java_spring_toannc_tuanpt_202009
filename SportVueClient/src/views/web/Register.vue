@@ -5,7 +5,7 @@
     </v-card-title>
     <v-card-text>
       <v-container>
-        <form>
+        <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
             :rules="nameRules"
             v-model="username"
@@ -23,12 +23,14 @@
           <v-text-field
             v-model="password"
             label="Password"
+            :rules="passwordRules"
             required
             type="password"
           ></v-text-field>
 
           <v-btn class="mr-4" @click="register">Submit</v-btn>
-        </form>
+          <v-alert type="success" v-if="success"> Register Success! </v-alert>
+        </v-form>
       </v-container>
     </v-card-text>
   </v-card>
@@ -42,6 +44,8 @@ export default {
   },
   data() {
     return {
+      success: false,
+      valid: true,
       email: "",
       username: "",
       password: "",
@@ -53,6 +57,7 @@ export default {
         (v) => !!v || "E-mail is required", // not exsits
         (v) => /.+@.+/.test(v) || "E-mail must be valid",
       ],
+      passwordRules: [(v) => !!v || "Password is required"],
     };
   },
   watch: {
@@ -71,14 +76,17 @@ export default {
   },
   methods: {
     register: function () {
+      this.$refs.form.validate();
       let self = this;
-
       let user = {
         username: this.username,
         email: this.email,
         password: this.password,
       };
-
+      let userLogin = {
+        username: this.username,
+        password: this.password,
+      };
       this.$store
         .dispatch("auth/register", user)
         .then((res) => {
@@ -87,10 +95,20 @@ export default {
           } else if (res.data.payload === 0) {
             self.emailRules = [(v) => !self.email || res.data.message];
           } else {
-            self.closeRegisterDialog();
-            self.email = "";
-            self.username = "";
-            self.password = "";
+            console.log(userLogin);
+            self.$store.dispatch("auth/login", userLogin).then((res) => {
+              let userInfo = res.data.payload.account;
+              self.success = true;
+              setTimeout(function () {
+                self.success = false;
+                self.$store.commit("user/user_info", userInfo);
+                self.$store.commit("user/user_profile");
+                self.closeRegisterDialog();
+                self.email = "";
+                self.username = "";
+                self.password = "";
+              }, 1500);
+            });
           }
         })
         .catch((err) => console.log(err));

@@ -7,6 +7,7 @@ import {getPlayerId} from '../api/MemberApi'
 const state = {
     userInfo: null,
     isProfile: false,
+    isAdminProfile: false
 }
 
 const mutations = {
@@ -15,6 +16,9 @@ const mutations = {
     },
     user_profile(state) {
         state.isProfile = !state.isProfile
+    },
+    admin_profile(state) {
+        state.isAdminProfile = !state.isAdminProfile
     }
 }
 
@@ -46,15 +50,15 @@ const actions = {
             })
         })
     },
-    async autoLogin({ commit },) {
-        try {
-            await autoLogin().then((res) => {
+    autoLogin({ commit },) {
+        return new Promise((resolve, reject) => {
+            autoLogin().then((res) => {
                 commit('user_info', res.data.payload)
-                return res
+                resolve(res);
+            }).catch((err) => {
+                reject(err);
             })
-        } catch (Ex) {
-            reject(err);
-        }
+        })       
     },
 
     historyMemberMatchs({ },id) {

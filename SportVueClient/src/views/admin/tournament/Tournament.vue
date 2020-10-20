@@ -311,6 +311,7 @@ export default {
         });
         arrSearch = arrDate;
       }
+      
       this.items = arrSearch;
       this.rows = arrSearch.length;
     },

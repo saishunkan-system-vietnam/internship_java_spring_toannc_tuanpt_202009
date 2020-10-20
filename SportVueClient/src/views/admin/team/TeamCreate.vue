@@ -14,7 +14,7 @@
         </v-col>
         <v-col class="d-flex" cols="12" sm="4">
           <v-select
-            :rules="[(v) => !!v || 'Item is required']"
+            :rules="[(v) => !!v || 'Logo is required']"
             :items="type"
             v-model="selectedType"
             label="Sport Type"
@@ -23,7 +23,12 @@
         </v-col>
 
         <v-col class="d-flex" cols="12" sm="4">
-          <v-file-input v-model="fileImage" label="Add Logo"></v-file-input>
+          <v-file-input
+            accept="image/png, image/jpeg, image/bmp"
+            :rules="[(v) => !!v.name || 'Item is required']"
+            v-model="fileImage"
+            label="Add Logo"
+          ></v-file-input>
         </v-col>
       </v-row>
       <v-textarea
@@ -33,8 +38,28 @@
         label="Description"
         value="Something about team"
       ></v-textarea>
-      <v-btn depressed color="primary" @click="onSubmit"> Create </v-btn>
+      <v-btn
+        :disabled="successDialog"
+        :loading="successDialog"
+        depressed
+        color="primary"
+        @click="onSubmit"
+      >
+        Create
+      </v-btn>
     </v-form>
+
+    <template>
+      <div class="text-center">
+        <v-dialog v-model="successDialog" hide-overlay persistent width="300">
+          <v-alert class="mb-0" type="success"> Create Team Success! </v-alert>
+        </v-dialog>
+      </div>
+    </template>
+  </v-container>
+</template>
+
+
   </v-container>
 </template>
 
@@ -46,6 +71,7 @@ export default {
   components: { ListMember },
   data() {
     return {
+      successDialog: false,
       idTeam: 0,
       valid: true,
       name: "",
@@ -88,12 +114,18 @@ export default {
         (v) => (v && v.length <= 21) || "Name must be less than 21 characters",
       ];
     },
+
+    successDialog(val) {
+      if (!val) return;
+
+      setTimeout(() => (this.successDialog = false), 100000);
+    },
   },
   methods: {
     onSubmit() {
       // console.log("submit");
       // console.log(this.fileImage);
-      this.$refs.form.validate()
+      this.$refs.form.validate();
       var teamForm = new FormData();
       teamForm.append("nameTeam", this.name);
       teamForm.append("type", this.selectedType);
@@ -114,7 +146,11 @@ export default {
           ) {
             alert("Created Falied");
           } else {
-            self.$router.push("/LayoutTeam");
+            self.successDialog = !self.successDialog;
+            setTimeout(function () {
+              self.successDialog = !self.successDialog;
+              self.$router.push("/LayoutTeam");
+            }, 1500);
           }
         })
         .catch(function (error) {});

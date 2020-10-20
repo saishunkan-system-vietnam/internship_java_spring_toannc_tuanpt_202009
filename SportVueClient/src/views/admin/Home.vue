@@ -8,6 +8,7 @@
   src="https://picsum.photos/id/11/500/300"
 ></v-img>
       <v-list dense>
+
         <router-link to="/admin/home" style="text-decoration:none">
           <v-list-item link>
             <v-list-item-action>
@@ -68,8 +69,11 @@
       <v-toolbar-title>Sports</v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-btn color="primary" @click.prevent="logout">
-        Logout
+      <v-btn
+        style="background-color: White; color: black"
+        @click.prevent="logout"
+      >
+        Back To Web
         <v-icon right>exit_to_app</v-icon>
       </v-btn>
     </v-app-bar>
@@ -98,9 +102,7 @@ export default {
   }),
   methods: {
     logout: function () {
-      this.$store.dispatch("auth/logout").then(() => {
-        this.$router.push("/admin/login");
-      });
+      this.$router.push("/");
     },
   },
 };

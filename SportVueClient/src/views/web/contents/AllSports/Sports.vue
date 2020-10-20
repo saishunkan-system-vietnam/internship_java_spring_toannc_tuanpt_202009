@@ -36,14 +36,11 @@
                 :items="tournament.schedule"
                 hide-default-footer
                 :items-per-page="100"
-                class="elevation-1"
+                class="elevation-1 row-pointer"
+                :custom-sort="customSort"
               >
                 <template v-slot:[`item.status`]="{ item }">
-                  <p
-                    style="color: red"
-                    class="mb-0"
-                    v-if="item.status === 2"
-                  >
+                  <p style="color: red" class="mb-0" v-if="item.status === 2">
                     FINISHED
                   </p>
                   <p
@@ -122,11 +119,32 @@ export default {
         "width=600px,height=600"
       );
     },
+    customSort(items, index, isDesc) {
+      items.sort((a, b) => {
+        if (index === "date") {
+          if (!isDesc) {
+            return dateHelp.compare(a.date, b.date);
+          } else {
+            return dateHelp.compare(b.date, a.date);
+          }
+        } else {
+          if (!isDesc) {
+            return a[index] < b[index] ? -1 : 1;
+          } else {
+            return b[index] < a[index] ? -1 : 1;
+          }
+        }
+      });
+      return items;
+    },
   },
 };
 </script>
-<style>
-  .remove-padding > div {
-    padding: 0;
-  }
+<style lang="css" scoped>
+.remove-padding > div {
+  padding: 0;
+}
+.row-pointer >>> tbody tr :hover {
+  cursor: pointer;
+}
 </style>
