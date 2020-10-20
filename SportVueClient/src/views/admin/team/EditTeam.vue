@@ -27,10 +27,9 @@
               v-model="fileImage"
               label="Change Logo"
               required
-               accept="image/png, image/jpeg, image/bmp"
-              :rules="[(v) => !!v.name || 'Item is required']"
+              accept="image/png, image/jpeg, image/bmp"
+              :rules="[(v) => !!v || 'Item is required']"
             ></v-file-input>
-           
           </v-col>
         </v-row>
 
@@ -96,7 +95,7 @@
       </v-form>
     </v-container>
     <v-dialog v-model="dialogConfirm" max-width="500">
-      <v-card class="container">
+      <v-card class="container" v-if="isConFirm">
         <v-card-title class="headline">
           Confirm update this information?
         </v-card-title>
@@ -114,6 +113,9 @@
           </v-btn>
         </v-card-actions>
       </v-card>
+      <template v-else>
+        <v-alert type="success"> Update Success! </v-alert>
+      </template>
     </v-dialog>
   </v-card>
 </template>
@@ -133,6 +135,7 @@ export default {
   },
   data() {
     return {
+      isConFirm: true,
       valid: true,
       checkLogo: false,
       dialogConfirm: false,
@@ -151,11 +154,9 @@ export default {
       items: [],
       members: [],
       fileImage: {},
-
     };
   },
   mounted() {
-    // console.log(this.teamProps);
   },
   watch: {
     selectedType() {
@@ -163,7 +164,6 @@ export default {
       this.members = this.items.filter((item) => {
         return item.type === this.selectedType && item.idTeam != 0;
       });
-      // console.log(this.members);
     },
   },
   methods: {
@@ -175,9 +175,9 @@ export default {
       teamForm.append("type", this.selectedType);
       teamForm.append("description", this.description);
       teamForm.append("file", this.fileImage);
-      for (var value of teamForm.values()) {
-        console.log(value);
-      }
+      // for (var value of teamForm.values()) {
+      //   console.log(value);
+      // }
       if (teamForm.get("type") != self.teamProps.type) {
         // console.log(self.teamProps);
         // setTimeout(() => {
@@ -192,8 +192,11 @@ export default {
       axios
         .post(`http://localhost:8090/api/v1/team/updateInfo/${id}`, teamForm)
         .then((res) => {
-          console.log("run here");
-          self.openEditTeam();
+          self.isConFirm = !self.isConFirm;
+          setTimeout(function () {
+            self.isConFirm = !self.isConFirm;
+            self.openEditTeam();
+          }, 1500);
         })
         .catch((e) => {
           // console.log(e);
@@ -202,7 +205,6 @@ export default {
 
     removeMembers(team) {
       let self = this;
-      console.log(team);
       this.$store.commit("auth/auth_overlay");
       this.$store
         .dispatch("team/updateMembersInTeam", team)

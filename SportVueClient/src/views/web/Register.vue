@@ -29,6 +29,7 @@
           ></v-text-field>
 
           <v-btn class="mr-4" @click="register">Submit</v-btn>
+          <v-alert type="success" v-if="success"> Register Success! </v-alert>
         </v-form>
       </v-container>
     </v-card-text>
@@ -43,6 +44,7 @@ export default {
   },
   data() {
     return {
+      success: false,
       valid: true,
       email: "",
       username: "",
@@ -96,12 +98,16 @@ export default {
             console.log(userLogin);
             self.$store.dispatch("auth/login", userLogin).then((res) => {
               let userInfo = res.data.payload.account;
-              self.$store.commit("user/user_info", userInfo);
-              self.$store.commit("user/user_profile");
-              self.closeRegisterDialog();
-              self.email = "";
-              self.username = "";
-              self.password = "";
+              self.success = true;
+              setTimeout(function () {
+                self.success = false;
+                self.$store.commit("user/user_info", userInfo);
+                self.$store.commit("user/user_profile");
+                self.closeRegisterDialog();
+                self.email = "";
+                self.username = "";
+                self.password = "";
+              }, 1500);
             });
           }
         })

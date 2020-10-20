@@ -37,6 +37,7 @@
                 hide-default-footer
                 :items-per-page="100"
                 class="elevation-1"
+                :custom-sort="customSort"
               >
                 <template v-slot:[`item.status`]="{ item }">
                   <p
@@ -122,6 +123,24 @@ export default {
         "width=600px,height=600"
       );
     },
+    customSort(items, index, isDesc) {
+      items.sort((a, b) => {
+        if (index === "date") {
+          if (!isDesc) {
+            return dateHelp.compare(a.date, b.date);
+          } else {
+            return dateHelp.compare(b.date, a.date);
+          }
+        } else {
+          if (!isDesc) {
+            return a[index] < b[index] ? -1 : 1;
+          } else {
+            return b[index] < a[index] ? -1 : 1;
+          }
+        }
+      });
+      return items;
+    }
   },
 };
 </script>

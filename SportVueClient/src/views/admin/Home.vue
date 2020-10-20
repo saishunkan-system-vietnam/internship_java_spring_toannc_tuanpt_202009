@@ -72,7 +72,7 @@
       <v-toolbar-title>Sports</v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-btn color="primary" @click.prevent="logout">
+      <v-btn style="background-color: White; color: black" @click.prevent="logout">
         Back To Web
         <v-icon right>exit_to_app</v-icon>
       </v-btn>

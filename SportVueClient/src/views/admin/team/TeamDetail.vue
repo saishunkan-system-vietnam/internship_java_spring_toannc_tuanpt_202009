@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto my-12 container" max-width="60%">
+  <v-card class="mx-auto my-12 container" max-width="85%">
     <v-img height="250" :src="team.logo"></v-img>
     <v-row>
       <v-card-title

@@ -33,6 +33,7 @@
             </v-col>
             <v-spacer></v-spacer>
           </v-row>
+          <v-alert type="success" v-if="success"> Login Success! </v-alert>
         </form>
       </v-container>
     </v-card-text>
@@ -50,6 +51,7 @@ export default {
   },
   data() {
     return {
+      success: false,
       user: {
         username: "admin",
         password: "admin",
@@ -84,17 +86,24 @@ export default {
           if (userInfo.role === null || userInfo.role === undefined) {
             self.checkProfile();
           } else if (userInfo.role === "ROLE_ADMIN") {
-            console.log("Run here")
-            self.$store.commit("user/user_info", userInfo);
-            self.$store.commit("user/admin_profile");
-            self.commonLogin(userInfo);
+            self.success = !self.success;
+            setTimeout(function () {
+              self.success = !self.success;
+              self.$store.commit("user/user_info", userInfo);
+              self.$store.commit("user/admin_profile");
+              self.commonLogin(userInfo);
+            }, 2100);
           } else if (
             userInfo.role === "ROLE_USER" ||
             userInfo.role === "ROLE_MEMBER"
           ) {
-            self.$store.commit("user/user_info", userInfo);
-            self.$store.commit("user/user_profile");
-            self.commonLogin(userInfo);
+            self.success = true;
+            setTimeout(function () {
+              self.success = false;
+              self.$store.commit("user/user_info", userInfo);
+              self.$store.commit("user/user_profile");
+              self.commonLogin(userInfo);
+            }, 2100);
           }
         })
         .catch((err) => console.log(err));
