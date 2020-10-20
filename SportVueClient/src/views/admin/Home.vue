@@ -2,16 +2,16 @@
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app>
       <v-list dense>
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>
-              <router-link to="/admin/home">Home</router-link>
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+        <router-link to="/admin/home">
+          <v-list-item link>
+            <v-list-item-action>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title> Home </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
 
         <v-list-item>
           <v-list-item-action>
@@ -63,7 +63,10 @@
       <v-toolbar-title>Application</v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-btn style="background-color: White; color: black" @click.prevent="logout">
+      <v-btn
+        style="background-color: White; color: black"
+        @click.prevent="logout"
+      >
         Back To Web
         <v-icon right>exit_to_app</v-icon>
       </v-btn>

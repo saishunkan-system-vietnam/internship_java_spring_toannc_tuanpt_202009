@@ -165,9 +165,6 @@ export default {
       teamDetail: {},
     };
   },
-
-  created() {},
-
   mounted() {
     this.loadListMember(this.$route.params.id);
     this.loadTeamById(this.$route.params.id);

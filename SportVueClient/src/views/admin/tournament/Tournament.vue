@@ -270,7 +270,6 @@ export default {
         });
     },
     search() {
-      this.busy = false;
       var arrSearch = [];
       {
         if (this.textNameTournament != "") {
@@ -313,6 +312,7 @@ export default {
         });
         arrSearch = arrDate;
       }
+      
       this.items = arrSearch;
     },
   },
