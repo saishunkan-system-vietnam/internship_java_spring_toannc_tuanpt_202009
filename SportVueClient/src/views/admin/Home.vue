@@ -71,7 +71,7 @@
 
     <v-main>
       <v-container>
-      <router-view />
+        <router-view />
       </v-container>
     </v-main>
     <v-footer color="indigo" app>
@@ -93,9 +93,7 @@ export default {
   }),
   methods: {
     logout: function () {
-      this.$store.dispatch("auth/logout").then(() => {
-        this.$router.push("/admin/login");
-      });
+      this.$router.push("/");
     },
   },
 };
