@@ -260,6 +260,7 @@ let routes = [
     meta: metaConfig
   }
 ]
+
 const router = new Router({
   routes,
   mode: 'history'
@@ -267,8 +268,15 @@ const router = new Router({
 
 router.beforeEach(async (to, from, next) => {
   if (store.state.auth.token != '' && store.state.user.userInfo == null) {
-    store.commit('user/user_profile')
-    await store.dispatch("user/autoLogin")
+    await store.dispatch("user/autoLogin").then((res) => {
+      // console.log(res)
+      if (store.state.user.userInfo.role === 'ROLE_ADMIN') {
+        store.commit('user/admin_profile')
+      }
+      else {
+        store.commit('user/user_profile')
+      }
+    })
   } else {
     next()
   }

@@ -64,7 +64,7 @@
       <v-spacer></v-spacer>
 
       <v-btn color="primary" @click.prevent="logout">
-        Logout
+        Back To Web
         <v-icon right>exit_to_app</v-icon>
       </v-btn>
     </v-app-bar>
