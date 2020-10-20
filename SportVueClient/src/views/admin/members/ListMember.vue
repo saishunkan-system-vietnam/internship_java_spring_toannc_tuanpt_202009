@@ -20,7 +20,15 @@
             <v-toolbar-title>Close</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-              <v-btn dark text @click="confirmList"> Save </v-btn>
+              <v-btn
+                :disabled="successDialog"
+                :loading="successDialog"
+                dark
+                text
+                @click="confirmList"
+              >
+                Save
+              </v-btn>
             </v-toolbar-items>
           </v-toolbar>
           <v-card-text>
@@ -88,8 +96,12 @@
         <CreateMember
           :isOpenModalMember="isOpenModalMember"
           :loadMemberAfterCreate="loadMemberAfterCreate"
-          :passSelectedType = "passSelectedType"
+          :passSelectedType="passSelectedType"
         />
+      </v-dialog>
+
+      <v-dialog v-model="successDialog" hide-overlay persistent width="300">
+        <v-alert class="mb-0" type="success">  List Member Added Success! </v-alert>
       </v-dialog>
     </v-row>
   </div>
@@ -111,10 +123,11 @@ export default {
     updateTeam: {
       type: Function,
     },
-    idTeam: Number
+    idTeam: Number,
   },
   data() {
     return {
+      successDialog: false,
       checkAdd: true,
       dialogMemberTable: false,
       dialogCreateMember: false,
@@ -139,9 +152,7 @@ export default {
       members: [],
     };
   },
-  computed:{
-   
-  },
+  computed: {},
   watch: {
     memberProp: {
       immediate: true,
@@ -179,7 +190,6 @@ export default {
         .catch(function (error) {});
     },
     addMember(member) {
-      
       this.checkAdd = false;
       let indexRemove = 0;
       this.addedMember(member);
@@ -197,8 +207,13 @@ export default {
       this.desserts.push(member);
     },
     confirmList() {
-      this.dialogMemberTable = !this.dialogMemberTable;
-      this.updateTeam(this.idTeam);
+      let self = this
+      this.successDialog = !this.successDialog;
+      setTimeout(function () {
+        self.successDialog = !self.successDialog;
+        self.dialogMemberTable = !self.dialogMemberTable;
+        self.updateTeam(self.idTeam);
+      }, 1000);
     },
   },
 };
