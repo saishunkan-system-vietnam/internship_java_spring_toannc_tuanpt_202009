@@ -146,10 +146,9 @@ export default {
           ) {
             alert("Created Falied");
           } else {
-            console.log("Run here");
-            self.successDialog = true;
+            self.successDialog = !self.successDialog;
             setTimeout(function () {
-              self.successDialog = false;
+              self.successDialog = !self.successDialog;
               self.$router.push("/LayoutTeam");
             }, 1500);
           }

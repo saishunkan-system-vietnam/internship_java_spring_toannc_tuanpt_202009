@@ -10,7 +10,7 @@
         ><h1>Win: {{ team.totalwin }}</h1></v-card-title
       >
     </v-row>
-    <v-card-text >
+    <v-card-text>
       <v-row>
         <h3>{{ team.type }}</h3>
 
@@ -90,11 +90,15 @@
     </v-card-actions>
 
     <v-dialog v-model="dialogEditTeam" max-width="60%">
-      <EditTeam :openEditTeam="openEditTeam" :teamProps="team" :desserts="desserts"/>
+      <EditTeam
+        :openEditTeam="openEditTeam"
+        :teamProps="team"
+        :desserts="desserts"
+      />
     </v-dialog>
 
     <v-dialog v-model="dialogConfirm" max-width="350">
-      <v-card class="container">
+      <v-card class="container" v-if="!success">
         <v-card-title class="headline">
           Confirm Apply This List ?
         </v-card-title>
@@ -112,6 +116,9 @@
           </v-btn>
         </v-card-actions>
       </v-card>
+      <template v-else>
+        <v-alert class="mb-0" type="success"> Confirm List Success! </v-alert>
+      </template>
     </v-dialog>
   </v-card>
 </template>
@@ -126,6 +133,7 @@ export default {
 
   data() {
     return {
+      success: false,
       dialogConfirm: false,
       dialogEditTeam: false,
       checkAdd: true,
@@ -192,7 +200,7 @@ export default {
     updateTeam(id) {
       let self = this;
       this.teamDetail.profile = this.desserts;
-      console.log(this.teamDetail)
+      // console.log(this.teamDetail)
       this.$store
         .dispatch("team/updateMembersInTeam", this.teamDetail)
         .then(function (response) {
@@ -226,8 +234,13 @@ export default {
     },
 
     confirmUpdate: function (id) {
-      this.dialogConfirm = false;
-      this.updateTeam(id);
+      let self = this
+      this.success = !this.success;
+      setTimeout(function () {
+        self.success = !self.success;
+        self.dialogConfirm = !self.dialogConfirm;
+        self.updateTeam(id);
+      }, 1500);
     },
   },
 };
