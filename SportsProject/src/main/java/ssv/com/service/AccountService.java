@@ -107,4 +107,9 @@ public class AccountService {
 
 		return accountDto;
 	}
+
+	public Account findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return accountRepository.findByEmail(email);
+	}
 }

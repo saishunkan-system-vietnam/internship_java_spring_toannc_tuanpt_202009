@@ -27,4 +27,6 @@ public interface  AccountMapper {
 
 	public  List<Account> searchTotal(String name, String type);
 
+	public Account findByEmail(String email);
+
 }

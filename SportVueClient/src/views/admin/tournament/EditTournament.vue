@@ -190,7 +190,7 @@ export default {
             if (response.data == "edit") {
               this.getList();
               this.callback();
-              alert("thanh cong");
+              alert("edit success");
             } else {
               alert(response.data);
             }

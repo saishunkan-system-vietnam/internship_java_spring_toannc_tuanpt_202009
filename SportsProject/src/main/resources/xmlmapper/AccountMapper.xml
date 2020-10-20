@@ -20,6 +20,16 @@
 			<result property="gender" column="profile_gender" />
 			<result property="address" column="profile_address" />
 			<result property="avatar" column="profile_avatar" />
+			<result property="idTeam" column="id_team" />
+			<result property="type" column="profile_type" />
+			<association property="team">
+				<id column="id_team" property="idTeam" />
+				<result column="team_name" property="nameTeam" />
+				<result column="team_type" property="type" />
+				<result column="team_description" property="description" />
+				<result column="team_logo" property="logo" />
+				<result column="id_tour" property="idTour" />
+			</association>
 		</association>
 	</resultMap>
 
@@ -36,8 +46,8 @@
 		a.id,a.account_username,a.account_email,a.account_password,a.account_role,b.id
 		as
 		id_profile,b.profile_name,b.profile_email,b.profile_phone,b.profile_age,b.profile_address,b.profile_gender,b.profile_avatar,b.id_team,b.profile_type
-		From account_tbl a left join profile_tbl b on
-		a.account_email=b.profile_email
+		, c.team_name,c.id_team From account_tbl a left join (profile_tbl b left join
+		team_tbl c on b.id_team=c.id_team) on a.account_email=b.profile_email
 		where a.id=${id}
 	</select>
 	<select id="findByUsername" resultMap="accountMapping">
@@ -90,5 +100,14 @@
 	<select id="searchTotal" resultMap="accountMapping">
 		SELECT * FROM account_tbl
 		Where ${type} LIKE '%${name}%' ORDER BY id DESC
+	</select>
+	<select id="findByEmail" resultMap="accountMapping">
+	SELECT
+		a.id,a.account_username,a.account_email,a.account_password,a.account_role,b.id
+		as
+		id_profile,b.profile_name,b.profile_email,b.profile_phone,b.profile_age,b.profile_address,b.profile_gender,b.profile_avatar,b.id_team,b.profile_type
+		, c.team_name,c.id_team From account_tbl a left join (profile_tbl b left join
+		team_tbl c on b.id_team=c.id_team) on a.account_email=b.profile_email
+		where a.account_email='${email}'
 	</select>
 </mapper>

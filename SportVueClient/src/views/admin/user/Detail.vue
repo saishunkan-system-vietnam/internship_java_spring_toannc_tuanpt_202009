@@ -24,8 +24,11 @@
                         {{ data && data.profile ? data.profile.name : "" }}
                       </h2>
                       <br />
-                      <h6 v-show="role">Người Dùng Hệ thống</h6>
-                      <h6 v-show="!role">Thành Viên Trong Hệ Thống</h6>
+
+                      <h6>
+
+                        {{data.role=='ROLE_USER'?'User':data.role=='ROLE_MEMBER'?'Member':'Admin'}}
+                      </h6>
                     </div>
                   </div>
                   <div class="col-md-4"></div>
@@ -50,7 +53,7 @@
                         </div>
                         <div class="row">
                           <div class="col-md-4">
-                            <label>Giới tính</label>
+                            <label>Gender</label>
                           </div>
                           <div class="col-md-4">
                             <p
@@ -60,9 +63,9 @@
                                 data.profile.gender == 'Male'
                               "
                             >
-                              Nam
+                              Male
                             </p>
-                            <p v-else>Nữ</p>
+                            <p v-else>Female</p>
                           </div>
                         </div>
                         <div class="row">
@@ -97,59 +100,33 @@
                             </p>
                           </div>
                         </div>
-                      </div>
-                      <div
-                        class="tab-pane fade"
-                        id="profile"
-                        role="tabpanel"
-                        aria-labelledby="profile-tab"
-                      >
-                        <div class="row">
-                          <div class="col-md-6">
-                            <label>Experience</label>
+                        <!-- --- -->
+                        <div v-if="data.role=='ROLE_MEMBER'&&data.profile.team!=null">
+                         <div class="row">
+                          <div class="col-md-4">
+                            <label>Team</label>
                           </div>
-                          <div class="col-md-6">
-                            <p>Expert</p>
+                          <div class="col-md-4">
+                            <p >
+                              <a :href="$router.resolve({path: '/edit/'+data.profile.team.idTeam}).href"> {{data.profile.team.nameTeam}}</a>
+                           </p>
                           </div>
                         </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <label>Hourly Rate</label>
+                        
+                        </div>
+                        <div v-if="data.role=='ROLE_MEMBER'&&data.profile.team==null">
+                         <div class="row">
+                          <div class="col-md-4">
+                            <label>Team</label>
                           </div>
-                          <div class="col-md-6">
-                            <p>10$/hr</p>
+                          <div class="col-md-4">
+                            <p >
+                              No team yet
+
+                           </p>
                           </div>
                         </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <label>Total Projects</label>
-                          </div>
-                          <div class="col-md-6">
-                            <p>230</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <label>English Level</label>
-                          </div>
-                          <div class="col-md-6">
-                            <p>Expert</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <label>Availability</label>
-                          </div>
-                          <div class="col-md-6">
-                            <p>6 months</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <label>Your Bio</label>
-                            <br />
-                            <p>Your detail description</p>
-                          </div>
+                        
                         </div>
                       </div>
                     </div>
@@ -169,7 +146,7 @@ export default {
     return {
       data: {},
       avatar: "",
-      role: true,
+     
     };
   },
   created() {
@@ -177,12 +154,9 @@ export default {
       .dispatch("user/getById", this.$route.params.id)
       .then((response) => {
         this.data = response.data;
-        this.avatar =response.data.profile.avatar;
-        if (response.data.role == "ROLE_USER") {
-          this.role = true;
-        } else {
-          this.role = false;
-        }
+        this.avatar = response.data.profile.avatar;
+        console.log(this.data)
+       
       });
   },
 };

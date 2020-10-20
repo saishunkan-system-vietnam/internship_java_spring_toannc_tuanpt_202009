@@ -238,7 +238,6 @@ export default {
   methods: {
     getListTournament() {
       this.$store.dispatch("tournament/getAll").then((response) => {
-        this.loading = true;
         this.items = response.data;
         this.tournament = response.data;
         this.busy = false;
@@ -314,6 +313,7 @@ export default {
       }
       
       this.items = arrSearch;
+      this.rows=arrSearch.length
     },
   },
   created() {
