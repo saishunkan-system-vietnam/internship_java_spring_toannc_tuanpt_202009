@@ -1,5 +1,5 @@
 import { searchUser } from '@/api/UserApi'
-import { getById, updateProfileUser } from '../api/UserApi';
+import { findByEmailUser, getAll, getById, updateProfileUser } from '../api/UserApi';
 import { autoLogin } from '../api/UserApi'
 import {findByEmail, historyMemberMatchs,upcommingMemberMatchs} from '../api/MemberApi'
 import {getPlayerId} from '../api/MemberApi'
@@ -26,6 +26,15 @@ const actions = {
     searchUser({ }, params) {
         return new Promise((resolve, reject) => {
             searchUser(params).then(res => {
+                resolve(res);
+            }).catch((err) => {
+                reject(err);
+            })
+        })
+    },
+    getAll({}){
+        return new Promise((resolve, reject) => {
+            getAll().then(res => {
                 resolve(res);
             }).catch((err) => {
                 reject(err);
@@ -93,6 +102,15 @@ const actions = {
     findByEmail({},email){
         return new Promise((resolve, reject) => {
             findByEmail(email).then(res => {
+                resolve(res);
+            }).catch((err) => {
+                reject(err);
+            })
+        })
+    },
+    findByEmailUser({},email){
+        return new Promise((resolve, reject) => {
+            findByEmailUser(email).then(res => {
                 resolve(res);
             }).catch((err) => {
                 reject(err);

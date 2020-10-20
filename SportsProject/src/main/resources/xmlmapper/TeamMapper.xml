@@ -6,9 +6,6 @@
 	<resultMap type="Team" id="teamMapping">
 		<id column="id_team" property="idTeam" />
 		<result column="team_name" property="nameTeam" />
-		<result column="team_totalmatch" property="totalmatch" />
-		<result column="team_totalwin" property="totalwin" />
-		<result column="team_type" property="type" />
 		<result column="team_description" property="description" />
 		<result column="team_logo" property="logo" />
 		<result column="id_tour" property="idTour" />
