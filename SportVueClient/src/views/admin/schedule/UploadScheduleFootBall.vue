@@ -87,7 +87,7 @@
         :placeholder="'Pick an image'"
         prepend-icon="mdi-camera"
         label="Image"
-        :rules="[(v) => !!v.name || 'Item is required']"
+        :rules="[(v) => !!v || 'Item is required']"
       ></v-file-input>
       <v-file-input
         v-model="fileVideo"
@@ -95,7 +95,7 @@
         :placeholder="'Pick an video'"
         prepend-icon="mdi-video"
         label="Video"
-        :rules="[(v) => !!v.name || 'Item is required']"
+        :rules="[(v) => !!v || 'Item is required']"
       ></v-file-input>
       <v-btn color="blue-grey" class="ma-2 white--text" @click="cancel">
         Cancel
@@ -117,6 +117,7 @@ export default {
   },
   data: () => ({
     busy: false,
+    name:'',
     score1h1: "",
     score2h1: "",
     score1h2: "",

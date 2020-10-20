@@ -20,7 +20,7 @@
           <v-expansion-panel-content>
             <v-simple-table>
               <tbody>
-                <tr
+                <tr style="cursor:pointer"
                   v-for="(item, index) in tournament.schedule"
                   :key="index"
                   v-b-popover.hover.top="'Click to see details'"

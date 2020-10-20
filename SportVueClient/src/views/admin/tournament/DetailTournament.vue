@@ -1,281 +1,400 @@
 <template>
   <div>
-    <b-container fluid>
-      <div class="text-center">
-        <h1>{{ data.nameTour }}</h1>
-        <h3>Type of sports :{{ data.type }}</h3>
-        {{ data.timeStart }}<b-icon-arrow-right></b-icon-arrow-right
-        >{{ data.timeEnd }}<br />
-      </div>
-      <p v-if="data.status == 2">
-        <img
-          style="width: 50px"
-          src="https://image.freepik.com/free-vector/trophy-vector-icon-illustration-with-laurel-wreath_38841-83.jpg"
-        />{{ this.winner }}
-      </p>
-
-      <b-container fluid style="margin-top: 100px">
-        <v-card>
-          <v-card-title>
-            Teams
-            <v-spacer> </v-spacer>
-
-            <v-text-field
-              v-model="search"
-              append-icon="mdi-magnify"
-              label="Search"
-              single-line
-              hide-details
-            ></v-text-field>
-          </v-card-title>
-          <v-btn
+    <div class="text-center">
+      <h1>{{ dataTournament.nameTour }}</h1>
+      <h3>Type of sports :{{ dataTournament.type }}</h3>
+      {{ dataTournament.timeStart }}<b-icon-arrow-right></b-icon-arrow-right
+      >{{ dataTournament.timeEnd }}<br />
+    </div>
+    <div style="margin-top:50px">
+      <b-tabs content-class="mt-3" fill  active-nav-item-class="font-weight-bold text-uppercase text-danger" >
+        <b-tab title="Team" active >
+          <v-btn 
             class="mx-2"
-            fab
+            style="margin-bottom: 20px;margin-top:50px"
             dark
             color="indigo"
             @click.stop="dialog = true"
           >
-            <v-icon dark> mdi-plus </v-icon>
-          </v-btn>
-          <v-data-table :headers="headers" :items="team" :search="search">
-            <template v-slot:item="row">
-              <tr>
-                <td>{{ row.item.nameTeam }}</td>
-                <td><b-avatar :src="row.item.logo" square></b-avatar></td>
-                <td>{{ row.item.profile.length }}</td>
-                <td>{{ row.item.description }}</td>
-                <td>
-                  <v-btn fab small @click="openMemberTable(row.item.idTeam)">
-                    <v-icon>mdi-forward</v-icon>
-                  </v-btn>
-
-                  <v-btn
-                    class="mx-2"
-                    fab
-                    small
-                    @click="deleteTeam(row.item.idTeam)"
-                  >
-                    <v-icon dark>mdi-delete</v-icon>
-                  </v-btn>
-                </td>
-              </tr>
+            <v-icon dark> mdi-plus </v-icon></v-btn
+          >
+          <b-row>
+            <b-col cols="12" sm="4">
+              Name Team
+              <b-form-input
+                v-model="textNameTeam"
+                placeholder="Input Field"
+              ></b-form-input>
+            </b-col>
+            <b-col>
+              <br />
+              <b-button variant="primary" @click="searchTeam">Search</b-button>
+            </b-col>
+          </b-row>
+          <b-table
+            small
+            outlined
+            id="my-table"
+            :per-page="perPage"
+            :current-page="currentPage"
+            striped
+            hover
+            :items="itemsTeam"
+            :fields="fieldsTeam"
+          >
+            <template v-slot:cell(logo)="row">
+              <b-img
+                style="max-width: 100px"
+                :src="row.item.logo"
+                alt="Left image"
+              ></b-img>
             </template>
-          </v-data-table>
-        </v-card>
-        <b-modal id="modal-1" centered title="Delete" @ok="handleOk()">
-          <p class="my-4">Are you sure!</p>
-        </b-modal>
-      </b-container>
+            <template v-slot:cell(Action)="row">
+              <a
+                :href="
+                  $router.resolve({ path: '/edit/' + row.item.idTeam }).href
+                "
+              >
+                <v-btn fab small>
+                  <v-icon>mdi-forward</v-icon>
+                </v-btn>
+              </a>
+              <v-btn fab small @click="deleteTeam(row.item.idTeam)">
+                <v-icon dark>mdi-delete</v-icon>
+              </v-btn>
+            </template>
+          </b-table>
+          <b-pagination
+            v-model="currentPage"
+            :total-rows="rowsTeam"
+            :per-page="perPage"
+            aria-controls="my-table"
+          ></b-pagination>
+          <v-row justify="center">
+            <v-dialog persistent v-model="dialog" max-width="290" scrollable>
+              <v-card>
+                <v-card-title class="headline"> Choose Team: </v-card-title>
 
-      <b-container fluid style="margin-top: 100px">
-        <v-card>
-          <v-card-title>
-            {{ schedule.length }} :Schedule
-            <v-spacer> </v-spacer>
-            <v-text-field
-              v-model="searchSchedule"
-              append-icon="mdi-magnify"
-              label="Search"
-              single-line
-              hide-details
-            ></v-text-field>
-          </v-card-title>
+                <v-card-text style="height: 300px">
+                  <v-radio-group
+                    v-model="teamAdd"
+                    column
+                    v-for="item in items"
+                    :key="item.idTeam"
+                  >
+                    <v-radio
+                      :label="item.nameTeam"
+                      :value="item.idTeam"
+                    ></v-radio>
+                  </v-radio-group>
+                </v-card-text>
+
+                <v-card-actions>
+                  <v-btn @click="dialog = false">Cancel</v-btn>
+                  <v-btn @click="addTeam">Ok</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-row>
+          <b-modal id="modal-1" centered title="Delete" @ok="handleOk()">
+            <p class="my-4">Are you sure?</p>
+          </b-modal>
+        </b-tab>
+        <b-tab title="Schedule">
           <v-btn
             class="mx-2"
-            fab
+            style="margin-bottom: 50px"
             dark
             color="indigo"
             @click.stop="dialogSchedule = true"
           >
-            <v-icon dark> mdi-plus </v-icon>
-          </v-btn>
-          <v-data-table
-            :headers="headersSchedule"
-            :items="schedule"
-            :search="searchSchedule"
+            <v-icon dark> mdi-plus </v-icon></v-btn
           >
-            <template v-slot:item="row">
-              <tr>
-                <td>{{ row.item.title }}</td>
-                <td>
-                  {{ row.item.timeStart }}<v-icon>mdi-forward</v-icon
-                  >{{ row.item.timeEnd }}
-                </td>
-                <td>
-                  {{ row.item.team[0].nameTeam }}<v-icon>mdi-fencing </v-icon
-                  >{{ row.item.team[1].nameTeam }}
-                </td>
-                <td>
-                  {{ row.item.scoreTeam1 != 0 ? row.item.scoreTeam1 : "?" }}-{{
-                    row.item.scoreTeam2 != 0 ? row.item.scoreTeam2 : "?"
-                  }}
-                </td>
-                <td>
-                  {{
-                    row.item.status == 0
-                      ? "not"
-                      : row.item.status == 1
-                      ? "doing"
-                      : "end"
-                  }}
-                </td>
-                <td>
-                  <router-link
-                    :to="{ path: '/DetailSchedule/' + row.item.idSchedule }"
-                    id="${schedule.idSchedule}"
+          <b-row>
+            <b-col cols="12" sm="3">
+              Title Schedule
+              <b-form-input
+                v-model="textTitleSchedule"
+                placeholder="Input Field"
+              ></b-form-input>
+            </b-col>
+            <b-col cols="12" sm="4">
+              Team
+              <b-form-input
+                v-model="textTeamSchedule"
+                placeholder="Input Field"
+              ></b-form-input>
+            </b-col>
+            <b-col cols="12" sm="4">
+              Status
+              <b-form-select v-model="selectedStatus" :options="optionsStatus">
+              </b-form-select>
+            </b-col>
+           
+          </b-row>
+          <b-row>
+            <b-col cols="12" sm="10">
+              Time Start To
+              <b-row>
+                <b-col cols="12" sm="5">
+                  <b-form-datepicker
+                    id="example-datepicker"
+                    v-model="valueStart"
+                    class="mb-2"
+                    reset-button
                   >
-                    <v-btn fab small>
-                      <v-icon>mdi-forward</v-icon>
-                    </v-btn>
-                  </router-link>
-                  <v-btn
-                    v-if="row.item.status == 0"
-                    class="mx-2"
-                    fab
-                    small
-                    @click="editSchedule(row.item)"
+                  </b-form-datepicker
+                ></b-col>
+                <b-col cols="12" sm="1" class="text-center">~</b-col>
+                <b-col cols="12" sm="5">
+                  <b-form-datepicker
+                    id="example-datepicker1"
+                    v-model="valueEnd"
+                    class="mb-2"
+                    reset-button
+                  ></b-form-datepicker
+                ></b-col>
+              </b-row>
+            </b-col>
+            <b-col>
+              <br />
+              <b-row>
+                <b-col>
+                  <b-button variant="primary" @click="searchSchedule"
+                    >Search</b-button
                   >
-                    <v-icon dark>mdi-pencil</v-icon>
-                  </v-btn>
-                  <v-btn
-                    class="mx-2"
-                    fab
-                    small
-                    @click="deleteSchedule(row.item.idSchedule)"
-                  >
-                    <v-icon dark>mdi-delete</v-icon>
-                  </v-btn>
-                </td>
-              </tr>
+                </b-col>
+              </b-row>
+            </b-col>
+          </b-row>
+
+          <b-table
+            id="my-table"
+            :per-page="perPageSchedule"
+            :current-page="currentPageSchedule"
+            striped
+            hover
+            small
+            :items="itemsSchedule"
+            :fields="fieldsSchedule"
+          >
+            <template v-slot:cell(Acction)="row">
+              <router-link
+                :to="{ path: '/DetailSchedule/' + row.item.idSchedule }"
+                id="${schedule.idSchedule}"
+              >
+                <v-btn fab x-small>
+                  <v-icon>mdi-forward</v-icon>
+                </v-btn>
+              </router-link>
+              <v-btn
+                v-if="row.item.status == 0"
+                fab
+                x-small
+                @click="editSchedule(row.item)"
+              >
+                <v-icon dark>mdi-pencil</v-icon>
+              </v-btn>
+              <v-btn
+                v-if="row.item.status == 0"
+                fab
+                x-small
+                @click="deleteSchedule(row.item.idSchedule)"
+              >
+                <v-icon dark>mdi-delete</v-icon>
+              </v-btn>
             </template>
-          </v-data-table>
-        </v-card>
-        <b-modal id="modal-2" centered title="Delete" @ok="handleOkSchedule()">
-          <p class="my-4">Are you sure!</p>
-        </b-modal>
-      </b-container>
-    </b-container>
-    <v-row justify="center">
-      <v-dialog persistent v-model="dialog" max-width="290" scrollable>
-        <v-card>
-          <v-card-title class="headline"> Choose Team: </v-card-title>
+            <template v-slot:cell(status)="row">
+              <p
+                :style="
+                  row.item.status == 0
+                    ? 'color:green'
+                    : row.item.status == 1
+                    ? 'color:blue'
+                    : 'color:red'
+                "
+              >
+                {{
+                  row.item.status == 0
+                    ? "Upcomming"
+                    : row.item.status == 1
+                    ? "On Game"
+                    : "Finished"
+                }}
+              </p>
+            </template>
+            <template v-slot:cell(score)="row">
+              <p v-if="row.item.status == 2 && row.item.video != null">
+                {{ row.item.scoreTeam1 }}-{{ row.item.scoreTeam2 }}
+              </p>
+              <p v-else>&ensp;-</p>
+            </template>
+          </b-table>
+          <b-pagination
+          
+            v-model="currentPageSchedule"
+            :total-rows="rowsSchedule"
+            :per-page="perPageSchedule"
+            aria-controls="my-table"
+            
+          ></b-pagination>
+          <b-modal
+            id="modal-2"
+            centered
+            title="Delete"
+            @ok="handleOkSchedule()"
+          >
+            <p class="my-4">Are you sure!</p>
+          </b-modal>
+          <v-dialog v-model="dialogSchedule" max-width="1000px" persistent>
+            <v-card>
+              <v-card-title class="headline"> Add Schedule </v-card-title>
+              <v-card-text>
+                <AddSchedule
+                  :idTour="this.$route.params.id"
+                  :hideModal="hideModal"
+                  :getListSchedule="getTournamentSchedule"
+                  :getTournamentTeam="getTournamentTeam"
+                ></AddSchedule>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+          <v-dialog v-model="dialogEditSchedule" max-width="1000px" persistent>
+            <v-card>
+              <v-card-title class="headline"> Edit </v-card-title>
 
-          <v-card-text style="height: 300px">
-            <v-radio-group
-              v-model="teamAdd"
-              column
-              v-for="item in items"
-              :key="item.idTeam"
-            >
-              <v-radio :label="item.nameTeam" :value="item.idTeam"></v-radio>
-            </v-radio-group>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-btn @click="dialog = false">Cancel</v-btn>
-            <v-btn @click="addTeam">Ok</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-row>
-    <v-dialog v-model="dialogSchedule" max-width="1000px">
-      <v-card>
-        <v-card-title class="headline"> Add Schedule </v-card-title>
-        <v-card-text>
-          <AddSchedule
-            :idTour="this.$route.params.id"
-            :hideModal="hideModal"
-            :getListSchedule="getTournamentSchedule"
-            :getTournamentTeam="getTournamentTeam"
-          ></AddSchedule>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-    <v-dialog v-model="dialogEditSchedule" max-width="1000px">
-      <v-card>
-        <v-card-title class="headline"> Edit </v-card-title>
-
-        <v-card-text>
-          <EditSchedule
-            :hideModal="hideModal"
-            :getData="getTournamentSchedule"
-            :dataEdit="dataEdit"
-          ></EditSchedule>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-    <v-dialog v-model="dialogMemberTable" max-width="1000px">
-      <MemberTable :teamData="teamData" />
-    </v-dialog>
+              <v-card-text>
+                <EditSchedule
+                  :hideModal="hideModal"
+                  :getData="getTournamentSchedule"
+                  :dataEdit="dataEdit"
+                ></EditSchedule>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+        </b-tab>
+        <b-tab title="Rank"
+          ><Rank :idTour="idTour"/></b-tab
+        >
+      </b-tabs>
+    </div>
   </div>
 </template>
 <script>
 import AddSchedule from "./AddSchedule";
 import EditSchedule from "../schedule/EditSchedule";
+import Rank from "./Rank"
 
-import MemberTable from "@/views/admin/tournament/MembersTable";
 export default {
   components: {
     AddSchedule,
-    MemberTable,
     EditSchedule,
+    Rank
   },
   data() {
     return {
-      winner: "",
-      teamIdProp: "",
+      textTitleSchedule: "",
+      selectedStatus: null,
+      rowsSchedule: "",
+      valueStart: "",
+      perPageSchedule: 10,
+      currentPageSchedule: 1,
+      valueEnd: "",
+      selectedType: null,
+      perPage: 5,
+      textNameTeam: "",
+      rowsTeam: "",
+      currentPage: 1,
       dataEdit: "",
       dialogEditSchedule: false,
-      dialogMemberTable: false,
       dialogScheduleDelete: false,
       teamAdd: "",
       dialog: false,
       dialogSchedule: false,
       type: "",
-      search: "",
-      searchSchedule: "",
-      data: {},
-      team: [],
+      dataTournament: "",
       schedule: [],
-      items: [],
       idDelete: "",
-      headers: [
-        {
-          text: "Name",
-          align: "start",
-          sortable: true,
-          value: "nameTeam",
-        },
-        { text: "Logo", value: "logo", sortable: false },
-        { text: "Total Member", value: "type" },
-        { text: "Description", sortable: false },
-        { text: "action", sortable: false },
+      items: [],
+      optionsStatus: [
+        { value: null, text: "Please select an option" },
+        { value: "0", text: "Upcomming" },
+        { value: "1", text: "On Game" },
+        { value: "2", text: "Finished" },
       ],
-      headersSchedule: [
-        {
-          text: "Title",
-          align: "start",
-          sortable: true,
-          value: "title",
-        },
-        { text: "Time", value: "timeStart" },
-        { text: "Team", value: "type", sortable: false },
-        { text: "score", sortable: false },
-        { text: "status", value: "status" },
-        { text: "action", sortable: false },
+      optionsType: [
+        { value: null, text: "Please select an option" },
+        { value: "Football", text: "Football" },
+        { value: "TableTennis", text: "TableTennis" },
+        { value: "BasketBall", text: "BasketBall" },
       ],
+      fieldsTeam: [
+        {
+          key: "nameTeam",
+          label: "Name",
+          sortable: true,
+        },
+        {
+          key: "logo",
+          label: "Logo",
+          sortable: false,
+        },
+        {
+          key: "profile.length",
+          label: "Member",
+          sortable: false,
+        },
+        {
+          key: "description",
+          label: "Description",
+          sortable: false,
+        },
+        "Action",
+      ],
+      fieldsSchedule: [
+        {
+          key: "title",
+          label: "Title",
+          sortable: true,
+        },
+        {
+          key: "timeStart",
+          label: "Time Start",
+          sortable: true,
+        },
+
+        {
+          key: "team[0].nameTeam",
+          label: "HomeTeam",
+          sortable: true,
+        },
+        {
+          key: "team[1].nameTeam",
+          label: "Visiting Team",
+          sortable: true,
+        },
+
+        {
+          key: "score",
+          label: "Score",
+          sortable: false,
+        },
+        {
+          key: "status",
+          label: "Status",
+          sortable: true,
+        },
+        "Acction",
+      ],
+      itemsTeam: [],
+      textTeamSchedule: "",
+      itemsSchedule: [],
       idTour: this.$route.params.id,
-      teamData: {},
     };
   },
 
-  async created() {
-    let data1 = await this.getTournament();
-    this.type = data1.type;
-    this.getTournamentTeam();
-    this.getTournamentSchedule();
-    this.getTeamWait(data1.type);
-    this.idTour = this.$route.params.id;
+  created() {
+    this.Bindata();
   },
   watch: {
     team() {
@@ -285,6 +404,14 @@ export default {
     },
   },
   methods: {
+    async Bindata() {
+      let data1 = await this.getTournament();
+      this.type = data1.type;
+      this.getTournamentTeam();
+      this.getTournamentSchedule();
+      this.getTeamWait(data1.type);
+      this.idTour = this.$route.params.id;
+    },
     editSchedule(id) {
       this.dataEdit = id;
       this.dialogEditSchedule = true;
@@ -294,8 +421,7 @@ export default {
         .dispatch("tournament/deleteTeam", this.idDelete)
         .then((response) => {
           alert(response.data);
-          this.team.splice(this.index);
-          this.getTournamentTeam();
+          this.Bindata();
         });
     },
     handleOkSchedule() {
@@ -309,12 +435,12 @@ export default {
     },
     deleteSchedule(id) {
       this.$bvModal.show("modal-2");
-      this.index1 = this.team.indexOf(id);
+      this.index1 = this.itemsTeam.indexOf(id);
       this.idDeleteSchedule = id;
     },
     deleteTeam(id) {
       this.$bvModal.show("modal-1");
-      this.index = this.team.indexOf(id);
+      this.index = this.itemsTeam.indexOf(id);
       this.idDelete = id;
     },
     getTournamentSchedule() {
@@ -322,6 +448,9 @@ export default {
         .dispatch("schedule/getByIdTour", this.$route.params.id)
         .then((response) => {
           this.schedule = response.data;
+          this.itemsSchedule = response.data;
+          this.rowsSchedule = this.itemsSchedule.length;
+          console.log(this.schedule)
         });
     },
     hideModal() {
@@ -339,16 +468,9 @@ export default {
       this.$store
         .dispatch("tournament/getById", this.$route.params.id)
         .then((response) => {
-          this.data = response.data;
-          this.team = this.data.team;
-          // console.log(this.team);
-          if (response.data.winner != null) {
-            this.$store
-              .dispatch("team/getById", response.data.winner)
-              .then((response) => {
-                this.winner = response.data.nameTeam;
-              });
-          }
+          this.dataTournament = response.data;
+          this.itemsTeam = this.dataTournament.team;
+          this.rowsTeam = this.dataTournament.team.length;
         });
     },
     getTeamWait(data) {
@@ -359,17 +481,75 @@ export default {
     addTeam() {
       var idAdd = {
         idTeam: this.teamAdd,
-        idTour: this.data.idTour,
+        idTour: this.idTour,
       };
       this.$store.dispatch("tournament/addTeam", idAdd).then((response) => {
         alert(response.data);
-        this.getTournamentTeam();
         this.dialog = false;
+        this.Bindata();
       });
     },
-    openMemberTable(teamIdProp) {
-      this.dialogMemberTable = !this.dialogMemberTable;
-      this.teamData = { idTour: this.idTour, idTeam: teamIdProp };
+    searchTeam() {
+      var arrSearch = [];
+      {
+        if (this.textNameTeam != "") {
+          this.dataTournament.team.forEach((element) => {
+            if (element.nameTeam.includes(this.textNameTeam)) {
+              arrSearch.push(element);
+            }
+          });
+        } else {
+          arrSearch = this.dataTournament.team;
+        }
+      }
+      this.itemsTeam = arrSearch;
+    },
+    searchSchedule() {
+      var arrSearch = [];
+      {
+        if (this.textTitleSchedule != "") {
+          this.schedule.forEach((element) => {
+            if (element.title.includes(this.textTitleSchedule)) {
+              arrSearch.push(element);
+            }
+          });
+        } else {
+          arrSearch = this.schedule;
+        }
+      }
+      if (this.selectedStatus != null) {
+        var arrStatus = [];
+        arrSearch.forEach((element) => {
+          if (element.status == this.selectedStatus) {
+            arrStatus.push(element);
+          }
+        });
+        arrSearch = arrStatus;
+      }
+    
+      if (this.valueStart != "" && this.valueEnd != "") {
+        var arrDate = [];
+        arrSearch.forEach((element) => {
+          if (
+            element.timeStart >= this.valueStart &&
+            element.timeStart <= this.valueEnd
+          ) {
+            arrDate.push(element);
+          }
+        });
+        arrSearch = arrDate;
+      }
+      if(this.textTeamSchedule!=""){
+        var arrTeam=[];
+        arrSearch.forEach(element=>{
+          if(element.team[0].nameTeam.includes(this.textTeamSchedule)||element.team[1].nameTeam.includes(this.textTeamSchedule)){
+            arrTeam.push(element);
+          }
+        })
+        arrSearch=arrTeam;
+      }
+      this.itemsSchedule = arrSearch;
+      this.rowsSchedule = this.itemsSchedule.length;
     },
   },
 };

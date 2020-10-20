@@ -6,7 +6,7 @@
       opacity="0.6"
       spinner-small
       spinner-variant="primary"
-    ><h1 class="text-center">Tournament</h1>
+      ><h1 class="text-center">Tournament</h1>
       <v-btn
         class="mx-2"
         style="margin-bottom: 50px"
@@ -45,6 +45,7 @@
                 v-model="valueStart"
                 class="mb-2"
                 reset-button
+                
               >
               </b-form-datepicker
             ></b-col>
@@ -76,6 +77,7 @@
         striped
         hover
         :items="items"
+        small
         :fields="fields"
       >
         <template v-slot:cell(Acction)="row">
@@ -86,7 +88,6 @@
           </router-link>
           <v-btn
             v-if="row.item.status == 0"
-            class="mx-2"
             fab
             small
             @click="EditTour(row.item)"
@@ -95,7 +96,6 @@
           </v-btn>
           <v-btn
             v-if="row.item.status == 0"
-            class="mx-2"
             fab
             small
             @click="deleteTour(row.item)"
@@ -241,7 +241,7 @@ export default {
         this.items = response.data;
         this.tournament = response.data;
         this.busy = false;
-        this.rows=response.data.length
+        this.rows = response.data.length;
       });
     },
     EditTour(id) {
@@ -269,7 +269,6 @@ export default {
         });
     },
     search() {
-      this.busy = false;
       var arrSearch = [];
       {
         if (this.textNameTournament != "") {
@@ -313,7 +312,7 @@ export default {
         arrSearch = arrDate;
       }
       this.items = arrSearch;
-      this.rows=arrSearch.length
+      this.rows = arrSearch.length;
     },
   },
   created() {

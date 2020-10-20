@@ -85,6 +85,7 @@
         hover
         :items="items"
         :fields="fields"
+        small
       >
         <template v-slot:cell(Acction)="row">
           <router-link
