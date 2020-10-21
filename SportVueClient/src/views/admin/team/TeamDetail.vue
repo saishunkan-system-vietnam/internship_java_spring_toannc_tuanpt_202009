@@ -1,126 +1,133 @@
 <template>
-  <v-card class="mx-auto my-12 container" max-width="85%">
-    <v-img height="250" :src="team.logo"></v-img>
-    <v-row>
-      <v-card-title
-        ><h1>{{ team.nameTeam }}</h1></v-card-title
-      >
-      <v-spacer></v-spacer>
-      <v-card-title
-        ><h1>Win: {{ team.totalwin }}</h1></v-card-title
-      >
-    </v-row>
-    <v-card-text>
-      <v-row>
-        <h3>{{ team.type }}</h3>
-
-        <v-spacer> </v-spacer>
-        <h3>TotalMatch: {{ team.totalmatch }}</h3>
-      </v-row>
-    </v-card-text>
-    <v-card-text>
-      <v-row>
-        <div class="my-4 subtitle-1">
-          {{ team.description }}
-        </div>
-        <v-spacer></v-spacer>
-
-        <v-btn color="primary" dark class="ma-2" @click="openEditTeam">
-          Edit Team
-        </v-btn>
-      </v-row>
-    </v-card-text>
-    <v-divider class="mx-4"></v-divider>
-
-    <v-row>
-      <v-col cols="12" md="5">
-        <v-card-title><h2>List Member</h2></v-card-title>
-      </v-col>
-      <v-spacer></v-spacer>
-      <v-col cols="12" md="2"> </v-col>
-    </v-row>
-
-    <v-card-text>
-      <v-data-table
-        :headers="headers"
-        :items="desserts"
-        class="elevation-1"
-        :search="search"
-      >
-        <template v-slot:top>
-          <v-toolbar flat color="white">
-            <ListMember
-              :passSelectedType="team.type"
-              :memberProp="memberProp"
-              :addedMember="addedMember"
-              :updateTeam="updateTeam"
-              :idTeam="parseInt($route.params.id)"
-            />
-            <v-divider class="mx-4" inset vertical></v-divider>
-            <v-spacer></v-spacer>
-            <v-text-field
-              v-model="search"
-              append-icon="mdi-magnify"
-              label="Search"
-              single-line
-              hide-details
-            ></v-text-field>
-          </v-toolbar>
-        </template>
-        <template v-slot:[`item.avatar`]="{ item }">
-          <b-img
-            :src="item.avatar"
-            alt=""
-            class="fixImg1"
-            style="margin: 5px 0 5px 0"
-          />
-        </template>
-
-        <template v-slot:[`item.idTeam`]="{ item }">
-          <v-btn @click="removeMember(item)" small>Remove</v-btn>
-        </template>
-      </v-data-table>
-    </v-card-text>
-
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn color="primary" dark class="ma-2" @click="dialogConfirm = true">
-        Confirm List
-      </v-btn>
-    </v-card-actions>
-
-    <v-dialog v-model="dialogEditTeam" max-width="60%">
-      <EditTeam
-        :openEditTeam="openEditTeam"
-        :teamProps="team"
-        :desserts="desserts"
-      />
-    </v-dialog>
-
-    <v-dialog v-model="dialogConfirm" max-width="350">
-      <v-card class="container" v-if="!success">
-        <v-card-title class="headline">
-          Confirm Apply This List ?
-        </v-card-title>
-        <v-card-actions>
-          <v-btn color="green darken-1" text @click="dialogConfirm = false">
-            Disagree
-          </v-btn>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="green darken-1"
-            text
-            @click="confirmUpdate($route.params.id)"
-          >
-            Agree
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-      <template v-else>
-        <v-alert class="mb-0" type="success"> Confirm List Success! </v-alert>
+  <div>
+    <v-breadcrumbs :items="teamLink" large>
+      <template v-slot:divider>
+        <v-icon>mdi-chevron-right</v-icon>
       </template>
-    </v-dialog>
-  </v-card>
+    </v-breadcrumbs>
+    <v-card class="mx-auto my-12 container" max-width="88%">
+      <v-img height="250" :src="team.logo"></v-img>
+      <v-row>
+        <v-card-title
+          ><h1>{{ team.nameTeam }}</h1></v-card-title
+        >
+        <v-spacer></v-spacer>
+        <v-card-title
+          ><h1>Win: {{ team.totalwin }}</h1></v-card-title
+        >
+      </v-row>
+      <v-card-text>
+        <v-row>
+          <h3>{{ team.type }}</h3>
+
+          <v-spacer> </v-spacer>
+          <h3>TotalMatch: {{ team.totalmatch }}</h3>
+        </v-row>
+      </v-card-text>
+      <v-card-text>
+        <v-row>
+          <div class="my-4 subtitle-1">
+            {{ team.description }}
+          </div>
+          <v-spacer></v-spacer>
+
+          <v-btn color="primary" dark class="ma-2" @click="openEditTeam">
+            Edit Team
+          </v-btn>
+        </v-row>
+      </v-card-text>
+      <v-divider class="mx-4"></v-divider>
+
+      <v-row>
+        <v-col cols="12" md="5">
+          <v-card-title><h2>List Member</h2></v-card-title>
+        </v-col>
+        <v-spacer></v-spacer>
+        <v-col cols="12" md="2"> </v-col>
+      </v-row>
+
+      <v-card-text>
+        <v-data-table
+          :headers="headers"
+          :items="desserts"
+          class="elevation-1"
+          :search="search"
+        >
+          <template v-slot:top>
+            <v-toolbar flat color="white">
+              <ListMember
+                :passSelectedType="team.type"
+                :memberProp="memberProp"
+                :addedMember="addedMember"
+                :updateTeam="updateTeam"
+                :idTeam="parseInt($route.params.id)"
+              />
+              <v-divider class="mx-4" inset vertical></v-divider>
+              <v-spacer></v-spacer>
+              <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="Search"
+                single-line
+                hide-details
+              ></v-text-field>
+            </v-toolbar>
+          </template>
+          <template v-slot:[`item.avatar`]="{ item }">
+            <b-img
+              :src="item.avatar"
+              alt=""
+              class="fixImg1"
+              style="margin: 5px 0 5px 0"
+            />
+          </template>
+
+          <template v-slot:[`item.idTeam`]="{ item }">
+            <v-btn @click="removeMember(item)" small>Remove</v-btn>
+          </template>
+        </v-data-table>
+      </v-card-text>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" dark class="ma-2" @click="dialogConfirm = true">
+          Confirm List
+        </v-btn>
+      </v-card-actions>
+
+      <v-dialog v-model="dialogEditTeam" max-width="60%">
+        <EditTeam
+          :openEditTeam="openEditTeam"
+          :teamProps="team"
+          :desserts="desserts"
+        />
+      </v-dialog>
+
+      <v-dialog v-model="dialogConfirm" max-width="350">
+        <v-card class="container" v-if="!success">
+          <v-card-title class="headline">
+            Confirm Apply This List ?
+          </v-card-title>
+          <v-card-actions>
+            <v-btn color="green darken-1" text @click="dialogConfirm = false">
+              Disagree
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="green darken-1"
+              text
+              @click="confirmUpdate($route.params.id)"
+            >
+              Agree
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+        <template v-else>
+          <v-alert class="mb-0" type="success"> Confirm List Success! </v-alert>
+        </template>
+      </v-dialog>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -163,13 +170,34 @@ export default {
       team: {},
       memberProp: {},
       teamDetail: {},
+      teamLink: [
+        {
+          text: "Dashboard",
+          disabled: false,
+          href: "/admin/home",
+        },
+        {
+          text: "Teams",
+          disabled: false,
+          href: "/LayoutTeam",
+        },
+        {
+          text: '',
+          disabled: false,
+          href: `/edit/${this.$route.params.id}`,
+        },
+      ],
     };
   },
   mounted() {
     this.loadListMember(this.$route.params.id);
     this.loadTeamById(this.$route.params.id);
   },
-  watch: {},
+  watch: {
+    team(value){
+      this.teamLink[2].text = value.nameTeam
+    } 
+  },
   methods: {
     isOpenModalMember: function () {
       this.dialogCreateMember = !this.dialogCreateMember;
@@ -231,7 +259,7 @@ export default {
     },
 
     confirmUpdate: function (id) {
-      let self = this
+      let self = this;
       this.success = !this.success;
       setTimeout(function () {
         self.success = !self.success;

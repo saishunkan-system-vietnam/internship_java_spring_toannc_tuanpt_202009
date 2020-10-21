@@ -54,6 +54,7 @@
           >
             <template v-slot:cell(logo)="row">
               <b-img :src="row.item.logo" width="70px" />
+
             </template>
             <template v-slot:cell(Action)="row">
               <a

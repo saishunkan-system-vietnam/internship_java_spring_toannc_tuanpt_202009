@@ -9,6 +9,7 @@
       ></v-img>
       <h2 class="text-center">ADMIN</h2>
       <v-list dense>
+
         <v-list-item class="css" @click="home">
           <v-list-item-action>
             <v-icon>mdi-home</v-icon>
@@ -49,6 +50,7 @@
             <v-list-item-title> Tournament </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
       </v-list>
     </v-navigation-drawer>
     <v-app-bar app color="indigo" dark>
