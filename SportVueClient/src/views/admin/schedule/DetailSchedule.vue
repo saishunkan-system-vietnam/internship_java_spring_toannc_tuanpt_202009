@@ -30,7 +30,7 @@
     <v-row justify="center">
       <v-dialog v-model="dialogFootball" width="900px">
         <v-card>
-          <v-card-title class="headline"> Upload data </v-card-title>
+          <v-card-title class="headline"> Update data </v-card-title>
           <v-card-text>
             <UploadScheduleFootBall
               :schedule="schedule"
@@ -139,7 +139,7 @@
                   Score :
                   <b-row>
                     <b-col class="text-center"
-                      ><b-img :src="team1.logo" size="6rem"></b-img
+                      ><b-img :src="team1.logo" width="100px"></b-img
                     ></b-col>
                     <b-col class="text-center"
                       ><h1>
@@ -147,7 +147,7 @@
                       </h1></b-col
                     >
                     <b-col class="text-center"
-                      ><b-img :src="team2.logo" size="6rem"></b-img
+                      ><b-img :src="team2.logo" width="1  00px"></b-img
                     ></b-col>
                   </b-row>
                   Description:

@@ -164,11 +164,11 @@
               <v-spacer></v-spacer>
 
               <v-btn color="green darken-1" text @click="dialog = false">
-                Disagree
+                Cancel
               </v-btn>
 
               <v-btn color="green darken-1" text @click="okCancel">
-                Agree
+                OK
               </v-btn>
             </v-card-actions>
           </v-card>

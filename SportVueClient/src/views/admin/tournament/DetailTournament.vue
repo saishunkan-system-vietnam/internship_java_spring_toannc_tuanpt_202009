@@ -178,7 +178,6 @@
             id="my-table"
             :per-page="perPageSchedule"
             :current-page="currentPageSchedule"
-            striped
             hover
             small
             :items="itemsSchedule"
@@ -428,7 +427,6 @@ export default {
     },
   },
   mounted(){
-    
   },
   methods: {
     async Bindata() {
@@ -585,10 +583,12 @@ export default {
   },
   watch:{
     dataTournament(){
+      if(this.itemlinks.length!=3){
        this.itemlinks.push({
         text: this.dataTournament.nameTour,
         disabled: true,
       });
+      }
     }
   }
 };

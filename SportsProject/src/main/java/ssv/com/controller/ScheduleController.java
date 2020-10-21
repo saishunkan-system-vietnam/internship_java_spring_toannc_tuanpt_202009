@@ -54,7 +54,7 @@ public class ScheduleController {
 	@PostMapping(value = "create")
 	public ResponseEntity<String> create(@RequestBody Schedule schedule){
 
-		if(scheduleService.checkTime(schedule.getTimeStart(),schedule.getTimeEnd(),schedule.getIdTour())) {
+		if(!scheduleService.checkTime(schedule.getTimeStart(),schedule.getTimeEnd(),schedule.getIdTour())) {
 			scheduleService.createSchedule(schedule);
 			return new ResponseEntity<String>("create",HttpStatus.OK);
 		}
