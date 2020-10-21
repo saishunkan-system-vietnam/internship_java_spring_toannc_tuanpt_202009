@@ -1,5 +1,10 @@
 <template>
   <div>
+     <v-breadcrumbs :items="itemlinks">
+        <template v-slot:divider>
+          <v-icon>mdi-chevron-right</v-icon>
+        </template>
+      </v-breadcrumbs>
     <b-container class="bv-example-row">
       <b-row>
         <b-col>
@@ -146,7 +151,18 @@ export default {
     return {
       data: {},
       avatar: "",
-     
+      itemlinks: [
+        {
+          text: "Dashboard",
+          disabled: false,
+          href: "/admin/home",
+        },
+        {
+          text:"User",
+          disabled:false,
+          href:"/LayoutUser"
+        }
+      ],
     };
   },
   created() {
@@ -155,8 +171,10 @@ export default {
       .then((response) => {
         this.data = response.data;
         this.avatar = response.data.profile.avatar;
-        console.log(this.data)
-       
+        this.itemlinks.push({
+        text: this.data.profile.name,
+        disabled: true,
+      });
       });
   },
 };

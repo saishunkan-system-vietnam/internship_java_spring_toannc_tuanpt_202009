@@ -6,7 +6,15 @@
       opacity="0.6"
       spinner-small
       spinner-variant="primary"
-      ><h1 class="text-center">Tournament</h1>
+      >
+     <v-breadcrumbs :items="itemlinks">
+        <template v-slot:divider>
+          <v-icon>mdi-chevron-right</v-icon>
+        </template>
+      </v-breadcrumbs>
+     
+      
+      <h1 class="text-center">Tournament</h1>
       <v-btn
         class="mx-2"
         style="margin-bottom: 50px"
@@ -186,6 +194,17 @@ export default {
       valueStart: "",
       valueEnd: "",
       tournament: [],
+      itemlinks:[
+        {
+          text: "Dashboard",
+          disabled: false,
+          href: "/admin/home",
+        },
+        {
+          text:"Tournamnet",
+          disabled:true
+        }
+      ],
       fields: [
         {
           key: "nameTour",

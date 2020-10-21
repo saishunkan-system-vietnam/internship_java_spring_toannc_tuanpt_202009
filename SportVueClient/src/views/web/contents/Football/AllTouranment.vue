@@ -12,9 +12,10 @@
     </div>
     <v-expansion-panels v-model="panel" multiple>
       <v-expansion-panel v-for="(tournament, i) in tournaments" :key="i">
-        <template v-if="i < number">
+        <template v-if="i < number&&tournament.schedule!=''">
           <v-expansion-panel-header style="color: #6b4b4b"
-            ><h5 @click="detailTournament(tournament.idTour)">{{ tournament.nameTour }}</h5></v-expansion-panel-header
+            ><h5 @click="detailTournament(tournament.idTour)">{{ tournament.nameTour }}
+              </h5></v-expansion-panel-header
           >
           <v-expansion-panel-content>
             <v-simple-table>

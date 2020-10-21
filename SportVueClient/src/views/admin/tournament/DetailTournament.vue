@@ -1,17 +1,27 @@
 <template>
   <div>
+    <v-breadcrumbs :items="itemlinks">
+      <template v-slot:divider>
+        <v-icon>mdi-chevron-right</v-icon>
+      </template>
+    </v-breadcrumbs>
+
     <div class="text-center">
       <h1>{{ dataTournament.nameTour }}</h1>
       <h3>Type of sports :{{ dataTournament.type }}</h3>
       {{ dataTournament.timeStart }}<b-icon-arrow-right></b-icon-arrow-right
       >{{ dataTournament.timeEnd }}<br />
     </div>
-    <div style="margin-top:50px">
-      <b-tabs content-class="mt-3" fill  active-nav-item-class="font-weight-bold text-uppercase text-danger" >
-        <b-tab title="Team" active >
-          <v-btn 
+    <div style="margin-top: 50px">
+      <b-tabs
+        content-class="mt-3"
+        fill
+        active-nav-item-class="font-weight-bold text-uppercase text-danger"
+      >
+        <b-tab title="Team" active>
+          <v-btn
             class="mx-2"
-            style="margin-bottom: 20px;margin-top:50px"
+            style="margin-bottom: 20px; margin-top: 50px"
             dark
             color="indigo"
             @click.stop="dialog = true"
@@ -43,12 +53,8 @@
             :fields="fieldsTeam"
           >
             <template v-slot:cell(logo)="row">
-              <b-img
-                style="max-width: 50px;min-height:30px"
+              <b-img :src="row.item.logo" width="70px" />
 
-                :src="row.item.logo"
-                alt="Left image"
-              ></b-img>
             </template>
             <template v-slot:cell(Action)="row">
               <a
@@ -131,7 +137,6 @@
               <b-form-select v-model="selectedStatus" :options="optionsStatus">
               </b-form-select>
             </b-col>
-           
           </b-row>
           <b-row>
             <b-col cols="12" sm="10">
@@ -179,7 +184,7 @@
             :items="itemsSchedule"
             :fields="fieldsSchedule"
           >
-            <template v-slot:cell(Acction)="row">
+            <template v-slot:cell(Acction)="row" style="">
               <router-link
                 :to="{ path: '/DetailSchedule/' + row.item.idSchedule }"
                 id="${schedule.idSchedule}"
@@ -232,12 +237,10 @@
             </template>
           </b-table>
           <b-pagination
-          
             v-model="currentPageSchedule"
             :total-rows="rowsSchedule"
             :per-page="perPageSchedule"
             aria-controls="my-table"
-            
           ></b-pagination>
           <b-modal
             id="modal-2"
@@ -274,9 +277,7 @@
             </v-card>
           </v-dialog>
         </b-tab>
-        <b-tab title="Rank"
-          ><Rank :idTour="idTour"/></b-tab
-        >
+        <b-tab title="Rank"><Rank :idTour="idTour" /></b-tab>
       </b-tabs>
     </div>
   </div>
@@ -284,13 +285,13 @@
 <script>
 import AddSchedule from "./AddSchedule";
 import EditSchedule from "../schedule/EditSchedule";
-import Rank from "./Rank"
+import Rank from "./Rank";
 
 export default {
   components: {
     AddSchedule,
     EditSchedule,
-    Rank
+    Rank,
   },
   data() {
     return {
@@ -317,6 +318,18 @@ export default {
       schedule: [],
       idDelete: "",
       items: [],
+      itemlinks: [
+        {
+          text: "Dashboard",
+          disabled: false,
+          href: "/admin/home",
+        },
+        {
+          text: "Tournamnet",
+          href: "/LayoutTournament",
+          disabled: false,
+        },
+      ],
       optionsStatus: [
         { value: null, text: "Please select an option" },
         { value: "0", text: "Upcomming" },
@@ -334,21 +347,25 @@ export default {
           key: "nameTeam",
           label: "Name",
           sortable: true,
+          class: "center",
         },
         {
           key: "logo",
           label: "Logo",
           sortable: false,
+          class: "center",
         },
         {
           key: "profile.length",
           label: "Member",
           sortable: false,
+          class: "center",
         },
         {
           key: "description",
           label: "Description",
           sortable: false,
+          class: "center",
         },
         "Action",
       ],
@@ -357,33 +374,39 @@ export default {
           key: "title",
           label: "Title",
           sortable: true,
+          class: "center",
         },
         {
           key: "timeStart",
           label: "Time Start",
           sortable: true,
+          class: "center",
         },
 
         {
           key: "team[0].nameTeam",
           label: "HomeTeam",
           sortable: true,
+          class: "center",
         },
         {
           key: "team[1].nameTeam",
           label: "Visiting Team",
           sortable: true,
+          class: "center",
         },
 
         {
           key: "score",
           label: "Score",
           sortable: false,
+          class: "center",
         },
         {
           key: "status",
           label: "Status",
           sortable: true,
+          class: "center",
         },
         "Acction",
       ],
@@ -404,6 +427,9 @@ export default {
       }
     },
   },
+  mounted(){
+    
+  },
   methods: {
     async Bindata() {
       let data1 = await this.getTournament();
@@ -412,6 +438,7 @@ export default {
       this.getTournamentSchedule();
       this.getTeamWait(data1.type);
       this.idTour = this.$route.params.id;
+     
     },
     editSchedule(id) {
       this.dataEdit = id;
@@ -451,7 +478,7 @@ export default {
           this.schedule = response.data;
           this.itemsSchedule = response.data;
           this.rowsSchedule = this.itemsSchedule.length;
-          console.log(this.schedule)
+          console.log(this.schedule);
         });
     },
     hideModal() {
@@ -527,7 +554,7 @@ export default {
         });
         arrSearch = arrStatus;
       }
-    
+
       if (this.valueStart != "" && this.valueEnd != "") {
         var arrDate = [];
         arrSearch.forEach((element) => {
@@ -540,18 +567,35 @@ export default {
         });
         arrSearch = arrDate;
       }
-      if(this.textTeamSchedule!=""){
-        var arrTeam=[];
-        arrSearch.forEach(element=>{
-          if(element.team[0].nameTeam.includes(this.textTeamSchedule)||element.team[1].nameTeam.includes(this.textTeamSchedule)){
+      if (this.textTeamSchedule != "") {
+        var arrTeam = [];
+        arrSearch.forEach((element) => {
+          if (
+            element.team[0].nameTeam.includes(this.textTeamSchedule) ||
+            element.team[1].nameTeam.includes(this.textTeamSchedule)
+          ) {
             arrTeam.push(element);
           }
-        })
-        arrSearch=arrTeam;
+        });
+        arrSearch = arrTeam;
       }
       this.itemsSchedule = arrSearch;
       this.rowsSchedule = this.itemsSchedule.length;
     },
   },
+  watch:{
+    dataTournament(){
+       this.itemlinks.push({
+        text: this.dataTournament.nameTour,
+        disabled: true,
+      });
+    }
+  }
 };
 </script>
+<style>
+.center {
+  vertical-align: inherit !important;
+  text-align: center !important;
+}
+</style>

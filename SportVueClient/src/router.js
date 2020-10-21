@@ -44,6 +44,7 @@ import DetailTeamBasketBall from './views/web/contents/BasketBall/DetailTeamBask
 import RankTournamentBasketBall from './views/web/contents/BasketBall/RankTournament'
 import LayoutAllSports from './views/web/contents/AllSports/LayoutAllSports'
 import PlayerProfile from './views/web/profile/PlayerProfile'
+import NotFoundComponent  from  './views/NotFoundComponent '
 
 Vue.use(Router)
 const metaConfig = {
@@ -52,6 +53,7 @@ const metaConfig = {
   userAuth: false
 }
 let routes = [
+  { path: '*', component: NotFoundComponent  },
   {
     path: '/',
     name: 'web',

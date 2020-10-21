@@ -60,15 +60,15 @@
         <v-col class="text-center" style="margin-top: 10px"
           ><div v-if="data.status == 0">
             <h1>?-?</h1>
-            upcomming
+            Upcomming
           </div>
           <div v-if="data.status == 1">
             <h1>?-?</h1>
-            on game
+            On game
           </div>
           <div v-if="data.status == 2">
             <h1>{{ data.scoreTeam1 }} - {{ data.scoreTeam2 }}</h1>
-            finished
+            Finished
           </div></v-col
         >
         <v-col class="text-center"
@@ -217,6 +217,7 @@
                           <v-textarea
                             name="input-7-1"
                             :value="data.description"
+                            disabled
                           ></v-textarea>
                           <div
                             class="text-center"
@@ -353,10 +354,10 @@
                                     <h3>Score :</h3>
                                     <b-row>
                                       <b-col class="text-center"
-                                        ><b-avatar
+                                        ><b-img
                                           :src="team1.logo"
                                           size="6rem"
-                                        ></b-avatar
+                                        ></b-img
                                       ></b-col>
                                       <b-col class="text-center"
                                         ><h1>
@@ -366,10 +367,10 @@
                                         </h1></b-col
                                       >
                                       <b-col class="text-center"
-                                        ><b-avatar
+                                        ><b-img
                                           :src="team2.logo"
                                           size="6rem"
-                                        ></b-avatar
+                                        ></b-img
                                       ></b-col>
                                     </b-row>
                                     Reported :
@@ -461,7 +462,7 @@
                 <div v-if="data.video != null">
                   <video controls :src="data.video" width="550px"></video>
                 </div>
-                <div>No video</div>
+                <b-img src="https://torshizitrade.com/wp-content/uploads/2019/01/no-video.jpg"></b-img>
               </v-card-text>
             </v-card>
           </v-tab-item>

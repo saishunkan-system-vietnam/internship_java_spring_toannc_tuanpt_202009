@@ -9,50 +9,50 @@
       ></v-img>
       <h2 class="text-center">ADMIN</h2>
       <v-list dense>
-        <router-link to="/admin/home" style="text-decoration: none">
-          <v-list-item>
-            <v-list-item-action>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-action>
-            <v-list-item-title> Home </v-list-item-title>
-          </v-list-item>
-        </router-link>
-        <router-link to="/LayoutUser" style="text-decoration: none">
-          <v-list-item>
-            <v-list-item-action>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-action>
-            <v-list-item-title> User </v-list-item-title>
-          </v-list-item>
-        </router-link>
-        <router-link to="/LayoutSchedule" style="text-decoration: none">
-          <v-list-item>
-            <v-list-item-action>
-              <v-icon>mdi-calendar</v-icon>
-            </v-list-item-action>
-            <v-list-item-title> Schedule </v-list-item-title>
-          </v-list-item>
-        </router-link>
-        <router-link to="/LayoutTeam" style="text-decoration: none">
-          <v-list-item>
-            <v-list-item-action>
-              <v-icon>mdi-account-group</v-icon>
-            </v-list-item-action>
 
+        <v-list-item class="css" @click="home">
+          <v-list-item-action>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title> Home </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item class="css" @click="User">
+          <v-list-item-action>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title> User </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item class="css" @click="Schedule">
+          <v-list-item-action>
+            <v-icon>mdi-calendar</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title> Schedule </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item class="css" @click="Team">
+          <v-list-item-action>
+            <v-icon>mdi-account-group</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
             <v-list-item-title> Team </v-list-item-title>
-          </v-list-item>
-        </router-link>
-        <router-link to="/LayoutTournament" style="text-decoration: none">
-          <v-list-item>
-            <v-list-item-action>
-              <v-icon>mdi-tournament</v-icon>
-            </v-list-item-action>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item class="css" @click="Tournament">
+          <v-list-item-action>
+            <v-icon>mdi-tournament</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
             <v-list-item-title> Tournament </v-list-item-title>
-          </v-list-item>
-        </router-link>
+          </v-list-item-content>
+        </v-list-item>
+
       </v-list>
     </v-navigation-drawer>
-
     <v-app-bar app color="indigo" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer">
         <b-icon-list font-scale="2"></b-icon-list
@@ -95,6 +95,28 @@ export default {
     logout: function () {
       this.$router.push("/");
     },
+    home(){
+      this.$router.push('/admin/home')
+    },
+    User(){
+      this.$router.push('/LayoutUser')
+    },
+    Schedule(){
+      this.$router.push('/LayoutSchedule')
+    },
+    Team(){
+      this.$router.push('/LayoutTeam')
+    },
+    Tournament(){
+      this.$router.push('/LayoutTournament')
+    },
+    
   },
 };
 </script>
+<style>
+.css:hover {
+  color: #fff;
+  cursor: pointer;
+}
+</style>

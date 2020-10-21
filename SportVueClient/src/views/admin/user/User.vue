@@ -6,7 +6,13 @@
       opacity="0.6"
       spinner-small
       spinner-variant="primary"
-      ><h1 class="text-center">User</h1>
+      >
+       <v-breadcrumbs :items="itemlinks">
+        <template v-slot:divider>
+          <v-icon>mdi-chevron-right</v-icon>
+        </template>
+      </v-breadcrumbs>
+      <h1 class="text-center">User</h1>
      
       <b-row>
         <b-col cols="12" sm="6">
@@ -95,6 +101,17 @@
 export default {
   data() {
     return {
+       itemlinks: [
+        {
+          text: "Dashboard",
+          disabled: false,
+          href: "/admin/home",
+        },
+        {
+          text:"User",
+          disabled:true
+        }
+      ],
       busy: true,
       selectedRole:null,
       textUsername:"",
