@@ -82,7 +82,7 @@
                       <div>
                         <div v-for="(item, index1) in results" :key="index1">
                           <template v-if="index1 < 3">
-                            <h5>{{ item.nameTour }}</h5>
+                            <h5 style="cursor: pointer;" @click="detailTournament(item.idTour)">{{ item.nameTour }}</h5>
                             <v-simple-table style="width: 1221px">
                               <tbody>
                                 <tr
@@ -91,6 +91,7 @@
                                   :key="index2"
                                   v-b-popover.hover.top="'Click to see details'"
                                   @click="detail(item)"
+                                  style="cursor: pointer;"
                                 >
                                   <template v-if="index2 < 5">
                                     <td>
@@ -151,6 +152,7 @@
                                 :key="index4"
                                 v-b-popover.hover.top="'Click to see details'"
                                 @click="detail(item2)"
+                                style="cursor: pointer;"
                               >
                                 <template v-if="index4 < 5">
                                   <td>
@@ -198,7 +200,7 @@
             </div>
             <v-container>
               <div v-for="(item, index1) in results" :key="index1" id="results">
-                <h5>{{ item.nameTour }}</h5>
+                <h5 style="cursor: pointer;" @click="detailTournament(item.idTour)">{{ item.nameTour }}</h5>
                 <v-simple-table style="width: 1221px">
                   <tbody>
                     <tr
@@ -207,6 +209,7 @@
                       :key="index2"
                       v-b-popover.hover.top="'Click to see details'"
                       @click="detail(item)"
+                      style="cursor: pointer;"
                     >
                       <td style="width: 250px">
                         {{ item.timeEnd }}
@@ -243,7 +246,7 @@
               </div>
               <div v-for="(item2, index3) in fixtures" :key="index3">
                 <template v-if="index3 < 3">
-                  <h5>{{ item2.nameTour }}</h5>
+                  <h5 style="cursor: pointer;" @click="detailTournament(item2.idTour)">{{ item2.nameTour }}</h5>
                   <v-simple-table style="width: 1221px">
                     <tbody>
                       <tr
@@ -252,6 +255,7 @@
                         :key="index4"
                         v-b-popover.hover.top="'Click to see details'"
                         @click="detail(item2)"
+                        style="cursor: pointer;"
                       >
                         <template v-if="index4 < 5">
                           <td>
@@ -291,6 +295,7 @@
                     :key="index"
                     v-b-popover.hover.top="'Click to see details'"
                     @click="detailMember(item)"
+                    style="cursor: pointer;"
                   >
                     <td class="text-center">
                       <v-avatar class="profile" color="grey" size="70" tile>
@@ -360,6 +365,10 @@ export default {
     detailMember(item) {
       this.$router.push({ path: "/PlayerProfile/" + item.id });
     },
+    detailTournament(item){
+            this.$router.push({ path: "/DetailTournamentFootball/" + item.id });
+
+    }
   },
   watch: {
     tab() {},

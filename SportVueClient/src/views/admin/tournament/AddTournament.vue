@@ -101,8 +101,7 @@
           multiple
           :rules="rulesTeam"
           required
-            chips
-          
+          chips
         ></v-select>
 
         <v-row align="center" justify="space-around">
@@ -234,6 +233,15 @@ export default {
     type() {
       this.value = [];
       this.getTeamWait();
+    },
+    timeEnd() {
+      this.rulesTimeEnd = [(v) => v > this.timeStart || "bigger time start"];
+    },
+    team() {
+      this.rulesTeam = [
+        (v) => !!v || "Item is required",
+        (v) => v != "" || "Item is required",
+      ];
     },
   },
 };
