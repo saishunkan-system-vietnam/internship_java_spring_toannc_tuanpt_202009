@@ -87,7 +87,7 @@
         :placeholder="'Pick an image'"
         prepend-icon="mdi-camera"
         label="Image"
-        :rules="[(v) => !!v || 'Item is required']"
+        :rules="rulesImage"
       ></v-file-input>
       <v-file-input
         v-model="fileVideo"
@@ -95,7 +95,7 @@
         :placeholder="'Pick an video'"
         prepend-icon="mdi-video"
         label="Video"
-        :rules="[(v) => !!v || 'Item is required']"
+        :rules="rulesVideo"
       ></v-file-input>
       <v-btn color="blue-grey" class="ma-2 white--text" @click="cancel">
         Cancel
@@ -117,7 +117,9 @@ export default {
   },
   data: () => ({
     busy: false,
-    name:'',
+    name: "",
+    rulesImage: [],
+    rulesVideo: [],
     score1h1: "",
     score2h1: "",
     score1h2: "",
@@ -135,6 +137,8 @@ export default {
   methods: {
     reset() {
       this.$refs.form.reset();
+      this.rulesImage = [];
+      this.rulesVideo = [];
     },
     cancel() {
       this.reset();
@@ -142,6 +146,31 @@ export default {
     },
     submit() {
       this.busy = true;
+      if (!!this.fileImage.name) {
+        this.rulesImage = [
+          (v) =>
+            !!v ||
+            v.type == "image/png" ||
+            v.type == "image/jpeg" ||
+            v.type == "image/bmp" ||
+            "Wrong data",
+        ];
+      } else {
+        console.log(this.fileImage)
+        this.rulesImage = [(v) => !!v.name || "Item is required"];
+     
+        console.log('a')
+      }
+      {
+        if (!!!this.fileVideo.video) {
+          this.rulesVideo = [(v) => !!v.name || "Item is required"];
+        } else {
+          this.rulesVideo = [
+            (v) =>
+              v.type == "video/mp4" || v.type == "video/mov" || "Wrong data",
+          ];
+        }
+      }
       if (!this.$refs.form.validate()) {
         this.$refs.form.validate();
         this.busy = false;
@@ -193,6 +222,14 @@ export default {
           });
       }
     },
+  },
+  watch: {
+    fileImage() {
+      if (this.fileImage == undefined) {
+        this.fileImage = [];
+      }
+    },
+    
   },
 };
 </script>

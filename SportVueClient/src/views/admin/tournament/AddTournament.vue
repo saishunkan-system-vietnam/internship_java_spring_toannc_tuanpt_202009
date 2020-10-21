@@ -121,11 +121,11 @@
                 <v-spacer></v-spacer>
 
                 <v-btn color="green darken-1" text @click="dialog = false">
-                  Disagree
+                  Cancel
                 </v-btn>
 
                 <v-btn color="green darken-1" text @click="okCancel">
-                  Agree
+                  OK
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -206,11 +206,11 @@ export default {
         this.$store
           .dispatch("tournament/create", this.Tournament)
           .then((response) => {
-            if (response.data == "create") {
+            if (response.data == "Create Success") {
               this.getList();
               this.callback();
               this.clear();
-              alert("success");
+              alert("Create Success");
             } else {
               alert(response.data);
             }
