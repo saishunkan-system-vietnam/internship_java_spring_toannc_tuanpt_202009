@@ -200,24 +200,23 @@ export default {
 
       return value === this.typeSearch;
     },
+   
   },
 };
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .remove-padding > div {
   padding: 0;
 }
-
+.row-pointer >>> tbody tr :hover {
+  cursor: pointer;
+}
 .v-data-table-header__icon {
   opacity: 1;
 }
 tbody tr:nth-child(odd) {
   background: #dee2e6;
 }
-</style>
-<style lang="css" scoped>
-.row-pointer >>> tbody tr :hover {
-  cursor: pointer;
-}
+
 </style>

@@ -36,7 +36,7 @@
                 :items="tournament.schedule"
                 hide-default-footer
                 :items-per-page="100"
-                class="elevation-1"
+                class="elevation-1 row-pointer"
               >
                 <template v-slot:[`item.status`]="{}">
                   <p style="color: green" class="mb-0">Up Comming</p>
@@ -117,5 +117,9 @@ export default {
   },
 };
 </script>
-<style>
+
+<style lang="css" scoped>
+  .row-pointer >>> tbody tr :hover {
+    cursor: pointer;
+  }
 </style>
