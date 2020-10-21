@@ -45,7 +45,7 @@ export default {
     headers: [
       {
         text: "#",
-        value: "numberRank",
+        value: "numberRank",sortable: false 
       },
       { text: "Team", value: "team.nameTeam" },
       { text: "Logo", value: "team.logo", sortable: false },

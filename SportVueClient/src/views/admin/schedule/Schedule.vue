@@ -6,7 +6,13 @@
       opacity="0.6"
       spinner-small
       spinner-variant="primary"
-      ><h1 class="text-center">Schedule</h1>
+    >
+      <v-breadcrumbs :items="itemlinks">
+        <template v-slot:divider>
+          <v-icon>mdi-chevron-right</v-icon>
+        </template>
+      </v-breadcrumbs>
+      <h1 class="text-center">Schedule</h1>
       <v-btn
         class="mx-2"
         style="margin-bottom: 50px"
@@ -26,7 +32,7 @@
         </b-col>
         <b-col cols="12" sm="3">
           Team
-            <b-form-input
+          <b-form-input
             v-model="textTeam"
             placeholder="Input Field"
           ></b-form-input>
@@ -41,7 +47,6 @@
           <b-form-select v-model="selectedType" :options="optionsType">
           </b-form-select>
         </b-col>
-        
       </b-row>
       <b-row>
         <b-col cols="12" sm="10">
@@ -187,6 +192,17 @@ export default {
   },
   data() {
     return {
+      itemlinks: [
+        {
+          text: "Dashboard",
+          disabled: false,
+          href: "/admin/home",
+        },
+        {
+          text:"Schedule",
+          disabled:true
+        }
+      ],
       busy: true,
       optionsStatus: [
         { value: null, text: "Please select an option" },
@@ -261,7 +277,7 @@ export default {
       ],
       items: [],
       schedule: [],
-      textTeam:""
+      textTeam: "",
     };
   },
   created() {
@@ -315,14 +331,17 @@ export default {
         });
         arrSearch = arrDate;
       }
-      if(this.textTeam!=""){
-        var arrTeam=[];
-        arrSearch.forEach(element=>{
-          if(element.team[0].nameTeam.includes(this.textTeam)||element.team[1].nameTeam.includes(this.textTeam)){
+      if (this.textTeam != "") {
+        var arrTeam = [];
+        arrSearch.forEach((element) => {
+          if (
+            element.team[0].nameTeam.includes(this.textTeam) ||
+            element.team[1].nameTeam.includes(this.textTeam)
+          ) {
             arrTeam.push(element);
           }
-        })
-        arrSearch=arrTeam;
+        });
+        arrSearch = arrTeam;
       }
       this.items = arrSearch;
       this.rows = this.items.length;

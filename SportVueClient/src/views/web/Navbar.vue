@@ -105,6 +105,7 @@
               </v-menu>
             </v-row>
           </template>
+          
           <template v-else
             ><v-col class="d-flex" cols="1">
               <template>

@@ -60,8 +60,7 @@
                     <v-row>
                       <b-col sm="1">
                         <div
-                          :style="index==0?'width: 20px;height: 20px;background: #ee1d1d;border-radius: 60px;':index==1?'width: 20px;height: 20px;background: pink;border-radius: 60px;':''"
-                          class="text-center"
+                     
                         >
                           {{ index + 1 }}
                         </div></b-col
