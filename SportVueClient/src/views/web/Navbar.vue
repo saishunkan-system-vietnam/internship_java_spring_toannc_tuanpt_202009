@@ -34,18 +34,18 @@
                 <v-list>
                   <v-list-item>
                     <v-list-item-title>
-                      <v-btn
-                        class="fixButton"
+                      <div
+                        class="fixButton row-pointer"
                         @click="roleFunction(profile.role)"
                       >
                         Profile
-                      </v-btn>
+                      </div>
                     </v-list-item-title>
                   </v-list-item>
                   <v-list-item>
                     <v-list-item-title
-                      ><v-btn class="fixButton" @click="logout"
-                        >Logout</v-btn
+                      ><div class="fixButton row-pointer" @click="logout"
+                        >Logout</div
                       ></v-list-item-title
                     >
                   </v-list-item>
@@ -76,36 +76,33 @@
                 <v-list>
                   <v-list-item>
                     <v-list-item-title>
-                      <v-btn
-                        class="fixButton"
-                        @click="toAdminPage"
-                      >
-                        Manage
-                      </v-btn>
+                      <div class="fixButton row-pointer" @click="toAdminPage">
+                        Admin Page
+                      </div>
                     </v-list-item-title>
                   </v-list-item>
                   <v-list-item>
                     <v-list-item-title>
-                      <v-btn
-                        class="fixButton"
+                      <div
+                        class="fixButton ml-4 row-pointer"
                         @click="roleFunction(profile.role)"
                       >
                         Profile
-                      </v-btn>
+                      </div>
                     </v-list-item-title>
                   </v-list-item>
                   <v-list-item>
                     <v-list-item-title
-                      ><v-btn class="fixButton" @click="logout"
-                        >Logout</v-btn
-                      ></v-list-item-title
+                      ><div class="fixButton ml-4 row-pointer" @click="logout">
+                        Logout
+                      </div></v-list-item-title
                     >
                   </v-list-item>
                 </v-list>
               </v-menu>
             </v-row>
           </template>
-          
+
           <template v-else
             ><v-col class="d-flex" cols="1">
               <template>
@@ -244,9 +241,9 @@ export default {
     controlModalUser() {
       this.modalUser = !this.modalUser;
     },
-    toAdminPage(){
+    toAdminPage() {
       this.$router.push("/admin/home");
-    }
+    },
     // setBlank() {
     //   console.log(this.$refs);
     //   this.$refs.refLogin.test();
@@ -254,8 +251,12 @@ export default {
   },
 };
 </script>
-<style>
-.fixButton {
-  background: white !important;
-}
+
+<style lang="css">
+  .v-list-item .row-pointer:hover {
+    cursor: pointer;
+  }
+  .fixButton {
+    background: white !important;
+  }
 </style>

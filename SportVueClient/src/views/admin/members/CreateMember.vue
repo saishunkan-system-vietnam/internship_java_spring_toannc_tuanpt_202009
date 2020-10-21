@@ -36,6 +36,7 @@
             <v-select
               v-model="gender"
               :items="defaultGender"
+              :rules="[(v) => !!v || 'Gender is required']"
               label="Gender"
             ></v-select>
           </v-col>
@@ -51,7 +52,7 @@
           <v-col cols="12" md="3">
             <v-file-input
               accept="image/png, image/jpeg, image/bmp"
-              :rules="[(v) => !!v || 'Avatar is required']"
+              :rules="rulesImage"
               v-model="fileImage"
               label="Add Avatar"
             ></v-file-input>
@@ -72,10 +73,16 @@
         >
         <v-btn disabled v-else>Processing</v-btn>
       </v-card-actions>
-      <v-alert class="mb-0" type="success" v-if="success">
-        Create Team Success!
-      </v-alert>
     </v-form>
+    <template>
+      <div class="text-center">
+        <v-dialog v-model="successDialog" hide-overlay persistent width="300">
+          <v-alert class="mb-0" type="success">
+            Create Member Success!
+          </v-alert>
+        </v-dialog>
+      </div>
+    </template>
   </v-card>
 </template>
 
@@ -95,7 +102,7 @@ export default {
 
   data() {
     return {
-      success: false,
+      successDialog: false,
       changeButton: true,
       valid: false,
       response: "",
@@ -106,7 +113,7 @@ export default {
       number: 10,
       nameRules: [
         (v) => !!v || "Name is required",
-        (v) => v <= 21 || "Name must be less than 21 characters",
+        (v) => (v && v.length <= 10) || "Name must be less than 21 characters",
       ],
       email: "",
       emailRules: [
@@ -116,17 +123,19 @@ export default {
       phone: "",
       phoneRules: [
         (v) => !!v || "Phone number is required",
-        (v) => v <= 15 || "Phone number must be less than 15 characters",
+        (v) =>
+          (v && v.length <= 15) ||
+          "Phone number must be less than 15 characters",
       ],
       age: "",
       ageRules: [
         (v) => !!v || "Age number is required",
         (v) =>
-          (v == 2 && v <= 60 && v >= 6) ||
-          "Age must be less than 60 and greater than 6",
+          (v <= 60 && v >= 6) || "Age must be less than 60 and greater than 6",
       ],
       gender: "",
       defaultGender: ["Male", "Female", "Orther"],
+      rulesImage: [],
     };
   },
   mounted() {},
@@ -140,46 +149,51 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.fileImage)
-      if(      this.$refs.form.validate()==true){
-      let self = this;
-      var memberForm = new FormData();
-      memberForm.append("name", this.name);
-      memberForm.append("email", this.email);
-      memberForm.append("phone", this.phone);
-      memberForm.append("age", this.age);
-      memberForm.append("gender", this.gender);
-      memberForm.append("address", this.address);
-      memberForm.append("type", this.passSelectedType);
-      memberForm.append("file", this.fileImage);
-      //   for (var value of memberForm.values()) {
-      //     console.log(value);
-      //   }
-      axios
-        .post("http://localhost:8090/api/v1/profiles/createMember", memberForm)
-        .then((res) => {
-          self.changeButton = !self.changeButton;
-          if (res.data.code === 9999) {
-            self.emailRules = [
-              (v) => !self.email || "Email has already exists",
-            ];
-          } else {
-            self.success = true;
-            setTimeout(function () {
-              self.success = false;
-              self.isOpenModalMember();
-              self.loadMemberAfterCreate(res.data.payload);
-            }, 2100);
-          }
-        })
-        .catch((e) => {
-          self.changeButton = !self.changeButton;
-        });
-      self.changeButton = !self.changeButton;
-      self.reset();
+      console.log(this.fileImage);
+      if (!!this.fileImage.name == false) {
+        this.rulesImage = [(v) => !!v.name || "Image is required"];
       }
-      else{
-              this.$refs.form.validate();
+      if (this.$refs.form.validate() == true) {
+        let self = this;
+        var memberForm = new FormData();
+        memberForm.append("name", this.name);
+        memberForm.append("email", this.email);
+        memberForm.append("phone", this.phone);
+        memberForm.append("age", this.age);
+        memberForm.append("gender", this.gender);
+        memberForm.append("address", this.address);
+        memberForm.append("type", this.passSelectedType);
+        memberForm.append("file", this.fileImage);
+        //   for (var value of memberForm.values()) {
+        //     console.log(value);
+        //   }
+        axios
+          .post(
+            "http://localhost:8090/api/v1/profiles/createMember",
+            memberForm
+          )
+          .then((res) => {
+            self.changeButton = !self.changeButton;
+            if (res.data.code === 9999) {
+              self.emailRules = [
+                (v) => !self.email || "Email has already exists",
+              ];
+            } else {
+              self.isOpenModalMember();
+              self.successDialog = !self.successDialog;
+              setTimeout(function () {
+                self.successDialog = !self.successDialog;
+                self.loadMemberAfterCreate(res.data.payload);
+              }, 1100);
+            }
+          })
+          .catch((e) => {
+            self.changeButton = !self.changeButton;
+          });
+        self.changeButton = !self.changeButton;
+        self.reset();
+      } else {
+        this.$refs.form.validate();
       }
     },
     reset() {
