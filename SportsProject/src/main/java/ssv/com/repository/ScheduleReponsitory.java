@@ -103,6 +103,16 @@ public class ScheduleReponsitory {
 		return scheduleMapper.profileSchedule(idMember);
 	}
 
+	public List<Schedule> findTeamTournament(int idTeam, int idTour) {
+		// TODO Auto-generated method stub
+		return scheduleMapper.findTeamTournament(idTeam,idTour);
+	}
+
+	public List<Schedule> findTeam(int idTeam) {
+		// TODO Auto-generated method stub
+		return scheduleMapper.findTeam(idTeam);
+	}
+
 	
 
 }

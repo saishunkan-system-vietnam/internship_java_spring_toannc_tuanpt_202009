@@ -67,9 +67,9 @@ public class TournamentService {
 				teamService.updateTourNew(tournamentDto.getListIdTeam()[i]);
 				profileService.newTour(tournamentDto.getListIdTeam()[i]);
 			}
-			return "create";
+			return "Create Success";
 		} else {
-			return "time error";
+			return "The start time must be less than the end time";
 		}
 	}
 
@@ -94,9 +94,9 @@ public class TournamentService {
 			for (Profile profile : teamService.getById(idTeam).getProfile()) {
 				historyRepository.addTeamTournament(profile.getId(), idTour, idTeam);
 			}
-			return "More success";
+			return "Add success";
 		}
-		return "had tournaments";
+		return "Had tournaments";
 	}
 
 	public void updateStatus(int idTour, int status) {
@@ -149,10 +149,9 @@ public class TournamentService {
 			rank.setRank(numberRank);
 			rank.setIdTeam(team.getIdTeam());
 			rank.setTeam(teamService.findById(team.getIdTeam()));
+			rank.setTotalGoals(scheduleService.totalGoalsType(rank.getIdTeam()));
 			list.add(rank);
-			if(list.size()>4) {
-				break;
-			}
+			
 		}
 		;
 		Collections.sort(list, new Comparator<Rank>() {
@@ -167,9 +166,7 @@ public class TournamentService {
 					return 1;
 			}
 		});
-		for (int i = 0; i < list.size(); i++) {
-			list.get(i).setNumberRank(i+1);
-		}
+		
 
 		return list;
 	}
@@ -185,6 +182,8 @@ public class TournamentService {
 			rank.setList(scheduleService.getRecently(history.getIdTeam(),idTour));
 			rank.setRank(numberRank);
 			rank.setIdTeam(history.getIdTeam());
+			rank.setTeam(teamService.findTeamByTour(rank.getIdTeam(),idTour));
+			rank.setTotalGoals(scheduleService.totalGoalds(rank.getIdTeam(),idTour));
 			list.add(rank);
 		}
 		Collections.sort(list, new Comparator<Rank>() {

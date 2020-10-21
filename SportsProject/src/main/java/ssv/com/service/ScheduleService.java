@@ -162,4 +162,32 @@ public class ScheduleService {
 		return list;
 	}
 
+	public int totalGoalds(int idTeam, int idTour) {
+		List<Schedule> schedules=scheduleReponsitory.findTeamTournament(idTeam,idTour);
+		int total=0;
+		for (Schedule schedule : schedules) {
+			if(schedule.getTeam().get(0).getIdTeam()==idTeam) {
+				total=total+schedule.getScoreTeam1();
+			}
+			if(schedule.getTeam().get(1).getIdTeam()==idTeam) {
+				total=total+schedule.getScoreTeam2();
+			}
+		}
+		return total;
+	}
+
+	public int totalGoalsType(int idTeam) {
+		List<Schedule> schedules=scheduleReponsitory.findTeam(idTeam);
+		int total=0;
+		for (Schedule schedule : schedules) {
+			if(schedule.getTeam().get(0).getIdTeam()==idTeam) {
+				total=total+schedule.getScoreTeam1();
+			}
+			if(schedule.getTeam().get(1).getIdTeam()==idTeam) {
+				total=total+schedule.getScoreTeam2();
+			}
+		}
+		return total;
+	}
+
 }

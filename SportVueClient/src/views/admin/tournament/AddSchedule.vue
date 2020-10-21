@@ -194,7 +194,7 @@ export default {
           .dispatch("schedule/createSchedule", this.schedule)
           .then((response) => {
             if (response.data == "create") {
-              alert("thanh cong");
+              alert("success");
               this.hideModal();
               this.reset();
               this.getListSchedule();

@@ -1,58 +1,56 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app>
+      <v-img
+        style="margin-top: 50px"
+        max-height="300"
+        max-width="250"
+        src="@/assets/unnamed.png"
+      ></v-img>
+      <h2 class="text-center">ADMIN</h2>
       <v-list dense>
-        <router-link to="/admin/home">
-          <v-list-item link>
+        <router-link to="/admin/home" style="text-decoration: none">
+          <v-list-item >
             <v-list-item-action>
               <v-icon>mdi-home</v-icon>
             </v-list-item-action>
-            <v-list-item-content>
               <v-list-item-title> Home </v-list-item-title>
-            </v-list-item-content>
           </v-list-item>
         </router-link>
-
-        <v-list-item>
-          <v-list-item-action>
-            <v-icon>mdi-email</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>
-              <router-link to="/LayoutUser">User</router-link>
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-action>
-            <v-icon>mdi-calendar</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>
-              <router-link to="/LayoutSchedule">Schedule</router-link>
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-action>
-            <v-icon>mdi-account-group</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>
-              <router-link to="/LayoutTeam">Team</router-link>
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-action>
-            <v-icon>mdi-tournament</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>
-              <router-link to="/LayoutTournament">Tournament</router-link>
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+        <router-link to="/LayoutUser" style="text-decoration: none">
+          <v-list-item >
+            <v-list-item-action>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-action>
+              <v-list-item-title> User </v-list-item-title>
+          </v-list-item>
+        </router-link>
+        <router-link to="/LayoutSchedule" style="text-decoration: none">
+          <v-list-item >
+            <v-list-item-action>
+              <v-icon>mdi-calendar</v-icon>
+            </v-list-item-action>
+              <v-list-item-title> Schedule </v-list-item-title>
+          </v-list-item>
+        </router-link>
+        <router-link to="/LayoutTeam" style="text-decoration: none">
+          <v-list-item >
+            <v-list-item-action>
+              <v-icon>mdi-account-group</v-icon>
+            </v-list-item-action>
+      
+              <v-list-item-title> Team </v-list-item-title>
+           
+          </v-list-item>
+        </router-link>
+        <router-link to="/LayoutTournament" style="text-decoration: none">
+          <v-list-item >
+            <v-list-item-action>
+              <v-icon>mdi-tournament</v-icon>
+            </v-list-item-action>
+              <v-list-item-title> Tournament </v-list-item-title>
+          </v-list-item>
+        </router-link>
       </v-list>
     </v-navigation-drawer>
 
@@ -60,7 +58,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer">
         <b-icon-list font-scale="2"></b-icon-list
       ></v-app-bar-nav-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>Sports</v-toolbar-title>
       <v-spacer></v-spacer>
 
       <v-btn

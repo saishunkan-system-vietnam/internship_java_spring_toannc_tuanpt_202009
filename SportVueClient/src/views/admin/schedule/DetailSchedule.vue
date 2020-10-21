@@ -1,20 +1,26 @@
 <template>
   <div>
     <div>
+ 
       <div v-if="schedule.status == 2">
-        <div v-if="team1.type == 'Football'">
+        <div v-if="schedule.team[0].type == 'Football'">
           <v-btn color="green darken-1" text @click="dialogFootball = true">
-            <b-icon-upload></b-icon-upload>upload
+            <b-icon-upload></b-icon-upload>update
           </v-btn>
         </div>
-        <div v-else>
+        <div v-if="schedule.team[0].type=='TableTennis'">
           <v-btn color="green darken-1" text @click="dialogTableTennis = true"
-            ><b-icon-upload></b-icon-upload>upload</v-btn
+            ><b-icon-upload></b-icon-upload>update</v-btn
+          >
+        </div>
+         <div v-if="schedule.team[0].type=='BasketBall'">
+          <v-btn color="green darken-1" text @click="dialogBasketBall = true"
+            ><b-icon-upload></b-icon-upload>update</v-btn
           >
         </div>
       </div>
       <div v-else>
-        <p class="text-danger">the match is not over</p>
+        <div class="alert alert-danger" role="alert">the match is not over</div>
       </div>
     </div>
     <v-row justify="center">
@@ -45,18 +51,39 @@
     </v-row>
     <b-container>
       <h1 style="color: red">Tournament :{{ schedule.nameTour }}</h1>
-
+      <h3 >{{schedule.title}}</h3>
+      <h5>Time:{{schedule.timeStart}}</h5>
+      <br><br><br>
       <b-row>
         <b-col>
           <h3 style="color: Blue">Team 1: {{ team1.nameTeam }}</h3>
           <b-img :src="team1.logo" fluid alt="Responsive image"></b-img>
-
+        </b-col>
+        <b-col>
+          <h3 style="color: Blue">Team 2: {{ team2.nameTeam }}</h3>
+          <b-img :src="team2.logo" fluid alt="Responsive image"></b-img>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
           <h4 style="color: Blue">Member:</h4>
           <ul v-for="(item, index) in team1.profile" v-bind:key="index">
-            <li>
+            <li style="color:#194810;cursor:pointer" @click="detailMember(item.email)">
               {{ item.name }} - {{ item.age }} year old -{{ item.address }}
             </li>
           </ul>
+        </b-col>
+        <b-col>
+          <h4 style="color: Blue">Member :</h4>
+          <ul v-for="(item, index) in team2.profile" v-bind:key="index">
+            <li style="color:#194810;cursor:pointer"  @click="detailMember(item.email)">
+              {{ item.name }} - {{ item.age }} year old -{{ item.address }}
+            </li>
+          </ul>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
           <h4 style="color: Blue">Infomation :</h4>
           <ul>
             <li>Win rate : {{ inforTeam1.rate }}%</li>
@@ -70,19 +97,10 @@
             </li>
             <li>Total number of matches : {{ inforTeam1.sum }}</li>
             <li>Total number of wins : {{ inforTeam1.sumWin }}</li>
-          </ul>
-        </b-col>
-        <b-col>
-          <h3 style="color: Blue">Team 2: {{ team2.nameTeam }}</h3>
-          <b-img :src="team2.logo" fluid alt="Responsive image"></b-img>
-
-          <h4 style="color: Blue">Member :</h4>
-          <ul v-for="(item, index) in team2.profile" v-bind:key="index">
-            <li>
-              {{ item.name }} - {{ item.age }} year old -{{ item.address }}
-            </li>
-          </ul>
-          <h4 style="color: Blue">Infomation :</h4>
+          </ul></b-col
+        >
+        <b-col
+          ><h4 style="color: Blue">Infomation :</h4>
           <ul>
             <li>Win rate : {{ inforTeam2.rate }}%</li>
             <li>
@@ -95,10 +113,9 @@
             </li>
             <li>Total number of matches : {{ inforTeam2.sum }}</li>
             <li>Total number of wins : {{ inforTeam2.sumWin }}</li>
-          </ul>
-        </b-col>
+          </ul></b-col
+        >
       </b-row>
-
       <div>
         <div>
           <b-card no-body>
@@ -148,7 +165,10 @@
         disabled
       ></b-form-textarea>
       <h4>Final score : {{ schedule.scoreTeam1 }}-{{ schedule.scoreTeam2 }}</h4>
-      <div class="text-center">
+      <div
+        class="text-center"
+        v-if="schedule.image != null && schedule.video != null"
+      >
         <h3 style="color: Blue">Photo and Video</h3>
         <h5>Photo</h5>
         <b-img
@@ -191,6 +211,13 @@ export default {
     hideModal() {
       this.dialogFootball = false;
       this.dialogTableTennis = false;
+    },
+    detailMember(idMember){
+      
+      this.$store.dispatch("user/findByEmailUser",idMember).then(res=>{
+        console.log(res.data)
+        this.$router.push('/DetailUser/'+res.data.id)
+      })
     },
     getAll() {
       this.$store

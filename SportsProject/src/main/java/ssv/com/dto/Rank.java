@@ -12,9 +12,11 @@ import ssv.com.entity.Team;
 public class Rank {
 	private String name;
 	public double rank;
-	public int numberRank;
 	public int idTeam;
 	public List<Schedule> list;
 	public Team team;
+	public int totalGoals;
+	
+	
 	
 }

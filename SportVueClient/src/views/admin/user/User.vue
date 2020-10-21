@@ -1,95 +1,143 @@
 <template>
-  <div data-app>
-    <b-container fluid>
-      <div>
-        <v-row>
-          <v-col cols="12" sm="6" md="3">
-            <v-text-field label="Search" v-model="nameSearch"></v-text-field>
-          </v-col>
+  <div>
+    <b-overlay
+      :show="busy"
+      rounded
+      opacity="0.6"
+      spinner-small
+      spinner-variant="primary"
+      ><h1 class="text-center">User</h1>
+     
+      <b-row>
+        <b-col cols="12" sm="6">
+          Username
+          <b-form-input
+            v-model="textUsername"
+            placeholder="Input Field"
+          ></b-form-input>
+        </b-col>
+        <b-col cols="12" sm="6">
+          Role
+          <b-form-select v-model="selectedRole" :options="optionsRole">
+          </b-form-select>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="12" sm="6">
+          Email
+          <b-form-input
+            v-model="textEmail"
+            placeholder="Input Field"
+          ></b-form-input>
+        </b-col>
+        <b-col cols="12" sm="6">
+          <br />
+          <b-button variant="primary" @click="search">Search</b-button>
+        </b-col>
+      </b-row>
 
-          <v-col cols="12" sm="6" md="3">
-            <v-select
-              :items="items"
-              item-text="value"
-              item-value="type"
-              label="Option Search"
-              v-model="type"
-            ></v-select>
-          </v-col>
-
-          <v-col cols="12" sm="6" md="3">
-            <b-button variant="outline-primary" @click.prevent="Search">
-              <b-icon-search></b-icon-search>Search
-            </b-button>
-          </v-col>
-
-          <v-col cols="12" sm="6" md="3"></v-col>
-        </v-row>
-      </div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">id</th>
-            <th scope="col">UserName</th>
-            <th scope="col">Email</th>
-            <th scope="col">Role</th>
-            <th scope="col">Profile</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="user in user" :key="user.id">
-            <th scope="row">{{ user.id }}</th>
-            <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
-            <td>
-              {{
-                user.role == "ROLE_USER"
-                  ? "Người dùng hệ thống"
-                  : user.role == "ROLE_ADMIN"
-                  ? "Người điều hành"
-                  : "Thành viên trong đội thể thao"
-              }}
-            </td>
-
-            <td>
-              <router-link :to="{ path: '/Detail/' + user.id }" id="${user.id}">
-                <b-icon-chevron-double-right></b-icon-chevron-double-right>
-              </router-link>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </b-container>
-    <div>
-      <b-pagination
-        align="center"
-        v-model="page"
-        :total-rows="pages"
+      <b-table
+        id="my-table"
         :per-page="perPage"
-        first-number
-        last-number
+        :current-page="currentPage"
+        striped
+        hover
+        :items="items"
+        :fields="fields"
+      >
+        <template v-slot:cell(Acction)="row">
+          <router-link :to="{ path: '/DetailTournament/' + row.item.idTour }">
+            <v-btn fab small>
+              <v-icon>mdi-forward</v-icon>
+            </v-btn>
+          </router-link>
+        </template>
+        <template v-slot:cell(role)="row">
+          <p
+            :style="
+              row.item.role == 'ROLE_USER'
+                ? 'color:green'
+                : row.item.role == 'ROLE_MEMBER'
+                ? 'color:blue'
+                : 'color:red'
+            "
+          >
+            {{
+              row.item.role == "ROLE_USER"
+                ? "USER"
+                : row.item.role == "ROLE_MEMBER"
+                ? "MEMBER"
+                : "ADMIN"
+            }}
+          </p>
+        </template>
+        <template v-slot:cell(Detail)="row">
+          <router-link
+            :to="{ path: '/DetailUser/' + row.item.id }"
+            id="${user.id}"
+          >
+            <b-icon-chevron-double-right></b-icon-chevron-double-right>
+          </router-link>
+        </template>
+      </b-table>
+
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="my-table"
       ></b-pagination>
-    </div>
+    </b-overlay>
   </div>
 </template>
-
+<
 <script>
 export default {
   data() {
     return {
-      perPage: 1,
-      pages: 10,
-      user: [],
-      page: 1,
-      pagesize: 5,
-      nameSearch: "",
-      items: [
-        { type: "account_username", value: "username" },
-        { type: "account_email", value: "email" },
-        { type: "account_role", value: "role" },
+      busy: true,
+      selectedRole:null,
+      textUsername:"",
+      textEmail:"",
+      perPage: 10,
+      currentPage: 1,
+      loading: false,
+      rows: "",
+      fields: [
+        {
+          key: "id",
+          label: "No",
+          sortable: true,
+        },
+        {
+          key: "username",
+          label: "Username",
+          sortable: true,
+        },
+        {
+          key: "email",
+          label: "Email",
+          sortable: true,
+        },
+        {
+          key: "role",
+          label: "Role",
+          sortable: true,
+          sortDirection: "desc",
+        },
+        "Detail",
       ],
-      type: "",
-      loadingSearch: false,
+      items: [
+       
+      ],
+      user:[],
+      optionsRole: [
+        { value: null, text: "Please select an option" },
+        { value: "ROLE_ADMIN", text: "Admin" },
+        { value: "ROLE_MEMBER", text: "Member" },
+        { value: "ROLE_USER", text: "User" },
+      ]
+   
     };
   },
   created() {
@@ -97,33 +145,48 @@ export default {
   },
   methods: {
     getListUser() {
-      let params = {
-        page: this.page,
-        pageSize: this.pagesize,
-        type: this.type,
-        nameSearch: this.nameSearch,
-      };
-
-      this.$store.dispatch("user/searchUser", params).then((response) => {
-        this.user = response.data.account;
-        this.pages = response.data.totalPage;
-      });
+        this.$store.dispatch("user/getAll").then(res=>{
+          this.items=res.data;
+          this.busy = false;
+          this.rows=res.data.length;
+          this.user=res.data
+        })
     },
-    Search() {
-     
-      this.loadingSearch=true
-    },
-  },
-  watch: {
-    page() {
-      if (!this.loadingSearch) {
-        (this.nameSearch = ""), (this.type = "");
+    search() {
+      var arrSearch = [];
+      {
+        if (this.textUsername != "") {
+          this.user.forEach((element) => {
+            if (element.username.includes(this.textUsername)) {
+              arrSearch.push(element);
+            }
+          });
+        } else {
+          arrSearch = this.user;
+        }
       }
-      this.getListUser();
+      if (this.textEmail != null) {
+        var arrEmail = [];
+        arrSearch.forEach((element) => {
+          if (element.email.includes(this.textEmail)) {
+            arrEmail.push(element);
+          }
+        });
+        arrSearch = arrEmail;
+      }
+      if (this.selectedRole != null) {
+        var arrRole = [];
+        arrSearch.forEach((element) => {
+          if (element.role == this.selectedRole) {
+            arrRole.push(element);
+          }
+        });
+        arrSearch = arrRole;
+      }
+      
+      this.items = arrSearch;
+      this.rows=arrSearch.length
     },
-    nameSearch(){
- this.getListUser();
-    }
   },
 };
 </script>

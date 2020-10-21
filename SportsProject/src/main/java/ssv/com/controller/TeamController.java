@@ -52,7 +52,10 @@ public class TeamController {
 
 	@GetMapping(value = "findDetail/{id}")
 	public ResponseEntity<Team> getById(@PathVariable(value = "id") int id) {
+		if(id!=0) {
 		return new ResponseEntity<Team>(teamService.getById(id), HttpStatus.OK);
+		}
+		return null;
 	}
 
 	@GetMapping(value = "{teamId}")

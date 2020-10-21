@@ -50,6 +50,10 @@ public interface ScheduleMapper {
 
 	public List<Schedule> profileSchedule(int idMember);
 
+	public List<Schedule> findTeamTournament(int idTeam, int idTour);
+
+	public List<Schedule> findTeam(int idTeam);
+
 
 
 }

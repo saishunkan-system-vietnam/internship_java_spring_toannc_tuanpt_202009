@@ -224,4 +224,11 @@ public class TeamService {
 	public Integer getCountAll() {
 		return teamRepository.getCountAll();
 	}
+	//
+	public Team findTeamByTour(int idTeam, int idTour) {
+		Team team =teamRepository.findById(idTeam);
+		team.setTotalmatch(scheduleReponsitory.sumJoinByTour(idTeam, idTour));
+		team.setTotalwin(scheduleReponsitory.sumWinJoinByTour(idTeam, idTour));
+		return team;
+	}
 }

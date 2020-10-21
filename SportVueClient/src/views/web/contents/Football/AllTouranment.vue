@@ -14,18 +14,18 @@
       <v-expansion-panel v-for="(tournament, i) in tournaments" :key="i">
         <template v-if="i < number">
           <v-expansion-panel-header style="color: #6b4b4b"
-            ><h5>{{ tournament.nameTour }}</h5></v-expansion-panel-header
+            ><h5 @click="detailTournament(tournament.idTour)">{{ tournament.nameTour }}</h5></v-expansion-panel-header
           >
           <v-expansion-panel-content>
             <v-simple-table>
               <tbody>
-                <tr
+                <tr style="cursor:pointer"
                   v-for="(item, index) in tournament.schedule"
                   :key="index"
                   v-b-popover.hover.top="'Click to see details'"
                   @click="detail(item)"
                 >
-                  <template v-if="index < 5">
+                  <template v-if="index < 6">
                     <td
                       width="180px"
                       :style="
@@ -70,8 +70,8 @@
               </tbody>
             </v-simple-table>
 
-            <div class="text-center" style="font-size: 12px; margin-top: 18px">
-              <router-link :to="'/DetailTournamentSoccer/' + tournament.idTour">
+            <div class="text-center" style="font-size: 12px; margin-top: 18px" v-if="tournament.schedule.length >6">
+              <router-link :to="'/DetailTournamentFootball/' + tournament.idTour">
                 ----- All Matches -----
               </router-link>
             </div>
@@ -81,7 +81,7 @@
     </v-expansion-panels>
     <div
       class="text-center"
-      v-if="tournaments.length > 2 && number == 2"
+      v-if="tournaments.length > this.number"
       @click="show"
       style="color: blue"
     >
@@ -95,7 +95,7 @@ export default {
     return {
       panel: [0, 1, 2, 3, 4, 5, 6, 7, 8],
       tournaments: "",
-      number: 2,
+      number: 6,
     };
   },
   created() {
@@ -116,6 +116,9 @@ export default {
     show() {
       this.number = this.tournaments.length;
     },
+    detailTournament(id){
+      this.$router.push('/DetailTournamentFootball/'+id);
+    }
   },
 };
 </script>
