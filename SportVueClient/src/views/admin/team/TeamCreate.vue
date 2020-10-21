@@ -59,8 +59,6 @@
   </v-container>
 </template>
 
-
-
 <script>
 import axios from "axios";
 import ListMember from "@/views/admin/members/ListMember";
@@ -72,7 +70,7 @@ export default {
       successDialog: false,
       idTeam: 0,
       valid: true,
-      rulesImage:[],
+      rulesImage: [],
       name: "",
       type: ["Football", "TableTennis", "Basketball"],
       selectedType: "",
@@ -105,7 +103,6 @@ export default {
       this.members = this.items.filter((item) => {
         return item.type === this.selectedType && item.idTeam != 0;
       });
-      console.log(this.fileImage)
     },
 
     name() {
@@ -117,54 +114,51 @@ export default {
 
     successDialog(val) {
       if (!val) return;
-
       setTimeout(() => (this.successDialog = false), 100000);
     },
   },
   methods: {
     onSubmit() {
-      console.log(!!this.fileImage.name)
-      if(!!this.fileImage.name==false){
-        this.rulesImage=[    (v)=>!!v.name||"Image is required"]
+      console.log(!!this.fileImage.name);
+      if (!!this.fileImage.name == false) {
+        this.rulesImage = [(v) => !!v.name || "Image is required"];
       }
-      if(this.$refs.form.validate()==true){
-      // console.log("submit");
-      console.log(this.fileImage);
-      
-      var teamForm = new FormData();
-      teamForm.append("nameTeam", this.name);
-      teamForm.append("type", this.selectedType);
-      teamForm.append("description", this.description);
-      teamForm.append("file", this.fileImage);
-      // for (var value of teamForm.values()) {
-      //   console.log(value);
-      // }
-      let self = this;
-      this.$store
-        .dispatch("team/createTeam", teamForm)
-        .then(function (response) {
-          if (response.data.code === 9999 && response.data.payload != null) {
-            self.nameRules = [(v) => !self.name || "Name has already exists"];
-          } else if (
-            response.data.code === 9999 &&
-            response.data.payload === null
-          ) {
-            alert("Created Falied");
-          } else {
-            self.successDialog = !self.successDialog;
-            setTimeout(function () {
+      if (this.$refs.form.validate() == true) {
+        // console.log("submit");
+        console.log(this.fileImage);
+
+        var teamForm = new FormData();
+        teamForm.append("nameTeam", this.name);
+        teamForm.append("type", this.selectedType);
+        teamForm.append("description", this.description);
+        teamForm.append("file", this.fileImage);
+        // for (var value of teamForm.values()) {
+        //   console.log(value);
+        // }
+        let self = this;
+        this.$store
+          .dispatch("team/createTeam", teamForm)
+          .then(function (response) {
+            if (response.data.code === 9999 && response.data.payload != null) {
+              self.nameRules = [(v) => !self.name || "Name has already exists"];
+            } else if (
+              response.data.code === 9999 &&
+              response.data.payload === null
+            ) {
+              alert("Created Falied");
+            } else {
               self.successDialog = !self.successDialog;
-              self.$router.push("/LayoutTeam");
-            }, 1500);
-          }
-        })
-        .catch(function (error) {});
-      }
-      else{
+              setTimeout(function () {
+                self.successDialog = !self.successDialog;
+                self.$router.push("/LayoutTeam");
+              }, 1500);
+            }
+          })
+          .catch(function (error) {});
+      } else {
         this.$refs.form.validate();
       }
     },
-    
   },
 };
 </script>
