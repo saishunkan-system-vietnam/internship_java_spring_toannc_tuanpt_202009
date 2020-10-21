@@ -5,47 +5,47 @@
     :items="desserts"
     sort-by="nameTeam"
     class="elevation-1 container row-pointer"
-    :search="search"
     :custom-sort="customSort"
   >
     <template v-slot:top>
       <v-toolbar flat color="white">
+        <router-link :to="{ path: '/create', query: { maxId: 'maxTeamId' } }">
+          <v-btn color="primary" dark class="mb-2"> New Team </v-btn>
+        </router-link>
+        <v-divider class="mx-4" inset vertical></v-divider>
+
         <v-row>
-          <router-link :to="{ path: '/create', query: { maxId: 'maxTeamId' } }">
-            <v-btn color="primary" dark class="mb-2"> New Team </v-btn>
-          </router-link>
-          <v-divider class="mx-4" inset vertical></v-divider>
-          <v-spacer></v-spacer>
-        </v-row>
-        <v-row>
-          <v-col cols="12" sm="4" md="4">
+          <v-col cols="12" sm="1" md="1"> </v-col>
+          <v-col cols="12" sm="3" md="3">
             <v-select
-              v-model="search"
+              v-model="typeSearch"
               :items="items"
-              label="Standard"
+              label="Search Type"
             ></v-select>
           </v-col>
-          <v-col cols="12" sm="4" md="4">
+          <v-col cols="12" sm="3" md="3">
             <v-text-field
-              v-model="search"
+              v-model="nameTeamSearch"
               append-icon="mdi-magnify"
-              label="Search"
+              label="Team Search"
               single-line
               hide-details
             ></v-text-field>
           </v-col>
-          <v-col cols="12" sm="4" md="4">
+          <v-col cols="12" sm="3" md="3">
             <v-text-field
-              v-model="search"
+              v-model="tourNameSearch"
               append-icon="mdi-magnify"
-              label="Search"
+              label="Tournament Search"
               single-line
               hide-details
             ></v-text-field>
           </v-col>
         </v-row>
       </v-toolbar>
+      <v-divider class="mt-4 mb-8"></v-divider>
     </template>
+
     <template v-slot:[`item.nameTour`]="{ item }">
       <template v-if="item.idTour != 0 && item.tournament != null">
         {{ item.tournament.nameTour }}
@@ -81,16 +81,19 @@ export default {
           sortable: false,
           value: "logo",
         },
-        { text: "Team Name", value: "nameTeam" },
-        { text: "Type", value: "type" },
-        { text: "Current Tournament", value: "nameTour" },
+        { text: "Team Name", value: "nameTeam", filter: this.nameTeamFilter },
+        { text: "Type", value: "type", filter: this.typeFilter },
+        { text: "Current Tournament", value: "nameTour"},
         { text: "Total Matchs", value: "totalmatch" },
         { text: "Total Wins", value: "totalwin" },
         { text: "Team Detail", value: "actions", sortable: false },
       ],
       desserts: [],
       maxTeamId: 0,
-      items:["Football", "TableTennis", "Baseball", "Basketball"],
+      items: ["Football", "TableTennis", "Baseball", "Basketball"],
+      nameTeamSearch: "",
+      typeSearch: null,
+      tourNameSearch: "",
     };
   },
   mounted() {
@@ -113,9 +116,14 @@ export default {
         console.log(error);
       });
   },
-  watch: {
-    
+  computed: {
+    searchTrigger() {
+      if (this.search.length >= 3) {
+        return this.search;
+      }
+    },
   },
+  watch: {},
   methods: {
     editTeam(item) {
       // console.log(item);
@@ -141,6 +149,30 @@ export default {
         }
       });
       return items;
+    },
+    nameTeamFilter(value) {
+      // If this filter has no value we just skip the entire filter.
+      if (!this.nameTeamSearch) {
+        return true;
+      }
+
+      return value.toLowerCase().includes(this.nameTeamSearch.toLowerCase());
+    },
+    nameTourFilter(value) {
+      // If this filter has no value we just skip the entire filter.
+      if (!this.tourNameSearch) {
+        return true;
+      }
+
+      return value.toLowerCase().includes(this.tourNameSearch.toLowerCase());
+    },
+    typeFilter(value) {
+      // If this filter has no value we just skip the entire filter.
+      if (!this.typeSearch) {
+        return true;
+      }
+
+      return value === this.typeSearch;
     },
   },
 };
