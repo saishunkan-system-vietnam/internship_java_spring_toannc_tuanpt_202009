@@ -92,7 +92,7 @@ export default {
               self.$store.commit("user/user_info", userInfo);
               self.$store.commit("user/admin_profile");
               self.commonLogin(userInfo);
-            }, 2100);
+            }, 1100);
           } else if (
             userInfo.role === "ROLE_USER" ||
             userInfo.role === "ROLE_MEMBER"
@@ -103,7 +103,7 @@ export default {
               self.$store.commit("user/user_info", userInfo);
               self.$store.commit("user/user_profile");
               self.commonLogin(userInfo);
-            }, 2100);
+            }, 1100);
           }
         })
         .catch((err) => console.log(err));

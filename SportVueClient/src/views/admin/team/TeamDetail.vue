@@ -5,8 +5,8 @@
         <v-icon>mdi-chevron-right</v-icon>
       </template>
     </v-breadcrumbs>
-    <v-card class="mx-auto my-12 container" max-width="88%">
-      <v-img height="250" :src="team.logo"></v-img>
+    <v-card class="mx-auto my-12 container" >
+      <v-img height="500"  :src="team.logo"></v-img>
       <v-row>
         <v-card-title
           ><h1>{{ team.nameTeam }}</h1></v-card-title

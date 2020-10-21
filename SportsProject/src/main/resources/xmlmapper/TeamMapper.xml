@@ -9,6 +9,8 @@
 		<result column="team_description" property="description" />
 		<result column="team_logo" property="logo" />
 		<result column="id_tour" property="idTour" />
+				<result column="team_type" property="type" />
+		
 		<association property="tournament">
 			<id property="idTour" column="id_tournamet" />
 			<result property="nameTour" column="tournament_name" />
@@ -50,7 +52,7 @@
 		p
 		left join profile_tbl c on p.id_team = c.id_team
 		left join
-		tournament_tbl t on p.id_tour = t.id_tournament
+		tournament_tbl t on p.id_tour = t.id_tournament order by p.id_team desc
 	</select>
 
 	<select id="getCountAll">

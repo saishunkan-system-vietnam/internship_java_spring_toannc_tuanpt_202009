@@ -185,7 +185,6 @@ var dateNow = new Date().toISOString().substr(0, 10);
 import Schedule from "../../../models/schedule";
 
 export default {
-  
   props: {
     hideModal: {
       type: Function,
@@ -232,7 +231,7 @@ export default {
     },
 
     submit() {
-    this.busy = true,
+      (this.busy = true),
         (this.rulesTimeEnd = [
           (v) => v > this.timeStart || "bigger time start",
         ]);
@@ -256,11 +255,13 @@ export default {
             } else {
               alert(response.data);
               this.busy = false;
+              this.hideModal();
+              this.getData();
             }
           });
       } else {
         this.$refs.form.validate();
-        this.busy = false
+        this.busy = false;
       }
     },
   },
