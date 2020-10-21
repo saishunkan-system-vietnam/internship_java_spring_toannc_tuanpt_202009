@@ -44,7 +44,8 @@
           >
             <template v-slot:cell(logo)="row">
               <b-img
-                style="max-width: 100px"
+                style="max-width: 50px;min-height:30px"
+
                 :src="row.item.logo"
                 alt="Left image"
               ></b-img>

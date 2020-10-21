@@ -1,70 +1,81 @@
 <template>
-  <v-data-table
-    @click:row="handleRowClick"
-    :headers="headers"
-    :items="desserts"
-    sort-by="nameTeam"
-    class="elevation-1 container row-pointer"
-    :search="search"
-    :custom-sort="customSort"
-  >
-    <template v-slot:top>
-      <v-toolbar flat color="white">
-        <v-row>
+  <div>
+    <v-breadcrumbs :items="teamLink" large>
+      <template v-slot:divider>
+        <v-icon>mdi-chevron-right</v-icon>
+      </template>
+    </v-breadcrumbs>
+
+    <v-data-table
+      @click:row="handleRowClick"
+      :headers="headers"
+      :items="desserts"
+      sort-by="nameTeam"
+      class="elevation-1 container row-pointer"
+      :custom-sort="customSort"
+    >
+      <template v-slot:top>
+        <v-toolbar flat color="white">
           <router-link :to="{ path: '/create', query: { maxId: 'maxTeamId' } }">
             <v-btn color="primary" dark class="mb-2"> New Team </v-btn>
           </router-link>
           <v-divider class="mx-4" inset vertical></v-divider>
-          <v-spacer></v-spacer>
-        </v-row>
-        <v-row>
-          <v-col cols="12" sm="4" md="4">
-            <v-select
-              v-model="search"
-              :items="items"
-              label="Standard"
-            ></v-select>
-          </v-col>
-          <v-col cols="12" sm="4" md="4">
-            <v-text-field
-              v-model="search"
-              append-icon="mdi-magnify"
-              label="Search"
-              single-line
-              hide-details
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="4" md="4">
-            <v-text-field
-              v-model="search"
-              append-icon="mdi-magnify"
-              label="Search"
-              single-line
-              hide-details
-            ></v-text-field>
-          </v-col>
-        </v-row>
-      </v-toolbar>
-    </template>
-    <template v-slot:[`item.nameTour`]="{ item }">
-      <template v-if="item.idTour != 0 && item.tournament != null">
-        {{ item.tournament.nameTour }}
+          <v-row>
+            <v-col cols="12" sm="3" md="3"> </v-col>
+            <v-col cols="12" sm="3" md="3">
+              <v-select
+                v-model="typeSearch"
+                :items="items"
+                label="Search Type"
+                class="pt-3"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="3" md="3">
+              <v-text-field
+                v-model="nameTeamSearch"
+                append-icon="mdi-magnify"
+                label="Team Search"
+                single-line
+                hide-details
+                class="pt-3"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="3" md="3">
+              <v-text-field
+                v-model="tourNameSearch"
+                append-icon="mdi-magnify"
+                label="Tournament Search"
+                single-line
+                hide-details
+                class="pt-3"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-toolbar>
+        <v-divider class="mt-4 mb-8"></v-divider>
       </template>
-      <template style="color: green" v-else> Available </template>
-    </template>
-    <template v-slot:[`item.logo`]="{ item }">
-      <img
-        :src="item.logo"
-        alt=""
-        width="100px"
-        height="70px"
-        style="margin: 3px 0 3px 0"
-      />
-    </template>
-    <template v-slot:[`item.actions`]="{ item }">
-      <v-icon class="mr-2" @click="editTeam(item)"> mdi-pencil </v-icon>
-    </template>
-  </v-data-table>
+
+      <template v-slot:[`item.tournament.nameTour`]="{ item }">
+        <template v-if="item.idTour != 0 && item.tournament != null">
+          <div style="color: red">{{ item.tournament.nameTour }}</div>
+        </template>
+        <template v-else><div style="color: green">Available</div></template>
+      </template>
+
+      <template v-slot:[`item.logo`]="{ item }">
+        <img
+          :src="item.logo"
+          alt=""
+          width="100px"
+          height="70px"
+          style="margin: 3px 0 3px 0"
+        />
+      </template>
+      <template v-slot:[`item.actions`]="{ item }">
+        <v-icon class="mr-2" @click="editTeam(item)"> mdi-pencil </v-icon>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script>
@@ -81,16 +92,35 @@ export default {
           sortable: false,
           value: "logo",
         },
-        { text: "Team Name", value: "nameTeam" },
-        { text: "Type", value: "type" },
-        { text: "Current Tournament", value: "nameTour" },
+        { text: "Team Name", value: "nameTeam", filter: this.nameTeamFilter },
+        { text: "Type", value: "type", filter: this.typeFilter },
+        {
+          text: "Current Tournament",
+          value: "tournament.nameTour",
+          filter: this.nameTourFilter,
+        },
         { text: "Total Matchs", value: "totalmatch" },
         { text: "Total Wins", value: "totalwin" },
         { text: "Team Detail", value: "actions", sortable: false },
       ],
       desserts: [],
       maxTeamId: 0,
-      items:["Football", "TableTennis", "Baseball", "Basketball"],
+      items: ["Football", "TableTennis", "Baseball", "Basketball"],
+      nameTeamSearch: "",
+      typeSearch: null,
+      tourNameSearch: "",
+      teamLink: [
+        {
+          text: "Dashboard",
+          disabled: false,
+          href: "/admin/home",
+        },
+        {
+          text: "Teams",
+          disabled: false,
+          href: "/LayoutTeam",
+        },
+      ],
     };
   },
   mounted() {
@@ -98,7 +128,6 @@ export default {
     axios
       .get("http://localhost:8090/api/v1/team/getAll")
       .then(function (response) {
-        // console.log(response.data)
         self.desserts = response.data;
         self.maxTeamId =
           1 +
@@ -113,9 +142,14 @@ export default {
         console.log(error);
       });
   },
-  watch: {
-    
+  computed: {
+    searchTrigger() {
+      if (this.search.length >= 3) {
+        return this.search;
+      }
+    },
   },
+  watch: {},
   methods: {
     editTeam(item) {
       // console.log(item);
@@ -142,18 +176,48 @@ export default {
       });
       return items;
     },
+    nameTeamFilter(value) {
+      // If this filter has no value we just skip the entire filter.
+      if (!this.nameTeamSearch) {
+        return true;
+      }
+      console.log(value);
+      return value.toLowerCase().includes(this.nameTeamSearch.toLowerCase());
+    },
+    nameTourFilter(value) {
+      // If this filter has no value we just skip the entire filter.
+      if (!this.tourNameSearch) {
+        return true;
+      }
+      if (value != undefined)
+        return value.toLowerCase().includes(this.tourNameSearch.toLowerCase());
+    },
+    typeFilter(value) {
+      // If this filter has no value we just skip the entire filter.
+      if (!this.typeSearch) {
+        return true;
+      }
+
+      return value === this.typeSearch;
+    },
   },
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="css">
 .remove-padding > div {
   padding: 0;
 }
-.row-pointer >>> tbody tr :hover {
-  cursor: pointer;
-}
+
 .v-data-table-header__icon {
   opacity: 1;
+}
+tbody tr:nth-child(odd) {
+  background: #dee2e6;
+}
+</style>
+<style lang="css" scoped>
+.row-pointer >>> tbody tr :hover {
+  cursor: pointer;
 }
 </style>
