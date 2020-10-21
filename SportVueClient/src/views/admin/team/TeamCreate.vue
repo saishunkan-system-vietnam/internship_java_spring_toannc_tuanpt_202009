@@ -25,7 +25,7 @@
         <v-col class="d-flex" cols="12" sm="4">
           <v-file-input
             accept="image/png, image/jpeg, image/bmp"
-            :rules="[(v) => !!v.name || 'Item is required']"
+            :rules="rulesImage"
             v-model="fileImage"
             label="Add Logo"
           ></v-file-input>
@@ -60,8 +60,6 @@
 </template>
 
 
-  </v-container>
-</template>
 
 <script>
 import axios from "axios";
@@ -74,8 +72,9 @@ export default {
       successDialog: false,
       idTeam: 0,
       valid: true,
+      rulesImage:[],
       name: "",
-      type: ["Football", "TableTennis", "Baseball", "Basketball"],
+      type: ["Football", "TableTennis", "Basketball"],
       selectedType: "",
       logo: "",
       description: "",
@@ -106,6 +105,7 @@ export default {
       this.members = this.items.filter((item) => {
         return item.type === this.selectedType && item.idTeam != 0;
       });
+      console.log(this.fileImage)
     },
 
     name() {
@@ -123,9 +123,14 @@ export default {
   },
   methods: {
     onSubmit() {
+      console.log(!!this.fileImage.name)
+      if(!!this.fileImage.name==false){
+        this.rulesImage=[    (v)=>!!v.name||"Image is required"]
+      }
+      if(this.$refs.form.validate()==true){
       // console.log("submit");
-      // console.log(this.fileImage);
-      this.$refs.form.validate();
+      console.log(this.fileImage);
+      
       var teamForm = new FormData();
       teamForm.append("nameTeam", this.name);
       teamForm.append("type", this.selectedType);
@@ -154,7 +159,12 @@ export default {
           }
         })
         .catch(function (error) {});
+      }
+      else{
+        this.$refs.form.validate();
+      }
     },
+    
   },
 };
 </script>

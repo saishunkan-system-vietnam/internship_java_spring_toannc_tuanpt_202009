@@ -10,7 +10,6 @@
       @click:row="handleRowClick"
       :headers="headers"
       :items="desserts"
-      sort-by="nameTeam"
       class="elevation-1 container row-pointer"
       :custom-sort="customSort"
     >
@@ -129,6 +128,7 @@ export default {
       .get("http://localhost:8090/api/v1/team/getAll")
       .then(function (response) {
         self.desserts = response.data;
+        console.log(self.desserts )
         self.maxTeamId =
           1 +
           Math.max.apply(

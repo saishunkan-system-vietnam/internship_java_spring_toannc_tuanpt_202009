@@ -1,7 +1,7 @@
 <template>
   <v-expansion-panels v-model="panel" multiple>
     <v-expansion-panel v-for="(item, i) in tournaments" :key="i">
-      <v-expansion-panel-header
+      <v-expansion-panel-header v-if="item.schedule!=''"
         ><template v-if="item.type === 'Football'"
           ><v-icon style="max-width: 30px" medium color="green darken-2">
             mdi-soccer

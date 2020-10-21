@@ -51,7 +51,7 @@
           <v-col cols="12" md="3">
             <v-file-input
               accept="image/png, image/jpeg, image/bmp"
-              :rules="[(v) => !!v.name || 'Avatar is required']"
+              :rules="[(v) => !!v || 'Avatar is required']"
               v-model="fileImage"
               label="Add Avatar"
             ></v-file-input>
@@ -106,7 +106,7 @@ export default {
       number: 10,
       nameRules: [
         (v) => !!v || "Name is required",
-        (v) => v.length <= 21 || "Name must be less than 21 characters",
+        (v) => v <= 21 || "Name must be less than 21 characters",
       ],
       email: "",
       emailRules: [
@@ -116,13 +116,13 @@ export default {
       phone: "",
       phoneRules: [
         (v) => !!v || "Phone number is required",
-        (v) => v.length <= 15 || "Phone number must be less than 15 characters",
+        (v) => v <= 15 || "Phone number must be less than 15 characters",
       ],
       age: "",
       ageRules: [
         (v) => !!v || "Age number is required",
         (v) =>
-          (v.length === 2 && v <= 60 && v >= 6) ||
+          (v == 2 && v <= 60 && v >= 6) ||
           "Age must be less than 60 and greater than 6",
       ],
       gender: "",
@@ -140,7 +140,8 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$refs.form.validate();
+      console.log(this.fileImage)
+      if(      this.$refs.form.validate()==true){
       let self = this;
       var memberForm = new FormData();
       memberForm.append("name", this.name);
@@ -176,6 +177,10 @@ export default {
         });
       self.changeButton = !self.changeButton;
       self.reset();
+      }
+      else{
+              this.$refs.form.validate();
+      }
     },
     reset() {
       this.$refs.form.reset();
