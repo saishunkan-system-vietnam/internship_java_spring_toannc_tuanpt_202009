@@ -108,6 +108,11 @@ public class ScheduleReponsitory {
 		return scheduleMapper.findTeamTournament(idTeam,idTour);
 	}
 
+	public List<Schedule> findTeam(int idTeam) {
+		// TODO Auto-generated method stub
+		return scheduleMapper.findTeam(idTeam);
+	}
+
 	
 
 }

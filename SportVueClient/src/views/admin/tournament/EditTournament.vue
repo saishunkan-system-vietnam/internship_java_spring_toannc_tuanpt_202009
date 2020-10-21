@@ -161,17 +161,8 @@ export default {
     dialog:false
   }),
   methods: {
-    clear() {
-      (this.value = []),
-        (this.nameTour = ""),
-        (this.title = ""),
-        (this.type = ""),
-        (this.timeEnd = new Date().toISOString().substr(0, 10)),
-        (this.timeStart = new Date().toISOString().substr(0, 10));
-    },
     okCancel() {
       this.dialog=false
-      this.clear();
       this.$refs.form.resetValidation();
       this.callback();
     },

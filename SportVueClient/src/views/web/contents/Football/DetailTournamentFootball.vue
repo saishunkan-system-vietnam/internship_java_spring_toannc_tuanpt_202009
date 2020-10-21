@@ -35,6 +35,7 @@
                         v-for="item in tournament.team"
                         :key="item.name"
                         @click="detailTeam(item.idTeam)"
+                        style="cursor: pointer"
                       >
                         <td>{{ item.nameTeam }}</td>
                         <td class="text-center">
@@ -61,6 +62,9 @@
                       <tr>
                         <th class="text-left">Rank</th>
                         <th class="text-left">Name</th>
+                        <th class="text-left">MP</th>
+                        <th class="text-left">Win</th>
+                        <th class="text-left">Goals</th>
                         <th class="text-left">Win rate</th>
                         <th class="text-left">The most recent matches</th>
                       </tr>
@@ -82,6 +86,10 @@
                         <td>{{ index + 1 }}</td>
 
                         <td>{{ item.name }}</td>
+                        <td>{{ item.team.totalmatch }}</td>
+                        <td>{{ item.team.totalwin }}</td>
+                        <td>{{ item.totalGoals }}</td>
+
                         <td>{{ item.rank != "NaN" ? item.rank * 100 : 0 }}%</td>
                         <td>
                           <div style="padding: 5px">
@@ -99,7 +107,8 @@
                                     ? 'background:green;margin:2px'
                                     : 'background:red;margin:2px'
                                 "
-                                ><div v-if="schedule.video != null">
+                                >
+                                <div v-if="schedule.video != null||schedule.video==''">
                                   <span v-if="schedule.idwinner == item.idTeam">
                                     W
                                   </span>
@@ -135,8 +144,9 @@
                         v-for="(item, index) in schedule"
                         color="primary"
                         :key="index"
-                        v-b-popover.hover.bottom="'Kích vào để xem chi tiết'"
+                        v-b-popover.hover.bottom="'Click to see details'"
                         @click="detail(item)"
+                        style="cursor: pointer"
                       >
                         <td
                           :style="
