@@ -95,7 +95,6 @@ export default {
           } else if (res.data.payload === 0) {
             self.emailRules = [(v) => !self.email || res.data.message];
           } else {
-            console.log(userLogin);
             self.$store.dispatch("auth/login", userLogin).then((res) => {
               let userInfo = res.data.payload.account;
               self.success = true;

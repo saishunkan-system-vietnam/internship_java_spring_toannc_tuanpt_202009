@@ -144,8 +144,12 @@ export default {
   },
   methods: {
     onSubmit(id) {
+      console.log(this.fileImage.type);
       if (!!this.fileImage.name == false) {
         this.rulesImage = [(v) => !!v.name || "Image is required"];
+      }
+      if(this.fileImage.type != "image/png"){
+        this.rulesImage = [(v) => !!v.name || "This is not an image"];
       }
       if (this.$refs.form.validate() == true) {
         let self = this;
@@ -171,7 +175,6 @@ export default {
             self.openEditTeam();
             setTimeout(function () {
               self.dialogSuccess = !self.dialogSuccess;
-              
             }, 1500);
           })
           .catch((e) => {

@@ -224,7 +224,6 @@ export default {
     getTeamWait() {
       this.$store.dispatch("team/teamWait", this.type).then((response) => {
         this.items = response.data;
-        console.log(this.items);
       });
     },
   },
