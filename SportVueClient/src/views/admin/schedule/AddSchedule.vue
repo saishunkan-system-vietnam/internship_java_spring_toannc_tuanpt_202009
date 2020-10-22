@@ -128,36 +128,36 @@
             label="Address"
             v-model="address"
             required
+            :counter="15"
             :rules="[
               (v) => !!v || 'Item is required',
               (v) => v != '' || 'Item is required',
+              (v) =>
+                (v && v.length <= 15) || 'Name must be less than 15 characters',
             ]"
           ></v-text-field>
           <v-text-field
             label="Title"
             v-model="title"
+            :counter="25"
             :rules="[
               (v) => !!v || 'Item is required',
               (v) => v != '' || 'Item is required',
+              ,
+              (v) =>
+                (v && v.length <= 25) || 'Name must be less than 25 characters',
             ]"
           ></v-text-field>
         </div>
-        <v-btn
-          class="mx-2"
-          fab
-          dark
-          small
-          color="blue-grey"
-          @click.stop="dialog = true"
-        >
-          <v-icon dark> mdi-cancel </v-icon>
+        <v-btn class="mx-2" dark color="blue-grey" @click.stop="dialog = true">
+          Reset
         </v-btn>
         <v-dialog v-model="dialog" max-width="290">
           <v-card>
             <v-card-title class="headline"> Notification </v-card-title>
 
             <v-card-text>
-              Do you want to exit without finishing importing?
+              Do you want to Reset without finishing importing?
             </v-card-text>
 
             <v-card-actions>
@@ -167,14 +167,12 @@
                 Cancel
               </v-btn>
 
-              <v-btn color="green darken-1" text @click="okCancel">
-                OK
-              </v-btn>
+              <v-btn color="green darken-1" text @click="okCancel"> OK </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-btn class="mx-2" fab dark small color="primary" @click="submit">
-          <v-icon dark> mdi-plus </v-icon>
+        <v-btn class="mx-2" dark color="primary" @click="submit">
+          Create
         </v-btn>
       </v-form>
     </b-overlay>
@@ -216,8 +214,7 @@ export default {
   },
   methods: {
     okCancel() {
-      (this.dialog = false), this.hideModal();
-      this.reset();
+      (this.dialog = false), this.reset();
     },
     getTournament() {
       this.$store.dispatch("tournament/getAction").then((response) => {

@@ -45,7 +45,8 @@
           label="Score team 1 "
           required
           :rules="[
-            (v) => Number.isInteger(Number(v)) == true || 'Enter the correct number',
+            (v) =>
+              Number.isInteger(Number(v)) == true || 'Enter the correct number',
             (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
@@ -53,10 +54,11 @@
       <v-col>
         <v-text-field
           v-model="score2h2"
-          label="Score Team "
+          label="Score Team 2"
           required
           :rules="[
-            (v) => Number.isInteger(Number(v)) == true || 'Enter the correct number',
+            (v) =>
+              Number.isInteger(Number(v)) == true || 'Enter the correct number',
             (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
@@ -100,7 +102,7 @@
       </v-col>
     </v-row>
     <v-textarea
-      v-model="description1"
+      v-model="description3"
       name="input-7-1"
       label="Description set 3"
       required
@@ -113,9 +115,50 @@
         },
       ]"
     ></v-textarea>
+    <h3>Set 4</h3>
+    <v-row>
+      <v-col>
+        <v-text-field
+          v-model="score1h4"
+          label="Score team 1 "
+          required
+          :rules="[
+            (v) =>
+              Number.isInteger(Number(v)) == true || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
+          ]"
+        ></v-text-field>
+      </v-col>
+      <v-col>
+        <v-text-field
+          v-model="score2h4"
+          label="Score Team 2"
+          required
+          :rules="[
+            (v) =>
+              Number.isInteger(Number(v)) == true || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
+          ]"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+    <v-textarea
+      v-model="description4"
+      name="input-7-1"
+      label="Description set 4"
+      required
+      :rules="[
+        (v) => {
+          if (v == undefined || v.length == 0) {
+            return false || 'Do not leave blank';
+          }
+          return true;
+        },
+      ]"
+    ></v-textarea>
     <h3>Summary</h3>
     <v-textarea
-      v-model="description3"
+      v-model="descriptionSum"
       name="input-7-1"
       label="description"
       required
@@ -168,10 +211,13 @@ export default {
     score2h2: "",
     score1h3: "",
     score2h3: "",
+    score1h4: "",
+    score2h4: "",
     description1: "",
     description2: "",
     description3: "",
     description4: "",
+    descriptionSum: "",
     rulesImage: [
       (v) => {
         if (v == undefined || Array.isArray(v)) {
@@ -208,29 +254,17 @@ export default {
         this.$refs.form.validate();
       } else {
         var bodyFormData = new FormData();
-        var score1 = 0;
-        var score2 = 0;
-        if (this.score1h1 > this.score2h1) {
-          score1++;
-        } else {
-          score2++;
-        }
-        if (this.score1h2 > this.score2h2) {
-          score1++;
-        } else {
-          score2++;
-        }
-        if (this.score1h3 > this.score2h3) {
-          score1++;
-        } else {
-          score2++;
-        }
+        var score1 =
+          this.score1h1 + this.score1h2 + this.score1h3 + this.score1h4;
+        var score2 =
+          this.score2h1 + this.score2h2 + this.score2h3 + this.score2h4;
+
         bodyFormData.append("idSchedule", this.data.idSchedule);
         bodyFormData.append("scoreTeam1", score1);
         bodyFormData.append("scoreTeam2", score2);
         bodyFormData.append("idTeam1", this.data.idTeam1);
         bodyFormData.append("idTeam2", this.data.idTeam2);
-        bodyFormData.append("description", this.description4);
+        bodyFormData.append("description", this.descriptionSum);
         bodyFormData.append("fileImage", this.fileImage);
         bodyFormData.append("fileVideo", this.fileVideo);
 
@@ -262,12 +296,23 @@ export default {
                   })
                   .then((response) => {
                     this.$store
-                      .dispatch("schedule/updateSchedule", bodyFormData)
+                      .dispatch("round/uploadSchedule", {
+                        roundName: "Set 4",
+                        roundScore1: this.score1h4,
+                        roundScore2: this.score2h4,
+                        roundDescription: this.description4,
+                        roundSchedule: this.data.idSchedule,
+                      })
+
                       .then((response) => {
-                        alert(response.data);
-                        this.reset();
-                        this.callback();
-                        this.loadData();
+                        this.$store
+                          .dispatch("schedule/updateSchedule", bodyFormData)
+                          .then((response) => {
+                            alert(response.data);
+                            this.reset();
+                            this.callback();
+                            this.loadData();
+                          });
                       });
                   });
               });

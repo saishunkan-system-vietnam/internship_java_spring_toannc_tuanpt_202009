@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-breadcrumbs :items="itemlinks">
+    <v-breadcrumbs :items="itemlinks" large>
       <template v-slot:divider>
         <v-icon>mdi-chevron-right</v-icon>
       </template>
@@ -43,18 +43,18 @@
           </b-row>
           <b-table
             small
-            outlined
+            
             id="my-table"
             :per-page="perPage"
             :current-page="currentPage"
             striped
             hover
+            outlined
             :items="itemsTeam"
             :fields="fieldsTeam"
           >
             <template v-slot:cell(logo)="row">
               <b-img :src="row.item.logo" width="70px" />
-
             </template>
             <template v-slot:cell(Action)="row">
               <a
@@ -183,7 +183,7 @@
             :items="itemsSchedule"
             :fields="fieldsSchedule"
           >
-            <template v-slot:cell(Acction)="row" style="">
+            <template v-slot:cell(Action)="row" style="">
               <router-link
                 :to="{ path: '/DetailSchedule/' + row.item.idSchedule }"
                 id="${schedule.idSchedule}"
@@ -249,7 +249,7 @@
           >
             <p class="my-4">Are you sure!</p>
           </b-modal>
-          <v-dialog v-model="dialogSchedule" max-width="1000px" persistent>
+          <v-dialog v-model="dialogSchedule" max-width="1000px">
             <v-card>
               <v-card-title class="headline"> Add Schedule </v-card-title>
               <v-card-text>
@@ -366,7 +366,11 @@ export default {
           sortable: false,
           class: "center",
         },
-        "Action",
+        {
+          key: "Action",
+          label: "Action",
+          class: "center",
+        },
       ],
       fieldsSchedule: [
         {
@@ -407,7 +411,11 @@ export default {
           sortable: true,
           class: "center",
         },
-        "Acction",
+        {
+          key: "Action",
+          label: "Action",
+          class: "center",
+        },
       ],
       itemsTeam: [],
       textTeamSchedule: "",
@@ -426,8 +434,7 @@ export default {
       }
     },
   },
-  mounted(){
-  },
+  mounted() {},
   methods: {
     async Bindata() {
       let data1 = await this.getTournament();
@@ -436,7 +443,6 @@ export default {
       this.getTournamentSchedule();
       this.getTeamWait(data1.type);
       this.idTour = this.$route.params.id;
-     
     },
     editSchedule(id) {
       this.dataEdit = id;
@@ -581,16 +587,16 @@ export default {
       this.rowsSchedule = this.itemsSchedule.length;
     },
   },
-  watch:{
-    dataTournament(){
-      if(this.itemlinks.length!=3){
-       this.itemlinks.push({
-        text: this.dataTournament.nameTour,
-        disabled: true,
-      });
+  watch: {
+    dataTournament() {
+      if (this.itemlinks.length != 3) {
+        this.itemlinks.push({
+          text: this.dataTournament.nameTour,
+          disabled: true,
+        });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

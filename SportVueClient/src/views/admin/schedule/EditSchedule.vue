@@ -112,27 +112,31 @@
         <v-text-field
           label="Address"
           v-model="address"
+          :counter="15"
           required
           :rules="[
             (v) => !!v || 'Item is required',
             (v) => v != '' || 'Item is required',
+            (v) =>
+              (v && v.length <= 15) || 'Name must be less than 15 characters',
           ]"
         ></v-text-field>
         <v-text-field
           label="Title"
           v-model="title"
+          :counter="25"
           :rules="[
             (v) => !!v || 'Item is required',
             (v) => v != '' || 'Item is required',
+            (v) =>
+              (v && v.length <= 25) || 'Name must be less than 25 characters',
           ]"
         ></v-text-field>
       </div>
-      <v-btn class="mx-2" fab dark small color="blue-grey" @click="cancel">
-        <v-icon dark> mdi-cancel </v-icon>
+      <v-btn class="mx-2" dark color="blue-grey" @click="cancel">
+        Reset
       </v-btn>
-      <v-btn class="mx-2" fab dark small color="primary" @click="submit">
-        <v-icon dark> mdi-plus </v-icon>
-      </v-btn>
+      <v-btn class="mx-2" dark color="primary" @click="submit"> Edit </v-btn>
     </v-form>
   </div>
 </template>
@@ -173,12 +177,10 @@ export default {
   },
   methods: {
     cancel() {
-      this.hideModal();
       this.reset();
     },
 
     reset() {
-
       this.$store
         .dispatch("tournament/getById", this.dataEdit.idTour)
         .then((response) => {
@@ -206,7 +208,7 @@ export default {
           .dispatch("schedule/editSchedule", this.schedule)
           .then((response) => {
             if (response.data == "edit") {
-              alert("edit thanh cong");
+              alert("Edit success");
               this.hideModal();
               this.getData();
             } else {

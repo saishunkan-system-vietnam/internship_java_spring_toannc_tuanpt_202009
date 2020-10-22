@@ -86,12 +86,7 @@
             </v-menu>
           </v-col>
         </v-row>
-        <v-textarea
-          label="Title"
-          v-model="title"
-          :rules="[(v) => !!v || 'Item is required']"
-          required
-        ></v-textarea>
+       
         <v-select
           v-model="value"
           :items="items"
@@ -106,15 +101,14 @@
 
         <v-row align="center" justify="space-around">
           <v-btn tile color="primary" @click.stop="dialog = true">
-            <v-icon left> mdi-cancel </v-icon>
-            Cancel
+            Reset
           </v-btn>
           <v-dialog v-model="dialog" max-width="290">
             <v-card>
               <v-card-title class="headline"> Notification </v-card-title>
 
               <v-card-text>
-                Do you want to exit without finishing importing?
+                Do you want to reset without finishing importing?
               </v-card-text>
 
               <v-card-actions>
@@ -131,7 +125,6 @@
             </v-card>
           </v-dialog>
           <v-btn tile color="success" @click.prevent="submit">
-            <v-icon left> mdi-pencil </v-icon>
             Submit
           </v-btn>
         </v-row>
@@ -188,7 +181,6 @@ export default {
       this.dialog = false;
       this.clear();
       this.$refs.form.resetValidation();
-      this.callback();
     },
     submit() {
       this.rulesTimeEnd = [(v) => v > this.timeStart || "bigger time start"];

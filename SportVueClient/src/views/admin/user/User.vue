@@ -7,7 +7,7 @@
       spinner-small
       spinner-variant="primary"
       >
-       <v-breadcrumbs :items="itemlinks">
+       <v-breadcrumbs :items="itemlinks" large>
         <template v-slot:divider>
           <v-icon>mdi-chevron-right</v-icon>
         </template>

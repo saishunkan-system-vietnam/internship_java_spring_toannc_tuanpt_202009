@@ -118,11 +118,11 @@
           ]"
         ></v-text-field>
       </div>
-      <v-btn class="mx-2" fab dark small color="blue-grey" @click="cancel">
-        <v-icon dark> mdi-cancel </v-icon>
+      <v-btn class="mx-2" dark small color="blue-grey" @click="cancel">
+        Reset
       </v-btn>
-      <v-btn class="mx-2" fab dark small color="primary" @click="submit">
-        <v-icon dark> mdi-plus </v-icon>
+      <v-btn class="mx-2" dark small color="primary" @click="submit">
+        Create
       </v-btn>
     </v-form>
   </div>
@@ -151,8 +151,8 @@ export default {
     getListSchedule: {
       type: Function,
     },
-    getTournamentTeam:{
-      type:Function,
+    getTournamentTeam: {
+      type: Function,
     },
     hideModal: {
       type: Function,
@@ -166,7 +166,6 @@ export default {
   },
   methods: {
     cancel() {
-      this.hideModal();
       this.reset();
     },
     getTournament() {
@@ -182,6 +181,7 @@ export default {
         (this.timeEnd = new Date().toISOString().substr(0, 10));
     },
     submit() {
+      this.rulesTimeEnd = [(v) => v > this.timeStart || "bigger time start"];
       if (this.$refs.form.validate() == true) {
         this.schedule.idTour = this.$route.params.id;
         this.schedule.timeStart = this.timeStart;

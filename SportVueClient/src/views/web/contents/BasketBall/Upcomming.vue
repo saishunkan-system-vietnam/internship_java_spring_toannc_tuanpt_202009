@@ -1,15 +1,14 @@
 <template>
   <div>
-     <div v-if="tournaments == ''" class="text-center">
+    <div v-if="tournaments == ''" class="text-center">
       <div class="d-flex flex-column justify-space-between align-center">
         <v-img
           max-height="350"
           max-width="350"
-          src="@/assets/soccer.png"
+          src="@/assets/basketball.png"
         ></v-img>
         No match is upcomming
       </div>
-
     </div>
     <v-expansion-panels v-model="panel" multiple>
       <v-expansion-panel v-for="(tournament, i) in tournaments" :key="i">
@@ -34,7 +33,7 @@
                           ? 'color:green'
                           : item.status == 1
                           ? 'color:blue'
-                          : 'color:#68688e'
+                          : 'color:red'
                       "
                     >
                       {{
@@ -45,7 +44,7 @@
                           : "FINISHED"
                       }}
                     </td>
-                                        <td>{{ item.timeStart }}</td>
+                    <td>{{ item.timeStart }}</td>
 
                     <td>
                       <v-row>
@@ -71,7 +70,9 @@
             </v-simple-table>
 
             <div class="text-center" style="font-size: 12px; margin-top: 18px">
-              <router-link :to="'/DetailTournamentBasketBall/' + tournament.idTour">
+              <router-link
+                :to="'/DetailTournamentBasketBall/' + tournament.idTour"
+              >
                 ----- All Matches -----
               </router-link>
             </div>
@@ -79,23 +80,28 @@
         </template>
       </v-expansion-panel>
     </v-expansion-panels>
-     <div  class="text-center" v-if="tournaments.length>2 && number==2" @click="show" style="color:blue">
-           -- Show More --
-        </div>
+    <div
+      class="text-center"
+      v-if="tournaments.length > this.number"
+      @click="show"
+      style="color: blue"
+    >
+      -- Show More --
+    </div>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      panel: [0, 1, 2, 3, 4, 5,6,7,8],
+      panel: [0, 1, 2, 3, 4, 5, 6, 7, 8],
       tournaments: "",
-      number:2,
+      number: 6,
     };
   },
   created() {
     this.$store
-        .dispatch("tournament/getByStatus", { status: "0", type: "BasketBall" })
+      .dispatch("tournament/getByStatus", { status: "0", type: "BasketBall" })
       .then((response) => {
         this.tournaments = response.data;
       });
@@ -108,9 +114,9 @@ export default {
         "width=600px,height=600"
       );
     },
-    show(){
-      this.number=this.tournaments.length
-    }
+    show() {
+      this.number = this.tournaments.length;
+    },
   },
 };
 </script>

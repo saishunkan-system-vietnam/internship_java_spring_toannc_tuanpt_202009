@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <v-breadcrumbs :items="itemlinks">
+      <v-breadcrumbs :items="itemlinks" large>
         <template v-slot:divider>
           <v-icon>mdi-chevron-right</v-icon>
         </template>
@@ -33,6 +33,18 @@
           <v-card-title class="headline"> Update Football </v-card-title>
           <v-card-text>
             <UpdateScheduleFootBall
+              :schedule="schedule"
+              :loadData="getData"
+              :callback="hideModal"
+            />
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+      <v-dialog v-model="dialogBasketBall" width="900px">
+        <v-card>
+          <v-card-title class="headline"> Update BasketBall </v-card-title>
+          <v-card-text>
+            <UpdateScheduleBasketBall
               :schedule="schedule"
               :loadData="getData"
               :callback="hideModal"
@@ -147,13 +159,12 @@
                       </h1></b-col
                     >
                     <b-col class="text-center"
-                      ><b-img :src="team2.logo" width="1  00px"></b-img
+                      ><b-img :src="team2.logo" width="100px"></b-img
                     ></b-col>
                   </b-row>
                   Description:
                   <b-form-textarea
                     id="textarea-no-resize"
-                    placeholder="Description"
                     rows="5"
                     no-resize
                     disabled
@@ -168,7 +179,6 @@
       <h2 style="color: blue">Summary</h2>
       <b-form-textarea
         id="textarea-no-resize"
-        placeholder="Description"
         rows="5"
         no-resize
         v-model="schedule.description"
@@ -196,6 +206,7 @@
 <script>
 import UpdateScheduleFootBall from "./UpdateScheduleFootBall";
 import UpdateScheduleTableTennis from "./UpdateScheduleTableTennis";
+import UpdateScheduleBasketBall from "./UpdateScheduleBasketBall"
 export default {
   data() {
     return {
@@ -225,6 +236,7 @@ export default {
   components: {
     UpdateScheduleFootBall,
     UpdateScheduleTableTennis,
+    UpdateScheduleBasketBall
   },
   created() {
     this.getData();

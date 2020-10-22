@@ -82,12 +82,7 @@
             </v-menu>
           </v-col>
         </v-row>
-        <v-textarea
-          label="Title"
-          v-model="title"
-          :rules="[(v) => !!v || 'Item is required']"
-          required
-        ></v-textarea>
+     
 
         <v-row align="center" justify="space-around">
           <v-btn tile color="primary" @click.stop="dialog = true">
