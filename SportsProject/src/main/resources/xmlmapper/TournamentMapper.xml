@@ -107,7 +107,7 @@
 		p.id_tournament=q.id_tour left join
 		schedule_tbl c on
 		p.id_tournament=c.schedule_tour
-		Where p.id_tournament=${idTour}
+		Where p.id_tournament=${idTour} order by schedule_start desc
 	</select>
 
 	<select id="getTourInfo" resultMap="tournamentMapping">

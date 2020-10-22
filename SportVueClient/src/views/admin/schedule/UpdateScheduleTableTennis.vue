@@ -5,20 +5,20 @@
       <v-col>
         <v-text-field
           v-model="score1h1"
-          label="Bàn thắng team 1 "
+          label="Score team 1 "
           :rules="[
-            (v) => Number.isInteger(Number(v)) || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
       <v-col>
         <v-text-field
           v-model="score2h1"
-          label="Bàn thắng team 2"
+          label="Score team 2"
           :rules="[
-            (v) => Number.isInteger(Number(v)) || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
@@ -28,29 +28,36 @@
       name="input-7-1"
       label="Diễn biến set 1"
       required
-      :rules="[(v) => v != '' || 'Không để trống']"
+      :rules="[
+        (v) => {
+          if (v == undefined || v.length == 0) {
+            return false || 'Do not leave blank';
+          }
+          return true;
+        },
+      ]"
     ></v-textarea>
     <h3>Set 2</h3>
     <v-row>
       <v-col>
         <v-text-field
           v-model="score1h2"
-          label="Bàn thắng team 1 "
+          label="Score team 1 "
           required
           :rules="[
-            (v) => Number.isInteger(Number(v)) == true || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) == true || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
       <v-col>
         <v-text-field
           v-model="score2h2"
-          label="Bàn thắng team 2"
+          label="Score Team "
           required
           :rules="[
-            (v) => Number.isInteger(Number(v)) == true || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) == true || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
@@ -60,27 +67,34 @@
       name="input-7-1"
       label="Diễn biến set 2"
       required
-      :rules="[(v) => v != '' || 'Không để trống']"
+      :rules="[
+        (v) => {
+          if (v == undefined || v.length == 0) {
+            return false || 'Do not leave blank';
+          }
+          return true;
+        },
+      ]"
     ></v-textarea>
     <h3>Set 3</h3>
     <v-row>
       <v-col>
         <v-text-field
           v-model="score1h3"
-          label="Bàn thắng team 1 "
+          label="Score team 1 "
           :rules="[
-            (v) => Number.isInteger(Number(v)) || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
       <v-col>
         <v-text-field
           v-model="score2h3"
-          label="Bàn thắng team 2"
+          label="Score team 2"
           :rules="[
-            (v) => Number.isInteger(Number(v)) || 'nhập chính xác số',
-            (v) => v != '' || 'Không để trống',
+            (v) => Number.isInteger(Number(v)) || 'Enter the correct number',
+            (v) => v != '' || 'Do not leave blank',
           ]"
         ></v-text-field>
       </v-col>
@@ -88,17 +102,31 @@
     <v-textarea
       v-model="description1"
       name="input-7-1"
-      label="Diễn biến set 3"
+      label="Description set 3"
       required
-      :rules="[(v) => v != '' || 'Không để trống']"
+      :rules="[
+        (v) => {
+          if (v == undefined || v.length == 0) {
+            return false || 'Do not leave blank';
+          }
+          return true;
+        },
+      ]"
     ></v-textarea>
-    <h3>Kết thúc</h3>
+    <h3>Summary</h3>
     <v-textarea
       v-model="description3"
       name="input-7-1"
-      label="Đánh giá khách quan"
+      label="description"
       required
-      :rules="[(v) => v != '' || 'Không để trống']"
+      :rules="[
+        (v) => {
+          if (v == undefined || v.length == 0) {
+            return false || 'Do not leave blank';
+          }
+          return true;
+        },
+      ]"
     ></v-textarea>
     <v-file-input
       v-model="fileImage"
@@ -106,7 +134,7 @@
       :placeholder="'Pick an image'"
       prepend-icon="mdi-camera"
       label="Image"
-      :rules="[(v) => !!v.name || 'Item is required']"
+      :rules="rulesImage"
     ></v-file-input>
     <v-file-input
       v-model="fileVideo"
@@ -114,7 +142,7 @@
       :placeholder="'Pick an video'"
       prepend-icon="mdi-video"
       label="Video"
-      :rules="[(v) => !!v.name || 'Item is required']"
+      :rules="rulesVideo"
     ></v-file-input>
     <v-btn color="blue-grey" class="ma-2 white--text" @click="cancel">
       Cancel
@@ -144,7 +172,22 @@ export default {
     description2: "",
     description3: "",
     description4: "",
-
+    rulesImage: [
+      (v) => {
+        if (v == undefined || Array.isArray(v)) {
+          return false || "Item is required";
+        }
+        return true;
+      },
+    ],
+    rulesVideo: [
+      (v) => {
+        if (v == undefined || Array.isArray(v)) {
+          return false || "Item is required";
+        }
+        return true;
+      },
+    ],
     fileVideo: [],
     fileImage: [],
     data: {},
@@ -163,7 +206,6 @@ export default {
     submit() {
       if (!this.$refs.form.validate()) {
         this.$refs.form.validate();
-
       } else {
         var bodyFormData = new FormData();
         var score1 = 0;
@@ -184,8 +226,8 @@ export default {
           score2++;
         }
         bodyFormData.append("idSchedule", this.data.idSchedule);
-        bodyFormData.append("scoreTeam1",score1);
-        bodyFormData.append("scoreTeam2",score2);
+        bodyFormData.append("scoreTeam1", score1);
+        bodyFormData.append("scoreTeam2", score2);
         bodyFormData.append("idTeam1", this.data.idTeam1);
         bodyFormData.append("idTeam2", this.data.idTeam2);
         bodyFormData.append("description", this.description4);
@@ -230,6 +272,46 @@ export default {
                   });
               });
           });
+      }
+    },
+  },
+  watch: {
+    fileImage() {
+      if (this.fileImage == undefined) {
+        this.fileImage = [];
+        this.rulesImage = [
+          (v) => {
+            if (v == undefined || Array.isArray(v)) {
+              return false || "Item is required";
+            }
+            return true;
+          },
+        ];
+      }
+      if (!!this.fileImage.name) {
+        this.rulesImage = [
+          (v) =>
+            v.type == "image/png" ||
+            v.type == "image/jpeg" ||
+            v.type == "image/bmp" ||
+            "Wrong data",
+        ];
+      }
+    },
+    fileVideo() {
+      if (this.fileVideo == undefined) {
+        this.fileVideo = [];
+        this.rulesVideo = [
+          (v) => {
+            if (v == undefined || Array.isArray(v)) {
+              return false || "Item is required";
+            }
+            return true;
+          },
+        ];
+      }
+      if (!!this.fileVideo.name) {
+        this.rulesVideo = [(v) => v.type == "video/mp4" || "Wrong data"];
       }
     },
   },

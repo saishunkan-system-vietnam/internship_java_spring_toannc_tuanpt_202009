@@ -78,7 +78,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 v-model="timeEnd"
-                label="Time start"
+                label="Time End"
                 prepend-icon="mdi-calendar"
                 readonly
                 v-bind="attrs"
@@ -92,7 +92,7 @@
               <v-btn text color="primary" @click="menu2 = false">
                 Cancel
               </v-btn>
-              <v-btn text color="primary" @click="$refs.menu1.save(timeEnd)">
+              <v-btn text color="primary" @click="$refs.menu2.save(timeEnd)">
                 OK
               </v-btn>
             </v-date-picker>

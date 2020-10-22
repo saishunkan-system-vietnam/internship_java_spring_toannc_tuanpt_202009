@@ -16,8 +16,8 @@
       </template>
       <template v-slot:cell(logo)="row">
         <v-img
-          max-height="50"
-          max-width="100"
+          max-height="60"
+          max-width="80"
           :src="row.item.team.logo"
         ></v-img>
       </template>

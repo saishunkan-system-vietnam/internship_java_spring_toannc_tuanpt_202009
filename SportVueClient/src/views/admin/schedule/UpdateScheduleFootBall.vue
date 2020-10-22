@@ -35,7 +35,13 @@
         name="input-7-1"
         label="Description set 1"
         required
-        :rules="[(v) => v != '' || 'Do not leave blank']"
+        :rules="[(v) =>{
+        if (v == undefined || v.length==0) {
+          return false || 'Do not leave blank';
+        }
+        return true;
+      }
+      ]"
       ></v-textarea>
       <h3>Set 2</h3>
       <v-row>
@@ -71,7 +77,12 @@
         name="input-7-1"
         label="Description set 2"
         required
-        :rules="[(v) => v != '' || 'Do not leave blank']"
+        :rules="[(v) => {
+        if (v == undefined || v.length==0) {
+          return false || 'Do not leave blank';
+        }
+        return true;
+      }]"
       ></v-textarea>
       <h3>Summary</h3>
       <v-textarea
@@ -79,7 +90,12 @@
         name="input-7-1"
         label="Objective assessment"
         required
-        :rules="[(v) => v != '' || 'Do not leave blank']"
+        :rules="[(v) => {
+        if (v == undefined || v.length==0) {
+          return false || 'Do not leave blank';
+        }
+        return true;
+      }]"
       ></v-textarea>
       <v-file-input
         v-model="fileImage"
@@ -87,7 +103,7 @@
         :placeholder="'Pick an image'"
         prepend-icon="mdi-camera"
         label="Image"
-        :rules="[(v) => !!v || 'Item is required']"
+        :rules="rulesImage"
       ></v-file-input>
       <v-file-input
         v-model="fileVideo"
@@ -95,15 +111,13 @@
         :placeholder="'Pick an video'"
         prepend-icon="mdi-video"
         label="Video"
-        :rules="[(v) => !!v || 'Item is required']"
+        :rules="rulesVideo"
       ></v-file-input>
       <v-btn color="blue-grey" class="ma-2 white--text" @click="cancel">
         Cancel
-        <v-icon right dark> mdi-cancel </v-icon>
       </v-btn>
       <v-btn color="blue-grey" class="ma-2 white--text" @click="submit">
         Update
-        <v-icon right dark> mdi-cloud-upload </v-icon>
       </v-btn>
     </v-form>
   </b-overlay>
@@ -117,7 +131,23 @@ export default {
   },
   data: () => ({
     busy: false,
-    name:'',
+    name: "",
+    rulesImage: [
+      (v) => {
+        if (v == undefined || Array.isArray(v)) {
+          return false || "Item is required";
+        }
+        return true;
+      },
+    ],
+    rulesVideo: [
+      (v) => {
+        if (v == undefined || Array.isArray(v)) {
+          return false || "Item is required";
+        }
+        return true;
+      },
+    ],
     score1h1: "",
     score2h1: "",
     score1h2: "",
@@ -141,6 +171,7 @@ export default {
       this.callback();
     },
     submit() {
+      console.log(this.description3);
       this.busy = true;
       if (!this.$refs.form.validate()) {
         this.$refs.form.validate();
@@ -191,6 +222,46 @@ export default {
                   });
               });
           });
+      }
+    },
+  },
+  watch: {
+    fileImage() {
+      if (this.fileImage == undefined) {
+        this.fileImage = [];
+        this.rulesImage = [
+          (v) => {
+            if (v == undefined || Array.isArray(v)) {
+              return false || "Item is required";
+            }
+            return true;
+          },
+        ];
+      }
+      if (!!this.fileImage.name) {
+        this.rulesImage = [
+          (v) =>
+            v.type == "image/png" ||
+            v.type == "image/jpeg" ||
+            v.type == "image/bmp" ||
+            "Wrong data",
+        ];
+      }
+    },
+    fileVideo() {
+      if (this.fileVideo == undefined) {
+        this.fileVideo = [];
+        this.rulesVideo = [
+          (v) => {
+            if (v == undefined || Array.isArray(v)) {
+              return false || "Item is required";
+            }
+            return true;
+          },
+        ];
+      }
+      if (!!this.fileVideo.name) {
+        this.rulesVideo = [(v) => v.type == "video/mp4" || "Wrong data"];
       }
     },
   },
