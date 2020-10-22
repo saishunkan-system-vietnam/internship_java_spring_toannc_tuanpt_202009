@@ -26,9 +26,8 @@
             <v-file-input
               v-model="fileImage"
               label="Change Logo"
-              required
               accept="image/png, image/jpeg, image/bmp"
-              :rules="[(v) => !!v || 'Item is required']"
+              :rules="rulesImage"
             ></v-file-input>
           </v-col>
         </v-row>
@@ -85,35 +84,14 @@
             color="primary"
             x-large
             text
-            :disabled="!valid"
-            @click="validate"
-            v-if="changeButton"
+            @click="onSubmit(teamProps.idTeam)"
             >Update</v-btn
           >
-          <v-btn disabled v-else>Processing</v-btn>
         </v-card-actions>
       </v-form>
     </v-container>
-    <v-dialog v-model="dialogConfirm" max-width="500">
-      <v-card class="container" v-if="isConFirm">
-        <v-card-title class="headline">
-          Confirm update this information?
-        </v-card-title>
-        <v-card-actions>
-          <v-btn color="green darken-1" text @click="dialogConfirm = false">
-            Disagree
-          </v-btn>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="green darken-1"
-            text
-            @click="onSubmit(teamProps.idTeam)"
-          >
-            Agree
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-      <template v-else>
+    <v-dialog v-model="dialogSuccess" max-width="500">
+      <template>
         <v-alert type="success"> Update Success! </v-alert>
       </template>
     </v-dialog>
@@ -135,10 +113,8 @@ export default {
   },
   data() {
     return {
-      isConFirm: true,
-      valid: true,
       checkLogo: false,
-      dialogConfirm: false,
+      dialogSuccess: false,
       changeButton: true,
       valid: true,
       name: this.teamProps.nameTeam,
@@ -154,10 +130,10 @@ export default {
       items: [],
       members: [],
       fileImage: {},
+      rulesImage: [],
     };
   },
-  mounted() {
-  },
+  mounted() {},
   watch: {
     selectedType() {
       // important name function need to equal name state
@@ -168,39 +144,42 @@ export default {
   },
   methods: {
     onSubmit(id) {
-      this.$refs.form.validate();
-      let self = this;
-      var teamForm = new FormData();
-      teamForm.append("nameTeam", this.name);
-      teamForm.append("type", this.selectedType);
-      teamForm.append("description", this.description);
-      teamForm.append("file", this.fileImage);
-      // for (var value of teamForm.values()) {
-      //   console.log(value);
-      // }
-      if (teamForm.get("type") != self.teamProps.type) {
-        // console.log(self.teamProps);
-        // setTimeout(() => {
-        self.teamProps.profile.forEach((member) => {
-          member.idTeam = 0;
-          self.teamProps.profile.splice(member);
-        });
-
-        // },10000);
-        this.removeMembers(self.teamProps);
+      if (!!this.fileImage.name == false) {
+        this.rulesImage = [(v) => !!v.name || "Image is required"];
       }
-      axios
-        .post(`http://localhost:8090/api/v1/team/updateInfo/${id}`, teamForm)
-        .then((res) => {
-          self.isConFirm = !self.isConFirm;
-          setTimeout(function () {
-            self.isConFirm = !self.isConFirm;
+      if (this.$refs.form.validate() == true) {
+        let self = this;
+        var teamForm = new FormData();
+        teamForm.append("nameTeam", this.name);
+        teamForm.append("type", this.selectedType);
+        teamForm.append("description", this.description);
+        teamForm.append("file", this.fileImage);
+        // for (var value of teamForm.values()) {
+        //   console.log(value);
+        // }
+        if (teamForm.get("type") != self.teamProps.type) {
+          self.teamProps.profile.forEach((member) => {
+            member.idTeam = 0;
+            self.teamProps.profile.splice(member);
+          });
+          this.removeMembers(self.teamProps);
+        }
+        axios
+          .post(`http://localhost:8090/api/v1/team/updateInfo/${id}`, teamForm)
+          .then((res) => {
+            self.dialogSuccess = !self.dialogSuccess;
             self.openEditTeam();
-          }, 1500);
-        })
-        .catch((e) => {
-          // console.log(e);
-        });
+            setTimeout(function () {
+              self.dialogSuccess = !self.dialogSuccess;
+              
+            }, 1500);
+          })
+          .catch((e) => {
+            // console.log(e);
+          });
+      } else {
+        this.$refs.form.validate();
+      }
     },
 
     removeMembers(team) {
@@ -214,23 +193,9 @@ export default {
         })
         .catch(function (error) {});
     },
-    validateButton() {
-      let self = this;
-      if (this.fileImage.name == undefined) {
-        this.checkLogoFunction();
-        setTimeout(function () {
-          self.checkLogoFunction();
-        }, 3000);
-      } else {
-        this.dialogConfirm = true;
-      }
-    },
+
     checkLogoFunction() {
       this.checkLogo = !this.checkLogo;
-    },
-    validate() {
-      this.$refs.form.validate();
-      this.validateButton();
     },
   },
 };

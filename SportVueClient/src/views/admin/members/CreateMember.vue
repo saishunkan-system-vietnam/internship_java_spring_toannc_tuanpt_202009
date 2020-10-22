@@ -149,7 +149,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.fileImage);
+      // console.log(this.fileImage);
       if (!!this.fileImage.name == false) {
         this.rulesImage = [(v) => !!v.name || "Image is required"];
       }
