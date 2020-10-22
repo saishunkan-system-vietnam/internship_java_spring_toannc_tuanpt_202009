@@ -90,6 +90,7 @@
         </v-card-actions>
       </v-form>
     </v-container>
+
     <v-dialog v-model="dialogSuccess" max-width="500">
       <template>
         <v-alert type="success"> Update Success! </v-alert>
@@ -129,8 +130,15 @@ export default {
       select: [],
       items: [],
       members: [],
-      fileImage: {},
-      rulesImage: [],
+      fileImage: [],
+      rulesImage: [
+        (v) => {
+          if (v == undefined || Array.isArray(v)) {
+            return false || "Item is required";
+          }
+          return true;
+        },
+      ],
     };
   },
   mounted() {},
@@ -142,16 +150,36 @@ export default {
       });
     },
   },
+  watch: {
+    fileImage() {
+      if (this.fileImage == undefined) {
+        this.fileImage = [];
+        this.rulesImage = [
+          (v) => {
+            if (v == undefined || Array.isArray(v)) {
+              return false || "Item is required";
+            }
+            return true;
+          },
+        ];
+      }
+      if (!!this.fileImage.name) {
+        this.rulesImage = [
+          (v) =>
+            v.type == "image/png" ||
+            v.type == "image/jpeg" ||
+            v.type == "image/bmp" ||
+            "Wrong type image",
+        ];
+      }
+    },
+  },
   methods: {
     onSubmit(id) {
-      console.log(this.fileImage.type);
-      if (!!this.fileImage.name == false) {
-        this.rulesImage = [(v) => !!v.name || "Image is required"];
-      }
-      if(this.fileImage.type != "image/png"){
-        this.rulesImage = [(v) => !!v.name || "This is not an image"];
-      }
-      if (this.$refs.form.validate() == true) {
+      if (!this.$refs.form.validate()) {
+        this.$refs.form.validate();
+        this.busy = false;
+      } else {
         let self = this;
         var teamForm = new FormData();
         teamForm.append("nameTeam", this.name);
@@ -180,8 +208,6 @@ export default {
           .catch((e) => {
             // console.log(e);
           });
-      } else {
-        this.$refs.form.validate();
       }
     },
 

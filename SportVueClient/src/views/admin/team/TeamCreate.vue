@@ -76,7 +76,14 @@ export default {
       successDialog: false,
       idTeam: 0,
       valid: true,
-      rulesImage: [],
+      rulesImage: [
+        (v) => {
+          if (v == undefined || Array.isArray(v)) {
+            return false || "Item is required";
+          }
+          return true;
+        },
+      ],
       name: "",
       type: ["Football", "TableTennis", "Basketball"],
       selectedType: "",
@@ -89,7 +96,7 @@ export default {
       select: [],
       items: [],
       members: [],
-      fileImage: {},
+      fileImage: [],
       teamLink: [
         {
           text: "Dashboard",
@@ -101,7 +108,7 @@ export default {
           disabled: false,
           href: "/LayoutTeam",
         },
-         {
+        {
           text: "Team Create",
           disabled: false,
           href: "/create",
@@ -139,14 +146,36 @@ export default {
       if (!val) return;
       setTimeout(() => (this.successDialog = false), 100000);
     },
+
+    fileImage() {
+      if (this.fileImage == undefined) {
+        this.fileImage = [];
+        this.rulesImage = [
+          (v) => {
+            if (v == undefined || Array.isArray(v)) {
+              return false || "Item is required";
+            }
+            return true;
+          },
+        ];
+      }
+      if (!!this.fileImage.name) {
+        this.rulesImage = [
+          (v) =>
+            v.type == "image/png" ||
+            v.type == "image/jpeg" ||
+            v.type == "image/bmp" ||
+            "Wrong type image",
+        ];
+      }
+    },
   },
   methods: {
     onSubmit() {
-      console.log(!!this.fileImage.name);
-      if (!!this.fileImage.name == false) {
-        this.rulesImage = [(v) => !!v.name || "Image is required"];
-      }
-      if (this.$refs.form.validate() == true) {
+      if (!this.$refs.form.validate()) {
+        this.$refs.form.validate();
+        this.busy = false;
+      } else {
         // console.log("submit");
         console.log(this.fileImage);
 
@@ -178,8 +207,6 @@ export default {
             }
           })
           .catch(function (error) {});
-      } else {
-        this.$refs.form.validate();
       }
     },
 
