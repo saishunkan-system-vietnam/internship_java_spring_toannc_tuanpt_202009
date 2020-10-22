@@ -6,6 +6,10 @@
 
     <v-card-text>
       <v-container>
+        <p>Defaut Account:</p>
+        <p>1. admin - admin (Role_admin)</p>
+        <p>2. (Role Member)</p>
+        <p>3. (Role User)</p>
         <h6
           style="color: red"
           align="center"
@@ -20,7 +24,6 @@
             label="Email"
             required
           ></v-text-field>
-
           <v-text-field
             v-model="user.password"
             label="Password"
@@ -81,7 +84,6 @@ export default {
           // this.$store.commit("auth/auth_overlay");
           self.overlay = false;
           let userInfo = res.data.payload.account;
-          // console.log(userInfo);
           console.log(userInfo.role);
           if (userInfo.role === null || userInfo.role === undefined) {
             self.checkProfile();

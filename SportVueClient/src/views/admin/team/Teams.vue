@@ -180,7 +180,6 @@ export default {
       if (!this.nameTeamSearch) {
         return true;
       }
-      console.log(value);
       return value.toLowerCase().includes(this.nameTeamSearch.toLowerCase());
     },
     nameTourFilter(value) {

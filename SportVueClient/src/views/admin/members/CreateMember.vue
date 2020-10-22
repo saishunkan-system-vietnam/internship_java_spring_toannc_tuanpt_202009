@@ -62,7 +62,8 @@
         <v-text-field v-model="address" label="Address" required></v-text-field>
       </v-card-text>
       <v-card-actions>
-        <v-spacer> </v-spacer>
+        <v-btn color="error" x-large text @click="reset"> Reset Form </v-btn>
+        <v-spacer></v-spacer>
         <v-btn
           color="primary"
           x-large
@@ -196,6 +197,7 @@ export default {
         this.$refs.form.validate();
       }
     },
+    
     reset() {
       this.$refs.form.reset();
     },

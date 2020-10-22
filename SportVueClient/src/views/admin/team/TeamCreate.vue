@@ -1,5 +1,11 @@
 <template>
   <v-container fluid>
+    <v-breadcrumbs :items="teamLink">
+      <template v-slot:divider>
+        <v-icon>mdi-chevron-right</v-icon>
+      </template>
+    </v-breadcrumbs>
+
     <h1>Create Team</h1>
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-row align="center">
@@ -84,6 +90,23 @@ export default {
       items: [],
       members: [],
       fileImage: {},
+      teamLink: [
+        {
+          text: "Dashboard",
+          disabled: false,
+          href: "/admin/home",
+        },
+        {
+          text: "Teams",
+          disabled: false,
+          href: "/LayoutTeam",
+        },
+         {
+          text: "Team Create",
+          disabled: false,
+          href: "/create",
+        },
+      ],
     };
   },
   mounted() {
@@ -158,6 +181,10 @@ export default {
       } else {
         this.$refs.form.validate();
       }
+    },
+
+    reset() {
+      this.$refs.form.reset();
     },
   },
 };
