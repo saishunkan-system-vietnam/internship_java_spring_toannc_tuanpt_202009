@@ -59,7 +59,12 @@
           </v-col>
         </v-row>
 
-        <v-text-field :rules="countryRules" v-model="address" label="Country" required></v-text-field>
+        <v-text-field
+          :rules="countryRules"
+          v-model="address"
+          label="Country"
+          required
+        ></v-text-field>
       </v-card-text>
       <v-card-actions>
         <v-btn color="error" x-large text @click="reset"> Reset Form </v-btn>
@@ -112,14 +117,12 @@ export default {
       address: "",
       name: "",
       number: 10,
-      countryRules: [ (v) => !!v || "Country is required",],
-      nameRules: [
-        (v) => !!v || "Name is required",
-      ],
+      countryRules: [(v) => !!v || "Country is required"],
+      nameRules: [(v) => !!v || "Name is required"],
       email: "",
       emailRules: [
         (v) => !!v || "E-mail is required", // not exsits
-        (v) => /.+@.+/.test(v) || "E-mail must be valid",
+        (v) => /.+@.+/.test(v)  || "E-mail must be valid",
       ],
       phone: "",
       phoneRules: [

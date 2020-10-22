@@ -64,7 +64,7 @@
               </template>
               <template v-slot:[`item.idTeam`]="{ item }">
                 <p v-if="item.idTeam != 0" class="text1">
-                  {{ item.team.nameTeam }}
+                  {{ !!item.team ? item.team.nameTeam : "" }}
                 </p>
                 <p v-else class="text">Available</p>
               </template>
@@ -155,6 +155,14 @@ export default {
     };
   },
   computed: {},
+  created(){
+    console.log('created');
+    console.log(this.desserts);
+  },
+  updated(){
+    console.log('created');
+    console.log(this.desserts);
+  },
   watch: {
     memberProp: {
       immediate: true,
@@ -194,7 +202,8 @@ export default {
     addMember(member) {
       this.checkAdd = false;
       let indexRemove = 0;
-      this.addedMember(member);
+      let obj = Object.assign({}, member);;
+      this.addedMember(obj);
       this.desserts.forEach((element, index) => {
         if (element.id === member.id) {
           indexRemove = index;

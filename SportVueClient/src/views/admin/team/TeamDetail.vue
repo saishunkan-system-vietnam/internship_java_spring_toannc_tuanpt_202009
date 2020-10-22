@@ -100,7 +100,7 @@
           :openEditTeam="openEditTeam"
           :teamProps="team"
           :desserts="desserts"
-          :loadTeamById = "loadTeamById"
+          :loadTeamById="loadTeamById"
         />
       </v-dialog>
 
@@ -182,24 +182,12 @@ export default {
           disabled: false,
           href: "/LayoutTeam",
         },
-        {
-          text: "",
-          disabled: false,
-          href: `/edit/${this.$route.params.id}`,
-        },
       ],
     };
   },
   mounted() {
     this.loadListMember(this.$route.params.id);
     this.loadTeamById(this.$route.params.id);
-  },
-  watch: {
-    team(value) {
-      this.teamLink[2].text = value.nameTeam;
-    },
-
-    
   },
   methods: {
     isOpenModalMember: function () {
@@ -211,6 +199,10 @@ export default {
       let self = this;
       this.$store.dispatch("team/findTeamAndMembers", id).then((response) => {
         self.team = response.data;
+        this.teamLink.push({
+          text: response.data.nameTeam,
+          disabled: false,
+        });
       });
     },
 
@@ -218,10 +210,7 @@ export default {
       let self = this;
       this.$store.dispatch("team/findTeamAndMembers", id).then((response) => {
         self.teamDetail = response.data;
-        // console.log(response.data);
         self.desserts = self.teamDetail.profile;
-        // console.log(self.teamDetail);
-        // console.log(self.desserts);
       });
     },
 
@@ -246,7 +235,7 @@ export default {
           this.memberProp = element;
           this.desserts.splice(index, 1);
         }
-
+        // console.log(element);
         return element;
       });
     },
@@ -254,7 +243,6 @@ export default {
     addedMember(member) {
       member.idTeam = this.$route.params.id;
       this.desserts.push(member);
-      // console.log(member.idTeam);
     },
 
     openEditTeam: function () {
