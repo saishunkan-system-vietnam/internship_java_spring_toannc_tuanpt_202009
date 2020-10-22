@@ -63,7 +63,7 @@
       </v-card-text>
       <v-card-actions>
         <v-btn color="error" x-large text @click="reset"> Reset Form </v-btn>
-        <v-spacer></v-spacer>
+        <v-spacer> </v-spacer>
         <v-btn
           color="primary"
           x-large
@@ -108,7 +108,7 @@ export default {
       valid: false,
       response: "",
       dialogCreateMember: false,
-      fileImage: {},
+      fileImage: [],
       address: "",
       name: "",
       number: 10,
@@ -136,7 +136,14 @@ export default {
       ],
       gender: "",
       defaultGender: ["Male", "Female", "Orther"],
-      rulesImage: [],
+      rulesImage: [
+        (v) => {
+          if (v == undefined || Array.isArray(v)) {
+            return false || "Item is required";
+          }
+          return true;
+        },
+      ],
     };
   },
   mounted() {},
@@ -147,14 +154,36 @@ export default {
         (v) => /.+@.+/.test(v) || "E-mail must be valid",
       ];
     },
+    fileImage() {
+      if (this.fileImage == undefined) {
+        this.fileImage = [];
+        this.rulesImage = [
+          (v) => {
+            if (v == undefined || Array.isArray(v)) {
+              return false || "Item is required";
+            }
+            return true;
+          },
+        ];
+      }
+      if (!!this.fileImage.name) {
+        this.rulesImage = [
+          (v) =>
+            v.type == "image/png" ||
+            v.type == "image/jpeg" ||
+            v.type == "image/bmp" ||
+            "Wrong type image",
+        ];
+      }
+    },
   },
   methods: {
     onSubmit() {
-      // console.log(this.fileImage);
-      if (!!this.fileImage.name == false) {
-        this.rulesImage = [(v) => !!v.name || "Image is required"];
-      }
-      if (this.$refs.form.validate() == true) {
+      if (!this.$refs.form.validate()) {
+        this.$refs.form.validate();
+        this.busy = false;
+      } else {
+        // console.log(this.fileImage);
         let self = this;
         var memberForm = new FormData();
         memberForm.append("name", this.name);
@@ -193,11 +222,9 @@ export default {
           });
         self.changeButton = !self.changeButton;
         self.reset();
-      } else {
-        this.$refs.form.validate();
       }
     },
-    
+
     reset() {
       this.$refs.form.reset();
     },

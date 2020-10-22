@@ -171,7 +171,6 @@ export default {
       this.callback();
     },
     submit() {
-      console.log(this.description3);
       this.busy = true;
       if (!this.$refs.form.validate()) {
         this.$refs.form.validate();
@@ -248,6 +247,7 @@ export default {
         ];
       }
     },
+    
     fileVideo() {
       if (this.fileVideo == undefined) {
         this.fileVideo = [];
