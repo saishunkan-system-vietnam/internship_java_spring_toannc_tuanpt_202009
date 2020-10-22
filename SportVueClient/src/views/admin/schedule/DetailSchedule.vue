@@ -30,9 +30,9 @@
     <v-row justify="center">
       <v-dialog v-model="dialogFootball" width="900px">
         <v-card>
-          <v-card-title class="headline"> Update data </v-card-title>
+          <v-card-title class="headline"> Update Football </v-card-title>
           <v-card-text>
-            <UploadScheduleFootBall
+            <UpdateScheduleFootBall
               :schedule="schedule"
               :loadData="getData"
               :callback="hideModal"
@@ -42,9 +42,9 @@
       </v-dialog>
       <v-dialog v-model="dialogTableTennis" width="900px">
         <v-card>
-          <v-card-title class="headline"> Upload data </v-card-title>
+          <v-card-title class="headline"> Update TableTennis </v-card-title>
           <v-card-text>
-            <UploadScheduleTableTennis
+            <UpdateScheduleTableTennis
               :schedule="schedule"
               :loadData="getData"
               :callback="hideModal"
@@ -194,8 +194,8 @@
   </div>
 </template>
 <script>
-import UploadScheduleFootBall from "./UploadScheduleFootBall";
-import UploadScheduleTableTennis from "./UploadScheduleTableTennis";
+import UpdateScheduleFootBall from "./UpdateScheduleFootBall";
+import UpdateScheduleTableTennis from "./UpdateScheduleTableTennis";
 export default {
   data() {
     return {
@@ -223,8 +223,8 @@ export default {
     };
   },
   components: {
-    UploadScheduleFootBall,
-    UploadScheduleTableTennis,
+    UpdateScheduleFootBall,
+    UpdateScheduleTableTennis,
   },
   created() {
     this.getData();
