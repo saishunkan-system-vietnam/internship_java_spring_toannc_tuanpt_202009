@@ -7,7 +7,7 @@
       spinner-small
       spinner-variant="primary"
     >
-      <v-breadcrumbs :items="itemlinks">
+      <v-breadcrumbs :items="itemlinks" large>
         <template v-slot:divider>
           <v-icon>mdi-chevron-right</v-icon>
         </template>
@@ -88,11 +88,12 @@
         :current-page="currentPage"
         striped
         hover
+        outlined
         :items="items"
         :fields="fields"
         small
       >
-        <template v-slot:cell(Acction)="row">
+        <template v-slot:cell(Action)="row">
           <router-link
             :to="{ path: '/DetailSchedule/' + row.item.idSchedule }"
             id="${schedule.idSchedule}"
@@ -160,7 +161,7 @@
       <b-modal id="modal-1" title="Delete" @ok="handleOk()">
         <p class="my-4">Are you sure!</p>
       </b-modal>
-      <v-dialog v-model="dialog" max-width="1000px" persistent>
+      <v-dialog v-model="dialog" max-width="1000px">
         <v-card>
           <v-card-title class="headline"> Create Schedule </v-card-title>
 
@@ -199,9 +200,9 @@ export default {
           href: "/admin/home",
         },
         {
-          text:"Schedule",
-          disabled:true
-        }
+          text: "Schedule",
+          disabled: true,
+        },
       ],
       busy: true,
       optionsStatus: [
@@ -273,7 +274,10 @@ export default {
           label: "Status",
           sortable: true,
         },
-        "Acction",
+       {
+          key: "Action",
+          label: "Action",
+        },
       ],
       items: [],
       schedule: [],

@@ -5,7 +5,7 @@
         <v-img
           max-height="350"
           max-width="350"
-          src="@/assets/soccer.png"
+          src="@/assets/basketball.png"
         ></v-img>
         No match
       </div>
@@ -33,7 +33,7 @@
                           ? 'color:green'
                           : item.status == 1
                           ? 'color:blue'
-                          : 'color:#68688e'
+                          : 'color:red'
                       "
                     >
                       {{
@@ -81,7 +81,7 @@
     </v-expansion-panels>
     <div
       class="text-center"
-      v-if="tournaments.length > 2 && number == 2"
+      v-if="tournaments.length > this.number"
       @click="show"
       style="color: blue"
     >
@@ -95,7 +95,7 @@ export default {
     return {
       panel: [0, 1, 2, 3, 4, 5, 6, 7, 8],
       tournaments: "",
-      number: 2,
+      number: 6,
     };
   },
   created() {

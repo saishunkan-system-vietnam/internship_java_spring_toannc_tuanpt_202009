@@ -11,14 +11,14 @@
                 <a
                   :href="
                     $router.resolve({
-                      path: '/DetailTournamentBaskestBall/' + item.idTour,
+                      path: '/DetailTournamentBasketBall/' + item.idTour,
                     }).href
                   "
                   style="color: black"
                 >
                    <v-list-item-title  v-b-popover.hover.top="item.nameTour">
                      {{
-                    item.nameTour.length < 10
+                    item.nameTour.length &lt; 10
                       ? item.nameTour
                       : item.nameTour.slice(0, 15) + "..."
                   }}</v-list-item-title
@@ -41,7 +41,7 @@
                 > <a
                   :href="
                     $router.resolve({
-                      path: '/RankTournament/BaskestBall'
+                      path: '/RankTournament/BasketBall'
                     }).href
                   "
                 >RANK</a></b
@@ -53,7 +53,7 @@
                 <a
                   :href="
                     $router.resolve({
-                      path: '/DetailTeamBaskestBall/' + item.idTeam,
+                      path: '/DetailTeamBasketBall/' + item.idTeam,
                     }).href
                   "
                   style="color: black"
@@ -62,7 +62,6 @@
                     <v-row>
                       <b-col sm="1">
                         <div
-                          :style="index==0?'width: 20px;height: 20px;background: #ee1d1d;border-radius: 60px;':index==1?'width: 20px;height: 20px;background: pink;border-radius: 60px;':''"
                           class="text-center"
                         >
                           {{ index + 1 }}
@@ -96,14 +95,14 @@ export default {
   methods: {
     getTournament() {
       this.$store
-        .dispatch("tournament/getByType", "BaskestBall")
+        .dispatch("tournament/getByType", "BasketBall")
         .then((response) => {
           this.items = response.data;
         });
     },
     getRank() {
       this.$store
-        .dispatch("tournament/getRank", "BaskestBall")
+        .dispatch("tournament/getRank", "BasketBall")
         .then((response) => {
           this.rank = response.data;
         });

@@ -10,11 +10,9 @@
       </template>
       <template v-slot:item.winRate="{ item }">
         <div v-if="item.team.totalmatch!=0">
-            {{(item.team.totalwin*1.0/item.team.totalmatch)*100}}%
+            {{item.rank*100}}%
         </div>
-        <div v-else>
-          0%
-        </div>
+        
          </template>
 
       <template v-slot:item.team.logo="{ item }">

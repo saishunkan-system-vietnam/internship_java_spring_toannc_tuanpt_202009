@@ -187,27 +187,27 @@
 	<select id="sum" resultType="int">
 		Select COUNT(*) FROM
 		sports.schedule_tbl where (schedule_team1=${idTeam} or
-		schedule_team2=${idTeam}) and schedule_tbl.schedule_status=2
+		schedule_team2=${idTeam}) and schedule_tbl.schedule_status=2 and schedule_tbl.schedule_video!=""
 	</select>
 
 	<select id="sumWin" resultType="int">
 		Select COUNT(*) FROM
 		sports.schedule_tbl where schedule_winner=${idTeam} and
-		schedule_tbl.schedule_status=2
+		schedule_tbl.schedule_status=2 and schedule_tbl.schedule_video!=""
 	</select>
 
 	<select id="sumWinJoinByTour" resultType="int">
 		Select COUNT(*) FROM
 		sports.schedule_tbl where schedule_winner=${idTeam} and
 		schedule_tbl.schedule_status=2 and
-		schedule_tour=${idTour}
+		schedule_tour=${idTour} and schedule_tbl.schedule_video!=""
 	</select>
 
 	<select id="sumJoinByTour" resultType="int">
 		Select COUNT(*) FROM
 		sports.schedule_tbl where (schedule_team1=${idTeam} or
 		schedule_team2=${idTeam}) and schedule_tour=${idTour} and
-		schedule_tbl.schedule_status=2
+		schedule_tbl.schedule_status=2 and schedule_tbl.schedule_video!=""
 	</select>
 
 	<select id="upcomingMatch" resultMap="scheduleMapping">

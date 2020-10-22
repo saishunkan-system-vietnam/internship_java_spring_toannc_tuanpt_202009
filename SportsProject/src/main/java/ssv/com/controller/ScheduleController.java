@@ -53,13 +53,13 @@ public class ScheduleController {
 
 	@PostMapping(value = "create")
 	public ResponseEntity<String> create(@RequestBody Schedule schedule){
-
-		if(!scheduleService.checkTime(schedule.getTimeStart(),schedule.getTimeEnd(),schedule.getIdTour())) {
+		String check=scheduleService.checkTime(schedule.getTimeStart(),schedule.getTimeEnd(),schedule.getIdTour());
+		if(check==null) {
 			scheduleService.createSchedule(schedule);
 			return new ResponseEntity<String>("create",HttpStatus.OK);
 		}
 		String result=tournamnetService.getById(schedule.getIdTour()).getTimeStart()+"->"+tournamnetService.getById(schedule.getIdTour()).getTimeEnd();
-		return new ResponseEntity<String>("On the same date with ! The time of the tournament is " + result,HttpStatus.OK);
+		return new ResponseEntity<String>( check+"! The time of the tournament is " + result,HttpStatus.OK);
 	}
 
 	@DeleteMapping(value="delete/{idSchedule}")
@@ -90,7 +90,7 @@ public class ScheduleController {
 			scheduleService.editShedule(schedule);
 			return new ResponseEntity<String>("edit", HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("Trận đấu đã được diễn ra", HttpStatus.OK);
+		return new ResponseEntity<String>("The match is going on", HttpStatus.OK);
 	}
 	@GetMapping(value="status")
 	public void statusCheck() {

@@ -33,7 +33,7 @@
                           ? 'color:green'
                           : item.status == 1
                           ? 'color:blue'
-                          : 'color:#68688e'
+                          : 'color:red'
                       "
                     >
                       {{
