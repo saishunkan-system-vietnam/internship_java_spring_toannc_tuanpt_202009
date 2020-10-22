@@ -35,14 +35,13 @@
         name="input-7-1"
         label="Description set 1"
         required
-        :rules="[
-          (v) => {
-            if (v == undefined || v.length == 0) {
-              return false || 'Do not leave blank';
-            }
-            return true;
-          },
-        ]"
+        :rules="[(v) =>{
+        if (v == undefined || v.length==0) {
+          return false || 'Do not leave blank';
+        }
+        return true;
+      }
+      ]"
       ></v-textarea>
       <h3>Set 2</h3>
       <v-row>
@@ -78,14 +77,12 @@
         name="input-7-1"
         label="Description set 2"
         required
-        :rules="[
-          (v) => {
-            if (v == undefined || v.length == 0) {
-              return false || 'Do not leave blank';
-            }
-            return true;
-          },
-        ]"
+        :rules="[(v) => {
+        if (v == undefined || v.length==0) {
+          return false || 'Do not leave blank';
+        }
+        return true;
+      }]"
       ></v-textarea>
       <h3>Summary</h3>
       <v-textarea
@@ -93,14 +90,12 @@
         name="input-7-1"
         label="Objective assessment"
         required
-        :rules="[
-          (v) => {
-            if (v == undefined || v.length == 0) {
-              return false || 'Do not leave blank';
-            }
-            return true;
-          },
-        ]"
+        :rules="[(v) => {
+        if (v == undefined || v.length==0) {
+          return false || 'Do not leave blank';
+        }
+        return true;
+      }]"
       ></v-textarea>
       <v-file-input
         v-model="fileImage"
@@ -230,7 +225,6 @@ export default {
     },
   },
   watch: {
-
     fileImage() {
       if (this.fileImage == undefined) {
         this.fileImage = [];
@@ -253,7 +247,7 @@ export default {
         ];
       }
     },
-
+    
     fileVideo() {
       if (this.fileVideo == undefined) {
         this.fileVideo = [];
