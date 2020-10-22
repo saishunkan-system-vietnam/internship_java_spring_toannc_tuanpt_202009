@@ -35,7 +35,13 @@
         name="input-7-1"
         label="Description set 1"
         required
-        :rules="[(v) => v != '' || 'Do not leave blank']"
+        :rules="[(v) =>{
+        if (v == undefined || v.length==0) {
+          return false || 'Do not leave blank';
+        }
+        return true;
+      }
+      ]"
       ></v-textarea>
       <h3>Set 2</h3>
       <v-row>
@@ -71,7 +77,12 @@
         name="input-7-1"
         label="Description set 2"
         required
-        :rules="[(v) => v != '' || 'Do not leave blank']"
+        :rules="[(v) => {
+        if (v == undefined || v.length==0) {
+          return false || 'Do not leave blank';
+        }
+        return true;
+      }]"
       ></v-textarea>
       <h3>Summary</h3>
       <v-textarea
@@ -79,7 +90,12 @@
         name="input-7-1"
         label="Objective assessment"
         required
-        :rules="[(v) => v != '' || 'Do not leave blank']"
+        :rules="[(v) => {
+        if (v == undefined || v.length==0) {
+          return false || 'Do not leave blank';
+        }
+        return true;
+      }]"
       ></v-textarea>
       <v-file-input
         v-model="fileImage"
@@ -99,11 +115,9 @@
       ></v-file-input>
       <v-btn color="blue-grey" class="ma-2 white--text" @click="cancel">
         Cancel
-        <v-icon right dark> mdi-cancel </v-icon>
       </v-btn>
       <v-btn color="blue-grey" class="ma-2 white--text" @click="submit">
         Update
-        <v-icon right dark> mdi-cloud-upload </v-icon>
       </v-btn>
     </v-form>
   </b-overlay>
@@ -118,8 +132,22 @@ export default {
   data: () => ({
     busy: false,
     name: "",
-    rulesImage: [],
-    rulesVideo: [],
+    rulesImage: [
+      (v) => {
+        if (v == undefined || Array.isArray(v)) {
+          return false || "Item is required";
+        }
+        return true;
+      },
+    ],
+    rulesVideo: [
+      (v) => {
+        if (v == undefined || Array.isArray(v)) {
+          return false || "Item is required";
+        }
+        return true;
+      },
+    ],
     score1h1: "",
     score2h1: "",
     score1h2: "",
@@ -137,40 +165,14 @@ export default {
   methods: {
     reset() {
       this.$refs.form.reset();
-      this.rulesImage = [];
-      this.rulesVideo = [];
     },
     cancel() {
       this.reset();
       this.callback();
     },
     submit() {
+      console.log(this.description3);
       this.busy = true;
-      if (!!this.fileImage.name) {
-        this.rulesImage = [
-          (v) =>
-            !!v ||
-            v.type == "image/png" ||
-            v.type == "image/jpeg" ||
-            v.type == "image/bmp" ||
-            "Wrong data",
-        ];
-      } else {
-        console.log(this.fileImage)
-        this.rulesImage = [(v) => !!v.name || "Item is required"];
-     
-        console.log('a')
-      }
-      {
-        if (!!!this.fileVideo.video) {
-          this.rulesVideo = [(v) => !!v.name || "Item is required"];
-        } else {
-          this.rulesVideo = [
-            (v) =>
-              v.type == "video/mp4" || v.type == "video/mov" || "Wrong data",
-          ];
-        }
-      }
       if (!this.$refs.form.validate()) {
         this.$refs.form.validate();
         this.busy = false;
@@ -227,9 +229,41 @@ export default {
     fileImage() {
       if (this.fileImage == undefined) {
         this.fileImage = [];
+        this.rulesImage = [
+          (v) => {
+            if (v == undefined || Array.isArray(v)) {
+              return false || "Item is required";
+            }
+            return true;
+          },
+        ];
+      }
+      if (!!this.fileImage.name) {
+        this.rulesImage = [
+          (v) =>
+            v.type == "image/png" ||
+            v.type == "image/jpeg" ||
+            v.type == "image/bmp" ||
+            "Wrong data",
+        ];
       }
     },
-    
+    fileVideo() {
+      if (this.fileVideo == undefined) {
+        this.fileVideo = [];
+        this.rulesVideo = [
+          (v) => {
+            if (v == undefined || Array.isArray(v)) {
+              return false || "Item is required";
+            }
+            return true;
+          },
+        ];
+      }
+      if (!!this.fileVideo.name) {
+        this.rulesVideo = [(v) => v.type == "video/mp4" || "Wrong data"];
+      }
+    },
   },
 };
 </script>
