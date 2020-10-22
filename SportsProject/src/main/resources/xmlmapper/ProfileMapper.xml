@@ -62,7 +62,7 @@
 		left JOIN account_tbl a ON p.profile_email =
 		a.account_email
 		left join team_tbl t on t.id_team = p.id_team
-		WHERE account_role = 'ROLE_MEMBER'
+		WHERE account_role = 'ROLE_MEMBER' ORDER BY a.id DESC
 	</select>
 
 

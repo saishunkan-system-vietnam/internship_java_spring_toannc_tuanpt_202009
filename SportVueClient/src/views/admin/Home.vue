@@ -1,13 +1,8 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app>
-      <v-img
-        style="margin-top: 50px"
-        max-height="300"
-        max-width="250"
-        src="@/assets/unnamed.png"
-      ></v-img>
-      <h2 class="text-center">ADMIN</h2>
+   
+      <h1 class="text-center" style="margin-top:50px">ADMIN</h1>
       <v-list dense>
 
         <v-list-item class="css" @click="home">

@@ -101,7 +101,9 @@
       </v-dialog>
 
       <v-dialog v-model="successDialog" hide-overlay persistent width="300">
-        <v-alert class="mb-0" type="success">  List Member Added Success! </v-alert>
+        <v-alert class="mb-0" type="success">
+          List Member Added Success!
+        </v-alert>
       </v-dialog>
     </v-row>
   </div>
@@ -204,10 +206,10 @@ export default {
       this.checkAdd = true;
     },
     loadMemberAfterCreate(member) {
-      this.desserts.push(member);
+      this.desserts.unshift(member); // unshift is add into 1st positions , push is add last positions
     },
     confirmList() {
-      let self = this
+      let self = this;
       this.successDialog = !this.successDialog;
       setTimeout(function () {
         self.successDialog = !self.successDialog;
