@@ -59,7 +59,7 @@
           </v-col>
         </v-row>
 
-        <v-text-field v-model="address" label="Address" required></v-text-field>
+        <v-text-field :rules="countryRules" v-model="address" label="Country" required></v-text-field>
       </v-card-text>
       <v-card-actions>
         <v-btn color="error" x-large text @click="reset"> Reset Form </v-btn>
@@ -112,9 +112,9 @@ export default {
       address: "",
       name: "",
       number: 10,
+      countryRules: [ (v) => !!v || "Country is required",],
       nameRules: [
         (v) => !!v || "Name is required",
-        (v) => (v && v.length <= 10) || "Name must be less than 21 characters",
       ],
       email: "",
       emailRules: [

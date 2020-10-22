@@ -66,7 +66,7 @@
           :src="item.logo"
           alt=""
           width="100px"
-          height="70px"
+          height="100px"
           style="margin: 3px 0 3px 0"
         />
       </template>

@@ -111,6 +111,9 @@ export default {
     removeMember: {
       type: Function,
     },
+    loadTeamById:{
+      type: Function
+    }
   },
   data() {
     return {
@@ -202,6 +205,7 @@ export default {
             self.dialogSuccess = !self.dialogSuccess;
             self.openEditTeam();
             setTimeout(function () {
+              self.loadTeamById(self.teamProps.idTeam)
               self.dialogSuccess = !self.dialogSuccess;
             }, 1500);
           })

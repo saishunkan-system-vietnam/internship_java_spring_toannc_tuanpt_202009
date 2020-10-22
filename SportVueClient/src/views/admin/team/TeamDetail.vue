@@ -5,8 +5,8 @@
         <v-icon>mdi-chevron-right</v-icon>
       </template>
     </v-breadcrumbs>
-    <v-card class="mx-auto my-12 container" >
-      <v-img height="500"  :src="team.logo"></v-img>
+    <v-card class="mx-auto my-12 container">
+      <v-img height="500" :src="team.logo"></v-img>
       <v-row>
         <v-card-title
           ><h1>{{ team.nameTeam }}</h1></v-card-title
@@ -100,6 +100,7 @@
           :openEditTeam="openEditTeam"
           :teamProps="team"
           :desserts="desserts"
+          :loadTeamById = "loadTeamById"
         />
       </v-dialog>
 
@@ -182,7 +183,7 @@ export default {
           href: "/LayoutTeam",
         },
         {
-          text: '',
+          text: "",
           disabled: false,
           href: `/edit/${this.$route.params.id}`,
         },
@@ -194,9 +195,11 @@ export default {
     this.loadTeamById(this.$route.params.id);
   },
   watch: {
-    team(value){
-      this.teamLink[2].text = value.nameTeam
-    } 
+    team(value) {
+      this.teamLink[2].text = value.nameTeam;
+    },
+
+    
   },
   methods: {
     isOpenModalMember: function () {
