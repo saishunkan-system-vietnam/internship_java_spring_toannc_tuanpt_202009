@@ -30,8 +30,13 @@
             {{ team.description }}
           </div>
           <v-spacer></v-spacer>
-
-          <v-btn color="primary" dark class="ma-2" @click="openEditTeam">
+          <v-btn
+            v-if="team.idTour == 0"
+            color="primary"
+            dark
+            class="ma-2"
+            @click="openEditTeam"
+          >
             Edit Team
           </v-btn>
         </v-row>
@@ -61,6 +66,7 @@
                 :addedMember="addedMember"
                 :updateTeam="updateTeam"
                 :idTeam="parseInt($route.params.id)"
+                :teamProps = "team"
               />
               <v-divider class="mx-4" inset vertical></v-divider>
               <v-spacer></v-spacer>
@@ -103,7 +109,7 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" dark class="ma-2" @click="dialogConfirm = true">
+        <v-btn v-if="team.idTour == 0" color="primary" dark class="ma-2" @click="dialogConfirm = true">
           Confirm List
         </v-btn>
       </v-card-actions>
@@ -177,7 +183,7 @@ export default {
           text: "Actions",
           value: "idTeam",
           filter: (value, search, item) => {
-            if (item.idTeam != 0) return true;
+            if (item.idTeam != 0 && this.team.idTour == 0) return true;
             return value;
           },
         },

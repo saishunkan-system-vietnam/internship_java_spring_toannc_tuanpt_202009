@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row justify="center">
-      <v-btn color="primary" class="ma-2" dark @click="openListModalMember">
+      <v-btn v-if="teamProps.idTour == 0" color="primary" class="ma-2" dark @click="openListModalMember">
         Add Members
       </v-btn>
 
@@ -155,6 +155,7 @@ export default {
       type: Function,
     },
     idTeam: Number,
+    teamProps: Object
   },
   data() {
     return {
