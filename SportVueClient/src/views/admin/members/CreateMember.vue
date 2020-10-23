@@ -6,7 +6,7 @@
         <v-row>
           <v-col cols="12" md="6">
             <v-text-field
-              v-model="name"
+              v-model.trim="name"
               :rules="nameRules"
               :counter="21"
               label="Full Name"
@@ -15,7 +15,7 @@
           </v-col>
           <v-col cols="12" md="6">
             <v-text-field
-              v-model="email"
+              v-model.trim="email"
               :rules="emailRules"
               label="E-mail"
               required
@@ -120,17 +120,7 @@ export default {
       countryRules: [(v) => !!v || "Country is required"],
       nameRules: [(v) => !!v || "Name is required"],
       email: "",
-      emailRules: [
-        (v) => !!v || "E-mail is required", // not exsits
-        (v) => /.+@.+/.test(v)  || "E-mail must be valid",
-      ],
       phone: "",
-      phoneRules: [
-        (v) => !!v || "Phone number is required",
-        (v) =>
-          (v && v.length <= 15) ||
-          "Phone number must be less than 15 characters",
-      ],
       age: "",
       ageRules: [
         (v) => !!v || "Age number is required",
@@ -153,10 +143,35 @@ export default {
   watch: {
     email() {
       this.emailRules = [
-        (v) => !!v || "E-mail is required", // not exsits
-        (v) => /.+@.+/.test(v) || "E-mail must be valid",
+         (v) => {
+            if (!!!v) {
+              return false || "E-mail is required";
+            }
+            if (!/.+@.+/.test(v)) {
+              return false || "E-mail must be valid";
+            }
+            if (v.indexOf(" ") > -1) {
+              return false || "E-mail can not have white space";
+            }
+            return true;
+          },
       ];
     },
+
+    phone(){
+      this.phoneRules = [
+         (v) => {
+            if (!/^[0-9]+$/.test(v)) {
+              return false || "Invalid phone number";
+            }
+            if (v.length < 5) {
+              return false || "Phone number have at least 6 digit";
+            }
+            return true;
+          },
+      ];
+    },
+
     fileImage() {
       if (this.fileImage == undefined) {
         this.fileImage = [];
@@ -180,6 +195,7 @@ export default {
       }
     },
   },
+
   methods: {
     onSubmit() {
       if (!this.$refs.form.validate()) {
@@ -207,24 +223,24 @@ export default {
           )
           .then((res) => {
             self.changeButton = !self.changeButton;
-            if (res.data.code === 9999) {
-              self.emailRules = [
-                (v) => !self.email || "Email has already exists",
-              ];
-            } else {
+            if (res.data.code != 9999) {
               self.isOpenModalMember();
               self.successDialog = !self.successDialog;
               setTimeout(function () {
                 self.successDialog = !self.successDialog;
                 self.loadMemberAfterCreate(res.data.payload);
               }, 1100);
+              self.reset();
+            } else {
+              self.emailRules = [
+                (v) => !self.email || "Email has already exists",
+              ];
             }
           })
           .catch((e) => {
             self.changeButton = !self.changeButton;
           });
         self.changeButton = !self.changeButton;
-        self.reset();
       }
     },
 
