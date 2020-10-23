@@ -5,7 +5,7 @@
         <v-card>
           <v-list style="background-color: white">
             <v-subheader><b style="color: red">TOURNAMENTS</b></v-subheader>
-            <v-list-item v-for="item in items" :key="item.title">
+            <v-list-item v-for="(item,index) in items" :key="index">
               <v-list-item-content>
                 <a
                   :href="
@@ -33,21 +33,22 @@
       </v-col>
       <v-col cols="12" sm="2" style="padding: 5px">
         <v-card>
-          <v-list style="background-color: white">
-            <v-subheader>
-              <b style="color: green; min-width: 100px" class="text-center">
-                <a
-                  :href="
-                    $router.resolve({
-                      path: '/RankTournament/BasketBall',
-                    }).href
-                  "
-                  >RANK</a
-                ></b
-              ></v-subheader
-            >
-            <v-list-item v-for="(item, index) in rank" :key="index">
-              <template v-if="index < 5">
+          <div>
+            <v-list style="background-color: white">
+              <v-subheader>
+                <b style="color: green; min-width: 100px" class="text-center">
+                  <a
+                    :href="
+                      $router.resolve({
+                        path: '/RankTournament/BasketBall',
+                      }).href
+                    "
+                    >RANK</a
+                  ></b
+                ></v-subheader
+              >
+
+              <v-list-item v-for="(item, index) in rank" :key="index">
                 <v-list-item-content>
                   <a
                     :href="
@@ -69,9 +70,9 @@
                     </div>
                   </a>
                 </v-list-item-content>
-              </template>
-            </v-list-item>
-          </v-list>
+              </v-list-item>
+            </v-list>
+          </div>
         </v-card>
       </v-col>
     </v-row>

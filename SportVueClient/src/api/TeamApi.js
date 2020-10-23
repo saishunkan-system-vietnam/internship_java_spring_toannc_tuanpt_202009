@@ -30,5 +30,8 @@ export function getTeam(id){
 }
 
 export function createTeam(teamForm){
-    return Api.post(`/team/createTeam`, teamForm)
+    return Api.post('/team/createTeam', teamForm)
+}
+export function getAll(){
+    return Api.get('/team/getAll')
 }

@@ -76,7 +76,7 @@
                     card
                     active-nav-item-class="font-weight-bold text-uppercase text-danger"
                   >
-                    <div v-if="results == null">There is no Lastest Scores</div>
+                    <div v-if="results == ''">There is no Lastest Scores</div>
 
                     <b-tab title="Lastest Scores" active>
                       <div>
@@ -139,7 +139,7 @@
                     active-nav-item-class="font-weight-bold text-uppercase text-danger"
                   >
                     <b-tab title="Schedule" active>
-                      <div v-if="fixtures == null">There is no schedule</div>
+                      <div v-if="fixtures == ''">There is no schedule</div>
                       <div v-for="(item2, index3) in fixtures" :key="index3">
                         <template v-if="index3 < 3">
                           <h5>{{ item2.nameTour }}</h5>
@@ -184,7 +184,7 @@
             </v-container>
           </v-tab-item>
           <v-tab-item style="min-height: 1000px">
-            <div v-if="results == null" class="text-center">
+            <div v-if="results == ''" class="text-center">
               <div
                 class="d-flex flex-column justify-space-between align-center"
               >
@@ -228,7 +228,7 @@
           </v-tab-item>
           <v-tab-item style="min-height: 1000px">
             <v-container>
-              <div v-if="fixtures == null" class="text-center">
+              <div v-if="fixtures == ''" class="text-center">
                 <div
                   class="d-flex flex-column justify-space-between align-center"
                 >
@@ -348,6 +348,7 @@ export default {
         .dispatch("tournament/getFixtures", this.$route.params.id)
         .then((res) => {
           this.fixtures = res.data;
+           
         });
     },
     detail(data) {

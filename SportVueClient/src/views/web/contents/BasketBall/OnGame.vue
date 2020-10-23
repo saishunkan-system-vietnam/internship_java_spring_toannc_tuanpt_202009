@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div v-if="tournaments == ''" class="text-center">
+    <div v-if="tournaments == ''" class="text-center">
       <div class="d-flex flex-column justify-space-between align-center">
         <v-img
           max-height="350"
@@ -14,12 +14,15 @@
       <v-expansion-panel v-for="(tournament, i) in tournaments" :key="i">
         <template v-if="i < number">
           <v-expansion-panel-header style="color: #6b4b4b"
-            ><h5 @click="detailTournament(tournament.idTour)">{{ tournament.nameTour }}</h5></v-expansion-panel-header
+            ><h5 @click="detailTournament(tournament.idTour)">
+              {{ tournament.nameTour }}
+            </h5></v-expansion-panel-header
           >
           <v-expansion-panel-content>
             <v-simple-table>
               <tbody>
-                <tr style="cursor:pointer"
+                <tr
+                  style="cursor: pointer"
                   v-for="(item, index) in tournament.schedule"
                   :key="index"
                   v-b-popover.hover.top="'Click to see details'"
@@ -52,12 +55,12 @@
                           >{{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam1
-                              :  " "
+                              : " "
                           }}-
                           {{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam2
-                              :  " "
+                              : " "
                           }}</v-col
                         >
                         <v-col>{{ item.team[1].nameTeam }}</v-col>
@@ -68,8 +71,14 @@
               </tbody>
             </v-simple-table>
 
-            <div class="text-center" style="font-size: 12px; margin-top: 18px" v-if="tournament.schedule.length>6">
-              <router-link :to="'/DetailTournamentBasketball/' + tournament.idTour">
+            <div
+              class="text-center"
+              style="font-size: 12px; margin-top: 18px"
+              v-if="tournament.schedule.length > 6"
+            >
+              <router-link
+                :to="'/DetailTournamentBasketball/' + tournament.idTour"
+              >
                 ----- All Matches -----
               </router-link>
             </div>
@@ -79,7 +88,7 @@
     </v-expansion-panels>
     <div
       class="text-center"
-      v-if="tournaments.length >  this.number"
+      v-if="tournaments.length > this.number"
       @click="show"
       style="color: blue"
     >
@@ -114,9 +123,9 @@ export default {
     show() {
       this.number = this.tournaments.length;
     },
-    detailTournament(id){
-      this.$router.push('/DetailTournamentBasketball/'+id);
-    }
+    detailTournament(id) {
+      this.$router.push("/DetailTournamentBasketball/" + id);
+    },
   },
 };
 </script>

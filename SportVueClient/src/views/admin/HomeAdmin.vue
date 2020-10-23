@@ -2,18 +2,18 @@
   <div>
     <v-row>
       <v-col @click="tournament1"
-        ><div class="border1" style="background-color: green;cursor: pointer;">
+        ><div class="border1" style="background-color: green; cursor: pointer">
           <h3 class="text-center">{{ this.tournament.length }} TOURNAMENT</h3>
         </div></v-col
       >
       <v-col @click="schedule1"
-        ><div class="border1" style="background-color: blue;cursor: pointer;">
+        ><div class="border1" style="background-color: blue; cursor: pointer">
           <h3 class="text-center">{{ this.schedule.length }} SCHEDULE</h3>
         </div></v-col
       >
-      <v-col @click="team"
-        ><div class="border1" style="background-color: red;cursor: pointer;">
-          <h3 class="text-center">20 TEAM</h3>
+      <v-col @click="team1"
+        ><div class="border1" style="background-color: red; cursor: pointer">
+          <h3 class="text-center">{{ this.team.length }} TEAM</h3>
         </div></v-col
       >
     </v-row>
@@ -63,29 +63,32 @@ export default {
     return {
       tournament: "",
       schedule: "",
+      team: "",
     };
   },
   created() {
     this.$store.dispatch("tournament/getAll").then((response) => {
       this.tournament = response.data;
     });
+    this.$store.dispatch("team/getAll").then((response) => {
+      this.team = response.data;
+    });
     this.$store.dispatch("schedule/getAll").then((response) => {
       this.schedule = response.data;
       // console.log(this.schedule);
     });
   },
-  methods:{
-    tournament1(){
-      this.$router.push('/LayoutTournament')
-        
+  methods: {
+    tournament1() {
+      this.$router.push("/LayoutTournament");
     },
-    schedule1(){
-this.$router.push('/LayoutSchedule')
+    schedule1() {
+      this.$router.push("/LayoutSchedule");
     },
-    team(){
-this.$router.push('/LayoutTeam')
+    team1() {
+      this.$router.push("/LayoutTeam");
     },
-  }
+  },
 };
 </script>
 <style>

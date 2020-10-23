@@ -25,6 +25,7 @@
             dark
             color="indigo"
             @click.stop="dialog = true"
+            v-if="dataTournament.status == 0"
           >
             <v-icon dark> mdi-plus </v-icon></v-btn
           >
@@ -43,7 +44,6 @@
           </b-row>
           <b-table
             small
-            
             id="my-table"
             :per-page="perPage"
             :current-page="currentPage"
@@ -114,6 +114,7 @@
             dark
             color="indigo"
             @click.stop="dialogSchedule = true"
+            v-if="dataTournament.status != 2"
           >
             <v-icon dark> mdi-plus </v-icon></v-btn
           >
@@ -262,7 +263,7 @@
               </v-card-text>
             </v-card>
           </v-dialog>
-          <v-dialog v-model="dialogEditSchedule" max-width="1000px" persistent>
+          <v-dialog v-model="dialogEditSchedule" max-width="1000px">
             <v-card>
               <v-card-title class="headline"> Edit </v-card-title>
 

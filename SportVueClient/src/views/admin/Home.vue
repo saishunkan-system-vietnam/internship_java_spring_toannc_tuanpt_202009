@@ -91,19 +91,19 @@ export default {
       this.$router.push("/");
     },
     home(){
-      this.$router.push('/admin/home')
+      this.$router.push('/admin/home').catch (err => {})
     },
     User(){
-      this.$router.push('/LayoutUser')
+      this.$router.push('/LayoutUser').catch (err => {})
     },
     Schedule(){
-      this.$router.push('/LayoutSchedule')
+      this.$router.push('/LayoutSchedule').catch (err => {})
     },
     Team(){
-      this.$router.push('/LayoutTeam')
+      this.$router.push('/LayoutTeam').catch (err => {})
     },
     Tournament(){
-      this.$router.push('/LayoutTournament')
+      this.$router.push('/LayoutTournament').catch (err => {})
     },
     
   },

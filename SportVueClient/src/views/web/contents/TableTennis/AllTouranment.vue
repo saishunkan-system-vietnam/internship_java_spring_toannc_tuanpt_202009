@@ -6,7 +6,7 @@
         <v-img
           max-height="350"
           max-width="350"
-          src="@/assets/soccer.png"
+          src="@/assets/hiclipart.com.png"
         ></v-img>
         No match
       </div>
@@ -105,6 +105,7 @@ export default {
       .dispatch("tournament/getByType", "TableTennis")
       .then((response) => {
         this.tournaments = response.data;
+        console.log(this.tournaments)
       });
   },
   methods: {

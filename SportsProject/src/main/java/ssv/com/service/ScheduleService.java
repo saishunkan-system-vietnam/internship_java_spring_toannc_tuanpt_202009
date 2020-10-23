@@ -33,7 +33,7 @@ public class ScheduleService {
 
 	public String checkTime(Date timeStart, Date timeEnd, int idTour) {
 		Tournament tournament = tournamentService.getById(idTour);
-		if (tournament.getTimeEnd().compareTo(timeEnd) >= 0 && tournament.getTimeStart().compareTo(timeStart) <= 0) {
+		if (tournament.getTimeEnd().compareTo(timeEnd) > 0 && tournament.getTimeStart().compareTo(timeStart) < 0) {
 			List<Schedule> list = scheduleReponsitory.getByIdTour(idTour);
 			if (timeEnd.compareTo(timeStart) > 0) {
 				if (list.isEmpty()) {
@@ -48,6 +48,7 @@ public class ScheduleService {
 						}
 					}
 				}
+				return null;
 			}
 		}
 		return "Past tournament time";
