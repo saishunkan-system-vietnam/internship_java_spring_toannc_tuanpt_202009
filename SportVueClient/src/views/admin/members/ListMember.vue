@@ -121,7 +121,7 @@
         </v-card>
       </v-dialog>
 
-      <v-dialog v-model="dialogCreateMember" max-width="65%">
+      <v-dialog v-model="dialogCreateMember" max-width="68%">
         <CreateMember
           :isOpenModalMember="isOpenModalMember"
           :loadMemberAfterCreate="loadMemberAfterCreate"
@@ -155,7 +155,8 @@ export default {
       type: Function,
     },
     idTeam: Number,
-    teamProps: Object
+    teamProps: Object,
+    item: Object
   },
   data() {
     return {

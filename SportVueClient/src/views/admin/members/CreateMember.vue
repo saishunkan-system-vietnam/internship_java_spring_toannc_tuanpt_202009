@@ -143,7 +143,6 @@ export default {
   },
   watch: {
     email() {
-      console.log("Run here")
       this.emailRules = [
         (v) => {
           if (!!!v) {
@@ -161,7 +160,6 @@ export default {
     },
 
     phone() {
-      console.log("Run here")
       this.phoneRules = [
         (v) => {
           if (!/^[0-9]+$/.test(v)) {
@@ -235,12 +233,14 @@ export default {
                 (v) => !self.email || "Phone number has already exists",
               ];
             }
-            if (res.data.code != 9999) self.isOpenModalMember();
+            if (res.data.code != 9999) ;
             {
+              self.isOpenModalMember()
               self.successDialog = !self.successDialog;
               setTimeout(function () {
                 self.successDialog = !self.successDialog;
                 self.loadMemberAfterCreate(res.data.payload);
+                
               }, 1100);
               self.reset();
             }
