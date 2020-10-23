@@ -15,7 +15,7 @@
           </v-col>
           <v-col cols="12" md="6">
             <v-text-field
-              v-model.trim="email"
+              v-model="email"
               :rules="emailRules"
               label="E-mail"
               required
@@ -120,7 +120,9 @@ export default {
       countryRules: [(v) => !!v || "Country is required"],
       nameRules: [(v) => !!v || "Name is required"],
       email: "",
+      emailRules: [],
       phone: "",
+      phoneRules: [],
       age: "",
       ageRules: [
         (v) => !!v || "Age number is required",
@@ -143,32 +145,32 @@ export default {
   watch: {
     email() {
       this.emailRules = [
-         (v) => {
-            if (!!!v) {
-              return false || "E-mail is required";
-            }
-            if (!/.+@.+/.test(v)) {
-              return false || "E-mail must be valid";
-            }
-            if (v.indexOf(" ") > -1) {
-              return false || "E-mail can not have white space";
-            }
-            return true;
-          },
+        (v) => {
+          if (!!!v) {
+            return false || "E-mail is required";
+          }
+          if (!/.+@.+/.test(v)) {
+            return false || "E-mail must be valid";
+          }
+          if (v.indexOf(" ") > -1) {
+            return false || "E-mail can not have white space";
+          }
+          return true;
+        },
       ];
     },
 
-    phone(){
+    phone() {
       this.phoneRules = [
-         (v) => {
-            if (!/^[0-9]+$/.test(v)) {
-              return false || "Invalid phone number";
-            }
-            if (v.length < 5) {
-              return false || "Phone number have at least 6 digit";
-            }
-            return true;
-          },
+        (v) => {
+          if (!/^[0-9]+$/.test(v)) {
+            return false || "Invalid phone number";
+          }
+          if (v.length < 5) {
+            return false || "Phone number have at least 6 digit";
+          }
+          return true;
+        },
       ];
     },
 
@@ -223,18 +225,24 @@ export default {
           )
           .then((res) => {
             self.changeButton = !self.changeButton;
-            if (res.data.code != 9999) {
-              self.isOpenModalMember();
+            if (res.data.code === 9999 && res.data.payload == null) {
+              self.emailRules = [
+                (v) => !self.email || "Email has already exists",
+              ];
+            }
+            if (res.data.code === 999 && res.data.payload == 0) {
+              self.emailRules = [
+                (v) => !self.email || "Phone number has already exists",
+              ];
+            }
+            if (res.data.code != 9999) self.isOpenModalMember();
+            {
               self.successDialog = !self.successDialog;
               setTimeout(function () {
                 self.successDialog = !self.successDialog;
                 self.loadMemberAfterCreate(res.data.payload);
               }, 1100);
               self.reset();
-            } else {
-              self.emailRules = [
-                (v) => !self.email || "Email has already exists",
-              ];
             }
           })
           .catch((e) => {

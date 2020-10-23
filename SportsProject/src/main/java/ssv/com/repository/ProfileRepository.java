@@ -69,6 +69,8 @@ public class ProfileRepository {
 		profileMapper.updateProfileUser(profile);
 	}
 
-	
+	public Profile checkPhoneExist(String phone) {
+		return profileMapper.checkPhoneExist(phone);
+	}
 
 }

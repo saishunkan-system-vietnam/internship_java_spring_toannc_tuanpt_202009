@@ -11,7 +11,7 @@ const actions={
         })
     },
     addComment({ },data) {
-        console.log(data)
+        // console.log(data)
         return new Promise((resolve, reject) => {
             addComment(data).then(res => {
                 resolve(res);

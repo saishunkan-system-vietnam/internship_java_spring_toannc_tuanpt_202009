@@ -94,7 +94,7 @@ export default {
   }),
   created() {
     this.info = this.$store.state.user.userInfo;
-    console.log(this.info);
+    // console.log(this.info);
     this.start = date.slice(0, 7);
     this.$store
       .dispatch(
@@ -102,7 +102,7 @@ export default {
         this.$store.state.user.userInfo.profile.id
       )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         if(res.data!=''){
         this.$store
           .dispatch("team/getTeam" , res.data[0].team[0].idTeam)

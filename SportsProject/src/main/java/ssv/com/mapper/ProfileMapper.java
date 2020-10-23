@@ -32,4 +32,6 @@ public interface ProfileMapper {
 	public void updateMembersInTeam(Team team);
 
 	public void updateProfileUser(Profile profile);
+
+	public Profile checkPhoneExist(String number);
 }

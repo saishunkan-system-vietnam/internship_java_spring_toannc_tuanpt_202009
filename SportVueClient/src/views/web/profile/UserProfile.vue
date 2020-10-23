@@ -72,7 +72,6 @@ export default {
   },
   created() {
     this.info = this.$store.state.user.userInfo;
-    // console.log(this.info);
   },
   methods: {
     Ok() {

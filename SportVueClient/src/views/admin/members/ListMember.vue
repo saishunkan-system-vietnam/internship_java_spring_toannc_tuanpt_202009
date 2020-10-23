@@ -211,7 +211,6 @@ export default {
     },
 
     openListModalMember: function () {
-      // console.log(this.desserts);
       this.dialogMemberTable = true;
     },
 
