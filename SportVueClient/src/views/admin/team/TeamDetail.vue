@@ -6,7 +6,7 @@
       </template>
     </v-breadcrumbs>
     <v-card class="mx-auto my-12 container">
-      <v-img height="500" :src="team.logo"></v-img>
+      <v-img height="300" :src="team.logo"></v-img>
       <v-row>
         <v-card-title
           ><h1>{{ team.nameTeam }}</h1></v-card-title
@@ -30,8 +30,13 @@
             {{ team.description }}
           </div>
           <v-spacer></v-spacer>
-
-          <v-btn color="primary" dark class="ma-2" @click="openEditTeam">
+          <v-btn
+            v-if="team.idTour == 0"
+            color="primary"
+            dark
+            class="ma-2"
+            @click="openEditTeam"
+          >
             Edit Team
           </v-btn>
         </v-row>
@@ -61,16 +66,30 @@
                 :addedMember="addedMember"
                 :updateTeam="updateTeam"
                 :idTeam="parseInt($route.params.id)"
+                :teamProps = "team"
               />
               <v-divider class="mx-4" inset vertical></v-divider>
               <v-spacer></v-spacer>
-              <v-text-field
-                v-model="search"
-                append-icon="mdi-magnify"
-                label="Search"
-                single-line
-                hide-details
-              ></v-text-field>
+              <v-row class="mt-4">
+                <v-col cols="12" sm="6" md="6">
+                  <v-text-field
+                    v-model="nameMemberSearch"
+                    append-icon="mdi-magnify"
+                    label="Name search"
+                    single-line
+                    hide-details
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="6">
+                  <v-text-field
+                    v-model="ageSearch"
+                    append-icon="mdi-magnify"
+                    label="Age"
+                    single-line
+                    hide-details
+                  ></v-text-field>
+                </v-col>
+              </v-row>
             </v-toolbar>
           </template>
           <template v-slot:[`item.avatar`]="{ item }">
@@ -90,7 +109,7 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" dark class="ma-2" @click="dialogConfirm = true">
+        <v-btn v-if="team.idTour == 0" color="primary" dark class="ma-2" @click="dialogConfirm = true">
           Confirm List
         </v-btn>
       </v-card-actions>
@@ -146,6 +165,8 @@ export default {
       dialogEditTeam: false,
       checkAdd: true,
       search: "",
+      nameMemberSearch: "",
+      ageSearch: "",
       headers: [
         {
           text: "Avatar",
@@ -153,16 +174,16 @@ export default {
           sortable: false,
           value: "avatar",
         },
-        { text: "Name", value: "name" },
+        { text: "Name", value: "name", filter: this.nameMemberFilter },
         { text: "Email", value: "email" },
         { text: "Phone", value: "phone" },
-        { text: "Age", value: "age" },
+        { text: "Age", value: "age", filter: this.ageFilter },
         { text: "Gender", value: "gender" },
         {
           text: "Actions",
           value: "idTeam",
           filter: (value, search, item) => {
-            if (item.idTeam != 0) return true;
+            if (item.idTeam != 0 && this.team.idTour == 0) return true;
             return value;
           },
         },
@@ -227,15 +248,12 @@ export default {
     },
 
     removeMember(member) {
-      // console.log(this.desserts);
-      // console.log("Removed");
       let data = this.desserts.map((element, index) => {
         if (element.id === member.id) {
           element.idTeam = 0;
           this.memberProp = element;
           this.desserts.splice(index, 1);
         }
-        // console.log(element);
         return element;
       });
     },
@@ -257,6 +275,23 @@ export default {
         self.dialogConfirm = !self.dialogConfirm;
         self.updateTeam(id);
       }, 1500);
+    },
+
+    nameMemberFilter(value) {
+      // If this filter has no value we just skip the entire filter.
+      if (!this.nameMemberSearch) {
+        return true;
+      }
+
+      return value.toLowerCase().includes(this.nameMemberSearch.toLowerCase());
+    },
+
+    ageFilter(value) {
+      // If this filter has no value we just skip the entire filter.
+      if (!this.ageSearch) {
+        return true;
+      }
+      return value.toLowerCase().includes(this.ageSearch.toLowerCase());
     },
   },
 };

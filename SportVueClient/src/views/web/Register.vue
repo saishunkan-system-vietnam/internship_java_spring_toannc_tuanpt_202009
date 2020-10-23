@@ -69,8 +69,18 @@ export default {
     },
     email() {
       this.emailRules = [
-        (v) => !!v || "E-mail is required", // not exsits
-        (v) => /.+@.+/.test(v) || "E-mail must be valid",
+        (v) => {
+          if (!!!v) {
+            return false || "E-mail is required";
+          }
+          if (!/.+@.+/.test(v)) {
+            return false || "E-mail must be valid";
+          }
+          if (v.indexOf(" ") > -1) {
+            return false || "E-mail can't have white space";
+          }
+          return true;
+        },
       ];
     },
   },

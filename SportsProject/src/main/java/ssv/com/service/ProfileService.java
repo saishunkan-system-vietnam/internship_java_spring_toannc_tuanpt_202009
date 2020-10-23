@@ -84,7 +84,10 @@ public class ProfileService {
 		Random rand = new Random();
 		if (profileRepository.getByEmail(profileForm.getEmail()) != null) {
 			return ResponseQuery.faild("Email has already exsists", null);
-		} else {
+		}else if(profileRepository.checkPhoneExist(profileForm.getPhone()) != null){
+			return ResponseQuery.faild("Phone number has already exsists", 0);
+		}
+		else {
 
 			Account account = new Account();
 			account.setEmail(profileForm.getEmail());

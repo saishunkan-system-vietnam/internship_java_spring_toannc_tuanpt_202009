@@ -482,7 +482,7 @@ export default {
           this.schedule = response.data;
           this.itemsSchedule = response.data;
           this.rowsSchedule = this.itemsSchedule.length;
-          console.log(this.schedule);
+          // console.log(this.schedule);
         });
     },
     hideModal() {

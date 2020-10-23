@@ -91,9 +91,9 @@
       </v-form>
     </v-container>
 
-    <v-dialog v-model="dialogSuccess" max-width="500">
-      <template>
-        <v-alert type="success"> Update Success! </v-alert>
+    <v-dialog persistent v-model="dialogSuccess" max-width="500">
+      <template >
+        <v-alert class="mb-0" type="success"> Update Success! </v-alert>
       </template>
     </v-dialog>
   </v-card>

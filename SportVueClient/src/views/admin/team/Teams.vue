@@ -6,7 +6,15 @@
       </template>
     </v-breadcrumbs>
 
+    <v-progress-circular
+      :size="50"
+      color="primary"
+      indeterminate
+      v-if="isLoading"
+    ></v-progress-circular>
+
     <v-data-table
+      v-else
       @click:row="handleRowClick"
       :headers="headers"
       :items="desserts"
@@ -83,6 +91,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      isLoading: false,
       search: "",
       headers: [
         {
@@ -94,9 +103,13 @@ export default {
         { text: "Team Name", value: "nameTeam", filter: this.nameTeamFilter },
         { text: "Type", value: "type", filter: this.typeFilter },
         {
-          text: "Current Tournament",
+          text: "Tournament",
           value: "tournament.nameTour",
           filter: this.nameTourFilter,
+        },
+        {
+          text: "Members Quatity",
+          value: "profile.length",
         },
         { text: "Total Matchs", value: "totalmatch" },
         { text: "Total Wins", value: "totalwin" },
@@ -124,10 +137,13 @@ export default {
   },
   mounted() {
     let self = this;
+    this.isLoading = true;
     axios
       .get("http://localhost:8090/api/v1/team/getAll")
       .then(function (response) {
+        self.isLoading = false;
         self.desserts = response.data;
+        // console.log(self.desserts)
         self.maxTeamId =
           1 +
           Math.max.apply(
@@ -138,7 +154,7 @@ export default {
           );
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       });
   },
   computed: {
@@ -198,7 +214,6 @@ export default {
 
       return value === this.typeSearch;
     },
-   
   },
 };
 </script>
@@ -216,5 +231,4 @@ export default {
 tbody tr:nth-child(odd) {
   background: #dee2e6;
 }
-
 </style>
