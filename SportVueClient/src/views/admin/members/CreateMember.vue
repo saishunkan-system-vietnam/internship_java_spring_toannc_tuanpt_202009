@@ -93,7 +93,6 @@
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
   props: {
@@ -216,11 +215,8 @@ export default {
         //   for (var value of memberForm.values()) {
         //     console.log(value);
         //   }
-        axios
-          .post(
-            "http://localhost:8090/api/v1/profiles/createMember",
-            memberForm
-          )
+        this.$store
+        .dispatch("user/createMember", memberForm)
           .then((res) => {
             self.changeButton = !self.changeButton;
             if (res.data.code === 9999 && res.data.payload == null) {

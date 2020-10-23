@@ -153,7 +153,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import EditTeam from "@/views/admin/team/EditTeam";
 import ListMember from "@/views/admin/members/ListMember";
 

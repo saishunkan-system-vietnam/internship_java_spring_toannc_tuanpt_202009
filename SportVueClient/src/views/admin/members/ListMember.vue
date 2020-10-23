@@ -138,7 +138,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
 import CreateMember from "@/views/admin/members/CreateMember.vue";
 
 export default {
@@ -218,8 +217,8 @@ export default {
 
     loadListMember() {
       let self = this;
-      axios
-        .get("http://localhost:8090/api/v1/profiles/members")
+      this.$store
+        .dispatch("user/members")
         .then(function (response) {
           self.desserts = response.data.filter((item) => {
             return item.type === self.passSelectedType && item.idTeam == 0;

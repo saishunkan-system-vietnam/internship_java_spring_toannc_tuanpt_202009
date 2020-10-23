@@ -19,7 +19,7 @@ if (token) {
 }
 
 Vue.config.productionTip = false
-
+const web="local"
 
 new Vue({
   router,

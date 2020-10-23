@@ -6,10 +6,12 @@
     <template v-else>
       <web/>
     </template>
-    
+    <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </v-app>
 </template>
-
+  
 <script>
 // import Navbar from '@/components/Navbar.vue'
 import web from '@/views/web'
@@ -19,7 +21,7 @@ export default {
   name: 'App',
   components: { web,admin },
   data: () => ({
-    //
+    overlay: false
   }),
 };
 </script>
