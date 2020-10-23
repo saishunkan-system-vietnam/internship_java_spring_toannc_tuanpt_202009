@@ -100,6 +100,7 @@ export default {
         .dispatch("tournament/getRank", "TableTennis")
         .then((response) => {
           this.rank = response.data;
+          this.rank.splice(5, this.rank.length - 4);
         });
     },
   },

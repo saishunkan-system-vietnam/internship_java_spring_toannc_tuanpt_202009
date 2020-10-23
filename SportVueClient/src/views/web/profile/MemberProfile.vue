@@ -1,81 +1,81 @@
 <template>
-  <div style="background: whitesmoke" >
-  <v-container>
-    <v-form ref="form">
-      <v-flex>
-        <v-row>
-          <v-col cols="6">
-            <v-img
-              lazy-src="https://picsum.photos/id/11/10/6"
-              max-height="100"
-              max-width="100"
-              :src="info.profile.avatar"
-            ></v-img>
-          </v-col>
-          <v-col cols="12" sm="6" md="6">
-            <h3>{{ info.profile.name }}</h3>
-            <p>{{ info.profile.address }}</p>
-          </v-col>
-          <v-col cols="12" sm="6" md="6">
-            <v-icon>mdi-email</v-icon>{{ info.profile.email }}
-          </v-col>
-          <v-col cols="6">
-            <v-icon>mdi-phone</v-icon>{{ info.profile.phone }}
-          </v-col>
-          <v-col cols="6">
-            <v-icon>mdi-account</v-icon>{{ info.username }}
-          </v-col>
-          <v-col cols="6">
-            <v-icon>mdi-account-group</v-icon>{{ this.team.nameTeam }}
-                      </v-col>
-              <v-col cols="6">
-            <v-icon>mdi-tournament</v-icon>{{ this.team.tourName }}
-          </v-col>
-        </v-row>
-        <h3>Schedule</h3>
-        <h5>{{ this.start }}</h5>
-        <v-sheet height="500">
-          <v-calendar v-model="today" color="primary" ref="calendar">
-            <template v-slot:day="{ date }">
-              <template v-for="event in eventsMap[date]">
-                <v-menu :key="event.title" v-model="event.open">
-                  <template v-slot:activator="{ on }">
-                    <div
-                      v-if="!event.time"
-                      v-ripple
-                      class="my-event"
-                      v-on="on"
-                      v-html="event.title"
-                    ></div>
-                  </template>
-                  <v-card color="grey lighten-4" min-width="350px">
-                    <v-toolbar color="primary" dark>
-                      <v-toolbar-title v-html="event.title"></v-toolbar-title>
-                      <v-spacer></v-spacer>
-                    </v-toolbar>
-                    <v-card-title primary-title>
-                      <span v-html="event.details"></span>
-                    </v-card-title>
-                    <v-card-actions>
-                      <v-btn color="secondary"> Cancel </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-menu>
+  <div style="background: whitesmoke">
+    <v-container>
+      <v-form ref="form">
+        <v-flex>
+          <v-row>
+            <v-col cols="6">
+              <v-img
+                lazy-src="https://picsum.photos/id/11/10/6"
+                max-height="100"
+                max-width="100"
+                :src="info.profile.avatar"
+              ></v-img>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <h3>{{ info.profile.name }}</h3>
+              <p>{{ info.profile.address }}</p>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-icon>mdi-email</v-icon>{{ info.profile.email }}
+            </v-col>
+            <v-col cols="6">
+              <v-icon>mdi-phone</v-icon>{{ info.profile.phone }}
+            </v-col>
+            <v-col cols="6">
+              <v-icon>mdi-account</v-icon>{{ info.username }}
+            </v-col>
+            <v-col cols="6">
+              <v-icon>mdi-account-group</v-icon>{{ this.team.nameTeam }}
+            </v-col>
+            <v-col cols="6">
+              <v-icon>mdi-tournament</v-icon>{{ this.team.tourName }}
+            </v-col>
+          </v-row>
+          <h3>Schedule</h3>
+          <h5>{{ this.start }}</h5>
+          <v-sheet height="500">
+            <v-calendar v-model="today" color="primary" ref="calendar">
+              <template v-slot:day="{ date }">
+                <template v-for="event in eventsMap[date]">
+                  <v-menu :key="event.title" v-model="event.open">
+                    <template v-slot:activator="{ on }">
+                      <div
+                        v-if="!event.time"
+                        v-ripple
+                        class="my-event"
+                        v-on="on"
+                        v-html="event.title"
+                      ></div>
+                    </template>
+                    <v-card color="grey lighten-4" min-width="350px">
+                      <v-toolbar color="primary" dark>
+                        <v-toolbar-title v-html="event.title"></v-toolbar-title>
+                        <v-spacer></v-spacer>
+                      </v-toolbar>
+                      <v-card-title primary-title>
+                        <span v-html="event.details"></span>
+                      </v-card-title>
+                      <v-card-actions>
+                        <v-btn color="secondary"> Cancel </v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-menu>
+                </template>
               </template>
-            </template>
-          </v-calendar>
-        </v-sheet>
-        <v-btn @click.prevent="prewMonth">
-          <v-icon right dark> keyboard_arrow_left </v-icon>
-          Prew
-        </v-btn>
-        <v-btn @click.prevent="nextMonth">
-          Next
-          <v-icon right dark> keyboard_arrow_right </v-icon>
-        </v-btn>
-      </v-flex>
-    </v-form>
-  </v-container>
+            </v-calendar>
+          </v-sheet>
+          <v-btn @click.prevent="prewMonth">
+            <v-icon right dark> keyboard_arrow_left </v-icon>
+            Prew
+          </v-btn>
+          <v-btn @click.prevent="nextMonth">
+            Next
+            <v-icon right dark> keyboard_arrow_right </v-icon>
+          </v-btn>
+        </v-flex>
+      </v-form>
+    </v-container>
   </div>
 </template>
 <script>
@@ -103,36 +103,32 @@ export default {
     },
   },
   methods: {
-    getdata(){
+    getdata() {
       this.info = this.$store.state.user.userInfo;
-   
 
-    this.start = date.slice(0, 7);
-    this.$store
-      .dispatch(
-        "schedule/profileSchedule",
-        this.$store.state.user.userInfo.profile.id
-      )
-      .then((res) => {
-        // console.log(res.data);
-        if(res.data!=''){
-        this.$store
-          .dispatch("team/getTeam" , res.data[0].team[0].idTeam)
-          .then((res) => {
-            this.team = res.data;
-          });
-        }
-        this.events=[]
-        res.data.forEach((element) => {
-          const a = {
-            title: element.title,
-            details: "Vs " + element.team[1].nameTeam,
-            date: element.timeStart,
-            open: false,
-          };
-          this.events.push(a);
+      this.start = date.slice(0, 7);
+      this.$store
+        .dispatch("team/getTeam", this.info.profile.idTeam)
+        .then((res) => {
+          this.team = res.data;
         });
-      });
+      this.$store
+        .dispatch(
+          "schedule/profileSchedule",
+          this.$store.state.user.userInfo.profile.id
+        )
+        .then((res) => {
+          this.events = [];
+          res.data.forEach((element) => {
+            const a = {
+              title: element.title,
+              details: "Vs " + element.team[1].nameTeam,
+              date: element.timeStart,
+              open: false,
+            };
+            this.events.push(a);
+          });
+        });
     },
     open(event) {
       alert(event.title);
@@ -168,7 +164,7 @@ export default {
       this.today = new Date().toISOString().substr(0, 10);
       (this.start = new Date().toISOString().substr(0, 10)),
         (this.end = new Date().toISOString().substr(0, 10));
-    this.getdata();
+      this.getdata();
     },
   },
 };

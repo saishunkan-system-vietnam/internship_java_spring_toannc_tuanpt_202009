@@ -353,6 +353,7 @@ export default {
         .dispatch("tournament/getFixtures", this.$route.params.id)
         .then((res) => {
           this.fixtures = res.data;
+         
         });
     },
     detail(data) {

@@ -175,12 +175,16 @@
                           </div>
                           <v-row>
                             <v-col cols="12" sm="6"></v-col>
-                              <v-col cols="12" sm="3" class="text-center"><b>{{
-                                    !!data ? data.team[0].nameTeam : ""
-                                  }}</b></v-col>
-                               <v-col cols="12" sm="3" class="text-center"><b>{{
-                                    !!data ? data.team[1].nameTeam : ""
-                                  }}</b></v-col>
+                            <v-col cols="12" sm="3" class="text-center"
+                              ><b>{{
+                                !!data ? data.team[0].nameTeam : ""
+                              }}</b></v-col
+                            >
+                            <v-col cols="12" sm="3" class="text-center"
+                              ><b>{{
+                                !!data ? data.team[1].nameTeam : ""
+                              }}</b></v-col
+                            >
                           </v-row>
                           <v-row>
                             <v-col cols="12" sm="6">
@@ -322,7 +326,7 @@
                                       target="_blank"
                                       @click="windowClose"
                                     >
-                                      <v-icon> mdi-chevron-triple-right</v-icon>
+                                      <v-icon color="blue"> mdi-chevron-triple-right</v-icon>
                                     </a>
                                   </td>
                                 </tr>
@@ -340,6 +344,7 @@
                                   <th class="text-left">Name</th>
                                   <th class="text-left">Team</th>
                                   <th class="text-left">Address</th>
+                                  <th class="text-left">Detail</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -355,6 +360,18 @@
                                   <td>{{ item.name }}</td>
                                   <td>{{ team2.nameTeam }}</td>
                                   <td>{{ item.address }}</td>
+                                    <td>
+                                    <a
+                                      :href="
+                                        'http://localhost:8080/PlayerProfile/' +
+                                        item.id
+                                      "
+                                      target="_blank"
+                                      @click="windowClose"
+                                    >
+                                      <v-icon color="blue"> mdi-chevron-triple-right</v-icon>
+                                    </a>
+                                  </td>
                                 </tr>
                               </tbody>
                             </template>

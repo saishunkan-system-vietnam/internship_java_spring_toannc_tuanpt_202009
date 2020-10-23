@@ -217,7 +217,6 @@ export default {
   },
   created() {
     this.gettournament();
-    console.log(this.$route);
   },
   methods: {
     detailTeam(id) {

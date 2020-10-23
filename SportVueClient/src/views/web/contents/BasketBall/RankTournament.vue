@@ -9,11 +9,8 @@
         {{ desserts.indexOf(item.item) + 1 }}
       </template>
       <template v-slot:item.winRate="{ item }">
-        <div v-if="item.team.totalmatch!=0">
-            {{item.rank*100}}%
-        </div>
-        
-         </template>
+        <div v-if="item.team.totalmatch != 0">{{ item.rank * 100 }}%</div>
+      </template>
 
       <template v-slot:item.team.logo="{ item }">
         <div>
@@ -43,7 +40,8 @@ export default {
     headers: [
       {
         text: "#",
-        value: "numberRank",sortable: false 
+        value: "numberRank",
+        sortable: false,
       },
       { text: "Team", value: "team.nameTeam" },
       { text: "Logo", value: "team.logo", sortable: false },
@@ -56,10 +54,12 @@ export default {
     desserts: [],
   }),
   created() {
-    this.$store.dispatch("tournament/getRank", "Basketball").then((response) => {
-      this.desserts = response.data;
-      console.log(this.desserts);
-    });
+    this.$store
+      .dispatch("tournament/getRank", "Basketball")
+      .then((response) => {
+        this.desserts = response.data;
+        console.log(this.desserts);
+      });
   },
   methods: {},
 };
