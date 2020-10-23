@@ -93,8 +93,19 @@ export default {
     team: "",
   }),
   created() {
-    this.info = this.$store.state.user.userInfo;
-    console.log(this.info);
+    this.getdata();
+  },
+  computed: {
+    eventsMap() {
+      const map = {};
+      this.events.forEach((e) => (map[e.date] = map[e.date] || []).push(e));
+      return map;
+    },
+  },
+  methods: {
+    getdata(){
+      this.info = this.$store.state.user.userInfo;
+   
     this.start = date.slice(0, 7);
     this.$store
       .dispatch(
@@ -110,6 +121,7 @@ export default {
             this.team = res.data;
           });
         }
+        this.events=[]
         res.data.forEach((element) => {
           const a = {
             title: element.title,
@@ -120,15 +132,7 @@ export default {
           this.events.push(a);
         });
       });
-  },
-  computed: {
-    eventsMap() {
-      const map = {};
-      this.events.forEach((e) => (map[e.date] = map[e.date] || []).push(e));
-      return map;
     },
-  },
-  methods: {
     open(event) {
       alert(event.title);
     },
@@ -163,6 +167,7 @@ export default {
       this.today = new Date().toISOString().substr(0, 10);
       (this.start = new Date().toISOString().substr(0, 10)),
         (this.end = new Date().toISOString().substr(0, 10));
+    this.getdata();
     },
   },
 };

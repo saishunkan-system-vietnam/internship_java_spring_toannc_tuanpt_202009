@@ -44,13 +44,13 @@ public class ScheduleService {
 								&& timeStart.compareTo(schedule.getTimeStart()) >= 0)
 								|| ((timeEnd.compareTo(schedule.getTimeEnd()) <= 0
 										&& timeEnd.compareTo(schedule.getTimeStart()) >= 0))) {
-							return "Must be between "+schedule.getTimeStart()+"and" + schedule.getTimeEnd();
+							return "Out of range  "+schedule.getTimeStart()+"and" + schedule.getTimeEnd();
 						}
 					}
 				}
 			}
 		}
-		return null;
+		return "Past tournament time";
 	}
 
 	public List<Schedule> getByIdTour(int idTour) {

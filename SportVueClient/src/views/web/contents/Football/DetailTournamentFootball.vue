@@ -151,10 +151,10 @@
                         <td
                           :style="
                             item.status == 0
-                              ? 'color:red'
+                              ? 'color:green'
                               : item.status == 1
                               ? 'color:blue'
-                              : 'color:#a99893'
+                              : 'color:red'
                           "
                         >
                           {{
@@ -180,13 +180,13 @@
                           {{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam1
-                              : "?"
+                              :  " "
                           }}
                           -
                           {{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam2
-                              : "?"
+                              :  " "
                           }}
                         </td>
                         <td>

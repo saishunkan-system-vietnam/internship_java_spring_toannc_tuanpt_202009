@@ -54,12 +54,12 @@
                           >{{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam1
-                              : "?"
+                              :  " "
                           }}-
                           {{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam2
-                              : "?"
+                              :  " "
                           }}</v-col
                         >
                         <v-col>{{ item.team[1].nameTeam }}</v-col>

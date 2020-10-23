@@ -101,7 +101,7 @@
               <v-btn text color="primary" @click="menu2 = false">
                 Cancel
               </v-btn>
-              <v-btn text color="primary" @click="$refs.menu1.save(timeEnd)">
+              <v-btn text color="primary" @click="$refs.menu2.save(timeEnd)">
                 OK
               </v-btn>
             </v-date-picker>

@@ -17,7 +17,7 @@
             ><b-icon-upload></b-icon-upload>update</v-btn
           >
         </div>
-        <div v-if="schedule.team[0].type == 'BasketBall'">
+        <div v-if="schedule.team[0].type == 'Basketball'">
           <v-btn color="green darken-1" text @click="dialogBasketBall = true"
             ><b-icon-upload></b-icon-upload>update</v-btn
           >
@@ -66,7 +66,7 @@
       </v-dialog>
     </v-row>
     <b-container>
-      <h1 style="color: red">Tournament :{{ schedule.nameTour }}</h1>
+      <h1 style="color: red;cursor: pointer" @click="detailTour(schedule.idTour)">Tournament :{{ schedule.nameTour }}</h1>
       <h3>{{ schedule.title }}</h3>
       <h5>Time:{{ schedule.timeStart }}</h5>
       <br /><br /><br />
@@ -206,13 +206,13 @@
 <script>
 import UpdateScheduleFootBall from "./UpdateScheduleFootBall";
 import UpdateScheduleTableTennis from "./UpdateScheduleTableTennis";
-import UpdateScheduleBasketBall from "./UpdateScheduleBasketBall"
+import UpdateScheduleBasketBall from "./UpdateScheduleBasketBall";
 export default {
   data() {
     return {
       dialogFootball: false,
       dialogTableTennis: false,
-
+      dialogBasketBall: false,
       schedule: [],
       team1: [],
       team2: [],
@@ -236,18 +236,20 @@ export default {
   components: {
     UpdateScheduleFootBall,
     UpdateScheduleTableTennis,
-    UpdateScheduleBasketBall
+    UpdateScheduleBasketBall,
   },
   created() {
     this.getData();
   },
-  mounted() {
-   
-  },
+  mounted() {},
   methods: {
+    detailTour(item){
+      this.$router.push("/DetailTournament/"+item)
+    },
     hideModal() {
       this.dialogFootball = false;
       this.dialogTableTennis = false;
+      this.dialogBasketBall = false;
     },
     detailMember(idMember) {
       this.$store.dispatch("user/findByEmailUser", idMember).then((res) => {
@@ -300,13 +302,15 @@ export default {
         });
     },
   },
-  watch:{
-    schedule(){
-       this.itemlinks.push({
-      text: this.schedule.title,
-      disabled: true,
-    });
-    }
-  }
+  watch: {
+    schedule() {
+      if(this.itemlinks.length!=3){
+      this.itemlinks.push({
+        text: this.schedule.title,
+        disabled: true,
+      });
+      }
+    },
+  },
 };
 </script>

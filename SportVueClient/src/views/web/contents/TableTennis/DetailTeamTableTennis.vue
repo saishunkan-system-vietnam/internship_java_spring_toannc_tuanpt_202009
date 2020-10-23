@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-container>
-      <v-icon large color="green darken-2"> mdi-soccer </v-icon>
+      <v-icon large color="green darken-2"> mdi-tennis </v-icon>
       <b-row>
         <b-col cols="12" sm="2">
           <v-img height="100" width="100" :src="team.logo"> </v-img>
@@ -82,7 +82,7 @@
                       <div>
                         <div v-for="(item, index1) in results" :key="index1">
                           <template v-if="index1 < 3">
-                            <h5>{{ item.nameTour }}</h5>
+                            <h5 style="cursor: pointer;" @click="detailTournament(item.idTour)">{{ item.nameTour }}</h5>
                             <v-simple-table style="width: 1221px">
                               <tbody>
                                 <tr
@@ -91,6 +91,7 @@
                                   :key="index2"
                                   v-b-popover.hover.top="'Click to see details'"
                                   @click="detail(item)"
+                                  style="cursor: pointer;"
                                 >
                                   <template v-if="index2 < 5">
                                     <td>
@@ -101,11 +102,11 @@
                                     </td>
                                     <td>
                                       {{
-                                        item.status == 2 ? item.scoreTeam1 : "?"
+                                        item.status == 2 ? item.scoreTeam1 :  " "
                                       }}
                                       -
                                       {{
-                                        item.status == 2 ? item.scoreTeam2 : "?"
+                                        item.status == 2 ? item.scoreTeam2 :  " "
                                       }}
                                     </td>
                                     <td>
@@ -151,6 +152,7 @@
                                 :key="index4"
                                 v-b-popover.hover.top="'Click to see details'"
                                 @click="detail(item2)"
+                                style="cursor: pointer;"
                               >
                                 <template v-if="index4 < 5">
                                   <td>
@@ -161,11 +163,11 @@
                                   </td>
                                   <td>
                                     {{
-                                      item2.status == 2 ? item2.scoreTeam1 : "?"
+                                      item2.status == 2 ? item2.scoreTeam1 :  " "
                                     }}
                                     -
                                     {{
-                                      item2.status == 2 ? item2.scoreTeam2 : "?"
+                                      item2.status == 2 ? item2.scoreTeam2 :  " "
                                     }}
                                   </td>
                                   <td>
@@ -191,14 +193,14 @@
                 <v-img
                   max-height="350"
                   max-width="350"
-                  src="@/assets/hiclipart.com.png"
+                  src="@/assets/soccer.png"
                 ></v-img>
                 No results
               </div>
             </div>
             <v-container>
               <div v-for="(item, index1) in results" :key="index1" id="results">
-                <h5>{{ item.nameTour }}</h5>
+                <h5 style="cursor: pointer;" @click="detailTournament(item.idTour)">{{ item.nameTour }}</h5>
                 <v-simple-table style="width: 1221px">
                   <tbody>
                     <tr
@@ -207,6 +209,7 @@
                       :key="index2"
                       v-b-popover.hover.top="'Click to see details'"
                       @click="detail(item)"
+                      style="cursor: pointer;"
                     >
                       <td style="width: 250px">
                         {{ item.timeEnd }}
@@ -215,9 +218,9 @@
                         {{ !!item ? item.team[0].nameTeam : "" }}
                       </td>
                       <td style="width: 150px">
-                        {{ item.status == 2 ? item.scoreTeam1 : "?" }}
+                        {{ item.status == 2 ? item.scoreTeam1 :  " " }}
                         -
-                        {{ item.status == 2 ? item.scoreTeam2 : "?" }}
+                        {{ item.status == 2 ? item.scoreTeam2 :  " " }}
                       </td>
                       <td>{{ !!item ? item.team[1].nameTeam : "" }}</td>
                     </tr>
@@ -236,14 +239,14 @@
                   <v-img
                     max-height="350"
                     max-width="350"
-                    src="@/assets/hiclipart.com.png"
+                    src="@/assets/soccer.png"
                   ></v-img>
                   No match is fixtures
                 </div>
               </div>
               <div v-for="(item2, index3) in fixtures" :key="index3">
                 <template v-if="index3 < 3">
-                  <h5>{{ item2.nameTour }}</h5>
+                  <h5 style="cursor: pointer;" @click="detailTournament(item2.idTour)">{{ item2.nameTour }}</h5>
                   <v-simple-table style="width: 1221px">
                     <tbody>
                       <tr
@@ -252,6 +255,7 @@
                         :key="index4"
                         v-b-popover.hover.top="'Click to see details'"
                         @click="detail(item2)"
+                        style="cursor: pointer;"
                       >
                         <template v-if="index4 < 5">
                           <td>
@@ -261,9 +265,9 @@
                             {{ !!item2 ? item2.team[0].nameTeam : "" }}
                           </td>
                           <td>
-                            {{ item2.status == 2 ? item2.scoreTeam1 : "?" }}
+                            {{ item2.status == 2 ? item2.scoreTeam1 :  " " }}
                             -
-                            {{ item2.status == 2 ? item2.scoreTeam2 : "?" }}
+                            {{ item2.status == 2 ? item2.scoreTeam2 :  " " }}
                           </td>
                           <td>{{ !!item2 ? item2.team[1].nameTeam : "" }}</td>
                         </template>
@@ -291,6 +295,7 @@
                     :key="index"
                     v-b-popover.hover.top="'Click to see details'"
                     @click="detailMember(item)"
+                    style="cursor: pointer;"
                   >
                     <td class="text-center">
                       <v-avatar class="profile" color="grey" size="70" tile>
@@ -360,6 +365,10 @@ export default {
     detailMember(item) {
       this.$router.push({ path: "/PlayerProfile/" + item.id });
     },
+    detailTournament(item){
+            this.$router.push({ path: "/DetailTournamentTableTennis/" + item.id });
+
+    }
   },
   watch: {
     tab() {},
