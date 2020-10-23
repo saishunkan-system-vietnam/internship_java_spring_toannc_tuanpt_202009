@@ -101,7 +101,9 @@
             />
           </template>
 
+
           <template  v-slot:[`item.idTeam`]="{ item }">
+
             <v-btn v-if="team.idTour == 0" @click="removeMember(item)" small>Remove</v-btn>
           </template>
         </v-data-table>
