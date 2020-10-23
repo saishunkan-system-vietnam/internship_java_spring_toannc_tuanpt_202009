@@ -32,9 +32,9 @@
                           <v-row>
                             <v-col> {{ item.team[0].nameTeam }}</v-col>
                             <v-col
-                              >{{ item.status == 2 ? item.scoreTeam1 : "?" }}-
+                              >{{ item.status == 2 ? item.scoreTeam1 :  " " }}-
                               {{
-                                item.status == 2 ? item.scoreTeam2 : "?"
+                                item.status == 2 ? item.scoreTeam2 :  " "
                               }}</v-col
                             >
                             <v-col>{{ item.team[1].nameTeam }}</v-col>
@@ -72,9 +72,9 @@
                           <v-row>
                             <v-col> {{ item.team[0].nameTeam }}</v-col>
                             <v-col
-                              >{{ item.status == 2 ? item.scoreTeam1 : "?" }}-
+                              >{{ item.status == 2 ? item.scoreTeam1 :  " " }}-
                               {{
-                                item.status == 2 ? item.scoreTeam2 : "?"
+                                item.status == 2 ? item.scoreTeam2 :  " "
                               }}</v-col
                             >
                             <v-col>{{ item.team[1].nameTeam }}</v-col>
@@ -111,9 +111,9 @@
                           <v-row>
                             <v-col> {{ item.team[0].nameTeam }}</v-col>
                             <v-col
-                              >{{ item.status == 2 ? item.scoreTeam1 : "?" }}-
+                              >{{ item.status == 2 ? item.scoreTeam1 :  " " }}-
                               {{
-                                item.status == 2 ? item.scoreTeam2 : "?"
+                                item.status == 2 ? item.scoreTeam2 :  " "
                               }}</v-col
                             >
                             <v-col>{{ item.team[1].nameTeam }}</v-col>
@@ -151,9 +151,9 @@
                           <v-row>
                             <v-col> {{ item.team[0].nameTeam }}</v-col>
                             <v-col
-                              >{{ item.status == 2 ? item.scoreTeam1 : "?" }}-
+                              >{{ item.status == 2 ? item.scoreTeam1 :  " " }}-
                               {{
-                                item.status == 2 ? item.scoreTeam2 : "?"
+                                item.status == 2 ? item.scoreTeam2 :  " "
                               }}</v-col
                             >
                             <v-col>{{ item.team[1].nameTeam }}</v-col>

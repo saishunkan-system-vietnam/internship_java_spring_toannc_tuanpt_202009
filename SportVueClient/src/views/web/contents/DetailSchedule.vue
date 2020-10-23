@@ -67,7 +67,10 @@
             On game
           </div>
           <div v-if="data.status == 2">
-            <h1>{{ data.scoreTeam1 }} - {{ data.scoreTeam2 }}</h1>
+            <h1>
+              {{ data.video == null ? "" : data.scoreTeam1 }} -
+              {{ data.video == null ? "" : data.scoreTeam2 }}
+            </h1>
             Finished
           </div></v-col
         >
@@ -142,10 +145,14 @@
                                   {{ item.roundName }}
                                 </td>
                                 <td>
-                                  {{ item.roundScore1 }}
+                                  {{
+                                    data.video == null ? "" : item.roundScore1
+                                  }}
                                 </td>
                                 <td>
-                                  {{ item.roundScore2 }}
+                                  {{
+                                    data.video == null ? "" : item.roundScore2
+                                  }}
                                 </td>
                               </tr>
                             </tbody>
@@ -157,9 +164,9 @@
                           >
                             Match information
                           </div>
-                         <b> Competition Venue</b> :{{ data.address }}
-                         <br>
-                         <b>Time</b>:{{data.timeStart}}
+                          <b> Competition Venue</b> :{{ data.address }}
+                          <br />
+                          <b>Time</b>:{{ data.timeStart }}
                           <div
                             class="text-center"
                             style="background-color: #bcaaa4"
@@ -167,8 +174,16 @@
                             Statistics index
                           </div>
                           <v-row>
+                            <v-col cols="12" sm="6"></v-col>
+                              <v-col cols="12" sm="3" class="text-center"><b>{{
+                                    !!data ? data.team[0].nameTeam : ""
+                                  }}</b></v-col>
+                               <v-col cols="12" sm="3" class="text-center"><b>{{
+                                    !!data ? data.team[1].nameTeam : ""
+                                  }}</b></v-col>
+                          </v-row>
+                          <v-row>
                             <v-col cols="12" sm="6">
-                              <br />
                               <ul>
                                 <li>Win rate</li>
                                 <li>Matches in the tournament</li>
@@ -178,8 +193,7 @@
                               </ul>
                             </v-col>
                             <v-col cols="12" sm="3">
-                              <ul style="list-style: none" >
-                                <li style="text-align: center"><b>{{ !!data ? data.team[0].nameTeam : "" }}</b></li>
+                              <ul style="list-style: none">
                                 <li style="text-align: center">
                                   {{ inforTeam1.rate }}%
                                 </li>
@@ -199,12 +213,21 @@
                             </v-col>
                             <v-col cols="12" sm="3">
                               <ul style="list-style: none">
-                                <li style="text-align: center"><b>{{ !!data ? data.team[1].nameTeam : "" }}</b></li>
-                                <li style="text-align: center">{{ inforTeam2.rate }}%</li>
-                                <li style="text-align: center">{{ inforTeam2.sumJoinByTour }}</li>
-                                <li style="text-align: center">{{ inforTeam2.sumWinJoinByTour }}</li>
-                                <li style="text-align: center">{{ inforTeam2.sum }}</li>
-                                <li style="text-align: center"> {{ inforTeam2.sumWin }}</li>
+                                <li style="text-align: center">
+                                  {{ inforTeam2.rate }}%
+                                </li>
+                                <li style="text-align: center">
+                                  {{ inforTeam2.sumJoinByTour }}
+                                </li>
+                                <li style="text-align: center">
+                                  {{ inforTeam2.sumWinJoinByTour }}
+                                </li>
+                                <li style="text-align: center">
+                                  {{ inforTeam2.sum }}
+                                </li>
+                                <li style="text-align: center">
+                                  {{ inforTeam2.sumWin }}
+                                </li>
                               </ul>
                             </v-col>
                           </v-row>
@@ -361,8 +384,14 @@
                                       ></b-col>
                                       <b-col class="text-center"
                                         ><h1>
-                                          {{ item.roundScore1 }}-{{
-                                            item.roundScore2
+                                          {{
+                                            data.video == null
+                                              ? ""
+                                              : item.roundScore1
+                                          }}-{{
+                                            data.video == null
+                                              ? ""
+                                              : item.roundScore2
                                           }}
                                         </h1></b-col
                                       >
@@ -412,10 +441,10 @@
                         <td
                           :style="
                             item.status == 0
-                              ? 'color:red'
+                              ? 'color:green'
                               : item.status == 1
                               ? 'color:blue'
-                              : 'color:#a99893'
+                              : 'color:red'
                           "
                         >
                           {{
@@ -430,9 +459,17 @@
                           {{ !!data ? item.team[0].nameTeam : "" }}
                         </td>
                         <td>
-                          {{ item.status == 2 ? item.scoreTeam1 : "?" }}
+                          {{
+                            item.status == 2 && item.video != null
+                              ? item.scoreTeam1
+                              : " "
+                          }}
                           -
-                          {{ item.status == 2 ? item.scoreTeam2 : "?" }}
+                          {{
+                            item.status == 2 && item.video != null
+                              ? item.scoreTeam2
+                              : " "
+                          }}
                         </td>
                         <td>
                           {{ !!data ? item.team[1].nameTeam : "" }}
@@ -462,7 +499,9 @@
                 <div v-if="data.video != null">
                   <video controls :src="data.video" width="550px"></video>
                 </div>
-                <b-img src="https://torshizitrade.com/wp-content/uploads/2019/01/no-video.jpg"></b-img>
+                <b-img
+                  src="https://torshizitrade.com/wp-content/uploads/2019/01/no-video.jpg"
+                ></b-img>
               </v-card-text>
             </v-card>
           </v-tab-item>
@@ -494,6 +533,7 @@ export default {
       .dispatch("schedule/getById", this.$route.params.id)
       .then((response) => {
         this.data = response.data;
+        console.log(this.data);
         this.type = response.data.team[0].type;
         this.$store
           .dispatch("team/getDetail", {
@@ -512,7 +552,6 @@ export default {
           })
           .then((response) => {
             this.team1 = response.data;
-            console.log(this.team1);
           });
         this.$store
           .dispatch("team/teamTourHistory", {

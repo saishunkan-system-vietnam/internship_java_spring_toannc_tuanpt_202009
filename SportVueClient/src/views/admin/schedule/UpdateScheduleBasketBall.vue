@@ -188,12 +188,10 @@
       :rules="rulesVideo"
     ></v-file-input>
     <v-btn color="blue-grey" class="ma-2 white--text" @click="cancel">
-      Cancel
-      <v-icon right dark> mdi-cancel </v-icon>
+      Reset
     </v-btn>
     <v-btn color="blue-grey" class="ma-2 white--text" @click="submit">
-      Upload
-      <v-icon right dark> mdi-cloud-upload </v-icon>
+      Update
     </v-btn>
   </v-form>
 </template>
@@ -240,6 +238,8 @@ export default {
   }),
   created() {
     this.data = this.schedule;
+     this.fileVideo == [];
+      this.fileImage==[];
   },
   methods: {
     reset() {
@@ -247,7 +247,6 @@ export default {
     },
     cancel() {
       this.reset();
-      this.callback();
     },
     submit() {
       if (!this.$refs.form.validate()) {
@@ -255,9 +254,9 @@ export default {
       } else {
         var bodyFormData = new FormData();
         var score1 =
-          this.score1h1 + this.score1h2 + this.score1h3 + this.score1h4;
+          Number(this.score1h1) + Number(this.score1h2) + Number(this.score1h3) + Number(this.score1h4);
         var score2 =
-          this.score2h1 + this.score2h2 + this.score2h3 + this.score2h4;
+          Number(this.score2h1) + Number(this.score2h2) + Number(this.score2h3) + Number(this.score2h4);
 
         bodyFormData.append("idSchedule", this.data.idSchedule);
         bodyFormData.append("scoreTeam1", score1);

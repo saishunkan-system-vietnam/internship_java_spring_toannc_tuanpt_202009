@@ -103,6 +103,7 @@ export default {
         .dispatch("tournament/getRank", "Football")
         .then((response) => {
           this.rank = response.data;
+          
         });
     },
   },

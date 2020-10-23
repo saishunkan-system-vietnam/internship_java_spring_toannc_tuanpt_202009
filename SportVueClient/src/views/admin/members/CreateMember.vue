@@ -256,5 +256,23 @@ export default {
       this.$refs.form.reset();
     },
   },
+  watch:{
+    email(){
+      this.emailRules=[
+        (v) => { 
+          if(!!!v ){
+            return false|| "E-mail is required"
+          }
+          if(!/.+@.+/.test(v)){
+             return false|| "E-mail must be valid"
+          }
+          if(v.indexOf(" ")>-1){
+            return false||"E-mail must be valid"
+          }
+          return true
+        }
+      ]
+    }
+  }
 };
 </script>

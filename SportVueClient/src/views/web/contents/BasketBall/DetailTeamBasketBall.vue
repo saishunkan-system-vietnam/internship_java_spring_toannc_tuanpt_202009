@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-container>
-      <v-icon large color="green darken-2"> mdi-soccer </v-icon>
+      <v-icon large color="green darken-2"> mdi-basketball </v-icon>
       <b-row>
         <b-col cols="12" sm="2">
           <v-img height="100" width="100" :src="team.logo"> </v-img>
@@ -76,7 +76,7 @@
                     card
                     active-nav-item-class="font-weight-bold text-uppercase text-danger"
                   >
-                    <div v-if="results == ''">There is no Lastest Scores</div>
+                    <div v-if="results == null">There is no Lastest Scores</div>
 
                     <b-tab title="Lastest Scores" active>
                       <div>
@@ -101,11 +101,11 @@
                                     </td>
                                     <td>
                                       {{
-                                        item.status == 2 ? item.scoreTeam1 : "?"
+                                        item.status == 2 ? item.scoreTeam1 :  " "
                                       }}
                                       -
                                       {{
-                                        item.status == 2 ? item.scoreTeam2 : "?"
+                                        item.status == 2 ? item.scoreTeam2 :  " "
                                       }}
                                     </td>
                                     <td>
@@ -139,7 +139,7 @@
                     active-nav-item-class="font-weight-bold text-uppercase text-danger"
                   >
                     <b-tab title="Schedule" active>
-                      <div v-if="fixtures == ''">There is no schedule</div>
+                      <div v-if="fixtures == null">There is no schedule</div>
                       <div v-for="(item2, index3) in fixtures" :key="index3">
                         <template v-if="index3 < 3">
                           <h5>{{ item2.nameTour }}</h5>
@@ -161,11 +161,11 @@
                                   </td>
                                   <td>
                                     {{
-                                      item2.status == 2 ? item2.scoreTeam1 : "?"
+                                      item2.status == 2 ? item2.scoreTeam1 :  " "
                                     }}
                                     -
                                     {{
-                                      item2.status == 2 ? item2.scoreTeam2 : "?"
+                                      item2.status == 2 ? item2.scoreTeam2 :  " "
                                     }}
                                   </td>
                                   <td>
@@ -184,7 +184,7 @@
             </v-container>
           </v-tab-item>
           <v-tab-item style="min-height: 1000px">
-            <div v-if="results == ''" class="text-center">
+            <div v-if="results == null" class="text-center">
               <div
                 class="d-flex flex-column justify-space-between align-center"
               >
@@ -215,9 +215,9 @@
                         {{ !!item ? item.team[0].nameTeam : "" }}
                       </td>
                       <td style="width: 150px">
-                        {{ item.status == 2 ? item.scoreTeam1 : "?" }}
+                        {{ item.status == 2 ? item.scoreTeam1 :  " " }}
                         -
-                        {{ item.status == 2 ? item.scoreTeam2 : "?" }}
+                        {{ item.status == 2 ? item.scoreTeam2 :  " " }}
                       </td>
                       <td>{{ !!item ? item.team[1].nameTeam : "" }}</td>
                     </tr>
@@ -228,7 +228,7 @@
           </v-tab-item>
           <v-tab-item style="min-height: 1000px">
             <v-container>
-              <div v-if="fixtures == ''" class="text-center">
+              <div v-if="fixtures == null" class="text-center">
                 <div
                   class="d-flex flex-column justify-space-between align-center"
                 >
@@ -261,9 +261,9 @@
                             {{ !!item2 ? item2.team[0].nameTeam : "" }}
                           </td>
                           <td>
-                            {{ item2.status == 2 ? item2.scoreTeam1 : "?" }}
+                            {{ item2.status == 2 ? item2.scoreTeam1 :  " " }}
                             -
-                            {{ item2.status == 2 ? item2.scoreTeam2 : "?" }}
+                            {{ item2.status == 2 ? item2.scoreTeam2 :  " " }}
                           </td>
                           <td>{{ !!item2 ? item2.team[1].nameTeam : "" }}</td>
                         </template>

@@ -1,31 +1,33 @@
 <template>
   <div>
+
     <div v-if="tournaments == ''" class="text-center">
       <div class="d-flex flex-column justify-space-between align-center">
         <v-img
           max-height="350"
           max-width="350"
-          src="@/assets/hiclipart.com.png"
+          src="@/assets/soccer.png"
         ></v-img>
         No match
       </div>
     </div>
     <v-expansion-panels v-model="panel" multiple>
       <v-expansion-panel v-for="(tournament, i) in tournaments" :key="i">
-        <template v-if="i < number ">
+        <template v-if="i < number">
           <v-expansion-panel-header style="color: #6b4b4b"
-            ><h5>{{ tournament.nameTour }}</h5></v-expansion-panel-header
+            ><h5 @click="detailTournament(tournament.idTour)">{{ tournament.nameTour }}
+              </h5></v-expansion-panel-header
           >
           <v-expansion-panel-content>
             <v-simple-table>
               <tbody>
-                <tr
+                <tr style="cursor:pointer"
                   v-for="(item, index) in tournament.schedule"
                   :key="index"
                   v-b-popover.hover.top="'Click to see details'"
                   @click="detail(item)"
                 >
-                  <template v-if="index < 5">
+                  <template v-if="index < 6">
                     <td
                       width="180px"
                       :style="
@@ -45,7 +47,7 @@
                       }}
                     </td>
                     <td>
-                      {{ item.timeStart }}
+                      {{item.timeStart}}
                     </td>
                     <td>
                       <v-row>
@@ -54,12 +56,12 @@
                           >{{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam1
-                              : "?"
+                              :  " "
                           }}-
                           {{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam2
-                              : "?"
+                              :  " "
                           }}</v-col
                         >
                         <v-col>{{ item.team[1].nameTeam }}</v-col>
@@ -70,8 +72,8 @@
               </tbody>
             </v-simple-table>
 
-         <div class="text-center" style="font-size: 12px; margin-top: 18px" v-if="tournament.schedule.length >6">
-              <router-link :to="'/DetailTournamentFootball/' + tournament.idTour">
+            <div class="text-center" style="font-size: 12px; margin-top: 18px" v-if="tournament.schedule.length >6">
+              <router-link :to="'/DetailTournamentTableTennis/' + tournament.idTour">
                 ----- All Matches -----
               </router-link>
             </div>
@@ -116,6 +118,9 @@ export default {
     show() {
       this.number = this.tournaments.length;
     },
+    detailTournament(id){
+      this.$router.push('/DetailTournamentTableTennis/'+id);
+    }
   },
 };
 </script>
