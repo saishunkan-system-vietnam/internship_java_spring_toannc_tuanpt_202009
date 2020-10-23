@@ -100,7 +100,6 @@ export default {
       let self = this;
       this.$store.dispatch("tournament/getToursByType").then((res) => {
         self.tournaments = res.data;
-        // console.log(self.tournaments);
       });
     },
     detail(item) {
