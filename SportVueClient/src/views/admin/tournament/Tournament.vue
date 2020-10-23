@@ -7,7 +7,7 @@
       spinner-small
       spinner-variant="primary"
       >
-     <v-breadcrumbs :items="itemlinks">
+     <v-breadcrumbs :items="itemlinks" large>
         <template v-slot:divider>
           <v-icon>mdi-chevron-right</v-icon>
         </template>
@@ -147,7 +147,7 @@
       <b-modal id="modal-1" title="Warning" @ok="handleOk()">
         <p class="my-4">You sure want to delete?</p>
       </b-modal>
-      <v-dialog v-model="dialog" max-width="1000px" persistent>
+      <v-dialog v-model="dialog" max-width="1000px" >
         <v-card>
           <v-card-title class="headline"> Create Tournament </v-card-title>
 

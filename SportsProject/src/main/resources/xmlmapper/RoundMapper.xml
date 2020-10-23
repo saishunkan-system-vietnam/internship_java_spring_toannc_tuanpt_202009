@@ -98,9 +98,6 @@
 		),	(
 		'Set 4',
 		@var_id
-		),	(
-		'Set 5',
-		@var_id
 		)
 	</insert>
 	

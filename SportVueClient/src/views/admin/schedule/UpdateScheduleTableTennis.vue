@@ -26,7 +26,7 @@
     <v-textarea
       v-model="description1"
       name="input-7-1"
-      label="Diễn biến set 1"
+      label="Description set 1"
       required
       :rules="[
         (v) => {
@@ -65,7 +65,7 @@
     <v-textarea
       v-model="description2"
       name="input-7-1"
-      label="Diễn biến set 2"
+      label="Description set 2"
       required
       :rules="[
         (v) => {

@@ -1,6 +1,6 @@
 <template>
   <div>
-     <v-breadcrumbs :items="itemlinks">
+     <v-breadcrumbs :items="itemlinks" large>
         <template v-slot:divider>
           <v-icon>mdi-chevron-right</v-icon>
         </template>
@@ -180,8 +180,7 @@ export default {
 };
 </script>
 <style>
-body {
-}
+
 .emp-profile {
   padding: 3%;
   margin-top: 3%;

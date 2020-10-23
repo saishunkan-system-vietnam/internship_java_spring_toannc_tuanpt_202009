@@ -15,13 +15,14 @@
                   "
                   style="color: black"
                 >
-                  <v-list-item-title  v-b-popover.hover.top="item.nameTour">
-                     {{
-                    item.nameTour.length < 10
-                      ? item.nameTour
-                      : item.nameTour.slice(0, 15) + "..."
-                  }}</v-list-item-title
-                ></a>
+                  <v-list-item-title v-b-popover.hover.top="item.nameTour">
+                    {{
+                      item.nameTour.length &lt; 10
+                        ? item.nameTour
+                        : item.nameTour.slice(0, 15) + "..."
+                    }}</v-list-item-title
+                  ></a
+                >
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -33,21 +34,20 @@
       <v-col cols="12" sm="2" style="padding: 5px">
         <v-card>
           <v-list style="background-color: white">
-            <v-subheader
-              >
-              <b style="color: green; min-width: 100px" class="text-center"
-                > <a
+            <v-subheader>
+              <b style="color: green; min-width: 100px" class="text-center">
+                <a
                   :href="
                     $router.resolve({
-                      path: '/RankTournament/TableTennis'
+                      path: '/RankTournament/TableTennis',
                     }).href
                   "
-                >RANK</a></b
+                  >RANK</a
+                ></b
               ></v-subheader
             >
             <v-list-item v-for="(item, index) in rank" :key="index">
               <v-list-item-content>
-
                 <a
                   :href="
                     $router.resolve({
@@ -59,10 +59,7 @@
                   <div>
                     <v-row>
                       <b-col sm="1">
-                        <div
-                          :style="index==0?'width: 20px;height: 20px;background: #ee1d1d;border-radius: 60px;':index==1?'width: 20px;height: 20px;background: pink;border-radius: 60px;':''"
-                          class="text-center"
-                        >
+                        <div class="text-center">
                           {{ index + 1 }}
                         </div></b-col
                       >
@@ -70,7 +67,6 @@
                     </v-row>
                   </div>
                 </a>
-
               </v-list-item-content>
             </v-list-item>
           </v-list>

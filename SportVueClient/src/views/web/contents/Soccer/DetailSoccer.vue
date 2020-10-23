@@ -342,9 +342,9 @@
                                 {{ !!data ? item.team[0].nameTeam : "" }}
                               </v-col>
                               <v-col cols="12" sm="4"
-                                >{{ item.status == 2 ? item.scoreTeam1 : "?" }}
+                                >{{ item.status == 2 ? item.scoreTeam1 :  " " }}
                                 -
-                                {{ item.status == 2 ? item.scoreTeam2 : "?" }}
+                                {{ item.status == 2 ? item.scoreTeam2 :  " " }}
                               </v-col>
                               <v-col cols="12" sm="4">
                                 {{ !!data ? item.team[1].nameTeam : "" }}</v-col

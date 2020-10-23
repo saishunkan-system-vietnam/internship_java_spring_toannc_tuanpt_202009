@@ -34,7 +34,7 @@
                           ? 'color:green'
                           : item.status == 1
                           ? 'color:blue'
-                          : 'color:#68688e'
+                          : 'color:red'
                       "
                     >
                       {{
@@ -54,12 +54,12 @@
                           >{{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam1
-                              : "?"
+                              :  " "
                           }}-
                           {{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam2
-                              : "?"
+                              :  " "
                           }}</v-col
                         >
                         <v-col>{{ item.team[1].nameTeam }}</v-col>

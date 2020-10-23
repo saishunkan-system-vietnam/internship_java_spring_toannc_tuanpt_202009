@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <div v-if="tournaments == ''" class="text-center">
       <div class="d-flex flex-column justify-space-between align-center">
         <v-img
@@ -12,7 +13,7 @@
     </div>
     <v-expansion-panels v-model="panel" multiple>
       <v-expansion-panel v-for="(tournament, i) in tournaments" :key="i">
-        <template v-if="i < number&&tournament.schedule!=''">
+        <template v-if="i < number">
           <v-expansion-panel-header style="color: #6b4b4b"
             ><h5 @click="detailTournament(tournament.idTour)">{{ tournament.nameTour }}
               </h5></v-expansion-panel-header
@@ -34,7 +35,7 @@
                           ? 'color:green'
                           : item.status == 1
                           ? 'color:blue'
-                          : 'color:#68688e'
+                          : 'color:red'
                       "
                     >
                       {{
@@ -55,12 +56,12 @@
                           >{{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam1
-                              : "?"
+                              :  " "
                           }}-
                           {{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam2
-                              : "?"
+                              :  " "
                           }}</v-col
                         >
                         <v-col>{{ item.team[1].nameTeam }}</v-col>

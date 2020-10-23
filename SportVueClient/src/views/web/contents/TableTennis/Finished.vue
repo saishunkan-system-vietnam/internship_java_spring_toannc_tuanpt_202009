@@ -5,7 +5,7 @@
         <v-img
           max-height="350"
           max-width="350"
-          src="@/assets/soccer.png"
+          src="@/assets/hiclipart.com.png"
         ></v-img>
         No match is finished
       </div>
@@ -33,7 +33,7 @@
                           ? 'color:green'
                           : item.status == 1
                           ? 'color:blue'
-                          : 'color:#68688e'
+                          : 'color:red'
                       "
                     >
                       {{
@@ -52,12 +52,12 @@
                           >{{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam1
-                              : "?"
+                              :  " "
                           }}-
                           {{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam2
-                              : "?"
+                              :  " "
                           }}</v-col
                         >
                         <v-col>{{ item.team[1].nameTeam }}</v-col>
@@ -68,8 +68,8 @@
               </tbody>
             </v-simple-table>
 
-            <div class="text-center" style="font-size: 12px; margin-top: 18px">
-              <router-link :to="'/DetailTournamentTableTennis/' + tournament.idTour">
+           <div class="text-center" style="font-size: 12px; margin-top: 18px" v-if="tournament.schedule.length >6">
+              <router-link :to="'/DetailTournamentFootball/' + tournament.idTour">
                 ----- All Matches -----
               </router-link>
             </div>
@@ -79,7 +79,7 @@
     </v-expansion-panels>
     <div
       class="text-center"
-      v-if="tournaments.length > 2 && number == 2"
+      v-if="tournaments.length > this.number"
       @click="show"
       style="color: blue"
     >
@@ -93,7 +93,7 @@ export default {
     return {
       panel: [0, 1, 2, 3, 4, 5, 6, 7, 8],
       tournaments: "",
-      number: 2,
+      number: 6,
     };
   },
   created() {

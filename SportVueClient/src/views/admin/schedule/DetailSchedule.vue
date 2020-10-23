@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <v-breadcrumbs :items="itemlinks">
+      <v-breadcrumbs :items="itemlinks" large>
         <template v-slot:divider>
           <v-icon>mdi-chevron-right</v-icon>
         </template>
@@ -17,7 +17,7 @@
             ><b-icon-upload></b-icon-upload>update</v-btn
           >
         </div>
-        <div v-if="schedule.team[0].type == 'BasketBall'">
+        <div v-if="schedule.team[0].type == 'Basketball'">
           <v-btn color="green darken-1" text @click="dialogBasketBall = true"
             ><b-icon-upload></b-icon-upload>update</v-btn
           >
@@ -40,6 +40,18 @@
           </v-card-text>
         </v-card>
       </v-dialog>
+      <v-dialog v-model="dialogBasketBall" width="900px">
+        <v-card>
+          <v-card-title class="headline"> Update BasketBall </v-card-title>
+          <v-card-text>
+            <UpdateScheduleBasketBall
+              :schedule="schedule"
+              :loadData="getData"
+              :callback="hideModal"
+            />
+          </v-card-text>
+        </v-card>
+      </v-dialog>
       <v-dialog v-model="dialogTableTennis" width="900px">
         <v-card>
           <v-card-title class="headline"> Update TableTennis </v-card-title>
@@ -54,7 +66,7 @@
       </v-dialog>
     </v-row>
     <b-container>
-      <h1 style="color: red">Tournament :{{ schedule.nameTour }}</h1>
+      <h1 style="color: red;cursor: pointer" @click="detailTour(schedule.idTour)">Tournament :{{ schedule.nameTour }}</h1>
       <h3>{{ schedule.title }}</h3>
       <h5>Time:{{ schedule.timeStart }}</h5>
       <br /><br /><br />
@@ -147,13 +159,12 @@
                       </h1></b-col
                     >
                     <b-col class="text-center"
-                      ><b-img :src="team2.logo" width="1  00px"></b-img
+                      ><b-img :src="team2.logo" width="100px"></b-img
                     ></b-col>
                   </b-row>
                   Description:
                   <b-form-textarea
                     id="textarea-no-resize"
-                    placeholder="Description"
                     rows="5"
                     no-resize
                     disabled
@@ -168,7 +179,6 @@
       <h2 style="color: blue">Summary</h2>
       <b-form-textarea
         id="textarea-no-resize"
-        placeholder="Description"
         rows="5"
         no-resize
         v-model="schedule.description"
@@ -196,12 +206,13 @@
 <script>
 import UpdateScheduleFootBall from "./UpdateScheduleFootBall";
 import UpdateScheduleTableTennis from "./UpdateScheduleTableTennis";
+import UpdateScheduleBasketBall from "./UpdateScheduleBasketBall";
 export default {
   data() {
     return {
       dialogFootball: false,
       dialogTableTennis: false,
-
+      dialogBasketBall: false,
       schedule: [],
       team1: [],
       team2: [],
@@ -225,17 +236,20 @@ export default {
   components: {
     UpdateScheduleFootBall,
     UpdateScheduleTableTennis,
+    UpdateScheduleBasketBall,
   },
   created() {
     this.getData();
   },
-  mounted() {
-   
-  },
+  mounted() {},
   methods: {
+    detailTour(item){
+      this.$router.push("/DetailTournament/"+item)
+    },
     hideModal() {
       this.dialogFootball = false;
       this.dialogTableTennis = false;
+      this.dialogBasketBall = false;
     },
     detailMember(idMember) {
       this.$store.dispatch("user/findByEmailUser", idMember).then((res) => {
@@ -288,13 +302,15 @@ export default {
         });
     },
   },
-  watch:{
-    schedule(){
-       this.itemlinks.push({
-      text: this.schedule.title,
-      disabled: true,
-    });
-    }
-  }
+  watch: {
+    schedule() {
+      if(this.itemlinks.length!=3){
+      this.itemlinks.push({
+        text: this.schedule.title,
+        disabled: true,
+      });
+      }
+    },
+  },
 };
 </script>

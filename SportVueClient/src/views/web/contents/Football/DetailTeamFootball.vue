@@ -102,11 +102,11 @@
                                     </td>
                                     <td>
                                       {{
-                                        item.status == 2 ? item.scoreTeam1 : "?"
+                                        item.status == 2 ? item.scoreTeam1 :  " "
                                       }}
                                       -
                                       {{
-                                        item.status == 2 ? item.scoreTeam2 : "?"
+                                        item.status == 2 ? item.scoreTeam2 :  " "
                                       }}
                                     </td>
                                     <td>
@@ -163,11 +163,11 @@
                                   </td>
                                   <td>
                                     {{
-                                      item2.status == 2 ? item2.scoreTeam1 : "?"
+                                      item2.status == 2 ? item2.scoreTeam1 :  " "
                                     }}
                                     -
                                     {{
-                                      item2.status == 2 ? item2.scoreTeam2 : "?"
+                                      item2.status == 2 ? item2.scoreTeam2 :  " "
                                     }}
                                   </td>
                                   <td>
@@ -218,9 +218,9 @@
                         {{ !!item ? item.team[0].nameTeam : "" }}
                       </td>
                       <td style="width: 150px">
-                        {{ item.status == 2 ? item.scoreTeam1 : "?" }}
+                        {{ item.status == 2 ? item.scoreTeam1 :  " " }}
                         -
-                        {{ item.status == 2 ? item.scoreTeam2 : "?" }}
+                        {{ item.status == 2 ? item.scoreTeam2 :  " " }}
                       </td>
                       <td>{{ !!item ? item.team[1].nameTeam : "" }}</td>
                     </tr>
@@ -265,9 +265,9 @@
                             {{ !!item2 ? item2.team[0].nameTeam : "" }}
                           </td>
                           <td>
-                            {{ item2.status == 2 ? item2.scoreTeam1 : "?" }}
+                            {{ item2.status == 2 ? item2.scoreTeam1 :  " " }}
                             -
-                            {{ item2.status == 2 ? item2.scoreTeam2 : "?" }}
+                            {{ item2.status == 2 ? item2.scoreTeam2 :  " " }}
                           </td>
                           <td>{{ !!item2 ? item2.team[1].nameTeam : "" }}</td>
                         </template>

@@ -1,14 +1,20 @@
 <template>
   <v-card>
     <v-card-title>
-    <h3>Rank</h3>
+      <h3>Rank</h3>
       <v-spacer></v-spacer>
-      
     </v-card-title>
-    <v-data-table
-      :headers="headers"
-      :items="desserts"
-    >
+    <v-data-table :headers="headers" :items="desserts">
+      <template v-slot:item.numberRank="item">
+        {{ desserts.indexOf(item.item) + 1 }}
+      </template>
+      <template v-slot:item.winRate="{ item }">
+        <div v-if="item.team.totalmatch!=0">
+            {{item.rank*100}}%
+        </div>
+        
+         </template>
+
       <template v-slot:item.team.logo="{ item }">
         <div>
           <v-img max-height="50" max-width="50" :src="item.team.logo"></v-img>
@@ -37,14 +43,15 @@ export default {
     headers: [
       {
         text: "#",
-        align: "start",
-        value: "numberRank",
+        value: "numberRank",sortable: false 
       },
       { text: "Team", value: "team.nameTeam" },
-      { text: "Logo", value: "team.logo",sortable:false },
+      { text: "Logo", value: "team.logo", sortable: false },
       { text: "MP", value: "team.totalmatch" },
       { text: "Win", value: "team.totalwin" },
-      { text: "Detail", value: "team.idTeam",sortable:false},
+      { text: "Goals", value: "totalGoals" },
+      { text: "Win rate", value: "winRate" },
+      { text: "Detail", value: "team.idTeam", sortable: false },
     ],
     desserts: [],
   }),
@@ -54,8 +61,6 @@ export default {
       console.log(this.desserts);
     });
   },
-  methods: {
-  
-  },
+  methods: {},
 };
 </script>
