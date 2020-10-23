@@ -121,7 +121,7 @@
         </v-card>
       </v-dialog>
 
-      <v-dialog v-model="dialogCreateMember" max-width="60%">
+      <v-dialog v-model="dialogCreateMember" max-width="65%">
         <CreateMember
           :isOpenModalMember="isOpenModalMember"
           :loadMemberAfterCreate="loadMemberAfterCreate"
