@@ -191,12 +191,9 @@ export default {
 
     upcommingMemberMatchs(id) {
       let self = this;
-      console.log("run here")
       this.$store
         .dispatch("user/upcommingMemberMatchs", id)
         .then(function (response) {
-          console.log("run here1")
-          console.log(response.data.payload);
           response.data.payload.forEach((element) => {
             self.desserts1 = self.desserts1.concat(element.schedules);
           });

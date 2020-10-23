@@ -242,15 +242,12 @@ export default {
     },
 
     removeMember(member) {
-      // console.log(this.desserts);
-      // console.log("Removed");
       let data = this.desserts.map((element, index) => {
         if (element.id === member.id) {
           element.idTeam = 0;
           this.memberProp = element;
           this.desserts.splice(index, 1);
         }
-        // console.log(element);
         return element;
       });
     },

@@ -176,17 +176,11 @@ export default {
         this.$refs.form.validate();
         this.busy = false;
       } else {
-        // console.log("submit");
-        console.log(this.fileImage);
-
         var teamForm = new FormData();
         teamForm.append("nameTeam", this.name);
         teamForm.append("type", this.selectedType);
         teamForm.append("description", this.description);
         teamForm.append("file", this.fileImage);
-        // for (var value of teamForm.values()) {
-        //   console.log(value);
-        // }
         let self = this;
         this.$store
           .dispatch("team/createTeam", teamForm)

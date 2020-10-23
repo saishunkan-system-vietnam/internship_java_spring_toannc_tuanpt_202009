@@ -333,7 +333,7 @@ export default {
         .dispatch("team/getById", this.$route.params.id)
         .then((res) => {
           this.team = res.data;
-          console.log(this.team);
+          // console.log(this.team);
         });
     },
     getTourByTeam() {

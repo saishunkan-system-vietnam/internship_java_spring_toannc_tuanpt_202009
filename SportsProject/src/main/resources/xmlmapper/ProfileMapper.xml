@@ -79,6 +79,12 @@
 		profile_email='${email}'
 	</select>
 
+	<select id="checkPhoneExist" flushCache="true"
+		statementType="PREPARED" resultType="Profile">
+		SELECT * FROM profile_tbl WHERE
+		profile_phone='${phone}'
+	</select>
+
 	<select id="findById" flushCache="true" statementType="PREPARED"
 		resultMap="profileMapping">
 		SELECT p.*, t.* FROM profile_tbl p inner join team_tbl t on p.id_team = t.id_team WHERE id= #{id}
