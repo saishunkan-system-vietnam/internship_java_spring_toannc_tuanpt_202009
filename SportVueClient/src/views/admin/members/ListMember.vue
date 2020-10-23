@@ -50,16 +50,45 @@
                     Create Member
                   </v-btn>
 
-                  <v-divider class="mx-4" inset vertical></v-divider>
+                  <v-divider class="mb-4" inset vertical></v-divider>
                   <v-spacer></v-spacer>
 
-                  <v-text-field
-                    v-model="search"
-                    append-icon="mdi-magnify"
-                    label="Search"
-                    single-line
-                    hide-details
-                  ></v-text-field>
+                  <v-row class="mt-4">
+                    <v-col cols="12" sm="3" md="3">
+                      <v-select
+                        v-model="typeSearch"
+                        :items="items"
+                        label="Search gender"
+                      ></v-select>
+                    </v-col>
+                    <v-col cols="12" sm="3" md="3">
+                      <v-text-field
+                        v-model="nameMemberSearch"
+                        append-icon="mdi-magnify"
+                        label="Name search"
+                        single-line
+                        hide-details
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="3" md="3">
+                      <v-text-field
+                        v-model="emailSearch"
+                        append-icon="mdi-magnify"
+                        label="Email search"
+                        single-line
+                        hide-details
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="3" md="3">
+                      <v-text-field
+                        v-model="ageSearch"
+                        append-icon="mdi-magnify"
+                        label="Age"
+                        single-line
+                        hide-details
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
                 </v-toolbar>
               </template>
               <template v-slot:[`item.idTeam`]="{ item }">
@@ -134,6 +163,11 @@ export default {
       dialogMemberTable: false,
       dialogCreateMember: false,
       search: "",
+      typeSearch: null,
+      items: ["Male", "Female", "Orther"],
+      nameMemberSearch: "",
+      emailSearch: "",
+      ageSearch: "",
       headers: [
         {
           text: "Avatar",
@@ -141,11 +175,11 @@ export default {
           sortable: false,
           value: "avatar",
         },
-        { text: "Name", value: "name" },
-        { text: "Email", value: "email" },
+        { text: "Name", value: "name", filter: this.nameMemberFilter },
+        { text: "Email", value: "email", filter: this.emailFilter },
         { text: "Phone", value: "phone" },
-        { text: "Age", value: "age" },
-        { text: "Gender", value: "gender" },
+        { text: "Age", value: "age", filter: this.ageFilter },
+        { text: "Gender", value: "gender", filter: this.genderFilter },
         { text: "Current Team", value: "idTeam" },
         { text: "Actions", value: "actions", sortable: false },
       ],
@@ -153,15 +187,6 @@ export default {
       desserts: [],
       members: [],
     };
-  },
-  computed: {},
-  created(){
-    console.log('created');
-    console.log(this.desserts);
-  },
-  updated(){
-    console.log('created');
-    console.log(this.desserts);
   },
   watch: {
     memberProp: {
@@ -184,10 +209,12 @@ export default {
     isOpenModalMember: function () {
       this.dialogCreateMember = !this.dialogCreateMember;
     },
+
     openListModalMember: function () {
       // console.log(this.desserts);
       this.dialogMemberTable = true;
     },
+
     loadListMember() {
       let self = this;
       axios
@@ -199,10 +226,11 @@ export default {
         })
         .catch(function (error) {});
     },
+
     addMember(member) {
       this.checkAdd = false;
       let indexRemove = 0;
-      let obj = Object.assign({}, member);;
+      let obj = Object.assign({}, member);
       this.addedMember(obj);
       this.desserts.forEach((element, index) => {
         if (element.id === member.id) {
@@ -211,12 +239,15 @@ export default {
       });
       this.desserts.splice(indexRemove, 1);
     },
+
     removeAdd(member) {
       this.checkAdd = true;
     },
+
     loadMemberAfterCreate(member) {
       this.desserts.unshift(member); // unshift is add into 1st positions , push is add last positions
     },
+
     confirmList() {
       let self = this;
       this.successDialog = !this.successDialog;
@@ -225,6 +256,40 @@ export default {
         self.dialogMemberTable = !self.dialogMemberTable;
         self.updateTeam(self.idTeam);
       }, 1000);
+    },
+
+    genderFilter(value) {
+      // If this filter has no value we just skip the entire filter.
+      if (!this.typeSearch) {
+        return true;
+      }
+
+      return value === this.typeSearch;
+    },
+
+    nameMemberFilter(value) {
+      // If this filter has no value we just skip the entire filter.
+      if (!this.nameMemberSearch) {
+        return true;
+      }
+
+      return value.toLowerCase().includes(this.nameMemberSearch.toLowerCase());
+    },
+
+    emailFilter(value) {
+      // If this filter has no value we just skip the entire filter.
+      if (!this.emailSearch) {
+        return true;
+      }
+      return value.toLowerCase().includes(this.emailSearch.toLowerCase());
+    },
+
+    ageFilter(value) {
+      // If this filter has no value we just skip the entire filter.
+      if (!this.ageSearch) {
+        return true;
+      }
+      return value.toLowerCase().includes(this.ageSearch.toLowerCase());
     },
   },
 };
