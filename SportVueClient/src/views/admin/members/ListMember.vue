@@ -129,7 +129,7 @@
         />
       </v-dialog>
 
-      <v-dialog v-model="successDialog" hide-overlay persistent width="300">
+      <v-dialog  v-model="successDialog" hide-overlay persistent width="300">
         <v-alert class="mb-0" type="success">
           List Member Added Success!
         </v-alert>

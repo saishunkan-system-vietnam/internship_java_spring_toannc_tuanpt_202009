@@ -102,7 +102,7 @@
           </template>
 
           <template v-slot:[`item.idTeam`]="{ item }">
-            <v-btn @click="removeMember(item)" small>Remove</v-btn>
+            <v-btn v-if="team.idTour == 0" @click="removeMember(item)" small>Remove</v-btn>
           </template>
         </v-data-table>
       </v-card-text>
@@ -183,7 +183,7 @@ export default {
           text: "Actions",
           value: "idTeam",
           filter: (value, search, item) => {
-            if (item.idTeam != 0 && this.team.idTour == 0) return true;
+            if (item.idTeam != 0) return true;
             return value;
           },
         },
