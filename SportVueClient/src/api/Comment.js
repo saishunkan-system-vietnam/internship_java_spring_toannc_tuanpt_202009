@@ -1,5 +1,6 @@
 import Api from './BaseApi';
 
+
 export function getAll(id){
     return Api.get('/comment/getBySchedule/'+id);
 }

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import store from '@/store';
+import { ENV } from '@/config/env.js' 
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8090/api/v1'
+    baseURL: ENV.BASE_URL
 });
 
 instance.interceptors.request.use(request => {

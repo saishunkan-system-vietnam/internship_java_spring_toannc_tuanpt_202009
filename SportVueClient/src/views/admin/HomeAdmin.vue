@@ -58,6 +58,8 @@
   </div>
 </template>
 <script>
+import  Api from '@/api/BaseApi'
+
 export default {
   data() {
     return {

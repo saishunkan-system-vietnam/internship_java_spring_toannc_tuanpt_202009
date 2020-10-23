@@ -71,8 +71,7 @@
 
       <template v-slot:[`item.logo`]="{ item }">
         <img
-          :src="item.logo"
-          alt=""
+          :src="baseUrl + item.logo"
           width="100px"
           height="100px"
           style="margin: 3px 0 3px 0"
@@ -87,6 +86,7 @@
 
 <script>
 import axios from "axios";
+import { ENV } from '@/config/env.js' 
 
 export default {
   data() {
@@ -163,6 +163,9 @@ export default {
         return this.search;
       }
     },
+    baseUrl(){
+      return ENV.BASE_IMAGE;
+    }
   },
   watch: {},
   methods: {

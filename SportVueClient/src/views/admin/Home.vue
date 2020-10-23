@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app>
+    <v-navigation-drawer v-model="drawer" app >
    
       <h1 class="text-center" style="margin-top:50px">ADMIN</h1>
       <v-list dense>
@@ -72,9 +72,7 @@
     <v-footer color="indigo" app>
       <span class="white--text">&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
-    <v-overlay :value="$store.state.auth.overlay">
-      <v-progress-circular indeterminate size="64"></v-progress-circular>
-    </v-overlay>
+    
   </v-app>
 </template>
            

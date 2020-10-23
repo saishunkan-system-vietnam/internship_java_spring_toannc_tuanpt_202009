@@ -18,3 +18,11 @@ export function getPlayerId(id){
 export function findByEmail(email){
     return Api.get('/profiles/findByEmail',{params:{email:email}})
 }
+
+export function createMember(formMember){
+    return Api.post('/profiles/createMember', formMember)
+}
+
+export function members(){
+    return Api.get('/profiles/members');
+}
