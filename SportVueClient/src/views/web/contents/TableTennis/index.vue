@@ -56,16 +56,7 @@
                   "
                   style="color: black"
                 >
-                  <div>
-                    <v-row>
-                      <b-col sm="1">
-                        <div class="text-center">
-                          {{ index + 1 }}
-                        </div></b-col
-                      >
-                      <b-col sm="9">{{ item.name }}</b-col>
-                    </v-row>
-                  </div>
+                  {{ index + 1 }}. {{ item.name }}
                 </a>
               </v-list-item-content>
             </v-list-item>
