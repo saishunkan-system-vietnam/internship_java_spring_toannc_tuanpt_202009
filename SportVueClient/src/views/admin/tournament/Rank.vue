@@ -85,7 +85,7 @@ export default {
       .then((response) => {
         this.rank = response.data;
         this.rows = this.rank.length;
-        console.log(this.rank);
+        // console.log(this.rank);
       });
   },
 };

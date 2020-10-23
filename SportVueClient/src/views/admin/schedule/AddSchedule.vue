@@ -33,7 +33,7 @@
               :rules="[
                 (v) => !!v || 'Item is required',
                 (v) => v != '' || 'Item is required',
-                (v) => v != this.selectTeam2 || 'Iteam the same selectTeam2',
+                (v) => v != this.selectTeam2 || 'Team1 and team2 cannot be the same team',
               ]"
             ></v-autocomplete>
           </v-col>
@@ -48,7 +48,7 @@
               :rules="[
                 (v) => !!v || 'Item is required',
                 (v) => v != '' || 'Item is required',
-                (v) => v != this.selectTeam1 || 'Iteam the same selectTeam1',
+                (v) => v != this.selectTeam1 || 'Team1 and team2 cannot be the same team',
               ]"
             ></v-autocomplete>
           </v-col>
