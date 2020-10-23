@@ -6,7 +6,7 @@
         <v-row>
           <v-col cols="12" md="6">
             <v-text-field
-              v-model.trim="name"
+              v-model="name"
               :rules="nameRules"
               :counter="21"
               label="Full Name"
@@ -15,7 +15,7 @@
           </v-col>
           <v-col cols="12" md="6">
             <v-text-field
-              v-model.trim="email"
+              v-model="email"
               :rules="emailRules"
               label="E-mail"
               required
@@ -120,9 +120,9 @@ export default {
       countryRules: [(v) => !!v || "Country is required"],
       nameRules: [(v) => !!v || "Name is required"],
       email: "",
-      emailRules: [],
+      emailRules: [(v) => !!v || "Email is required"],
       phone: "",
-      phoneRules: [],
+      phoneRules: [(v) => !!v || "Phone is required"],
       age: "",
       ageRules: [
         (v) => !!v || "Age number is required",
@@ -141,9 +141,9 @@ export default {
       ],
     };
   },
-  mounted() {},
   watch: {
     email() {
+      console.log("Run here")
       this.emailRules = [
         (v) => {
           if (!!!v) {
@@ -161,6 +161,7 @@ export default {
     },
 
     phone() {
+      console.log("Run here")
       this.phoneRules = [
         (v) => {
           if (!/^[0-9]+$/.test(v)) {
@@ -202,7 +203,6 @@ export default {
     onSubmit() {
       if (!this.$refs.form.validate()) {
         this.$refs.form.validate();
-        this.busy = false;
       } else {
         // console.log(this.fileImage);
         let self = this;
@@ -256,23 +256,5 @@ export default {
       this.$refs.form.reset();
     },
   },
-  watch:{
-    email(){
-      this.emailRules=[
-        (v) => { 
-          if(!!!v ){
-            return false|| "E-mail is required"
-          }
-          if(!/.+@.+/.test(v)){
-             return false|| "E-mail must be valid"
-          }
-          if(v.indexOf(" ")>-1){
-            return false||"E-mail must be valid"
-          }
-          return true
-        }
-      ]
-    }
-  }
 };
 </script>
