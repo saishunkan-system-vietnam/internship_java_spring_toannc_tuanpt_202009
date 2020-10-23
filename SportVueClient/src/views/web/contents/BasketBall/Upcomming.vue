@@ -51,8 +51,8 @@
 
                     <td>
                       <v-row>
-                        <v-col>{{ item.team[0].nameTeam }}</v-col>
-                        <v-col
+                        <v-col class="text-center">{{ item.team[0].nameTeam }}</v-col>
+                        <v-col class="text-center"
                           >{{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam1
@@ -64,7 +64,7 @@
                               : " "
                           }}</v-col
                         >
-                        <v-col>{{ item.team[1].nameTeam }}</v-col>
+                        <v-col class="text-center">{{ item.team[1].nameTeam }}</v-col>
                       </v-row>
                     </td>
                   </template>
