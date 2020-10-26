@@ -100,7 +100,7 @@
       </v-col>
     </v-row>
     <v-textarea
-      v-model="description1"
+      v-model="description3"
       name="input-7-1"
       label="Description set 3"
       required
@@ -115,7 +115,7 @@
     ></v-textarea>
     <h3>Summary</h3>
     <v-textarea
-      v-model="description3"
+      v-model="description4"
       name="input-7-1"
       label="description"
       required

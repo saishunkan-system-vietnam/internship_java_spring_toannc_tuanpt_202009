@@ -1,5 +1,6 @@
 package ssv.com.repository;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,6 +112,11 @@ public class ScheduleReponsitory {
 	public List<Schedule> findTeam(int idTeam) {
 		// TODO Auto-generated method stub
 		return scheduleMapper.findTeam(idTeam);
+	}
+
+	public Schedule findTeamByDate(Date timeEnd, Date timeStart) {
+		// TODO Auto-generated method stub
+		return scheduleMapper.findTeamByDate(timeEnd,timeStart);
 	}
 
 	

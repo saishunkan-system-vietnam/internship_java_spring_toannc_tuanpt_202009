@@ -222,6 +222,9 @@
 		where schedule_status=0
 		order by schedule_start
 	</select>
+	<select id="findTeamByDate" resultMap="scheduleMapping">
+	Select * FROM schedule_tbl where schedule_start='${timeStart}' and schedule_end='${timeEnd}'
+	</select>
 
 	<delete id="deleteData" parameterType="int">
 		DELETE from schedule_tbl

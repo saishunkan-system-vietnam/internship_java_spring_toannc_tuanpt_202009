@@ -7,6 +7,7 @@ const state = {
     status: '',
     checkAccount: false,
     overlay: false,
+    drawer:false
 }
 
 const mutations = {
@@ -26,6 +27,9 @@ const mutations = {
     },
     auth_overlay(state) {
         state.overlay = !state.overlay
+    },
+    auth_draw(state){
+        state.draw=!state.draw
     }
 }
 

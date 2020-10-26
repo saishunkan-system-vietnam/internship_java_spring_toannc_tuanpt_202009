@@ -48,7 +48,7 @@ public class TournamentService {
 	private HistoryRepository historyRepository;
 
 	public String add(TournamentDto tournamentDto) {
-		
+
 		if (tournamentDto.getTimeEnd().compareTo(tournamentDto.getTimeStart()) > 0) {
 			Tournament tournament = modelMapper.map(tournamentDto, Tournament.class);
 			for (Tournament tournament2 : tournamentRepository.getByType(tournamentDto.getType())) {
@@ -102,7 +102,7 @@ public class TournamentService {
 	public void updateStatus(int idTour, int status) {
 		if (status == 2) {
 			teamService.formatTour(idTour);
-			var a=rankByTour(idTour).get(0).idTeam;
+			var a = rankByTour(idTour).get(0).idTeam;
 			tournamentRepository.updateWinner(idTour, rankByTour(idTour).get(0).idTeam);
 		}
 		tournamentRepository.updateStatus(idTour, status);
@@ -115,11 +115,15 @@ public class TournamentService {
 
 	public String deleteTeam(int idTeam) {
 		if (tournamentRepository.getById(teamService.getById(idTeam).getIdTour()).getStatus() == 0) {
-			int idTour = teamService.getById(idTeam).getIdTour();
-			teamService.formatTourById(idTour, idTeam);
-			scheduleService.deleteData(idTour, idTeam);
-			historyRepository.deleteTeamTournament(idTour, idTeam);
-			return "deleted successfully";
+			if (tournamentRepository.getById(teamService.getById(idTeam).getIdTour()).getSchedule().size() > 2) {
+				int idTour = teamService.getById(idTeam).getIdTour();
+				teamService.formatTourById(idTour, idTeam);
+				scheduleService.deleteData(idTour, idTeam);
+				historyRepository.deleteTeamTournament(idTour, idTeam);
+				return "deleted successfully";
+			} else {
+				return "The tournament must have at least 2 teams";
+			}
 		}
 		return "Tournaments are in progress or ended";
 	}
@@ -151,7 +155,7 @@ public class TournamentService {
 			rank.setTeam(teamService.findById(team.getIdTeam()));
 			rank.setTotalGoals(scheduleService.totalGoalsType(rank.getIdTeam()));
 			list.add(rank);
-			
+
 		}
 		;
 		Collections.sort(list, new Comparator<Rank>() {
@@ -166,7 +170,6 @@ public class TournamentService {
 					return 1;
 			}
 		});
-		
 
 		return list;
 	}
@@ -179,11 +182,11 @@ public class TournamentService {
 			Rank rank = new Rank();
 			rank.setName(teamService.getById(history.getIdTeam()).getNameTeam());
 			double numberRank = teamService.rankByTour(history.getIdTeam(), idTour);
-			rank.setList(scheduleService.getRecently(history.getIdTeam(),idTour));
+			rank.setList(scheduleService.getRecently(history.getIdTeam(), idTour));
 			rank.setRank(numberRank);
 			rank.setIdTeam(history.getIdTeam());
-			rank.setTeam(teamService.findTeamByTour(rank.getIdTeam(),idTour));
-			rank.setTotalGoals(scheduleService.totalGoalds(rank.getIdTeam(),idTour));
+			rank.setTeam(teamService.findTeamByTour(rank.getIdTeam(), idTour));
+			rank.setTotalGoals(scheduleService.totalGoalds(rank.getIdTeam(), idTour));
 			list.add(rank);
 		}
 		Collections.sort(list, new Comparator<Rank>() {
@@ -202,14 +205,14 @@ public class TournamentService {
 	}
 
 	public List<ToursByType> getToursByType() {
-		List<ToursByType> listsTours=new ArrayList<ToursByType>();
-		List<String> lists=tournamentRepository.getTypeSport();
+		List<ToursByType> listsTours = new ArrayList<ToursByType>();
+		List<String> lists = tournamentRepository.getTypeSport();
 		for (String type : lists) {
-			List<Tournament> listTour=tournamentRepository.getByType(type);
-			ToursByType toursByType=new ToursByType();
+			List<Tournament> listTour = tournamentRepository.getByType(type);
+			ToursByType toursByType = new ToursByType();
 			toursByType.setTournament(listTour);
 			toursByType.setType(type);
-			for(Tournament tour : listTour) {
+			for (Tournament tour : listTour) {
 				tour.getSchedule().forEach(s -> {
 					s.setNameTeam1(teamRepository.getByID(s.getIdTeam1()).getNameTeam());
 					s.setNameTeam2(teamRepository.getByID(s.getIdTeam2()).getNameTeam());
@@ -221,10 +224,10 @@ public class TournamentService {
 	}
 
 	public List<RankTeamsByType> rankAll() {
-		List<RankTeamsByType> listTeam=new ArrayList<RankTeamsByType>();
-		List<String> lists=tournamentRepository.getTypeSport();
+		List<RankTeamsByType> listTeam = new ArrayList<RankTeamsByType>();
+		List<String> lists = tournamentRepository.getTypeSport();
 		for (String type : lists) {
-			RankTeamsByType rankTeamsByType=new RankTeamsByType();
+			RankTeamsByType rankTeamsByType = new RankTeamsByType();
 			rankTeamsByType.setType(type);
 			rankTeamsByType.setList(rank(type));
 			listTeam.add(rankTeamsByType);
@@ -234,10 +237,10 @@ public class TournamentService {
 	}
 
 	public List<Tournament> getTourByTeam(int idTeam) {
-		List<Tournament> list=tournamentRepository.getTourByTeam(idTeam);
+		List<Tournament> list = tournamentRepository.getTourByTeam(idTeam);
 		for (Tournament tournament : list) {
 			for (Schedule schedule : tournament.getSchedule()) {
-				List<Team> listTeam=new ArrayList<Team>();
+				List<Team> listTeam = new ArrayList<Team>();
 				listTeam.add(teamService.getById(schedule.getIdTeam1()));
 				listTeam.add(teamService.getById(schedule.getIdTeam2()));
 				schedule.setTeam(listTeam);
@@ -247,10 +250,10 @@ public class TournamentService {
 	}
 
 	public List<Tournament> getFixtures(int idTeam) {
-		List<Tournament> list=tournamentRepository.getFixtures(idTeam);
+		List<Tournament> list = tournamentRepository.getFixtures(idTeam);
 		for (Tournament tournament : list) {
 			for (Schedule schedule : tournament.getSchedule()) {
-				List<Team> listTeam=new ArrayList<Team>();
+				List<Team> listTeam = new ArrayList<Team>();
 				listTeam.add(teamService.getById(schedule.getIdTeam1()));
 				listTeam.add(teamService.getById(schedule.getIdTeam2()));
 				schedule.setTeam(listTeam);

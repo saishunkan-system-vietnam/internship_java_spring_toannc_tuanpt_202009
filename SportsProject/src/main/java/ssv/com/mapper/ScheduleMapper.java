@@ -1,5 +1,6 @@
 package ssv.com.mapper;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -53,6 +54,8 @@ public interface ScheduleMapper {
 	public List<Schedule> findTeamTournament(int idTeam, int idTour);
 
 	public List<Schedule> findTeam(int idTeam);
+
+	public Schedule findTeamByDate(Date timeEnd, Date timeStart);
 
 
 

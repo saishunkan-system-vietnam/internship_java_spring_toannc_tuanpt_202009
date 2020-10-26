@@ -418,7 +418,6 @@ export default {
         {
           key: "Action",
           label: "Action",
-          class: "center",
         },
       ],
       itemsTeam: [],
@@ -453,12 +452,17 @@ export default {
       this.dialogEditSchedule = true;
     },
     handleOk() {
+      if(this.itemsTeam.length<=2){
+        alert('The tournament must have at least 2 teams')
+      }
+      else{
       this.$store
         .dispatch("tournament/deleteTeam", this.idDelete)
         .then((response) => {
           alert(response.data);
           this.Bindata();
         });
+      }
     },
     handleOkSchedule() {
       this.$store
@@ -486,7 +490,6 @@ export default {
           this.schedule = response.data;
           this.itemsSchedule = response.data;
           this.rowsSchedule = this.itemsSchedule.length;
-          // console.log(this.schedule);
         });
     },
     hideModal() {

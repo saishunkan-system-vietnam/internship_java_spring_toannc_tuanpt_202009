@@ -367,7 +367,7 @@ export default {
       );
     },
     detailMember(item) {
-      this.$router.push({ path: "/PlayerProfile/" + item.id });
+      this.$router.push({ path: "/PlayerProfile/" + item.id , query: { idTeam: this.$route.params.id,type:'TableTennis'}});
     },
     detailTournament(item){
             this.$router.push({ path: "/DetailTournamentTableTennis/" + item.id });

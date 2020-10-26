@@ -49,27 +49,25 @@
               >
 
               <v-list-item v-for="(item, index) in rank" :key="index">
-                <v-list-item-content>
-                  <a
-                    :href="
-                      $router.resolve({
-                        path: '/DetailTeamBasketBall/' + item.idTeam,
-                      }).href
-                    "
-                    style="color: black"
-                  >
-                    <div>
-                      <v-row>
-                        <b-col sm="1">
-                          <div class="text-center">
-                            {{ index + 1 }}
-                          </div></b-col
-                        >
-                        <b-col sm="9">{{ item.name }}</b-col>
-                      </v-row>
-                    </div>
-                  </a>
-                </v-list-item-content>
+                <v-list-item-content v-b-popover.hover.top="item.name">
+                <a
+                  :href="
+                    $router.resolve({
+                      path: '/DetailTeamBasketBall/' + item.idTeam,
+                    }).href
+                  "
+                  style="color: black"
+                >
+                  {{ index + 1 }}.
+
+                  {{
+                    item.name.length < 10
+                      ? item.name
+                      : item.name.slice(0, 10) + "..."
+                  }}
+
+                </a>
+              </v-list-item-content>
               </v-list-item>
             </v-list>
           </div>

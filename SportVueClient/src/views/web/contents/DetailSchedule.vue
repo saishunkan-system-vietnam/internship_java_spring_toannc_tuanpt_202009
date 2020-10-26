@@ -14,7 +14,7 @@
       <span style="cursor: pointer">
         <a
           :href="
-            'http://192.168.10.117:8080/DetailTournament' +
+          urlNetWork +'/DetailTournament' +
             this.type +
             '/' +
             data.idTour
@@ -48,7 +48,7 @@
           <button>
             <a
               :href="
-                'http://192.168.10.117:8080/DetailTeamFootball/' +
+                urlNetWork+'/DetailTeamFootball/' +
                 data.team[0].idTeam
               "
               @click="windowClose"
@@ -84,7 +84,7 @@
           <button class="text-center">
             <a
               :href="
-                'http://192.168.10.117:8080/DetailTeamFootball/' +
+                urlNetWork+'/DetailTeam'+type +'/'+
                 data.team[1].idTeam
               "
               target="_blank"
@@ -320,7 +320,7 @@
                                   <td>
                                     <a
                                       :href="
-                                        'http://192.168.10.117:8080/PlayerProfile/' +
+                                        urlNetWork+'/PlayerProfile/' +
                                         item.id
                                       "
                                       target="_blank"
@@ -362,8 +362,8 @@
                                   <td>{{ item.address }}</td>
                                     <td>
                                     <a
-                                      :href="
-                                        'http://192.168.10.117:8080/PlayerProfile/' +
+                                      :href=" urlNetWork
+                                        +'/PlayerProfile/' +
                                         item.id
                                       "
                                       target="_blank"
@@ -534,6 +534,7 @@ export default {
   data() {
     return {
       url:ENV.BASE_IMAGE,
+      urlNetWork:ENV.BASE_NETWORK,
       tab: null,
       data: "",
       tabb: null,
@@ -618,7 +619,7 @@ export default {
     },
     relatedMatch(id) {
       var myWindow = window.open(
-        "http://192.168.10.117:8080/detail/" + id,
+      urlNetWork+  "/detail/" + id,
         "myWindow",
         "width=600px,height=600"
       );
