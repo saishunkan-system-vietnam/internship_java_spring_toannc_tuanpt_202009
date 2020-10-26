@@ -79,7 +79,7 @@ export default {
     tab: null,
     tournaments: [],
     rank: [],
-    panel: [],
+    panel: [0, 1],
   }),
   created() {
     this.recivceData();

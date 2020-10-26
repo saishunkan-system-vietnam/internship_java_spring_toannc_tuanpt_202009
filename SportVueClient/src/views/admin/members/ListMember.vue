@@ -1,7 +1,13 @@
 <template>
   <div>
     <v-row justify="center">
-      <v-btn v-if="teamProps.idTour == 0" color="primary" class="ma-2" dark @click="openListModalMember">
+      <v-btn
+        v-if="teamProps.idTour == 0"
+        color="primary"
+        class="ma-2"
+        dark
+        @click="openListModalMember"
+      >
         Add Members
       </v-btn>
 
@@ -100,7 +106,7 @@
 
               <template v-slot:[`item.avatar`]="{ item }">
                 <b-img
-                  :src="item.avatar"
+                  :src="baseUrl + item.avatar"
                   alt=""
                   style="margin: 5px 0 5px 0"
                   class="fixImg"
@@ -129,7 +135,7 @@
         />
       </v-dialog>
 
-      <v-dialog  v-model="successDialog" hide-overlay persistent width="300">
+      <v-dialog v-model="successDialog" hide-overlay persistent width="300">
         <v-alert class="mb-0" type="success">
           List Member Added Success!
         </v-alert>
@@ -139,6 +145,7 @@
 </template>
 <script>
 import CreateMember from "@/views/admin/members/CreateMember.vue";
+import { ENV } from "@/config/env.js";
 
 export default {
   components: {
@@ -155,7 +162,7 @@ export default {
     },
     idTeam: Number,
     teamProps: Object,
-    item: Object
+    item: Object,
   },
   data() {
     return {
@@ -206,6 +213,13 @@ export default {
       },
     },
   },
+
+  computed: {
+    baseUrl() {
+      return ENV.BASE_IMAGE;
+    },
+  },
+
   methods: {
     isOpenModalMember: function () {
       this.dialogCreateMember = !this.dialogCreateMember;
