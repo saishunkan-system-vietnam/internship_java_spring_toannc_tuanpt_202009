@@ -5,7 +5,7 @@
         <v-card>
           <v-list style="background-color: white">
             <v-subheader><b style="color: red">TOURNAMENTS</b></v-subheader>
-            <v-list-item v-for="(item, index) in items" :key="index">
+            <v-list-item v-for="(item,index) in items" :key="index">
               <v-list-item-content>
                 <a
                   :href="
@@ -58,9 +58,16 @@
                     "
                     style="color: black"
                   >
-                    {{ index + 1 }}.
-
-                    {{ item.name }}
+                    <div>
+                      <v-row>
+                        <b-col sm="1">
+                          <div class="text-center">
+                            {{ index + 1 }}
+                          </div></b-col
+                        >
+                        <b-col sm="9">{{ item.name }}</b-col>
+                      </v-row>
+                    </div>
                   </a>
                 </v-list-item-content>
               </v-list-item>
