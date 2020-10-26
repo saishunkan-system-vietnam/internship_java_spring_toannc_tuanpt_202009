@@ -63,6 +63,7 @@
                       ? item.name
                       : item.name.slice(0, 10) + "..."
                   }}
+
                 </a>
               </v-list-item-content>
             </v-list-item>

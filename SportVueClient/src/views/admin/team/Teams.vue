@@ -85,8 +85,7 @@
 </template>
 
 <script>
-import axios from "axios";
-import { ENV } from '@/config/env.js' 
+import { ENV } from "@/config/env.js";
 
 export default {
   data() {
@@ -135,11 +134,12 @@ export default {
       ],
     };
   },
+
   mounted() {
     let self = this;
     this.isLoading = true;
-    axios
-      .get("http://localhost:8090/api/v1/team/getAll")
+    this.$store
+      .dispatch("team/getAll")
       .then(function (response) {
         self.isLoading = false;
         self.desserts = response.data;
@@ -157,17 +157,20 @@ export default {
         // console.log(error);
       });
   },
+
   computed: {
     searchTrigger() {
       if (this.search.length >= 3) {
         return this.search;
       }
     },
-    baseUrl(){
-      return ENV.BASE_URL;
-    }
+
+
+    baseUrl() {
+      return ENV.BASE_IMAGE;
+    },
   },
-  watch: {},
+
   methods: {
     editTeam(item) {
       // console.log(item);
