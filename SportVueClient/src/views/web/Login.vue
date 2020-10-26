@@ -1,49 +1,81 @@
 <template>
   <v-card>
-    <v-card-title>
-      <span class="headline">Login</span>
-    </v-card-title>
+    <template v-if="loginForm">
+      <v-card-title>
+        <span class="headline">Login</span>
+      </v-card-title>
 
-    <v-card-text>
-      <v-container>
-        <p>Defaut Account:</p>
-        <p>1. admin - admin (Role_admin)</p>
-        <p>2. (Role Member)</p>
-        <p>3. (Role User)</p>
-        <h6
-          style="color: red"
-          align="center"
-          justify="center"
-          v-if="checkAccount"
-        >
-          Wrong Username or Password
-        </h6>
-        <form @submit.prevent="login">
+      <v-card-text>
+        <v-container>
+          <p>Defaut Account:</p>
+          <p>1. admin - admin (Role_admin)</p>
+          <p>2. (Role Member)</p>
+          <p>3. (Role User)</p>
+          <h6
+            style="color: red"
+            align="center"
+            justify="center"
+            v-if="checkAccount"
+          >
+            Wrong Username or Password
+          </h6>
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-text-field
+              v-model="user.username"
+              label="Email"
+              :rules="usernameRules"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="user.password"
+              label="Password"
+              :rules="passwordRules"
+              required
+              type="password"
+            ></v-text-field>
+            <v-row>
+              <v-col>
+                <v-btn @click="login" color="blue darken-1" text>Confirm</v-btn>
+              </v-col>
+              <v-spacer></v-spacer>
+              <v-col>
+                <v-btn @click="forgetPassword" color="blue darken-1" text
+                  >Forget Password?</v-btn
+                >
+              </v-col>
+            </v-row>
+            <v-alert type="success" v-if="success"> Login Success! </v-alert>
+          </v-form>
+        </v-container>
+      </v-card-text>
+    </template>
+    <template v-else>
+      <v-card-title>
+        <span class="headline">Forget Password</span>
+      </v-card-title>
+      <v-card-text>
+        <v-form ref="form" v-model="valid1" lazy-validation>
           <v-text-field
-            v-model="user.username"
-            label="Email"
+            v-model="email"
+            :rules="emailRules"
+            label="Input email to recive password"
             required
           ></v-text-field>
-          <v-text-field
-            v-model="user.password"
-            label="Password"
-            required
-            type="password"
-          ></v-text-field>
-          <v-row>
-            <v-col>
-              <v-btn type="submit" color="blue darken-1" text>Confirm</v-btn>
-            </v-col>
-            <v-spacer></v-spacer>
-          </v-row>
-          <v-alert type="success" v-if="success"> Login Success! </v-alert>
-        </form>
-      </v-container>
-    </v-card-text>
+        </v-form>
+        <v-row>
+          <v-btn @click="backToLogin" color="blue darken-1" text
+            >Back To Login</v-btn
+          >
+          <v-spacer></v-spacer>
+          <v-btn @click="confirmRecivePassword" color="blue darken-1" text
+            >Confirm</v-btn
+          >
+        </v-row>
+      </v-card-text>
+    </template>
   </v-card>
 </template>
 <script>
-
 export default {
   props: {
     closeLoginDialog: {
@@ -53,18 +85,24 @@ export default {
       type: Function,
     },
   },
+  
   data() {
     return {
+      valid: false,
+      valid1: false,
+      loginForm: true,
       success: false,
       user: {
         username: "admin",
         password: "admin",
       },
+      usernameRules: [(v) => !!v || "Username is required"],
+      passwordRules: [(v) => !!v || "Password is required"],
+      email: "",
+      emailRules: [(v) => !!v || "Email is required"],
     };
   },
-  mounted() {
-    // console.log(this.$store.state.auth.checkAccount);
-  },
+
   computed: {
     checkAccount: function () {
       return this.$store.state.auth.checkAccount;
@@ -73,48 +111,103 @@ export default {
       return this.$store.getters.isLoggedIn;
     },
   },
-  watch: {},
+
+  watch: {
+    email() {
+      this.emailRules = [
+        (v) => {
+          if (!!!v) {
+            return false || "E-mail is required";
+          }
+          if (!/.+@.+/.test(v)) {
+            return false || "E-mail must be valid";
+          }
+          if (v.indexOf(" ") > -1) {
+            return false || "E-mail can not have white space";
+          }
+          return true;
+        },
+      ];
+    },
+  },
+
   methods: {
     login: function () {
-      let self = this;
-      // let userInfo = this.$store.state.user.userInfo;
-      // this.$store.commit("auth/auth_overlay");
-      this.$store
-        .dispatch("auth/login", this.user)
-        .then((res) => {
-          // this.$store.commit("auth/auth_overlay");
-          self.overlay = false;
-          let userInfo = res.data.payload.account;
-          console.log(userInfo.role);
-          if (userInfo.role === null || userInfo.role === undefined) {
-            self.checkProfile();
-          } else if (userInfo.role === "ROLE_ADMIN") {
-            self.success = !self.success;
-            setTimeout(function () {
+      if (!this.$refs.form.validate()) {
+        this.$refs.form.validate();
+      } else {
+        let self = this;
+        // let userInfo = this.$store.state.user.userInfo;
+        // this.$store.commit("auth/auth_overlay");
+        this.$store
+          .dispatch("auth/login", this.user)
+          .then((res) => {
+            // this.$store.commit("auth/auth_overlay");
+            self.overlay = false;
+            let userInfo = res.data.payload.account;
+            console.log(userInfo.role);
+            if (userInfo.role === null || userInfo.role === undefined) {
+              self.checkProfile();
+            } else if (userInfo.role === "ROLE_ADMIN") {
               self.success = !self.success;
-              self.$store.commit("user/user_info", userInfo);
-              self.$store.commit("user/admin_profile");
-              self.commonLogin(userInfo);
-            }, 1100);
-          } else if (
-            userInfo.role === "ROLE_USER" ||
-            userInfo.role === "ROLE_MEMBER"
-          ) {
-            self.success = true;
-            setTimeout(function () {
-              self.success = false;
-              self.$store.commit("user/user_info", userInfo);
-              self.$store.commit("user/user_profile");
-              self.commonLogin(userInfo);
-            }, 1100);
-          }
-        })
-        .catch((err) => console.log(err));
+              setTimeout(function () {
+                self.success = !self.success;
+                self.$store.commit("user/user_info", userInfo);
+                self.$store.commit("user/admin_profile");
+                self.commonLogin(userInfo);
+              }, 1100);
+            } else if (
+              userInfo.role === "ROLE_USER" ||
+              userInfo.role === "ROLE_MEMBER"
+            ) {
+              self.success = true;
+              setTimeout(function () {
+                self.success = false;
+                self.$store.commit("user/user_info", userInfo);
+                self.$store.commit("user/user_profile");
+                self.commonLogin(userInfo);
+              }, 1100);
+            }
+          })
+          .catch((err) => console.log(err));
+      }
     },
+
     commonLogin(userInfo) {
       this.closeLoginDialog();
       this.username = "";
       this.password = "";
+    },
+
+    backToLogin() {
+      this.loginForm = !this.loginForm;
+    },
+
+    forgetPassword() {
+      this.loginForm = !this.loginForm;
+    },
+
+    confirmRecivePassword() {
+      if (!this.$refs.form.validate()) {
+        this.$refs.form.validate();
+      } else {
+        this.$store.commit("auth/auth_overlay");
+        let self = this;
+        this.$store
+          .dispatch("user/forgetEmail", this.email)
+          .then((res) => {
+            if (res.data.code === 9999 && res.data.payload != null) {
+              this.$store.commit("auth/auth_overlay");
+              self.emailRules = [(v) => !self.email || "Email was not found"];
+            } else if (res.data.code === 0) {
+              self.closeLoginDialog();
+              this.$store.commit("auth/auth_overlay");
+            } else {
+              alert("Failed to action!!!!");
+            }
+          })
+          .catch();
+      }
     },
   },
 };

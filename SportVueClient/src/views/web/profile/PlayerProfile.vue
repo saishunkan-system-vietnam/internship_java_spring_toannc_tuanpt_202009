@@ -134,7 +134,7 @@ export default {
       {
         text: "Team",
         disabled: false,
-        href: "/",
+        href: `/DetailTeamFootball/${this.$route.params.id}`,
       },
       {
         text: "Player",

@@ -15,7 +15,12 @@ export default {
   name: "Admin",
   components: {},
   data: () => ({
-    overlay: false,
+    
   }),
+  computed:{
+    overlay(){
+      return this.$store.state.auth.overlay
+    }
+  }
 };
 </script>

@@ -109,10 +109,10 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/forget/{email}", method = RequestMethod.POST)
-	public ResponseEntity<String> forget(@PathVariable String email) {
+	public ResponseQuery<?> forget(@PathVariable String email) {
 		String emailPattern = "\\w+@\\w+[.]\\w+";
 		if (email.isEmpty() && email.matches(emailPattern)) {
-			return new ResponseEntity<String>("Wrong", HttpStatus.OK);
+			return ResponseQuery.faild("Wrong email pattern", null);
 		}
 		String result = "";
 		HttpStatus httpStatus = null;
@@ -126,20 +126,18 @@ public class AccountController {
 				account.setPassword(new RandomPass().randomAlphaNumeric(8));
 				accountService.replacePass(account);
 				message.setText(account.getPassword());
-				result = "Email Sent!";
 				this.emailSender.send(message);
-				httpStatus = HttpStatus.OK;
+				return ResponseQuery.success("Change password success , please check email to recive password",
+						account);
 			} else {
-				result = "wrong";
-				httpStatus = HttpStatus.BAD_REQUEST;
+				return ResponseQuery.faild("Email not found ", email);
 			}
 
 		} catch (Exception e) {
-			result = "fail";
-			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+
 		}
 
-		return new ResponseEntity<String>(result, httpStatus);
+		return ResponseQuery.faild("Failed To Change Password ", null);
 
 	}
 
@@ -166,7 +164,8 @@ public class AccountController {
 	public ResponseEntity<Account> findById(@PathVariable(value = "id") int id) {
 		return new ResponseEntity<Account>(accountService.findById(id), HttpStatus.OK);
 	}
-	//lấy account theo mail
+
+	// lấy account theo mail
 	@GetMapping(value = "/getByMail")
 	public ResponseEntity<Account> findByEmail(@RequestParam String email) {
 		return new ResponseEntity<Account>(accountService.findByEmail(email), HttpStatus.OK);
@@ -188,5 +187,4 @@ public class AccountController {
 		return new ResponseEntity<SearchAccountDto>(accountService.search(page, pageSize, nameSearch, type),
 				HttpStatus.OK);
 	}
-
 }
