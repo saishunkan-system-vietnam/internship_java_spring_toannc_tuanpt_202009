@@ -12,7 +12,7 @@
               <v-img
                 max-height="100"
                 max-width="100"
-                :src="this.info.profile.avatar"
+                :src="url+this.info.profile.avatar"
               ></v-img>
             </span>
             <span v-else
@@ -54,6 +54,8 @@
   </v-card>
 </template>
 <script>
+import { ENV } from '@/config/env.js' 
+
 export default {
   props: {
     controlModalUser: {
@@ -63,6 +65,7 @@ export default {
   },
   data() {
     return {
+      url:ENV.BASE_IMAGE,
       info: "",
       edit: false,
       image: {},

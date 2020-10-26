@@ -17,7 +17,7 @@
 
       <template v-slot:item.team.logo="{ item }">
         <div>
-          <v-img max-height="50" max-width="50" :src="item.team.logo"></v-img>
+          <v-img max-height="50" max-width="50" :src="url+item.team.logo"></v-img>
         </div>
       </template>
       <template v-slot:item.team.idTeam="{ item }">
@@ -38,8 +38,11 @@
   </v-card>
 </template>
 <script>
+import { ENV } from '@/config/env.js' 
+
 export default {
   data: () => ({
+    url:ENV.BASE_IMAGE,
     headers: [
       {
         text: "#",

@@ -47,7 +47,7 @@
               ></v-subheader
             >
             <v-list-item v-for="(item, index) in rank" :key="index">
-              <v-list-item-content>
+              <v-list-item-content v-b-popover.hover.top="item.name">
                 <a
                   :href="
                     $router.resolve({
@@ -58,8 +58,11 @@
                 >
                   {{ index + 1 }}.
 
-                    {{ item.name }}
-                  
+                  {{
+                    item.name.length < 10
+                      ? item.name
+                      : item.name.slice(0, 10) + "..."
+                  }}
                 </a>
               </v-list-item-content>
             </v-list-item>

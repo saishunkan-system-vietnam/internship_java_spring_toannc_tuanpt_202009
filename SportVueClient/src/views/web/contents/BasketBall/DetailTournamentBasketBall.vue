@@ -46,7 +46,7 @@
                             tile
                             style="margin: 5px"
                           >
-                            <v-img :src="item.logo"></v-img>
+                            <v-img :src="url+item.logo"></v-img>
                           </v-avatar>
                         </td>
                         <td class="text-center">{{ item.profile.length }}</td>
@@ -205,9 +205,12 @@
   </div>
 </template>
 <script>
+import { ENV } from '@/config/env.js' 
+
 export default {
   data() {
     return {
+      url:ENV.BASE_IMAGE,
       rank: "",
       tournament: "",
       tab: null,
@@ -242,8 +245,8 @@ export default {
     detail(tournament) {
       this.detailScore = tournament;
       this.open = true;
-      var myWindow = window.open(
-        "http://localhost:8080/detail/" + tournament.idSchedule,
+      var myWindow = window.open(ENV.BASE_NETWORK+
+        "/detail/" + tournament.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );

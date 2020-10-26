@@ -9,7 +9,7 @@
                 lazy-src="https://picsum.photos/id/11/10/6"
                 max-height="100"
                 max-width="100"
-                :src="info.profile.avatar"
+                :src="url+info.profile.avatar"
               ></v-img>
             </v-col>
             <v-col cols="12" sm="6" md="6">
@@ -79,6 +79,8 @@
   </div>
 </template>
 <script>
+import { ENV } from '@/config/env.js' 
+
 const date = new Date().toISOString().substr(0, 10);
 
 export default {
@@ -86,6 +88,7 @@ export default {
     showMenu: Boolean,
   },
   data: () => ({
+    url:ENV.BASE_IMAGE,
     today: new Date().toISOString().substr(0, 10),
     events: [],
     start: "",

@@ -73,11 +73,11 @@
       <b-row>
         <b-col>
           <h3 style="color: Blue">Team 1: {{ team1.nameTeam }}</h3>
-          <b-img :src="team1.logo" fluid alt="Responsive image"></b-img>
+          <b-img :src="url+team1.logo" fluid alt="Responsive image"></b-img>
         </b-col>
         <b-col>
           <h3 style="color: Blue">Team 2: {{ team2.nameTeam }}</h3>
-          <b-img :src="team2.logo" fluid alt="Responsive image"></b-img>
+          <b-img :src="url+team2.logo" fluid alt="Responsive image"></b-img>
         </b-col>
       </b-row>
       <b-row>
@@ -151,7 +151,7 @@
                   Score :
                   <b-row>
                     <b-col class="text-center"
-                      ><b-img :src="team1.logo" width="100px"></b-img
+                      ><b-img :src="url+team1.logo" width="100px"></b-img
                     ></b-col>
                     <b-col class="text-center"
                       ><h1>
@@ -159,7 +159,7 @@
                       </h1></b-col
                     >
                     <b-col class="text-center"
-                      ><b-img :src="team2.logo" width="100px"></b-img
+                      ><b-img :src="url+team2.logo" width="100px"></b-img
                     ></b-col>
                   </b-row>
                   Description:
@@ -192,7 +192,7 @@
         <h3 style="color: Blue">Photo and Video</h3>
         <h5>Photo</h5>
         <b-img
-          :src="schedule.image"
+          :src="url+schedule.image"
           alt="Responsive image"
           style="max-width: 50%"
         ></b-img>
@@ -204,12 +204,15 @@
   </div>
 </template>
 <script>
+import { ENV } from '@/config/env.js' 
+
 import UpdateScheduleFootBall from "./UpdateScheduleFootBall";
 import UpdateScheduleTableTennis from "./UpdateScheduleTableTennis";
 import UpdateScheduleBasketBall from "./UpdateScheduleBasketBall";
 export default {
   data() {
     return {
+      url:ENV.BASE_IMAGE,
       dialogFootball: false,
       dialogTableTennis: false,
       dialogBasketBall: false,

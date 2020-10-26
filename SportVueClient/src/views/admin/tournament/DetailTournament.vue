@@ -54,7 +54,7 @@
             :fields="fieldsTeam"
           >
             <template v-slot:cell(logo)="row">
-              <b-img :src="row.item.logo" width="70px" />
+              <b-img :src="url+row.item.logo" width="70px" />
             </template>
             <template v-slot:cell(Action)="row">
               <a
@@ -286,6 +286,8 @@
 import AddSchedule from "./AddSchedule";
 import EditSchedule from "../schedule/EditSchedule";
 import Rank from "./Rank";
+import { ENV } from '@/config/env.js' 
+
 
 export default {
   components: {
@@ -295,6 +297,7 @@ export default {
   },
   data() {
     return {
+      url:ENV.BASE_IMAGE,
       textTitleSchedule: "",
       selectedStatus: null,
       rowsSchedule: "",

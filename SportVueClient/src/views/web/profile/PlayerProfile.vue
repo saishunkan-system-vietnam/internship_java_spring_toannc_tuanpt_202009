@@ -121,6 +121,8 @@
   </v-row>
 </template>
 <script>
+import { ENV } from '@/config/env.js' 
+
 export default {
   data: () => ({
     items: [
@@ -212,7 +214,7 @@ export default {
     },
     handleRowClick(item) {
       var myWindow = window.open(
-        "http://localhost:8080/detail/" + item.idSchedule,
+       ENV.BASE_NETWORK+"/detail/" + item.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );

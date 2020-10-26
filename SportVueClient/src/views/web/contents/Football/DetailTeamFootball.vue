@@ -4,7 +4,7 @@
       <v-icon large color="green darken-2"> mdi-soccer </v-icon>
       <b-row>
         <b-col cols="12" sm="2">
-          <v-img height="100" width="100" :src="team.logo"> </v-img>
+          <v-img height="100" width="100" :src="url+team.logo"> </v-img>
         </b-col>
         <b-col
           cols="12"
@@ -299,7 +299,7 @@
                   >
                     <td class="text-center">
                       <v-avatar class="profile" color="grey" size="70" tile>
-                        <v-img :src="item.avatar"></v-img>
+                        <v-img :src="url+item.avatar"></v-img>
                       </v-avatar>
                     </td>
                     <td class="text-center">{{ item.name }}</td>
@@ -317,9 +317,12 @@
   </v-card>
 </template>
 <script>
+import { ENV } from '@/config/env.js' 
+
 export default {
   data() {
     return {
+      url:ENV.BASE_IMAGE,
       tab: null,
       team: "",
       results: "",
@@ -357,7 +360,7 @@ export default {
     },
     detail(data) {
       var myWindow = window.open(
-        "http://localhost:8080/detail/" + data.idSchedule,
+       ENV.BASE_NETWORK+"/detail/" + data.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );

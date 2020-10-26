@@ -94,7 +94,7 @@
           </template>
           <template v-slot:[`item.avatar`]="{ item }">
             <b-img
-              :src="item.avatar"
+              :src="url+item.avatar"
               alt=""
               class="fixImg1"
               style="margin: 5px 0 5px 0"
@@ -155,12 +155,14 @@
 <script>
 import EditTeam from "@/views/admin/team/EditTeam";
 import ListMember from "@/views/admin/members/ListMember";
+import { ENV } from '@/config/env.js' 
 
 export default {
   components: { EditTeam, ListMember },
 
   data() {
     return {
+      url:ENV.BASE_IMAGE,
       success: false,
       dialogConfirm: false,
       dialogEditTeam: false,

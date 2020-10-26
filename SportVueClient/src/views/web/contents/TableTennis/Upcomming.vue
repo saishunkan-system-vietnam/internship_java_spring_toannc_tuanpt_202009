@@ -98,6 +98,8 @@
   </div>
 </template>
 <script>
+import { ENV } from '@/config/env.js' 
+
 export default {
   data() {
     return {
@@ -116,7 +118,7 @@ export default {
   methods: {
     detail(data) {
       var myWindow = window.open(
-        "http://localhost:8080/detail/" + data.idSchedule,
+       ENV.BASE_NETWORK+"/detail/" + data.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );

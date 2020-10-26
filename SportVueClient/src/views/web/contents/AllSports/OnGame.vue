@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import { ENV } from "@/config/env.js";
+
 export default {
   data() {
     return {
@@ -109,7 +111,7 @@ export default {
       this.detailScore = item;
       this.open = true;
       var myWindow = window.open(
-        "http://localhost:8080/detail/" + item.idSchedule,
+        ENV.BASE_NETWORK + "/detail/" + item.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );
@@ -117,7 +119,7 @@ export default {
     handleRowClick(item) {
       alert(item);
       var myWindow = window.open(
-        "http://localhost:8080/detail/" + item.idSchedule,
+        ENV.BASE_NETWORK + "/detail/" + item.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );
@@ -127,13 +129,13 @@ export default {
 </script>
 
 <style>
-  .v-expansion-panel-content {
-    padding: 0 !important;
-  }
+.v-expansion-panel-content {
+  padding: 0 !important;
+}
 </style>
 
 <style lang="css" scoped>
-  .row-pointer >>> tbody tr :hover {
-    cursor: pointer;
-  }
+.row-pointer >>> tbody tr :hover {
+  cursor: pointer;
+}
 </style>

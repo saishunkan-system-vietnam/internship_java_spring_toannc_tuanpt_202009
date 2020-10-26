@@ -164,7 +164,7 @@ export default {
       }
     },
     baseUrl(){
-      return ENV.BASE_IMAGE;
+      return ENV.BASE_URL;
     }
   },
   watch: {},
