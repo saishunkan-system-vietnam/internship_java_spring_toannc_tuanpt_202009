@@ -89,14 +89,18 @@ export default {
   methods: {
     recivceData() {
       let self = this;
+      this.$store.commit("auth/auth_overlay");
       this.$store.dispatch("tournament/getToursByType").then((res) => {
+        this.$store.commit("auth/auth_overlay");
         self.tournaments = res.data;
         // console.log(self.tournaments);
       });
     },
     recivceRank() {
       let self = this;
+      this.$store.commit("auth/auth_overlay");
       this.$store.dispatch("tournament/rankAll").then((res) => {
+        this.$store.commit("auth/auth_overlay");
         self.rank = res.data;
       });
     },

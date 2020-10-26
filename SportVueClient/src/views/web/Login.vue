@@ -85,7 +85,7 @@ export default {
       type: Function,
     },
   },
-  
+
   data() {
     return {
       valid: false,
@@ -99,7 +99,16 @@ export default {
       usernameRules: [(v) => !!v || "Username is required"],
       passwordRules: [(v) => !!v || "Password is required"],
       email: "",
-      emailRules: [(v) => !!v || "Email is required"],
+      isEmailNotFound: false,
+      emailRules: [
+        (v) => !!v || "Email is required",
+        (v) => {
+          let inValid = /\s/;
+          let k = inValid.test(v);
+          return !inValid.test(v) || "E-mail can not have white space";
+        },
+        (v) => !!/.+@.+/.test(v) || "E-mail must be valid",
+      ],
     };
   },
 
@@ -109,25 +118,6 @@ export default {
     },
     isLoggedIn: function () {
       return this.$store.getters.isLoggedIn;
-    },
-  },
-
-  watch: {
-    email() {
-      this.emailRules = [
-        (v) => {
-          if (!!!v) {
-            return false || "E-mail is required";
-          }
-          if (!/.+@.+/.test(v)) {
-            return false || "E-mail must be valid";
-          }
-          if (v.indexOf(" ") > -1) {
-            return false || "E-mail can not have white space";
-          }
-          return true;
-        },
-      ];
     },
   },
 
@@ -193,15 +183,18 @@ export default {
       } else {
         this.$store.commit("auth/auth_overlay");
         let self = this;
+        self.closeLoginDialog();
         this.$store
           .dispatch("user/forgetEmail", this.email)
           .then((res) => {
             if (res.data.code === 9999 && res.data.payload != null) {
               this.$store.commit("auth/auth_overlay");
-              self.emailRules = [(v) => !self.email || "Email was not found"];
-            } else if (res.data.code === 0) {
               self.closeLoginDialog();
+              alert("Email not found");
+            } else if (res.data.code === 0) {
+              self.loginForm = true;
               this.$store.commit("auth/auth_overlay");
+              alert("Recive email success")
             } else {
               alert("Failed to action!!!!");
             }
