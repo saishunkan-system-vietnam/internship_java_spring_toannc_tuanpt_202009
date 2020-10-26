@@ -198,7 +198,7 @@
         ></b-img>
         <br />
         <h5>Video</h5>
-        <video controls :src="schedule.video" style="max-width: 50%"></video>
+        <video controls :src="url+schedule.video" style="max-width: 50%"></video>
       </div>
     </b-container>
   </div>

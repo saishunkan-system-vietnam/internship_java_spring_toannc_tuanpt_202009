@@ -8,8 +8,7 @@
       <v-container>
         <p>Defaut Account:</p>
         <p>1. admin - admin (Role_admin)</p>
-        <p>2. (Role Member)</p>
-        <p>3. (Role User)</p>
+        <p>2. manuelneuer522100 - 123456789(Role Member)</p>
         <h6
           style="color: red"
           align="center"
@@ -21,7 +20,7 @@
         <form @submit.prevent="login">
           <v-text-field
             v-model="user.username"
-            label="Email"
+            label="Username"
             required
           ></v-text-field>
           <v-text-field

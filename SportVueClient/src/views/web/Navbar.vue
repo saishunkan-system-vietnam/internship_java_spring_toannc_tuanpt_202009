@@ -23,7 +23,7 @@
                   <p class="pt-4 pr-2">{{ profile.profile.name }}</p>
                   <v-card
                     class="portrait mt-2"
-                    :img="profile.profile.avatar"
+                    :img="url+profile.profile.avatar"
                     height="40"
                     width="40"
                     v-bind="attrs"
@@ -65,7 +65,7 @@
                   <p class="pt-4 pr-2">{{ profile.profile.name }}</p>
                   <v-card
                     class="portrait mt-2"
-                    :img="profile.profile.avatar"
+                    :img="url+profile.profile.avatar"
                     height="40"
                     width="40"
                     v-bind="attrs"
@@ -162,6 +162,7 @@ import Login from "@/views/web/Login.vue";
 import store from "@/store";
 import MemberProfile from "@/views/web/profile/MemberProfile";
 import UserProfile from "@/views/web/profile/UserProfile";
+import { ENV } from '@/config/env.js' 
 
 export default {
   name: "navbar",
@@ -173,6 +174,7 @@ export default {
   },
   data() {
     return {
+      url:ENV.BASE_IMAGE,
       modalMember: false,
       modalUser: false,
       LoginDialog: false,
