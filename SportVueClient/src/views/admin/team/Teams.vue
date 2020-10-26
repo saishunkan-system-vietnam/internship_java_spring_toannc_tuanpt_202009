@@ -86,7 +86,7 @@
 
 <script>
 import axios from "axios";
-import { ENV } from '@/config/env.js' 
+import { ENV } from "@/config/env.js";
 
 export default {
   data() {
@@ -135,6 +135,7 @@ export default {
       ],
     };
   },
+
   mounted() {
     let self = this;
     this.isLoading = true;
@@ -157,17 +158,19 @@ export default {
         // console.log(error);
       });
   },
+  
   computed: {
     searchTrigger() {
       if (this.search.length >= 3) {
         return this.search;
       }
     },
-    baseUrl(){
+    
+    baseUrl() {
       return ENV.BASE_IMAGE;
-    }
+    },
   },
-  watch: {},
+
   methods: {
     editTeam(item) {
       // console.log(item);
