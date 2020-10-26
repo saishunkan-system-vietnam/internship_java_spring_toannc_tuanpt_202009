@@ -82,7 +82,7 @@ export default {
     source: String,
   },
   data: () => ({
-    drawer: null,
+    drawer: false,
   }),
   methods: {
     logout: function () {

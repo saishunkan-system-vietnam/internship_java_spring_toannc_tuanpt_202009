@@ -17,7 +17,7 @@
                       <img
                         :src="
                           avatar != ''
-                            ? avatar
+                            ? url+avatar
                             : 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png'
                         "
                       />
@@ -146,9 +146,12 @@
   </div>
 </template>
 <script>
+import { ENV } from '@/config/env.js' 
+
 export default {
   data() {
     return {
+      url:ENV.BASE_IMAGE,
       data: {},
       avatar: "",
       itemlinks: [

@@ -9,7 +9,7 @@
           sm="3"
           md="3"
           class="portrait mt-2 ml-4"
-          :img="player.avatar"
+          :img="url + player.avatar"
           height="120"
           width="120"
         ></v-card>
@@ -25,7 +25,7 @@
         <v-card
           style="margin-right: 15px"
           class="portrait mt-2"
-          :img="player.team != null ? player.team.logo : ''"
+          :img="player.team != null ? url + player.team.logo : ''"
           height="120"
           width="120"
         >
@@ -114,31 +114,21 @@
           </p>
           <p class="mb-0" v-else>{{ item.nameTeam2 }}</p>
         </template>
-       
       </v-data-table>
     </v-col>
     <v-col cols="12" sm="1" md="1"></v-col>
   </v-row>
 </template>
 <script>
-import { ENV } from '@/config/env.js' 
+import { ENV } from "@/config/env.js";
 
 export default {
   data: () => ({
+    url: ENV.BASE_IMAGE,
     items: [
       {
         text: "Sport",
         disabled: false,
-        href: "/",
-      },
-      {
-        text: "Team",
-        disabled: false,
-        href: "/",
-      },
-      {
-        text: "Player",
-        disabled: true,
         href: "/",
       },
     ],
@@ -172,7 +162,19 @@ export default {
     player: {},
   }),
   mounted() {
-    console.log(this.$route.params)
+    console.log(this.$route);
+    this.items.push(
+      {
+        text: "Team",
+        disabled: false,
+        href: `/DetailTeam`+this.$route.query.type+`/`+`${this.$route.query.idTeam}`,
+      },
+      {
+        text: "Player",
+        disabled: true,
+        href: "/",
+      }
+    );
     this.historyMemberMatchs(this.$route.params.id);
     this.playerInfo(this.$route.params.id);
     this.upcommingMemberMatchs(this.$route.params.id);
@@ -214,7 +216,7 @@ export default {
     },
     handleRowClick(item) {
       var myWindow = window.open(
-       ENV.BASE_NETWORK+"/detail/" + item.idSchedule,
+        ENV.BASE_NETWORK + "/detail/" + item.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );

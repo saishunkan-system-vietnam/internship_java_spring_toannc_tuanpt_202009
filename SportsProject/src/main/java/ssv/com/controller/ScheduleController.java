@@ -86,7 +86,7 @@ public class ScheduleController {
 
 	@PostMapping(value = "editShedule")
 	public ResponseEntity<String> editShedule(@RequestBody Schedule schedule) {
-		String check = scheduleService.checkTime(schedule.getTimeStart(), schedule.getTimeEnd(), schedule.getIdTour());
+		String check = scheduleService.checkTimeEdit(schedule.getTimeStart(), schedule.getTimeEnd(), schedule.getIdTour());
 		if (check == null) {
 			if (scheduleService.getById(schedule.getIdSchedule()).getStatus() == 0) {
 				scheduleService.editShedule(schedule);

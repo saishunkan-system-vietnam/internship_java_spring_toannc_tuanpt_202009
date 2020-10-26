@@ -44,7 +44,7 @@ public class ScheduleService {
 								&& timeStart.compareTo(schedule.getTimeStart()) >= 0)
 								|| ((timeEnd.compareTo(schedule.getTimeEnd()) <= 0
 										&& timeEnd.compareTo(schedule.getTimeStart()) >= 0))) {
-							return "Out of range  "+schedule.getTimeStart()+"and" + schedule.getTimeEnd();
+							return "Out of range  " + schedule.getTimeStart() + "and" + schedule.getTimeEnd();
 						}
 					}
 				}
@@ -164,31 +164,64 @@ public class ScheduleService {
 	}
 
 	public int totalGoalds(int idTeam, int idTour) {
-		List<Schedule> schedules=scheduleReponsitory.findTeamTournament(idTeam,idTour);
-		int total=0;
+		List<Schedule> schedules = scheduleReponsitory.findTeamTournament(idTeam, idTour);
+		int total = 0;
 		for (Schedule schedule : schedules) {
-			if(schedule.getTeam().get(0).getIdTeam()==idTeam) {
-				total=total+schedule.getScoreTeam1();
+			if (schedule.getTeam().get(0).getIdTeam() == idTeam) {
+				total = total + schedule.getScoreTeam1();
 			}
-			if(schedule.getTeam().get(1).getIdTeam()==idTeam) {
-				total=total+schedule.getScoreTeam2();
+			if (schedule.getTeam().get(1).getIdTeam() == idTeam) {
+				total = total + schedule.getScoreTeam2();
 			}
 		}
 		return total;
 	}
 
 	public int totalGoalsType(int idTeam) {
-		List<Schedule> schedules=scheduleReponsitory.findTeam(idTeam);
-		int total=0;
+		List<Schedule> schedules = scheduleReponsitory.findTeam(idTeam);
+		int total = 0;
 		for (Schedule schedule : schedules) {
-			if(schedule.getTeam().get(0).getIdTeam()==idTeam) {
-				total=total+schedule.getScoreTeam1();
+			if (schedule.getTeam().get(0).getIdTeam() == idTeam) {
+				total = total + schedule.getScoreTeam1();
 			}
-			if(schedule.getTeam().get(1).getIdTeam()==idTeam) {
-				total=total+schedule.getScoreTeam2();
+			if (schedule.getTeam().get(1).getIdTeam() == idTeam) {
+				total = total + schedule.getScoreTeam2();
 			}
 		}
 		return total;
+	}
+
+	public String checkTimeEdit(Date timeStart, Date timeEnd, int idTour) {
+		Tournament tournament = tournamentService.getById(idTour);
+		if (tournament.getTimeEnd().compareTo(timeEnd) > 0 && tournament.getTimeStart().compareTo(timeStart) < 0) {
+			List<Schedule> list = scheduleReponsitory.getByIdTour(idTour);
+			if (scheduleReponsitory.findTeamByDate(timeEnd, timeStart) != null) {
+				Schedule scheduleExit = scheduleReponsitory.findTeamByDate(timeEnd, timeStart);
+				for (int i = 0; i < list.size(); i++) {
+					if (scheduleExit.getIdSchedule() == list.get(i).getIdSchedule()) {
+						list.remove(i);
+						break;
+					}
+					;
+				}
+			}
+			if (timeEnd.compareTo(timeStart) > 0) {
+				if (list.isEmpty()) {
+					return null;
+				} else {
+					for (Schedule schedule : list) {
+						if ((timeStart.compareTo(schedule.getTimeEnd()) <= 0
+								&& timeStart.compareTo(schedule.getTimeStart()) >= 0)
+								|| ((timeEnd.compareTo(schedule.getTimeEnd()) <= 0
+										&& timeEnd.compareTo(schedule.getTimeStart()) >= 0))) {
+							return "Out of range  " + schedule.getTimeStart() + " and " + schedule.getTimeEnd();
+						}
+					}
+				}
+				return null;
+			}
+		}
+		return "Past tournament time";
 	}
 
 }
