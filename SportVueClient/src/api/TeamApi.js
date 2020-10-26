@@ -3,12 +3,15 @@ import Api from './BaseApi';
 export function teamTourHistory(data){
     return Api.get('/team/teamTourHistory',{params:{idTour:data.idTour,idTeam:data.idTeam}});
 }
+
 export function detail(params){
     return Api.get('/team/detail',params);
 }
+
 export function teamWait(type){
     return Api.get('/team/teamWait',{params:{type:type}});
 }
+
 export function getById(id){
     return Api.get('/team/findDetail/'+id);
 }
@@ -32,6 +35,7 @@ export function getTeam(id){
 export function createTeam(teamForm){
     return Api.post('/team/createTeam', teamForm)
 }
+
 export function getAll(){
     return Api.get('/team/getAll')
 }

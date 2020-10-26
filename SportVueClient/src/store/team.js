@@ -1,4 +1,4 @@
-import { createTeam, updateTeam, updateMembersInTeam, findTeamAndMembers, detail, teamTourHistory, teamWait, getById, getTeam,getAll } from "../api/TeamApi";
+import {createTeam, updateTeam, updateMembersInTeam, findTeamAndMembers, detail, teamTourHistory, teamWait, getById, getTeam,getAll } from "../api/TeamApi";
 
 const state = {
     idTeam: '',
@@ -83,9 +83,9 @@ const actions = {
         })
     },
 
-    updateTeam({ }, id, data) {
+    updateTeam({ }, { id, formRequest }) {
         return new Promise((resolve, reject) => {
-            updateTeam(id, data).then((res) => {
+            updateTeam(id, formRequest).then((res) => {
                 resolve(res);
             }).catch((err) => {
                 reject(err);
@@ -111,7 +111,7 @@ const actions = {
                 reject(err);
             })
         })
-    }
+    },
 }
 
 export default {
