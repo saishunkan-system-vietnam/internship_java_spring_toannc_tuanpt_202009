@@ -79,7 +79,7 @@ export default {
     tab: null,
     tournaments: [],
     rank: [],
-    panel: [1,2,3,4,5,6,7,8,9,10],
+    panel: [],
   }),
   created() {
     this.recivceData();
@@ -91,6 +91,7 @@ export default {
       let self = this;
       this.$store.dispatch("tournament/getToursByType").then((res) => {
         self.tournaments = res.data;
+        // console.log(self.tournaments);
       });
     },
     recivceRank() {

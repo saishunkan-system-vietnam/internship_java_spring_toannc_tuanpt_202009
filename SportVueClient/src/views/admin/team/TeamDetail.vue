@@ -6,7 +6,7 @@
       </template>
     </v-breadcrumbs>
     <v-card class="mx-auto my-12 container">
-      <v-img height="300" :src="team.logo"></v-img>
+      <v-img height="300" :src="baseUrl + team.logo"></v-img>
       <v-row>
         <v-card-title
           ><h1>{{ team.nameTeam }}</h1></v-card-title
@@ -66,7 +66,7 @@
                 :addedMember="addedMember"
                 :updateTeam="updateTeam"
                 :idTeam="parseInt($route.params.id)"
-                :teamProps = "team"
+                :teamProps="team"
               />
               <v-divider class="mx-4" inset vertical></v-divider>
               <v-spacer></v-spacer>
@@ -94,24 +94,30 @@
           </template>
           <template v-slot:[`item.avatar`]="{ item }">
             <b-img
-              :src="item.avatar"
+              :src="baseUrl + item.avatar"
               alt=""
               class="fixImg1"
               style="margin: 5px 0 5px 0"
             />
           </template>
 
-
-          <template  v-slot:[`item.idTeam`]="{ item }">
-
-            <v-btn v-if="team.idTour == 0" @click="removeMember(item)" small>Remove</v-btn>
+          <template v-slot:[`item.idTeam`]="{ item }">
+            <v-btn v-if="team.idTour == 0" @click="removeMember(item)" small
+              >Remove</v-btn
+            >
           </template>
         </v-data-table>
       </v-card-text>
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn v-if="team.idTour == 0" color="primary" dark class="ma-2" @click="dialogConfirm = true">
+        <v-btn
+          v-if="team.idTour == 0"
+          color="primary"
+          dark
+          class="ma-2"
+          @click="dialogConfirm = true"
+        >
           Confirm List
         </v-btn>
       </v-card-actions>
@@ -155,6 +161,7 @@
 <script>
 import EditTeam from "@/views/admin/team/EditTeam";
 import ListMember from "@/views/admin/members/ListMember";
+import { ENV } from "@/config/env.js";
 
 export default {
   components: { EditTeam, ListMember },
@@ -207,10 +214,18 @@ export default {
       ],
     };
   },
+
   mounted() {
     this.loadListMember(this.$route.params.id);
     this.loadTeamById(this.$route.params.id);
   },
+
+  computed: {
+    baseUrl() {
+      return ENV.BASE_IMAGE;
+    },
+  },
+  
   methods: {
     isOpenModalMember: function () {
       this.dialogCreateMember = !this.dialogCreateMember;

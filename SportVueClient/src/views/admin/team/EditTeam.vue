@@ -92,7 +92,7 @@
     </v-container>
 
     <v-dialog persistent v-model="dialogSuccess" max-width="500">
-      <template >
+      <template>
         <v-alert class="mb-0" type="success"> Update Success! </v-alert>
       </template>
     </v-dialog>
@@ -111,9 +111,9 @@ export default {
     removeMember: {
       type: Function,
     },
-    loadTeamById:{
-      type: Function
-    }
+    loadTeamById: {
+      type: Function,
+    },
   },
   data() {
     return {
@@ -189,9 +189,6 @@ export default {
         teamForm.append("type", this.selectedType);
         teamForm.append("description", this.description);
         teamForm.append("file", this.fileImage);
-        // for (var value of teamForm.values()) {
-        //   console.log(value);
-        // }
         if (teamForm.get("type") != self.teamProps.type) {
           self.teamProps.profile.forEach((member) => {
             member.idTeam = 0;
@@ -199,13 +196,17 @@ export default {
           });
           this.removeMembers(self.teamProps);
         }
-        axios
-          .post(`http://localhost:8090/api/v1/team/updateInfo/${id}`, teamForm)
+        console.log(teamForm)
+        this.$store
+          .dispatch("team/updateTeam", {
+            id: id,
+            formRequest: teamForm
+          })
           .then((res) => {
             self.dialogSuccess = !self.dialogSuccess;
             self.openEditTeam();
             setTimeout(function () {
-              self.loadTeamById(self.teamProps.idTeam)
+              self.loadTeamById(self.teamProps.idTeam);
               self.dialogSuccess = !self.dialogSuccess;
             }, 1500);
           })
