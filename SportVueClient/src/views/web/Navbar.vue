@@ -23,7 +23,7 @@
                   <p class="pt-4 pr-2">{{ profile.profile.name }}</p>
                   <v-card
                     class="portrait mt-2"
-                    :img="url+profile.profile.avatar"
+                    :img="baseUrl + profile.profile.avatar"
                     height="40"
                     width="40"
                     v-bind="attrs"
@@ -44,9 +44,9 @@
                   </v-list-item>
                   <v-list-item>
                     <v-list-item-title
-                      ><div class="fixButton row-pointer" @click="logout"
-                        >Logout</div
-                      ></v-list-item-title
+                      ><div class="fixButton row-pointer" @click="logout">
+                        Logout
+                      </div></v-list-item-title
                     >
                   </v-list-item>
                 </v-list>
@@ -164,6 +164,7 @@ import MemberProfile from "@/views/web/profile/MemberProfile";
 import UserProfile from "@/views/web/profile/UserProfile";
 import { ENV } from '@/config/env.js' 
 
+
 export default {
   name: "navbar",
   components: {
@@ -183,9 +184,14 @@ export default {
     };
   },
   computed: {
+    baseUrl() {
+      return ENV.BASE_IMAGE;
+    },
+
     isProfile: function () {
       return this.$store.state.user.isProfile;
     },
+
     isAdminProfile: function () {
       return this.$store.state.user.isAdminProfile;
     },
@@ -255,10 +261,10 @@ export default {
 </script>
 
 <style lang="css">
-  .v-list-item .row-pointer:hover {
-    cursor: pointer;
-  }
-  .fixButton {
-    background: white !important;
-  }
+.v-list-item .row-pointer:hover {
+  cursor: pointer;
+}
+.fixButton {
+  background: white !important;
+}
 </style>

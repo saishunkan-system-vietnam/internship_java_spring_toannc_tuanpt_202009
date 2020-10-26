@@ -226,7 +226,7 @@ export default {
       return ENV.BASE_IMAGE;
     },
   },
-  
+
   methods: {
     isOpenModalMember: function () {
       this.dialogCreateMember = !this.dialogCreateMember;
