@@ -77,20 +77,6 @@ const actions = {
             resolve()
         })
     },
-
-    getMembers({ commit }) {
-        // console.log("Run this")
-        return new Promise((resolve, reject) => {
-            getListMember().then(res => {
-                // console.log("Run ")
-                // console.log(res.data);
-                resolve(res);
-            })
-                .catch((err) => {
-                    reject(err);
-                })
-        })
-    }
 }
 
 const getters = {

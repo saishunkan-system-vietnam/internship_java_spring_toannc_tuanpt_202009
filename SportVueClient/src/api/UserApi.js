@@ -7,6 +7,7 @@ export function login(user) {
 export function userRegister(register) {
     return Api.post('/account/signup', register);
 }
+
 export function searchUser(params) {
     return Api.get('/account/search', {
         params: {
@@ -17,9 +18,11 @@ export function searchUser(params) {
         },
     })
 }
-export function getAll(){
+
+export function getAll() {
     return Api.get('/account/getAll')
 }
+
 export function getById(id) {
     return Api.get('/account/getById/' + id);
 }
@@ -27,10 +30,16 @@ export function getById(id) {
 export function autoLogin() {
     return Api.post('/account/autoLogin');
 }
-export function updateProfileUser(bodyFormData){
-    return Api.post('/profiles/update',bodyFormData)
+
+export function updateProfileUser(bodyFormData) {
+    return Api.post('/profiles/update', bodyFormData)
 }
-export function findByEmailUser(email){
-    return Api.get('/account/getByMail',{params:{email:email}})
+
+export function findByEmailUser(email) {
+    return Api.get('/account/getByMail', { params: { email: email } })
+}
+
+export function forgetEmail(email) {
+    return Api.post(`/account/forget/${email}`)
 }
 

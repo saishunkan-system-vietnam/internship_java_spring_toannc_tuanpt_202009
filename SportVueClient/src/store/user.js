@@ -1,5 +1,5 @@
 import { searchUser } from '@/api/UserApi'
-import { findByEmailUser, getAll, getById, updateProfileUser } from '../api/UserApi';
+import { forgetEmail, findByEmailUser, getAll, getById, updateProfileUser } from '../api/UserApi';
 import { autoLogin } from '../api/UserApi'
 import { findByEmail, historyMemberMatchs, upcommingMemberMatchs } from '../api/MemberApi'
 import { getPlayerId } from '../api/MemberApi'
@@ -33,7 +33,7 @@ const actions = {
             })
         })
     },
-    
+
     getAll({ }) {
         return new Promise((resolve, reject) => {
             getAll().then(res => {
@@ -53,7 +53,7 @@ const actions = {
             })
         })
     },
-    
+
     autoLogin({ commit },) {
         return new Promise((resolve, reject) => {
             autoLogin().then((res) => {
@@ -144,6 +144,17 @@ const actions = {
             })
         })
     },
+
+    forgetEmail({ }, email) {
+        return new Promise((resolve, reject) => {
+            forgetEmail(email).then(res => {
+                resolve(res);
+            }).catch((err) => {
+                reject(err);
+            })
+        })
+    },
+
 }
 
 export default {
