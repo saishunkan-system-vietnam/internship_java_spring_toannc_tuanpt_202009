@@ -51,8 +51,8 @@
                     </td>
                     <td>
                       <v-row>
-                        <v-col>{{ item.team[0].nameTeam }}</v-col>
-                        <v-col
+                        <v-col class="text-center">{{ item.team[0].nameTeam }}</v-col>
+                        <v-col class="text-center"
                           >{{
                             item.status == 2 && item.video != null
                               ? item.scoreTeam1
@@ -64,7 +64,7 @@
                               :  " "
                           }}</v-col
                         >
-                        <v-col>{{ item.team[1].nameTeam }}</v-col>
+                        <v-col class="text-center">{{ item.team[1].nameTeam }}</v-col>
                       </v-row>
                     </td>
                   </template>
@@ -92,6 +92,8 @@
   </div>
 </template>
 <script>
+import { ENV } from '@/config/env.js' 
+
 export default {
   data() {
     return {
@@ -110,7 +112,7 @@ export default {
   methods: {
     detail(data) {
       var myWindow = window.open(
-        "http://localhost:8080/detail/" + data.idSchedule,
+       ENV.BASE_NETWORK+"/detail/" + data.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );

@@ -18,7 +18,7 @@
         <v-img
           max-height="60"
           max-width="80"
-          :src="row.item.team.logo"
+          :src="url+row.item.team.logo"
         ></v-img>
       </template>
       <template v-slot:cell(rank)="row">
@@ -39,12 +39,14 @@
   </div>
 </template>
 <script>
+import { ENV } from '@/config/env.js' 
 export default {
   props: {
     idTour: String,
   },
   data() {
     return {
+      url:ENV.BASE_IMAGE,
       rows: "",
       rank: [],
       fields: [

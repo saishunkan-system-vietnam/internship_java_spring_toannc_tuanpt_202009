@@ -14,7 +14,7 @@
       <span style="cursor: pointer">
         <a
           :href="
-            'http://localhost:8080/DetailTournament' +
+            'http://192.168.10.117:8080/DetailTournament' +
             this.type +
             '/' +
             data.idTour
@@ -41,14 +41,14 @@
         <v-col class="text-center"
           ><b-img
             center
-            :src="!!data ? data.team[0].logo : ''"
+            :src="!!data ? url+data.team[0].logo : ''"
             style="width: 100px"
             alt="Center image"
           ></b-img>
           <button>
             <a
               :href="
-                'http://localhost:8080/DetailTeamFootball/' +
+                'http://192.168.10.117:8080/DetailTeamFootball/' +
                 data.team[0].idTeam
               "
               @click="windowClose"
@@ -77,14 +77,14 @@
         <v-col class="text-center"
           ><b-img
             center
-            :src="!!data ? data.team[1].logo : ''"
+            :src="!!data ? url+ data.team[1].logo : ''"
             style="width: 100px"
             alt="Center image"
           ></b-img>
           <button class="text-center">
             <a
               :href="
-                'http://localhost:8080/DetailTeamFootball/' +
+                'http://192.168.10.117:8080/DetailTeamFootball/' +
                 data.team[1].idTeam
               "
               target="_blank"
@@ -320,7 +320,7 @@
                                   <td>
                                     <a
                                       :href="
-                                        'http://localhost:8080/PlayerProfile/' +
+                                        'http://192.168.10.117:8080/PlayerProfile/' +
                                         item.id
                                       "
                                       target="_blank"
@@ -363,7 +363,7 @@
                                     <td>
                                     <a
                                       :href="
-                                        'http://localhost:8080/PlayerProfile/' +
+                                        'http://192.168.10.117:8080/PlayerProfile/' +
                                         item.id
                                       "
                                       target="_blank"
@@ -395,7 +395,7 @@
                                     <b-row>
                                       <b-col class="text-center"
                                         ><b-img
-                                          :src="team1.logo"
+                                          :src="url+team1.logo"
                                           size="6rem"
                                         ></b-img
                                       ></b-col>
@@ -414,7 +414,7 @@
                                       >
                                       <b-col class="text-center"
                                         ><b-img
-                                          :src="team2.logo"
+                                          :src="url+team2.logo"
                                           size="6rem"
                                         ></b-img
                                       ></b-col>
@@ -505,7 +505,7 @@
                   lazy-src="https://www.westernheights.k12.ok.us/wp-content/uploads/2020/01/No-Photo-Available.jpg"
                   max-height="150"
                   max-width="250"
-                  :src="data.image"
+                  :src="url+data.image"
                 ></v-img>
               </v-card-text>
             </v-card>
@@ -514,7 +514,7 @@
             <v-card flat style="min-height: 500px">
               <v-card-text>
                 <div v-if="data.video != null">
-                  <video controls :src="data.video" width="550px"></video>
+                  <video controls :src="url+data.video" width="550px"></video>
                 </div>
                 <b-img
                   src="https://torshizitrade.com/wp-content/uploads/2019/01/no-video.jpg"
@@ -528,9 +528,12 @@
   </div>
 </template>
 <script>
+import { ENV } from '@/config/env.js' 
+
 export default {
   data() {
     return {
+      url:ENV.BASE_IMAGE,
       tab: null,
       data: "",
       tabb: null,
@@ -615,7 +618,7 @@ export default {
     },
     relatedMatch(id) {
       var myWindow = window.open(
-        "http://localhost:8080/detail/" + id,
+        "http://192.168.10.117:8080/detail/" + id,
         "myWindow",
         "width=600px,height=600"
       );

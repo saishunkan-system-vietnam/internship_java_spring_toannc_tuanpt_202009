@@ -118,7 +118,7 @@ export default {
       this.detailScore = data;
       this.open = true;
       var myWindow = window.open(
-        "http://localhost:8080/detail/" + data.idSchedule,
+        "http://192.168.10.117:8080/detail/" + data.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );

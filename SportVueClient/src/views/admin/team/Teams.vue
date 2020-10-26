@@ -165,6 +165,7 @@ export default {
       }
     },
 
+
     baseUrl() {
       return ENV.BASE_IMAGE;
     },

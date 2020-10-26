@@ -161,13 +161,14 @@
 <script>
 import EditTeam from "@/views/admin/team/EditTeam";
 import ListMember from "@/views/admin/members/ListMember";
-import { ENV } from "@/config/env.js";
+import { ENV } from '@/config/env.js' 
 
 export default {
   components: { EditTeam, ListMember },
 
   data() {
     return {
+      url:ENV.BASE_IMAGE,
       success: false,
       dialogConfirm: false,
       dialogEditTeam: false,

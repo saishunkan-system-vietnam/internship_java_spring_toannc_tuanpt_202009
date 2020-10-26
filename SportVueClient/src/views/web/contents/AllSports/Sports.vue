@@ -72,6 +72,8 @@
 </template>
 
 <script>
+import { ENV } from '@/config/env.js' 
+
 export default {
   data() {
     return {
@@ -106,14 +108,14 @@ export default {
       this.detailScore = item;
       this.open = true;
       var myWindow = window.open(
-        "http://localhost:8080/detail/" + item.idSchedule,
+        ENV.BASE_NETWORK+ "/detail/" + item.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );
     },
     handleRowClick(item) {
-      var myWindow = window.open(
-        "http://localhost:8080/detail/" + item.idSchedule,
+      var myWindow = window.open(ENV.BASE_NETWORK+
+        "/detail/" + item.idSchedule,
         "myWindow",
         "width=600px,height=600"
       );
