@@ -66,7 +66,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import ListMember from "@/views/admin/members/ListMember";
 
 export default {
@@ -118,8 +117,8 @@ export default {
   },
   mounted() {
     let self = this;
-    axios
-      .get("http://localhost:8090/api/v1/profiles/members")
+    this.$store
+      .dispatch("user/members")
       .then(function (response) {
         self.items = response.data;
       })

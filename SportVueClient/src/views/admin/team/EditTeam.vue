@@ -100,7 +100,6 @@
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
   props: {
@@ -196,11 +195,11 @@ export default {
           });
           this.removeMembers(self.teamProps);
         }
-        console.log(teamForm)
+        console.log(teamForm);
         this.$store
           .dispatch("team/updateTeam", {
             id: id,
-            formRequest: teamForm
+            formRequest: teamForm,
           })
           .then((res) => {
             self.dialogSuccess = !self.dialogSuccess;
