@@ -92,7 +92,6 @@ export default {
           }
         });
       console.log(a);
-
       a.forEach((element) => {
         if (element.status != 2) {
           this.schedule.push(element);

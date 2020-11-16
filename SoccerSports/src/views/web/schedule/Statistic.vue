@@ -13,7 +13,7 @@
                   <tr>
                     <th class="text-left">
                       <v-avatar size="50"
-                        ><img :src="Object.keys(schedule).length === 0?'':baseUrl + schedule.team[0].logo" alt="John"
+                      ><img :src="Object.keys(schedule).length === 0?'':baseUrl + schedule.team[0].logo" alt="John"
                       /></v-avatar>
                       {{ Object.keys(schedule).length === 0?'': schedule.team[0].nameTeam }}
                     </th>

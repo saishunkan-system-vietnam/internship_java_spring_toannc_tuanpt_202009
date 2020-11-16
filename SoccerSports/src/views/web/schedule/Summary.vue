@@ -1,10 +1,12 @@
 <template>
   <v-container>
+
     <v-row >
       <v-col cols="12" sm="2">
         <v-card>
           <v-tabs v-model="tab" >
             <v-tab v-for="item in items" :key="item" >
+
               {{ item }}
             </v-tab>
           </v-tabs>
@@ -178,6 +180,7 @@ export default {
         path: `/team/${item.idTeam}`,
         query: { idTab: 1 },
       });
+
     },
     getData() {
       this.$store.commit("auth/auth_overlay_true");
@@ -213,7 +216,6 @@ export default {
               .then((response) => {
                 if (response.data.code == 0) {
                   this.member1 = response.data.payload;
-               
                 }
               });
                this.$store
