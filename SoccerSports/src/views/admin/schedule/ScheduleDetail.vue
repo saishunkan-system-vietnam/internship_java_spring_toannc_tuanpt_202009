@@ -21,6 +21,7 @@
       >
       <h1 class="text-center">
         {{ Object.keys(schedule).length === 0?'':schedule.tournament.nameTournament  }}
+
       </h1>
       <h3 class="text-center">
         Time Start: {{ (new Date(Date.parse(schedule.timeStart)).toString().substring(0,21)) }}
@@ -29,18 +30,24 @@
       <div class="text-center">
         <v-avatar tile>
           <img
+
             :src="Object.keys(schedule).length === 0?'': baseUrl + schedule.team[0].logo "
+
             alt="John"
           />
         </v-avatar>
         <router-link
+
           :to="Object.keys(schedule).length === 0?'':{
+
             path: '/admin/team/detail/' + schedule.team[0].idTeam,
           }"
           style="text-decoration: none"
         >
           <h4 style="display: inline-block">
+
             {{ Object.keys(schedule).length === 0?'': schedule.team[0].nameTeam }}
+
           </h4></router-link
         >
         <v-avatar style="margin-left: 50px; margin-right: 50px">
@@ -48,19 +55,25 @@
         </v-avatar>
 
         <router-link
+
           :to="Object.keys(schedule).length === 0?'':{
+
             path: '/admin/team/detail/' + schedule.team[1].idTeam,
           }"
           style="text-decoration: none"
         >
           <h4 style="display: inline-block">
+
             {{ Object.keys(schedule).length === 0?'': schedule.team[1].nameTeam  }}
+
           </h4>
         </router-link>
 
         <v-avatar tile>
           <img
+
             :src="Object.keys(schedule).length === 0?'': baseUrl + schedule.team[1].logo"
+
             alt="John"
           />
         </v-avatar>
@@ -275,6 +288,7 @@ export default {
       dialogUpdate: false,
 
       schedule: {},
+
       linkScheduleDetail: [
         {
           text: "Dashboard",

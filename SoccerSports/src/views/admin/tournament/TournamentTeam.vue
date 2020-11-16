@@ -12,12 +12,14 @@
     <v-simple-table>
       <template v-slot:default>
         <thead>
+
           <tr >
             <th width="400px">Name</th>
             <th width="300px">Logo</th>
             <th width="200px">Total Member</th>
             <th >Description</th>
             <th width="100px">Action</th>
+
           </tr>
         </thead>
         <tbody>
@@ -39,10 +41,12 @@
               >
                 <v-icon small class="mr-2"> mdi-arrow-right-bold </v-icon>
               </router-link>
+
               <v-icon
                 style="cursor: pointer"
                 @click="deleteTeam(item)"
                 v-if="tournamentData.status == 0"
+
                 >mdi-delete</v-icon
               >
             </td>
@@ -54,10 +58,12 @@
       <v-card>
         <v-card-title class="headline"> Delete </v-card-title>
 
+
         <v-card-text>
           Warn: Will delete all of its matches
           <br />You definitely want to delete!
         </v-card-text>
+
 
         <v-card-actions>
           <v-spacer></v-spacer>

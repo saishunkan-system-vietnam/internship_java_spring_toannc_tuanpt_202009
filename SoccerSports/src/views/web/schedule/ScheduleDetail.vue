@@ -28,6 +28,7 @@
                         style="cursor: pointer"
                       >
                         {{Object.keys(schedule).length === 0?'':schedule.team[0].nameTeam }}
+
                       </h2>
                       <v-avatar size="50"
                         ><img
@@ -60,6 +61,7 @@
                 </v-row>
                 {{   Object.keys(schedule).length === 0?'':schedule.timeStart.substring(0, 10) }}<br />
                 {{   Object.keys(schedule).length === 0?'':schedule.timeStart.substring(11, 16) }}
+
               </v-col>
               <v-col
                 ><v-row
