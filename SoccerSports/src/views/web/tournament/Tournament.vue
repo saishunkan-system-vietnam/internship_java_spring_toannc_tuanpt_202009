@@ -150,6 +150,8 @@ export default {
       this.$store.commit("auth/auth_overlay_true");
       this.$store.dispatch("tournament/getAll").then((response) => {
         this.tournament = response.data.payload;
+              this.$store.commit("auth/auth_overlay_false");
+
       });
     },
   },

@@ -7,14 +7,14 @@
             style="font-family: times; color: blue; cursor: pointer"
             @click="detailTournament(schedule.tournament.idTournament)"
           >
-            {{ schedule.tournament.nameTournament }}
+            {{ Object.keys(schedule).length === 0?'':schedule.tournament.nameTournament }}
           </h1>
         </v-card>
         <v-row style="margin-top: 40px">
           <v-col class="text-center" cols="12" sm="3">
             <v-avatar size="128" tile
               ><img
-                :src="!!schedule ? baseUrl + schedule.team[0].logo : ''"
+                :src="Object.keys(schedule).length === 0?'': baseUrl + schedule.team[0].logo "
                 alt="Logo" /></v-avatar
           ></v-col>
           <v-col>
@@ -27,19 +27,20 @@
                         @click="detailTeam(schedule.team[0])"
                         style="cursor: pointer"
                       >
-                        {{ !!schedule ? schedule.team[0].nameTeam : "" }}
+                        {{Object.keys(schedule).length === 0?'':schedule.team[0].nameTeam }}
+
                       </h2>
                       <v-avatar size="50"
                         ><img
                           :src="
-                            !!schedule ? baseUrl + schedule.team[0].logo : ''
+                           Object.keys(schedule).length === 0?'':baseUrl + schedule.team[0].logo
                           "
                           alt="Logo" /></v-avatar
                     ></v-row>
                     <span v-for="(item, i) in goal1" :key="i"
-                      >{{ item.profile.name }}({{
-                        item.time.substring(0, 5)
-                      }})</span
+                      >{{goal1.length>0?item.profile.name:'' }}({{
+                       goal1.length>0? item.time.substring(0, 5):''
+                      }})<br></span
                     >
                   </v-col></v-row
                 ></v-col
@@ -58,8 +59,9 @@
                     </h2></v-col
                   >
                 </v-row>
-                {{ schedule.timeStart.substring(0, 10) }}<br />
-                {{ schedule.timeStart.substring(11, 16) }}
+                {{   Object.keys(schedule).length === 0?'':schedule.timeStart.substring(0, 10) }}<br />
+                {{   Object.keys(schedule).length === 0?'':schedule.timeStart.substring(11, 16) }}
+
               </v-col>
               <v-col
                 ><v-row
@@ -68,7 +70,7 @@
                       <v-avatar size="50"
                         ><img
                           :src="
-                            !!schedule ? baseUrl + schedule.team[1].logo : ''
+                              Object.keys(schedule).length === 0?'': baseUrl + schedule.team[1].logo 
                           "
                           alt="Logo"
                       /></v-avatar>
@@ -76,13 +78,13 @@
                         @click="detailTeam(schedule.team[1])"
                         style="cursor: pointer"
                       >
-                        {{ !!schedule ? schedule.team[1].nameTeam : "" }}
+                        {{   Object.keys(schedule).length === 0?'': schedule.team[1].nameTeam  }}
                       </h2>
                     </v-row>
                     <span v-for="(item, i) in goal2" :key="i"
                       >{{ item.profile.name }}({{
                         item.time.substring(0, 5)
-                      }})</span
+                      }})<br></span
                     >
                   </v-col></v-row
                 ></v-col
@@ -92,7 +94,7 @@
           <v-col class="text-center" cols="12" sm="3">
             <v-avatar size="128" tile
               ><img
-                :src="!!schedule ? baseUrl + schedule.team[1].logo : ''"
+                :src="  Object.keys(schedule).length === 0?'': baseUrl + schedule.team[1].logo "
                 alt="Logo" /></v-avatar
           ></v-col>
         </v-row>

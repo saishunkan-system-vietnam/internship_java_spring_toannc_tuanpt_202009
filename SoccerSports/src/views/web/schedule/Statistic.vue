@@ -13,15 +13,15 @@
                   <tr>
                     <th class="text-left">
                       <v-avatar size="50"
-                        ><img :src="baseUrl + schedule.team[0].logo" alt="John"
+                      ><img :src="Object.keys(schedule).length === 0?'':baseUrl + schedule.team[0].logo" alt="John"
                       /></v-avatar>
-                      {{ !!schedule ? schedule.team[0].nameTeam : "" }}
+                      {{ Object.keys(schedule).length === 0?'': schedule.team[0].nameTeam }}
                     </th>
                     <th class="text-left" width="500px"></th>
                     <th class="text-right">
-                      {{ !!schedule ? schedule.team[1].nameTeam : ""
+                      {{ Object.keys(schedule).length === 0?'': schedule.team[1].nameTeam 
                       }}<v-avatar size="50"
-                        ><img :src="baseUrl + schedule.team[1].logo" alt="John"
+                        ><img :src="Object.keys(schedule).length === 0?'':baseUrl + schedule.team[1].logo" alt="John"
                       /></v-avatar>
                     </th>
                   </tr>
@@ -72,7 +72,7 @@
           <v-container>
             <b
               ><v-avatar size="50"
-                ><img :src="baseUrl + schedule.team[0].logo" alt="John"
+                ><img :src="Object.keys(schedule).length === 0?'':baseUrl + schedule.team[0].logo" alt="John"
               /></v-avatar>
               Form</b
             >
@@ -123,7 +123,7 @@
           <v-container>
             <b
               ><v-avatar size="50"
-                ><img :src="baseUrl + schedule.team[1].logo" alt="John"
+                ><img :src="Object.keys(schedule).length === 0?'':baseUrl + schedule.team[1].logo" alt="John"
               /></v-avatar>
               Form</b
             >

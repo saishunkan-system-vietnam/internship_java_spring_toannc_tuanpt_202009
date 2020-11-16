@@ -1,10 +1,12 @@
 <template>
   <v-container>
-    <v-row style="margin-left: 100px; margin-right: 100px">
+
+    <v-row >
       <v-col cols="12" sm="2">
         <v-card>
-          <v-tabs v-model="tab" grow>
-            <v-tab v-for="item in items" :key="item">
+          <v-tabs v-model="tab" >
+            <v-tab v-for="item in items" :key="item" >
+
               {{ item }}
             </v-tab>
           </v-tabs>
@@ -66,13 +68,13 @@
                   <h5>{{ team1.nameTeam }}</h5>
                   <v-row>
                     <v-col cols="12" sm="4" v-for="(n,i) in member1" :key="i" @click="detailMember(n)">
-                      <v-card>
+                      <v-card style="height:200px;cursor: pointer">
                         <v-img
                           lazy-src="https://picsum.photos/id/11/10/6"
                           :src="baseUrl+n.avatar"
                         ></v-img>
-                        <b>{{n.name}}</b>
-                        Goals:{{ n.history.length }}
+                        <b>{{n.name}}</b><br>
+                        Goals:{{ n.numberGoal }}
                       </v-card>
                     </v-col>
                   </v-row>
@@ -87,13 +89,13 @@
                   <h5>{{ team2.nameTeam }}</h5>
                   <v-row>
                     <v-col cols="12" sm="4" v-for="(n,i) in member2" :key="i" @click="detailMember(n)">
-                      <v-card>
+                      <v-card style="height:200px;cursor: pointer">
                         <v-img
                           lazy-src="https://picsum.photos/id/11/10/6"
                           :src="baseUrl+n.avatar"
                         ></v-img>
-                        <b>{{n.name}}</b>
-                        Goals:{{ n.history.length }}
+                        <b>{{n.name}}</b><br>
+                        Goals:{{ n.numberGoal }}
                       </v-card>
                     </v-col>
                   </v-row>
@@ -106,7 +108,7 @@
       <v-col cols="12" sm="4">
         <v-card>
           <v-container>
-            <b>{{this.schedule.tournament.nameTournament}}</b>
+            <b>{{Object.keys(schedule).length === 0?'':this.schedule.tournament.nameTournament}}</b>
             <v-simple-table>
               <template v-slot:default>
                 <thead>
@@ -121,7 +123,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, i) in rank" :key="i" @click="detailTeam(n)">
+                  <tr v-for="(item, i) in rank" :key="i" @click="detailTeam(item)">
                     <td>{{ i + 1 }}</td>
                     <td>{{ item.nameTeam }}</td>
                     <td>{{ item.totalMatchByTour }}</td>
@@ -153,48 +155,6 @@ export default {
     return {
       tab: null,
       items: ["Team1", "Team2"],
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-        },
-        {
-          name: "Donut",
-          calories: 452,
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-        },
-      ],
       schedule: {},
       team1: {},
       team2: {},
@@ -215,8 +175,12 @@ export default {
     detailMember(item){
       this.$router.push("/player/"+item.id)
     },
-    detailTeam(){
-      
+    detailTeam(item){
+      this.$router.push({
+        path: `/team/${item.idTeam}`,
+        query: { idTab: 1 },
+      });
+
     },
     getData() {
       this.$store.commit("auth/auth_overlay_true");

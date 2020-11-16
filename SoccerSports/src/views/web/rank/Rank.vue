@@ -90,7 +90,8 @@ export default {
   data() {
     return {
       rank: "",
-      tournament: "",
+      tournament: [],
+
       select: "",
     };
   },

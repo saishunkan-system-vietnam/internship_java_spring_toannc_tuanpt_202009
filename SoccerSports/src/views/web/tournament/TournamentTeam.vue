@@ -64,5 +64,14 @@ export default {
       return ENV.BASE_IMAGE;
     },
   },
+  methods:{
+    detailTeam(item){
+      this.$router.push({
+        path: `/team/${item.idTeam}`,
+        query: { idTab: 1 },
+      });
+    }
+  }
+
 };
 </script>

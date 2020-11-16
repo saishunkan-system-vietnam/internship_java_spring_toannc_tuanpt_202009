@@ -1,7 +1,20 @@
 <template>
   <div>
+    <span
+      style="
+        position: absolute;
+        display: flex;
+        left: 250px;
+        font-size: 130px;
+        font-family: Time new roman;
+        color: white;
+        top: 309px;
+      "
+      >WELLCOME TO SOCCER</span
+    >
     <img
-      src="https://i.pinimg.com/564x/38/d2/c3/38d2c37984a06bd6cdc0fa46bf01ea64.jpg"
+      src="@/assets/innerpageBg.jpg"
+
       style="width: -webkit-fill-available"
       class="ls-bg"
       alt="Slide background"
@@ -19,6 +32,9 @@
                 margin-left: 80px;
                 background-image: url(https://rstheme.com/products/html/khelo/images/background/upcoming-match-bg.jpg);
               "
+
+              @click="detailUpComming"
+
             >
               <v-card-title class="justify-center" style="color: white"
                 >UpComming Match</v-card-title
@@ -535,6 +551,11 @@ export default {
           alert(error);
         });
     },
+
+    detailUpComming() {
+      this.$router.push({ path: "/summary/" + this.recentMatch.idSchedule });
+    },
+
     getLastResults() {
       this.$store
         .dispatch("schedule/lastResults")

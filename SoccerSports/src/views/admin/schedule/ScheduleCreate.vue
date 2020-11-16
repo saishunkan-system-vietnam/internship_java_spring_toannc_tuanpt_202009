@@ -269,7 +269,8 @@ export default {
                 v < response.data.payload.timeStart ||
                 v > response.data.payload.timeEnd
               ) {
-                return false || "Past tournament time";
+                return false || "Past tournament time("+response.data.payload.timeStart+"->"+response.data.payload.timeEnd+")";
+
               } else {
                 return true;
               }

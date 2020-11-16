@@ -132,7 +132,6 @@ export default {
   mounted() {
     // console.log(this.$route)
     if (this.$route.params.id == undefined) {
-      alert("Team: " + this.$route.params.id);
       this.$router.push({ path: `/teams` });
     } else {
       this.getTeamById(this.$route.params.id);
@@ -161,7 +160,6 @@ export default {
           self.$store.commit("auth/auth_overlay_false");
           if (response.data.code == 0) {
             let list = response.data.payload;
-            console.log(list.length);
             if (list.length > 0) {
               self.desserts = list.filter((d) => {
                 return d.pos === "Goalkeepers";
