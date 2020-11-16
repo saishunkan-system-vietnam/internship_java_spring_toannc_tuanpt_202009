@@ -200,7 +200,11 @@
             <v-card-subtitle class="center mb-5">
               <h3>{{ nextMatch.year }} {{ nextMatch.nameTour }}</h3>
             </v-card-subtitle>
-            <router-link>
+            <router-link
+              :to="{
+                path: `/summary/${nextMatch.idSchedule}`,
+              }"
+            >
               <v-card-text
                 style="cursor: pointer"
                 v-if="nextMatch != null && nextMatch.length != ''"
