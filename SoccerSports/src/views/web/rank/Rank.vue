@@ -17,7 +17,7 @@
                 :items="tournament"
                 item-text="nameTournament"
                 item-value="idTournament"
-                label="Select Status"
+                :label="tournament.length>0?tournament[0].nameTournament:''"
                 dense
                 solo
               ></v-select>
