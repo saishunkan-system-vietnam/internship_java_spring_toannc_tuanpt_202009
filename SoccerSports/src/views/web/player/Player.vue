@@ -117,42 +117,8 @@
           ></v-select>
 
           <template v-if="team != null">
-            <div v-for="(member, index) in team.profile" :key="index">
-              <template v-if="member.position == positionSelect">
-                <router-link :to="`/player/${member.id}`">
-                  <v-row
-                    class="ml-6"
-                    style="cursor: pointer"
-                  >
-                    <v-avatar
-                      style="border: 1px solid grey"
-                      class="pr-3"
-                      size="48"
-                    >
-                      <v-img
-                        :src="baseUrl + member.avatar"
-                        max-width="60"
-                        max-height="60"
-                        class="ml-3 pointer"
-                      ></v-img>
-                    </v-avatar>
-                    <div>
-                      <p
-                        style="
-                          margin-bottom: 0px;
-                          color: #2b2c2d;
-                          font-weight: 600;
-                          font-size: 14px;
-                        "
-                      >
-                        {{ member.name }}
-                      </p>
-                      <p style="font-size: 12px">Age: {{ member.age }}</p>
-                    </div>
-                  </v-row>
-                </router-link>
-              </template>
-              <template v-else>
+            <template v-if="checkPosition">
+              <div v-for="(member, index) in team.profile" :key="index">
                 <router-link :to="`/player/${member.id}`">
                   <v-row class="ml-6" style="cursor: pointer">
                     <v-avatar
@@ -182,8 +148,46 @@
                     </div>
                   </v-row>
                 </router-link>
-              </template>
-            </div>
+              </div>
+            </template>
+            <template v-else>
+              <div
+                v-for="(member, index) in team.profile.filter(
+                  (p) => p.position == positionSelect
+                )"
+                :key="index"
+              >
+                <router-link :to="`/player/${member.id}`">
+                  <v-row class="ml-6" style="cursor: pointer">
+                    <v-avatar
+                      style="border: 1px solid grey"
+                      class="pr-3"
+                      size="48"
+                    >
+                      <v-img
+                        :src="baseUrl + member.avatar"
+                        max-width="60"
+                        max-height="60"
+                        class="ml-3 pointer"
+                      ></v-img>
+                    </v-avatar>
+                    <div>
+                      <p
+                        style="
+                          margin-bottom: 0px;
+                          color: #2b2c2d;
+                          font-weight: 600;
+                          font-size: 14px;
+                        "
+                      >
+                        {{ member.name }}
+                      </p>
+                      <p style="font-size: 12px">Age: {{ member.age }}</p>
+                    </div>
+                  </v-row>
+                </router-link>
+              </div>
+            </template>
           </template>
           <!-- <v-divider style="margin: 0 !important"></v-divider> -->
           <!-- <h5 @click="toSquad" class="center" style="color: blue;cursor: pointer">
@@ -205,30 +209,27 @@
               }"
             >
               <v-card-text
-                style="cursor: pointer"
+                style="cursor: pointer; display: flex; justify-content: center"
                 v-if="nextMatch != null && nextMatch.length != ''"
               >
-                <v-row>
-                  <v-col cols="2"></v-col>
-                  <h4>{{ nextMatch.nameTeam1 }}</h4>
-                  <v-img
-                    class="ml-4"
-                    max-height="50"
-                    max-width="50"
-                    :src="baseUrl + nextMatch.logoTeam1"
-                  ></v-img>
-                  <div class="px-15">
-                    <h5 style="margin-bottom: 0">{{ nextMatch.dayStart }}</h5>
-                    <h5>{{ nextMatch.timeStart }}</h5>
-                  </div>
-                  <v-img
-                    class="mr-4"
-                    max-height="50"
-                    max-width="50"
-                    :src="baseUrl + nextMatch.logoTeam2"
-                  ></v-img>
-                  <h4>{{ nextMatch.nameTeam2 }}</h4>
-                </v-row>
+                <h4>{{ nextMatch.nameTeam1 }}</h4>
+                <v-img
+                  class="ml-4"
+                  max-height="50"
+                  max-width="50"
+                  :src="baseUrl + nextMatch.logoTeam1"
+                ></v-img>
+                <div class="mx-4">
+                  <h5 style="margin-bottom: 0">{{ nextMatch.dayStart }}</h5>
+                  <h5>{{ nextMatch.timeStart }}</h5>
+                </div>
+                <v-img
+                  class="mr-4"
+                  max-height="50"
+                  max-width="50"
+                  :src="baseUrl + nextMatch.logoTeam2"
+                ></v-img>
+                <h4>{{ nextMatch.nameTeam2 }}</h4>
               </v-card-text>
             </router-link>
           </template>
@@ -302,6 +303,7 @@ var d = new Date();
 export default {
   data() {
     return {
+      checkPosition: true,
       lastFiveMatch: [],
       teamSelect: "",
       positionSelect: "",
@@ -359,7 +361,12 @@ export default {
     },
 
     positionSelect(newValue) {
-      this.positionSelect = newValue;
+      if (newValue != "" && newValue != "None") {
+        this.checkPosition = false;
+        this.positionSelect = newValue;
+      } else {
+        this.checkPosition = true;
+      }
     },
 
     $route() {
@@ -535,6 +542,12 @@ export default {
       this.playerStatus.save = Math.floor(Math.random() * 2);
       this.playerStatus.assists = Math.floor(Math.random() * 6);
       this.playerStatus.yc = Math.floor(Math.random() * 2);
+    },
+
+    filterTeamPosition() {
+      this.team = this.team.playerProfile((p) => {
+        return (this.positionSelect = p.position);
+      });
     },
   },
 };
