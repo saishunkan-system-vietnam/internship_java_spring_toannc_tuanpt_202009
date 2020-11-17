@@ -151,23 +151,22 @@ export default {
         this.$store
           .dispatch("team/createTeam", teamForm)
           .then(function (response) {
+            self.$store.commit("auth/auth_overlay_false");
             self.changeButton = !self.changeButton;
-            if (response.data.code === 9999 && response.data.payload == 409) {
-              this.$store.commit("auth/auth_overlay_true");
-              alert(response.data.message);
-            } else {
+            if (response.data.code == 0) {
               self.closeCreateTeamDialog();
               self.successDialog = !self.successDialog;
               setTimeout(function () {
                 self.successDialog = !self.successDialog;
                 self.getTeams();
                 self.reset();
-                this.$store.commit("auth/auth_overlay_true");
               }, 1500);
+            } else {
+              alert(response.data.message);
             }
           })
           .catch(function (error) {
-            this.$store.commit("auth/auth_overlay_true");
+            self.$store.commit("auth/auth_overlay_false");
             alert(error);
             self.changeButton = !self.changeButton;
           });

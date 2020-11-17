@@ -123,7 +123,6 @@
                   <v-row
                     class="ml-6"
                     style="cursor: pointer"
-                    @click="memberInfoClick(member)"
                   >
                     <v-avatar
                       style="border: 1px solid grey"
