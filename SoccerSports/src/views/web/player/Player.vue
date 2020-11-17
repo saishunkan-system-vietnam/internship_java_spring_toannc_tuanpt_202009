@@ -384,7 +384,7 @@ export default {
         this.getNextMatch(this.$route.params.id);
         this.getLastFiveMatch(this.$route.params.id);
         this.randomStatus();
-        console.log(getParams);
+        // console.log(getParams);
       }
     },
 
@@ -398,12 +398,10 @@ export default {
             self.getTeamById(self.playerProfile.idTeam);
             self.getTeamCurrent(self.playerProfile.idTeam);
           } else {
-            console.log("Run here player");
             // alert(response.data.message);
           }
         })
         .catch(function (error) {
-          console.log("Run here player");
           alert(error);
         });
     },
@@ -417,7 +415,6 @@ export default {
           this.$store.commit("auth/auth_overlay_false");
           if (response.data.code === 0) {
             self.teams = response.data.payload;
-            // console.log(self.desserts)
           } else {
             alert(response.data.message);
           }
@@ -428,13 +425,11 @@ export default {
     },
 
     getNextMatch(id) {
-      console.log("next match");
       let self = this;
       this.$store.commit("auth/auth_overlay_true");
       this.$store
         .dispatch("member/nextMatch", id)
         .then((response) => {
-          console.log(response);
           this.$store.commit("auth/auth_overlay_false");
           let data = response.data;
           if (data.code == 0) {
@@ -443,7 +438,6 @@ export default {
             self.nextMatch = {};
             // alert(data.message);
           }
-          console.log(self.nextMatch);
         })
         .catch(function (error) {
           alert(error);
@@ -451,7 +445,6 @@ export default {
     },
 
     getLastFiveMatch(id) {
-      console.log("5 match");
       let self = this;
       this.$store.commit("auth/auth_overlay_true");
       this.$store
@@ -465,7 +458,6 @@ export default {
             self.lastFiveMatch = [];
             // alert(data.message);
           }
-          // console.log(self.lastFiveMatch);
         })
         .catch(function (error) {
           alert(error);
@@ -485,14 +477,12 @@ export default {
     // },
 
     linkTeam(team) {
-      console.log(team);
       this.$router.push({
         path: `/team/${team.idTeam}`,
       });
     },
 
     linkSchedule(id) {
-      console.log(id);
       this.$router.push({ path: "/scheduleDetail/" + id });
     },
 
@@ -531,7 +521,6 @@ export default {
     },
 
     randomStatus() {
-      console.log(this.playerStatus);
       this.playerStatus.height =
         Math.floor(Math.random() * 2) +
         5 +

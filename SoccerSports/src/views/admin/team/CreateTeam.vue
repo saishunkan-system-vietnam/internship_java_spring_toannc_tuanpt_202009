@@ -162,13 +162,11 @@ export default {
                 self.reset();
               }, 1500);
             } else {
-              console.log("Run here 2")
               alert(response.data.message);
             }
           })
           .catch(function (error) {
             self.$store.commit("auth/auth_overlay_false");
-            console.log("Run here 1")
             alert(error);
             self.changeButton = !self.changeButton;
           });

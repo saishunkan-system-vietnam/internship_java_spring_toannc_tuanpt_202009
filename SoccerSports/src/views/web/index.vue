@@ -276,7 +276,7 @@ export default {
     },
 
     roleFunction(role) {
-      console.log(role);
+      // console.log(role);
       if (role === "ROLE_MEMBER") {
         this.$router.push(
           "/profile/" + this.$store.state.user.userInfo.profile.id
