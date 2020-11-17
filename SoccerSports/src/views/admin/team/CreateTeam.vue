@@ -48,7 +48,10 @@
       <small>*All the field need to be filled</small>
     </v-card-text>
     <v-card-actions>
-      <v-btn color="blue darken-1" text @click="reset"> Reset </v-btn>
+      <v-btn color="error-1" text @click="closeCreateTeamDialog">
+        Cancel
+      </v-btn>
+      <v-btn color="error-1" text @click="reset"> Reset </v-btn>
       <v-spacer></v-spacer>
 
       <v-btn v-if="changeButton" color="blue darken-1" text @click="onSubmit">
@@ -87,7 +90,7 @@ export default {
       nameRules: [
         (v) => !!v || "Name is required",
         (v) => (v && v.length <= 21) || "Name must be less than 21 characters",
-        (v)=>(v&&v.trim().length!=0)|| 'Name is required'
+        (v) => (v && v.trim().length != 0) || "Name is required",
       ],
       country: "",
       countryRules: [
@@ -95,14 +98,7 @@ export default {
         (v) => (v && v.length <= 21) || "Name must be less than 21 characters",
       ],
       fileImage: [],
-      rulesImage: [
-        (v) => {
-          if (v == undefined || Array.isArray(v)) {
-            return false || "Image is required";
-          }
-          return true;
-        },
-      ],
+      rulesImage: [],
       description: "",
     };
   },
@@ -114,13 +110,12 @@ export default {
 
     fileImage() {
       if (this.fileImage == undefined) {
-        this.fileImage = [];
+        this.fileImage = new File([""], "");
         this.rulesImage = [
           (v) => {
-            if (v == undefined || Array.isArray(v)) {
-              return false || "Item is required";
+            if (v == undefined || v.name == "") {
+              return true;
             }
-            return true;
           },
         ];
       }
@@ -162,11 +157,13 @@ export default {
                 self.reset();
               }, 1500);
             } else {
+              console.log("Run here 2");
               alert(response.data.message);
             }
           })
           .catch(function (error) {
             self.$store.commit("auth/auth_overlay_false");
+            console.log("Run here 1");
             alert(error);
             self.changeButton = !self.changeButton;
           });

@@ -46,7 +46,7 @@ public class TeamController {
 			team.setLogo(path);
 			if (!teamService.checkExistsTeam(team)) {
 				teamService.createTeam(team);
-				return ResponseQuery.success("Success", teamForm);
+				return ResponseQuery.success("Success", team);
 			}
 			return ResponseQuery.faild("Team has already exists", 409);
 		} catch (Exception e) {

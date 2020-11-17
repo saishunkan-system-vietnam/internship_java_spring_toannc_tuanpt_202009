@@ -1,7 +1,5 @@
 package ssv.com.exception;
 
-import java.io.FileNotFoundException;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -32,9 +30,9 @@ public class ApiExceptionHandler {
 		return ResponseQuery.faild(ex.getLocalizedMessage(), 400);
 	}
 
-	@ExceptionHandler(FileNotFoundException.class)
-	@ResponseStatus(value = HttpStatus.OK)
-	public ResponseQuery<?> imgException(Exception ex, WebRequest request) {
-		return ResponseQuery.faild("invalid Image", 302);
-	}
+//	@ExceptionHandler(FileNotFoundException.class)
+//	@ResponseStatus(value = HttpStatus.OK)
+//	public ResponseQuery<?> imgException(Exception ex, WebRequest request) {
+//		return ResponseQuery.faild("invalid Image", 302);
+//	}
 }
