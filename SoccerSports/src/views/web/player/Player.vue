@@ -30,18 +30,19 @@
                 {{ currentTeam.nameTeam }}
               </v-row>
               <h5 class="pt-3" style="font-size: 18px; font-weight: 400">
-                {{ playerStatus.pos }}
+                {{ playerProfile.position }}
               </h5>
             </v-toolbar-title>
           </v-col>
           <v-divider class="mx-4" inset vertical></v-divider>
+          
           <v-col cols="6" md="2" class="pt-6">
             <p class="status-player">
               Height/Weight: {{ playerStatus.height }},
               {{ playerStatus.weight }}
             </p>
-            <p class="status-player">Age: {{ playerStatus.age }}</p>
-            <p class="status-player">Country: {{ playerStatus.nation }}</p>
+            <p class="status-player">Age: {{ playerProfile.age }}</p>
+            <p class="status-player">Country: {{ playerProfile.country }}</p>
           </v-col>
           <v-col>
             <v-card class="mx-auto" max-width="600">
@@ -395,6 +396,7 @@ export default {
         .then((response) => {
           if (response.data.code == 0) {
             self.playerProfile = response.data.payload;
+            console.log(self.playerProfile)
             self.getTeamById(self.playerProfile.idTeam);
             self.getTeamCurrent(self.playerProfile.idTeam);
           } else {
