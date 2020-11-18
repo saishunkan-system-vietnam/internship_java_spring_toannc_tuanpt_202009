@@ -98,7 +98,21 @@ export default {
         (v) => (v && v.length <= 21) || "Name must be less than 21 characters",
       ],
       fileImage: [],
-      rulesImage: [],
+      rulesImage: [(v) => {
+          if (v == undefined || Array.isArray(v)) {
+            return true;
+          } else {
+            if (
+              v.type == "image/png" ||
+              v.type == "image/jpeg" ||
+              v.type == "image/bmp"
+            ) {
+              return true;
+            } else {
+              return false || "Wrong data";
+            }
+          }
+        },],
       description: "",
     };
   },
@@ -106,29 +120,6 @@ export default {
     successDialog(val) {
       if (!val) return;
       setTimeout(() => (this.successDialog = false), 100000);
-    },
-
-    fileImage() {
-      if (this.fileImage == undefined) {
-        this.fileImage = new File([""], "");
-        this.rulesImage = [
-          (v) => {
-            if (v == undefined || v.name == "") {
-              return true;
-            }
-          },
-        ];
-      }
-      let isContainImage = !this.fileImage.name;
-      if (!isContainImage) {
-        this.rulesImage = [
-          (v) =>
-            v.type == "image/png" ||
-            v.type == "image/jpeg" ||
-            v.type == "image/bmp" ||
-            "Wrong type image",
-        ];
-      }
     },
   },
   methods: {
@@ -140,7 +131,9 @@ export default {
         teamForm.append("nameTeam", this.name);
         teamForm.append("country", this.country);
         teamForm.append("description", this.description);
+         if (this.fileImage.size > 0) {
         teamForm.append("file", this.fileImage);
+         }
         let self = this;
         this.$store.commit("auth/auth_overlay_true");
         this.$store

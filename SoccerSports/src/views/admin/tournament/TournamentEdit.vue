@@ -176,6 +176,7 @@ export default {
     getOld() {
       this.dateEnd = this.tournament.timeEnd;
       this.dateStart = this.tournament.timeStart;
+      this.fileImage=[];
       this.nameTournament = this.tournament.nameTournament;
       if (this.tournament.banner != null && this.tournament.banner != "") {
         document.getElementById("image").src =
