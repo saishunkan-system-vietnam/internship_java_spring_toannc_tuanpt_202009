@@ -11,7 +11,7 @@
     </v-btn>
 
     <v-container style="font-family: Times New Roman">
-      <h3 style="color: blue; display: inline-block">#SUMMARY</h3>
+      <h3 style="color: blue; display: inline-block">SUMMARY</h3>
       <v-btn
         v-if="schedule.status == 0"
         style="right: 0px; position: absolute"
@@ -19,9 +19,10 @@
         @click="dialogEdit = true"
         >Edit</v-btn
       >
-      <h1 class="text-center">
-        {{ Object.keys(schedule).length === 0?'':schedule.tournament.nameTournament  }}
-
+      <h1 class="text-center" style="cursor: pointer">
+        <router-link :to="{path:Object.keys(schedule).length === 0?'':'/admin/tournament/'+schedule.tournament.idTournament}">
+       <b> {{ Object.keys(schedule).length === 0?'':schedule.tournament.nameTournament  }}</b>
+        </router-link>
       </h1>
       <h3 class="text-center">
         Time Start: {{ (new Date(Date.parse(schedule.timeStart)).toString().substring(0,21)) }}
@@ -81,7 +82,7 @@
       <hr />
 
       <div>
-        <h3 style="color: blue">#Schedule</h3>
+        <h3 style="color: blue">Schedule</h3>
         <template v-if="schedule.status != 2">
           <h1 class="text-center">
             The match is not over or has not been updated
@@ -128,7 +129,7 @@
         </template>
       </div>
       <hr />
-      <h3 style="color: blue">#Team</h3>
+      <h3 style="color: blue">Team</h3>
       <v-row>
         <v-col v-for="(team, index) in schedule.team" :key="index">
           <div class="text-center">
@@ -218,7 +219,7 @@
       </v-row>
       <hr />
       <template v-if="schedule.status == 2">
-        <h3 style="color: blue">#Video,Photo</h3>
+        <h3 style="color: blue">Video,Photo</h3>
         <v-row>
           <v-col>
             <v-container>
@@ -379,7 +380,7 @@ export default {
               this.$store
                 .dispatch("team/getDetail", {
                   idTeam: this.schedule.team[0].idTeam,
-                  idTournament: this.$route.params.id,
+                  idTournament: this.schedule.idTour,
                 })
                 .then((response) => {
                   this.detailTeam.push(response.data.payload);
@@ -387,7 +388,7 @@ export default {
               this.$store
                 .dispatch("team/getDetail", {
                   idTeam: this.schedule.team[1].idTeam,
-                  idTournament: this.$route.params.id,
+                  idTournament: this.schedule.idTour,
                 })
                 .then((response) => {
                   this.detailTeam.push(response.data.payload);

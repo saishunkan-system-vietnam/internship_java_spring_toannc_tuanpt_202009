@@ -215,6 +215,7 @@ export default {
           self.$store.commit("auth/auth_overlay_false");
           if (response.data.code == 0) {
             self.tournaments = response.data.payload;
+            console.log( self.tournaments)
           } else {
             console.log("Squad");
             alert(response.data.message);
@@ -231,6 +232,7 @@ export default {
       this.$store
         .dispatch("team/getTeamById", id)
         .then((response) => {
+          console.log("run here")
           self.$store.commit("auth/auth_overlay_false");
           self.team = response.data.payload;
           self.getTours(self.team.idTeam);

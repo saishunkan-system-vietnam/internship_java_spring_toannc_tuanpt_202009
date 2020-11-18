@@ -40,7 +40,7 @@ export function squad(data){
 }
 
 export function toursByTeam(idTeam){
-    return Api.get(`http://localhost:8090/api/v1/team/toursByTeam/${idTeam}`)
+    return Api.get(`/team/toursByTeam/${idTeam}`)
 }
 
 

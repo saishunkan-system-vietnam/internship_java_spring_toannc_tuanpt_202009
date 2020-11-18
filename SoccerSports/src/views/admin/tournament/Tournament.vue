@@ -182,7 +182,7 @@
       </v-card>
     </v-dialog>
     <v-dialog v-model="dialogCreate" fullscreen persistent>
-      <TournamentCreate :hideDialog="hideDialog" :getData="getData" />
+      <TournamentCreate :hideDialog="hideDialog" :getData="getData" :tournamentData="tournament"/>
     </v-dialog>
   </div>
 </template>
@@ -294,11 +294,11 @@ export default {
     },
     deleteItemConfirm() {
       this.dialogDelete = false;
-      this.$store.commit("auth/auth_overlay");
+      this.$store.commit("auth/auth_overlay_true");
       this.$store
         .dispatch("tournament/deleteTournament", this.idDelete)
         .then((response) => {
-          this.$store.commit("auth/auth_overlay");
+          this.$store.commit("auth/auth_overlay_false");
           if (response.data.code == 0) {
             this.tournament.splice(this.editedIndex, 1);
             alert(response.data.message);
