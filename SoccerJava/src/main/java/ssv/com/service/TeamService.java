@@ -234,7 +234,7 @@ public class TeamService {
 			match.setIdSchedule(schedule.getIdSchedule());
 			match.setMonthStart(
 					monthName[schedule.getTimeStart().getMonthValue() - 1] + " , " + schedule.getTimeStart().getYear());
-			match.setDayStart(monthName[schedule.getTimeStart().getMonthValue()] + " , "
+			match.setDayStart(monthName[schedule.getTimeStart().getMonthValue() -1] + " , "
 					+ schedule.getTimeStart().getDayOfMonth());
 			match.setNameTeam1(team1.getNameTeam());
 			match.setLogoTeam1(team1.getLogo());

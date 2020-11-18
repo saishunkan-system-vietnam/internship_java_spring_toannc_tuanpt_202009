@@ -1,4 +1,4 @@
-	package ssv.com.controller;
+package ssv.com.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -110,12 +110,13 @@ public class AccountController {
 				message.setSubject("Tạo lại mật khẩu tài khoản");
 				Account account = new Account();
 				account.setEmail(email);
-				String pass=new RandomPass().randomAlphaNumeric(8);
+				String pass = new RandomPass().randomAlphaNumeric(8);
 				String hash = BCrypt.hashpw(pass, BCrypt.gensalt(12));
 				account.setPassword(hash);
 				accountService.replacePass(account);
-				message.setText("Xin chào mừng bạn đễn với trang thể thao .Xin chào "+account.getEmail()+" .Bạn nhận được email này vì bạn  yêu cầu đặt lại mật khẩu . Mật khẩu mới sẽ là :" +pass);
-				
+				message.setText("Xin chào mừng bạn đễn với trang thể thao .Xin chào " + account.getEmail()
+						+ " .Bạn nhận được email này vì bạn  yêu cầu đặt lại mật khẩu . Mật khẩu mới sẽ là :" + pass);
+
 				this.emailSender.send(message);
 				return ResponseQuery.success("Change password success , please check email to recive password",
 						account);
@@ -130,9 +131,9 @@ public class AccountController {
 		return ResponseQuery.faild("Failed To Change Password ", null);
 
 	}
-	@GetMapping(value="/getAll")
-	public ResponseQuery<?> getAll(){
+
+	@GetMapping(value = "/getAll")
+	public ResponseQuery<?> getAll() {
 		return ResponseQuery.success("Recivce Success", accountService.getAll());
 	}
 }
-	

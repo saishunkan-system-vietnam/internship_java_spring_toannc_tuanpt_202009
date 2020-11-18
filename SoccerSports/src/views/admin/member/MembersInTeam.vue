@@ -44,9 +44,14 @@
     </template>
 
     <template v-slot:[`item.actions`]="{ item }">
-      <v-btn class="mr-1 mb-1" color="primary" small @click="removeMember(item)"
-        >Kick</v-btn
+      <v-btn
+        class="mr-1 mb-1"
+        color="primary"
+        small
+        @click="removeMember(item)"
       >
+        Kick
+      </v-btn>
       <v-btn color="primary mb-1" small @click="editPlayer(item)">Edit</v-btn>
     </template>
   </v-data-table>
@@ -65,6 +70,8 @@ export default {
   },
   data() {
     return {
+      checkUpdate: true,
+      backUpPlayes: [],
       positionSearch: "",
       positionItems: [
         "Default",
@@ -94,13 +101,32 @@ export default {
     };
   },
 
-  mounted() {
-    // console.log(this.playersInTeam);
-  },
+  // updated() {
+  //   if (this.checkUpdate) {
+  //     console.log("Run 1")
+  //     this.checkUpdate = false;
+  //     this.backUpPlayers = this.playersInTeam;
+  //     console.log(this.backUpPlayers)
+  //   }
+  // },
 
   computed: {
     baseUrl() {
       return ENV.BASE_IMAGE;
+    },
+  },
+
+  watch: {
+    playersInTeam: {
+      deep: true,
+      handler(newValue, oldValue) {
+        console.log("Run herer");
+        // let copiedArray = oldValue;
+        console.log(newValue);
+        console.log(oldValue);
+        if (oldValue.length > 0 && newValue != oldValue)
+          this.checkUpdate = false;
+      },
     },
   },
 
@@ -145,10 +171,17 @@ export default {
         (element) => element.id != member.id
       );
       this.removedMember(obj, newArray);
+      // console.log(this.playersInTeam);
     },
 
     editPlayer(player) {
-      this.isConfirm(player.id);
+      if (this.checkUpdate) {
+        this.$router.push({
+          path: `/admin/member/${player.id}`,
+        });
+      } else {
+        this.isConfirm(player.id);
+      }
     },
 
     resetInTeam() {

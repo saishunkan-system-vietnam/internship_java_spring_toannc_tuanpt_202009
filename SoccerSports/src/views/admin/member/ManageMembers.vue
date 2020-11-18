@@ -82,6 +82,7 @@
               :isConfirm="isConfirm"
               :addedMember="addedMember"
               :playersAvailable="playersAvailable"
+              :backUpPlayers="backUpPlayersAvailable"
             />
           </v-col>
           <v-col cols="12" md="12" xl="6" xm="12">
@@ -144,6 +145,7 @@
               :isConfirm="isConfirm"
               :removedMember="removedMember"
               :playersInTeam="playersInTeam"
+              :backUpPlayers="backUpPlayersInTeam"
             />
           </v-col>
         </v-row>
@@ -188,7 +190,9 @@ export default {
       members: [],
       players: [],
       playersAvailable: [],
+      backUpPlayersAvailable: [],
       playersInTeam: [],
+      backUpPlayersInTeam: [],
       teamDetail: {
         idTeam: parseInt(this.$route.params.id),
         profile: [],
@@ -226,12 +230,16 @@ export default {
       this.$store
         .dispatch("member/members")
         .then(function (response) {
-          self.playersAvailable = response.data.payload.filter((item) => {
+          let listAvailable = response.data.payload.filter((item) => {
             return item.idTeam == 0;
           });
-          self.playersInTeam = response.data.payload.filter((item) => {
+          let listInTeam = response.data.payload.filter((item) => {
             return item.idTeam == self.$route.params.id;
           });
+          self.playersAvailable = listAvailable;
+          self.backUpPlayersAvailable = listAvailable;
+          self.playersInTeam = listInTeam;
+          self.backUpPlayersInTeam = listInTeam;
           self.mapShowView(self.playersInTeam);
         })
         .catch(function (error) {
@@ -265,6 +273,7 @@ export default {
             self.success = !self.success;
             self.loadListMember(id);
             console.log(index);
+            console.log(id)
             if (index == 1) {
               self.$router.push({
                 path: `/admin/member/${self.idPlayer}`,
@@ -280,15 +289,19 @@ export default {
     addedMember(member, data) {
       member.idTeam = this.$route.params.id;
       this.playersAvailable = data;
-      this.playersInTeam.push(member);
+      let temp = JSON.parse(JSON.stringify(this.playersInTeam));
+      temp.push(member);
+      this.playersInTeam = temp;
       this.mapShowView(this.playersInTeam);
     },
 
     removedMember(member, data) {
       member.idTeam = 0;
       this.playersInTeam = data;
-      this.playersAvailable.push(member);
-      this.mapShowView(this.playersInTeam);
+      let temp = JSON.parse(JSON.stringify(this.playersAvailable));
+      temp.push(member);
+      this.playersAvailable = temp;
+      this.mapShowView(this.playersAvailable);
     },
 
     mapShowView(data) {
@@ -307,9 +320,10 @@ export default {
     isConfirm(id) {
       if (id != 0) {
         this.manageConfirm = false;
+      } else {
+        this.idPlayer = id;
+        this.dialogConfirm = !this.dialogConfirm;
       }
-      this.idPlayer = id;
-      this.dialogConfirm = !this.dialogConfirm;
     },
   },
 };

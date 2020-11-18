@@ -61,6 +61,7 @@ import { ENV } from "@/config/env.js";
 export default {
   props: {
     playersAvailable: Array,
+    backUpPlayers: Array,
     addedMember: {
       type: Function,
     },
@@ -70,6 +71,7 @@ export default {
   },
   data() {
     return {
+      checkUpdate: true,
       positionSearch: "",
       positionItems: [
         "Default",
@@ -98,14 +100,27 @@ export default {
       ],
     };
   },
-  mounted() {
-    // console.log(this.playersAvailable);
-  },
+
   computed: {
     baseUrl() {
       return ENV.BASE_IMAGE;
     },
   },
+
+   watch: {
+    playersAvailable: {
+      deep: true,
+      handler(newValue, oldValue) {
+        console.log("Run herer");
+        // let copiedArray = oldValue;
+        console.log(newValue);
+        console.log(oldValue);
+        if (oldValue.length > 0 && newValue != oldValue)
+          this.checkUpdate = false;
+      },
+    },
+  },
+
 
   methods: {
     countryFilter(value) {
@@ -156,7 +171,13 @@ export default {
     },
 
     editPlayer(player) {
-      this.isConfirm(player.id);
+      if (this.checkUpdate) {
+        this.$router.push({
+          path: `/admin/member/${player.id}`,
+        });
+      } else {
+        this.isConfirm(player.id);
+      }
     },
 
     resetAvaiable() {
