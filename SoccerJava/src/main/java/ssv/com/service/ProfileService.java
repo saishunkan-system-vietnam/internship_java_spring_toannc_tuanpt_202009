@@ -76,6 +76,8 @@ public class ProfileService {
 			Profile profile = modelMapper.map(profileForm, Profile.class);
 			if (profileForm.getFile() != null && !profileForm.getFile().getOriginalFilename().isEmpty()) {
 				profile.setAvatar(UploadFile.saveFile(profileForm.getFile()));
+			}else {
+				profile.setAvatar("/images/default_user.png");
 			}
 			accountRepository.create(account);
 			profileRepository.saveProfile(profile);
@@ -84,7 +86,6 @@ public class ProfileService {
 //			message.setSubject("Email and password");
 //			message.setText(account.getUsername() + "-" + pass);
 //			this.emailSender.send(message);
-
 			return profile;
 		}
 	}

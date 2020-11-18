@@ -8,6 +8,9 @@
       <v-toolbar-title>Create Tournamet</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
+        <v-btn dark text @click="reset"> Reset </v-btn>
+      </v-toolbar-items>
+      <v-toolbar-items>
         <v-btn dark text @click="save"> Save </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -27,7 +30,7 @@
                   (v) =>
                     (v && v.trim().length <= 40) ||
                     'Name must be less than 40 characters',
-                    (v)=>(v&&v.trim().length!=0)||'Name is required'
+                  (v) => (v && v.trim().length != 0) || 'Name is required',
                 ]"
               ></v-text-field>
             </v-list-item-subtitle>
@@ -336,7 +339,10 @@ export default {
         }
       }
     },
-    async close() {
+    close() {
+      this.hideDialog();
+    },
+    async reset() {
       await this.$refs.form.reset();
       this.dateEnd = new Date(new Date().setDate(new Date().getDate() + 1))
         .toISOString()
@@ -344,7 +350,6 @@ export default {
       this.dateStart = new Date(new Date().setDate(new Date().getDate() + 1))
         .toISOString()
         .substr(0, 10);
-      this.hideDialog();
     },
   },
   mounted() {

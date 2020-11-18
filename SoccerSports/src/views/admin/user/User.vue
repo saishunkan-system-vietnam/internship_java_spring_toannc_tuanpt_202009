@@ -44,7 +44,7 @@
               }}
             </template>
             <template v-slot:[`item.profile`]="{ item }" >
-              <div v-if="item.profile.idTeam!=0">
+              <div v-if="item.role=='ROLE_MEMBER'">
                 <router-link
                   :to="{
                     path: '/admin/member/' + item.profile.id,
@@ -91,7 +91,6 @@ export default {
         { value: "ALL", text: "ALL" },
         { value: "ROLE_ADMIN", text: "ADMIN" },
         { value: "ROLE_MEMBER", text: "MEMBER" },
-        { value: "ROLE_USER", text: "USER" },
       ],
     };
   },

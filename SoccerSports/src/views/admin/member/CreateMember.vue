@@ -124,7 +124,7 @@ export default {
       valid: false,
       response: "",
       dialogCreateMember: false,
-      fileImage: new File([""], ""),
+      fileImage: [],
       country: "",
       name: "",
       countryRules: [(v) => !!v || "Country is required"],
@@ -217,7 +217,9 @@ export default {
         memberForm.append("age", this.age);
         memberForm.append("country", this.country);
         memberForm.append("position", this.position);
-        memberForm.append("file", this.fileImage);
+        if (this.fileImage.size > 0) {
+          memberForm.append("file", this.fileImage);
+        }
         // for (var value of memberForm.values()) {
         //   console.log(value);
         // }

@@ -28,22 +28,17 @@ public class TeamController {
 	private TeamService teamService;
 
 	@GetMapping(value = "getTeams")
-	public ResponseQuery<?> getTeams() {
-
-		if (teamService.getTeams() != null) {
-			return ResponseQuery.success("Connect Success", teamService.getTeams());
-		}
-		return ResponseQuery.faild("Falied To recive data", null);
-
+	public ResponseQuery<?> getTeams() { 
+		return ResponseQuery.success("Connect Success", teamService.getTeams());
 	}
 
 	@PostMapping(value = "createTeam")
 	public ResponseQuery<?> createTeam(@ModelAttribute TeamForm teamForm) {
-		String path = "";
 		try {
-			path = UploadFile.saveFile(teamForm.getFile());
 			Team team = modelMapper.map(teamForm, Team.class);
-			team.setLogo(path);
+			if (teamForm.getFile() != null && !teamForm.getFile().getOriginalFilename().isEmpty()) {
+				team.setLogo(UploadFile.saveFile(teamForm.getFile()));
+			}
 			if (!teamService.checkExistsTeam(team)) {
 				teamService.createTeam(team);
 				return ResponseQuery.success("Success", team);
@@ -82,7 +77,8 @@ public class TeamController {
 		Team currentTeam = teamService.getTeamById(id);
 		try {
 			for (Team team : teams) {
-				if (team.getNameTeam().equalsIgnoreCase(teamForm.getNameTeam()) && !currentTeam.getNameTeam().equalsIgnoreCase(teamForm.getNameTeam())) {
+				if (team.getNameTeam().equalsIgnoreCase(teamForm.getNameTeam())
+						&& !currentTeam.getNameTeam().equalsIgnoreCase(teamForm.getNameTeam())) {
 					return ResponseQuery.faild("Team has exists", 301);
 				}
 			}

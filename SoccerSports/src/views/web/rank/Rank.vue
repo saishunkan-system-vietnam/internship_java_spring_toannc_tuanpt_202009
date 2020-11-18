@@ -17,7 +17,9 @@
                 :items="tournament"
                 item-text="nameTournament"
                 item-value="idTournament"
-                :label="tournament.length>0?tournament[0].nameTournament:''"
+                :label="
+                  tournament.length > 0 ? tournament[0].nameTournament : ''
+                "
                 dense
                 solo
               ></v-select>
@@ -95,7 +97,7 @@ export default {
       select: "",
     };
   },
-  created() {
+  async created() {
     this.getData();
     this.getTournament();
   },
@@ -108,22 +110,18 @@ export default {
     getData() {
       this.$store.commit("auth/auth_overlay_true");
       this.$store.dispatch("tournament/tournamentRank", 1).then((response) => {
-        this.$store.commit("auth/auth_overlay_false");
         if (response.data.code == 0) {
           this.rank = response.data.payload;
+          this.$store.commit("auth/auth_overlay_false");
         }
       });
     },
     getTournament() {
-      this.$store.commit("auth/auth_overlay_true");
-      this.$store
-        .dispatch("tournament/tournamentStatus", 2)
-        .then((response) => {
-          this.$store.commit("auth/auth_overlay_false");
-          if (response.data.code == 0) {
-            this.tournament = response.data.payload;
-          }
-        });
+      this.$store.dispatch("tournament/getAll").then((response) => {
+        for (var i = response.data.payload.length - 1; i >= 0; i--) {
+          this.tournament.push(response.data.payload[i]);
+        }
+      });
     },
     detailTeam(item) {
       this.$router.push({

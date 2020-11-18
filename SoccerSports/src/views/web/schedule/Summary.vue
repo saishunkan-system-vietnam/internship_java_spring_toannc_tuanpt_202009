@@ -123,7 +123,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(item, i) in rank" :key="i" @click="detailTeam(item)">
+                  <tr v-for="(item, i) in rank" :key="i" @click="detailTeam(item)" style="cursor: pointer">
                     <td>{{ i + 1 }}</td>
                     <td>{{ item.nameTeam }}</td>
                     <td>{{ item.totalMatchByTour }}</td>
