@@ -302,7 +302,6 @@ export default {
       this.hideDiaglog();
     },
     async getDataOld() {
-      console.log(this.schedule);
       if (this.schedule.image != null) {
         document.getElementById("image").src =
           this.baseUrl + this.schedule.image;
@@ -321,8 +320,6 @@ export default {
         }
         if (element.team == 2) {
           this.schedule.team[1].profile.forEach((profile) => {
-            console.log(element.idMember);
-            console.log(this.schedule.team[1].profile);
             if (profile.id == element.idMember) {
               this.goal2.push({
                 profile: profile,
@@ -333,7 +330,6 @@ export default {
           });
         }
       });
-      console.log();
     },
 
     update() {
@@ -368,7 +364,6 @@ export default {
                 }
               });
             if (response.data.code == 0) {
-              console.log(response.data.payload);
               this.getData();
             } else {
               alert("Error");
