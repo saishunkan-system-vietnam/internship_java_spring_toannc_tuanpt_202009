@@ -42,6 +42,7 @@
                   >
                     <h1>{{ item.nameTournament }}</h1></router-link
                   >
+                  {{(new Date(item.timeStart)).toString().substring(0,16)}}
                   <h4
                     :style="
                       item.status == 0

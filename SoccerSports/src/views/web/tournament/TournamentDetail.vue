@@ -105,11 +105,9 @@ export default {
   },
   methods: {},
   async created() {
-    this.$store.commit("auth/auth_overlay_true");
     await this.$store
       .dispatch("tournament/getById", this.$route.params.id)
       .then((response) => {
-        this.$store.commit("auth/auth_overlay_false");
         this.tournament = response.data.payload;
       });
   },

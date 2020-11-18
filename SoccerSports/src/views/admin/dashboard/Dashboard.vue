@@ -112,11 +112,14 @@ export default {
     },
   },
   created() {
+    this.$store.commit("auth/auth_overlay_true");
+
     this.$store.dispatch("tournament/getAll").then((response) => {
       this.tournament = response.data.payload;
     });
     this.$store.dispatch("team/getTeams").then((response) => {
       this.team = response.data.payload;
+      this.$store.commit("auth/auth_overlay_false");
     });
     this.$store.dispatch("schedule/getAll").then((response) => {
       this.schedule = response.data.payload;

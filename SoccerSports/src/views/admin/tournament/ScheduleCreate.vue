@@ -245,7 +245,7 @@ export default {
             return false || "time required";
           }
           if (v < this.tournament.timeStart || v > this.tournament.timeEnd) {
-            return false || "Past tournament time";
+            return false || "Past tournament time("+this.tournament.timeStart+"->"+this.tournament.timeEnd+")";
           } else {
             return true;
           }
