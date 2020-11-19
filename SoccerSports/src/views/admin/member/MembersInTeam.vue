@@ -75,6 +75,7 @@ export default {
   },
   data() {
     return {
+      options: {},
       checkUpdate: true,
       backUpPlayes: [],
       positionSearch: "",
