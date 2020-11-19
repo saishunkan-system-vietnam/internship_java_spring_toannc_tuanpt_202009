@@ -156,6 +156,7 @@
               v-for="player in membersSearch"
               :key="player.id"
             >
+            {{player}}
               <v-container>
                 <v-card class="mx-auto" max-width="434" tile>
                   <v-img height="100%">
@@ -222,7 +223,7 @@
                               {{ player.position }}
                             </v-list-item-title>
                             <v-list-item-subtitle style="color: black"
-                              >Age: {{ player.age }}
+                              >Age: {{ player.currentAge }}
                             </v-list-item-subtitle>
                           </v-list-item-content>
                         </v-list-item>

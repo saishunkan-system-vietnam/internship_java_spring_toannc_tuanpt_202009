@@ -39,7 +39,7 @@
                 hide-details
                 class="pt-3"
               ></v-text-field> -->
-               <v-text-field
+              <v-text-field
                 v-model="countrySearch"
                 append-icon="mdi-magnify"
                 label="Country Search"
@@ -59,14 +59,12 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="3" md="3">
-              <v-text-field
+              <v-select
                 v-model="tourNameSearch"
-                append-icon="mdi-magnify"
                 label="Tournament Search"
-                single-line
-                hide-details
+                :items="tourItems"
                 class="pt-3"
-              ></v-text-field>
+              ></v-select>
             </v-col>
           </v-row>
         </v-toolbar>
@@ -113,6 +111,7 @@ export default {
     return {
       createTeamDialog: false,
       search: "",
+      tourItems: [],
       headers: [
         {
           text: "Logo",
@@ -176,7 +175,9 @@ export default {
         .then((response) => {
           this.$store.commit("auth/auth_overlay_false");
           if (response.data.code === 0) {
+            console.log(response)
             self.desserts = response.data.payload;
+            self.getTourById();
             // console.log(self.desserts)
           } else {
             alert(response.data.message);
@@ -184,6 +185,28 @@ export default {
         })
         .catch(function (error) {
           this.$store.commit("auth/auth_overlay_false");
+          alert(error);
+        });
+    },
+
+    getTourById(id) {
+      let self = this;
+      self.$store.commit("auth/auth_overlay_true");
+      this.$store
+        .dispatch("tournament/getById", id)
+        .then((response) => {
+          self.$store.commit("auth/auth_overlay_false");
+          if (response.data.code == 0) {
+            console.log(response);
+            self.tourItems = response.data.payload;
+          } else {
+            console.log("Run here Teams Client");
+            alert(response.data.message);
+          }
+        })
+        .catch(function (error) {
+          self.$store.commit("auth/auth_overlay_false");
+          console.log("Run here Teams Client");
           alert(error);
         });
     },

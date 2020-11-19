@@ -1,6 +1,9 @@
 package ssv.com.service;
 
 import java.io.IOException;
+import java.lang.reflect.Member;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ssv.com.dto.ResponseQuery;
 import ssv.com.dto.TeamScheduleDto;
-
 import ssv.com.entity.Account;
 import ssv.com.entity.Profile;
 import ssv.com.entity.Schedule;
@@ -45,8 +47,11 @@ public class ProfileService {
 	private ModelMapper modelMapper;
 
 	public List<Profile> getMembers() {
-		return profileRepository.getMembers();
-
+		List<Profile> profiles = profileRepository.getMembers();
+		for (Profile member : profiles) {
+			member.setCurrentAge(LocalDate.now().getYear() - LocalDate.parse(member.getAge()).getYear());
+		}
+		return profiles;
 	}
 
 	public void saveProfile(Profile profile) {
@@ -74,9 +79,10 @@ public class ProfileService {
 
 			// Create Profile
 			Profile profile = modelMapper.map(profileForm, Profile.class);
+			profile.setCurrentAge(LocalDate.now().getYear() - LocalDate.parse(profile.getAge()).getYear());
 			if (profileForm.getFile() != null && !profileForm.getFile().getOriginalFilename().isEmpty()) {
 				profile.setAvatar(UploadFile.saveFile(profileForm.getFile()));
-			}else {
+			} else {
 				profile.setAvatar("/images/default_user.png");
 			}
 			accountRepository.create(account);
@@ -103,6 +109,7 @@ public class ProfileService {
 		profileUpdate.setEmail(oldProfile.get().getEmail());
 		profileUpdate.setPhone(profileForm.getPhone());
 		profileUpdate.setAge(profileForm.getAge());
+		profileUpdate.setCurrentAge(LocalDate.now().getYear() - LocalDate.parse(profileUpdate.getAge()).getYear());
 		profileUpdate.setGender(profileForm.getGender());
 		profileUpdate.setCountry(profileForm.getCountry());
 		profileUpdate.setPosition(profileForm.getPosition());

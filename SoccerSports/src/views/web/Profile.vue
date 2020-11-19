@@ -36,7 +36,7 @@
                 Country:<b>{{ profile.country }}</b>
               </h3>
               <h3>
-                Age:<b>{{ profile.age }}</b>
+                Age:<b>{{ profile.currentAge }}</b>
               </h3>
               <h3>
                 Sex:<b>{{ profile.gender }}</b>

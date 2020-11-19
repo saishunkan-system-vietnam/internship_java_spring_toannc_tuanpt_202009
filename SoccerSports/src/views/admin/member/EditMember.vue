@@ -75,11 +75,11 @@
             </v-col>
             <v-col cols="12" md="4">
               <v-text-field
-                v-model="age"
-                label="Age"
-                :rules="ageRules"
-                :counter="2"
+                v-model="birthDate.mydate"
+                label="Birth"
+                :rules="birthDateRules"
                 required
+                type="date"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -129,7 +129,8 @@
 
 <script>
 import { ENV } from "@/config/env.js";
-
+var vueData = {};
+vueData.mydate = "1996-01-21";
 export default {
   data() {
     return {
@@ -160,11 +161,15 @@ export default {
           );
         },
       ],
-      age: "",
-      ageRules: [
+      birthDate: vueData,
+      birthDateRules: [
         (v) => !!v || "Age number is required",
-        (v) =>
-          (v <= 60 && v >= 6) || "Age must be less than 60 and greater than 6",
+        // (v) => {
+        //   let inValid = /^[0-9]+$/;
+        //   return inValid.test(v) || "Age must be a number";
+        // },
+        // (v) =>
+        //    (v >= 1980) || "Year ",
       ],
       gender: "",
       defaultGender: ["Male", "Female", "Orther"],
@@ -285,7 +290,7 @@ export default {
         memberForm.append("email", this.email);
         memberForm.append("phone", this.phone);
         memberForm.append("gender", this.gender);
-        memberForm.append("age", this.age);
+        memberForm.append("age", this.birthDate.mydate);
         memberForm.append("country", this.country);
         memberForm.append("position", this.position);
         memberForm.append("file", this.fileImage);
