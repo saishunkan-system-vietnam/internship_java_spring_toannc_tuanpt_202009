@@ -136,4 +136,9 @@ public class AccountController {
 	public ResponseQuery<?> getAll() {
 		return ResponseQuery.success("Recivce Success", accountService.getAll());
 	}
+
+	@GetMapping(value = "/test")
+	public ResponseQuery<?> test() {
+		return ResponseQuery.success("Recivce Success", accountService.testList());
+	}
 }
