@@ -22,13 +22,6 @@
                       </li>
                       <li>
                         <a>
-                          <router-link to="/teams">Team</router-link
-                          ><span></span> <span></span> <span></span>
-                          <span></span>
-                        </a>
-                      </li>
-                      <li>
-                        <a>
                           <router-link to="/tournament">Tournament</router-link
                           ><span></span> <span></span> <span></span>
                           <span></span>
@@ -43,6 +36,20 @@
                       </li>
                       <li>
                         <a>
+                          <router-link to="/teams">Teams</router-link
+                          ><span></span> <span></span> <span></span>
+                          <span></span>
+                        </a>
+                      </li>
+                      <li>
+                        <a>
+                          <router-link to="/player">Players</router-link
+                          ><span></span> <span></span> <span></span>
+                          <span></span>
+                        </a>
+                      </li>
+                      <li>
+                        <a>
                           <router-link to="/rank">Rank</router-link
                           ><span></span> <span></span> <span></span>
                           <span></span>
@@ -51,7 +58,10 @@
                       <li>
                         <div>
                           <template v-if="isProfile">
-                            <v-row class="d-flex d-flex mt-5 ml-4" justify="center">
+                            <v-row
+                              class="d-flex d-flex mt-5 ml-4"
+                              justify="center"
+                            >
                               <v-menu
                                 v-model="showMenu"
                                 absolute
@@ -114,7 +124,10 @@
                                     v-bind="attrs"
                                     v-on="on"
                                   ></v-card>
-                                  <h4 class="pr-10" style="color: white; padding-left: 5px">
+                                  <h4
+                                    class="pr-10"
+                                    style="color: white; padding-left: 5px"
+                                  >
                                     {{ profile.profile.name }}
                                   </h4>
                                 </template>
@@ -153,7 +166,12 @@
                                 >
                                   <template v-slot:activator="{ on, attrs }">
                                     <a v-bind="attrs" v-on="on">
-                                      <h5 class="ml-6" style="color: white; margin-top: 14px">Login</h5>
+                                      <h5
+                                        class="ml-6"
+                                        style="color: white; margin-top: 14px"
+                                      >
+                                        Login
+                                      </h5>
                                     </a>
                                   </template>
                                   <Login :closeLoginDialog="loginDialog" />

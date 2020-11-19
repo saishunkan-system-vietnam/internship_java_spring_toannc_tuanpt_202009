@@ -52,14 +52,14 @@ let routes = [
             component: Summary,
 
           },
-          
+
           {
             path: '/statistics/:id',
             component: () => import('@/views/web/schedule/Statistic'),
 
           }
           ,
-          
+
           {
             path: '/video/:id',
             component: () => import('@/views/web/schedule/Video'),
@@ -106,7 +106,7 @@ let routes = [
         ]
       },
       {
-        path:'/profile/:id',
+        path: '/profile/:id',
         name: "profile",
         component: () => import('@/views/web/Profile')
       },
@@ -120,8 +120,12 @@ let routes = [
         component: Teams,
       },
       {
-        path: '/player/:id',
-        component: () => import('@/views/web/player/Player'),
+        path: '/players',
+        component: () => import('@/views/web/player'),
+        children: [{
+          path: '/player/:id',
+          component: () => import('@/views/web/player/Player')
+        },]
       },
       {
         path: '/team/:id',
