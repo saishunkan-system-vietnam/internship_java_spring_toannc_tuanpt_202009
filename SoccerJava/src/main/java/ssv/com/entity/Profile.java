@@ -18,6 +18,7 @@ public class Profile {
 	private String email;
 	private String phone;
 	private String age;
+	private Integer currentAge;
 	private String gender;
 	private String country;
 	private String avatar;

@@ -175,6 +175,8 @@ export default {
         });
     },
 
+    
+
     handleRowClick(item) {
       this.$router.push({ path: "/scheduleDetail/" + item.idSchedule });
     },

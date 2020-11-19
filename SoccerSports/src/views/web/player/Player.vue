@@ -41,7 +41,7 @@
               Height/Weight: {{ playerStatus.height }},
               {{ playerStatus.weight }}
             </p>
-            <p class="status-player">Age: {{ playerProfile.age }}</p>
+            <p class="status-player">Age: {{ playerProfile.currentAge }}</p>
             <p class="status-player">Country: {{ playerProfile.country }}</p>
           </v-col>
           <v-col>
@@ -145,7 +145,7 @@
                       >
                         {{ member.name }}
                       </p>
-                      <p style="font-size: 12px">Age: {{ member.age }}</p>
+                      <p style="font-size: 12px">Age: {{ member.currentAge }}</p>
                     </div>
                   </v-row>
                 </router-link>
@@ -183,7 +183,7 @@
                       >
                         {{ member.name }}
                       </p>
-                      <p style="font-size: 12px">Age: {{ member.age }}</p>
+                      <p style="font-size: 12px">Age: {{ member.currentAge }}</p>
                     </div>
                   </v-row>
                 </router-link>

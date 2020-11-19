@@ -120,10 +120,7 @@ public class TournamentController {
 
 	@GetMapping(value="rankInTour")
 	public ResponseQuery<?> rankByTour(@RequestParam Integer id){
-		if(tournamentService.rankByTour(id) != null) {
-			return ResponseQuery.success("Connect",tournamentService.rankByTour(id));
-		}
-		return ResponseQuery.faild("No data", null);
+		return ResponseQuery.success("Connect",tournamentService.rankByTour(id));
 	}
 
 	@PostMapping(value="checkStatus")

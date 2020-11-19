@@ -105,11 +105,23 @@
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
             <v-row class="mt-4">
-              <v-col cols="12" sm="6" md="2">
+              <v-col cols="12" sm="6" md="2"></v-col>
+              <v-col cols="12" sm="6" md="1">
                 <v-select
-                  v-model="ageSearch"
+                  v-model="from"
                   :items="ages"
-                  label="Age"
+                  outlined
+                  dense
+                  label="From Age"
+                ></v-select>
+              </v-col>
+              <v-col cols="12" sm="6" md="1">
+                <v-select
+                  v-model="to"
+                  :items="ages"
+                  outlined
+                  dense
+                  label="To Age"
                 ></v-select>
               </v-col>
               <v-col cols="12" sm="6" md="2">
@@ -120,7 +132,7 @@
                   hide-details
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="3">
+              <v-col cols="12" sm="6" md="2">
                 <v-text-field
                   v-model="namePlayerSearch"
                   label="Name search"
@@ -128,7 +140,7 @@
                   hide-details
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="3">
+              <v-col cols="12" sm="6" md="2">
                 <v-select
                   v-model="positionSearch"
                   :items="items"
@@ -222,7 +234,7 @@
                               {{ player.position }}
                             </v-list-item-title>
                             <v-list-item-subtitle style="color: black"
-                              >Age: {{ player.age }}
+                              >Age: {{ player.currentAge }}
                             </v-list-item-subtitle>
                           </v-list-item-content>
                         </v-list-item>
@@ -306,10 +318,12 @@ export default {
       memberEdit: {},
       namePlayerSearch: "",
       ageSearch: "",
+      from: "",
+      to: "",
       positionSearch: "",
       countrySearch: "",
       membersSearch: [],
-      ages: Array.from(Array(46).keys()).map((v) => v + 10),
+      ages: Array.from(Array(46).keys()).map((v) => v + 6),
     };
   },
 
@@ -376,8 +390,15 @@ export default {
         })
         .filter((v) => {
           let isSearch = true;
-          if (this.ageSearch != "") {
-            isSearch = v.age == this.ageSearch;
+          if (this.from != "") {
+            isSearch = this.from <= v.currentAge;
+          }
+          return isSearch;
+        })
+        .filter((v) => {
+          let isSearch = true;
+          if (this.to != "") {
+            isSearch = this.to >= v.currentAge;
           }
           return isSearch;
         })
@@ -402,7 +423,8 @@ export default {
 
     reset() {
       this.namePlayerSearch = "";
-      this.ageSearch = "";
+      this.to = "";
+      this.from = "";
       this.countrySearch = "";
       this.positionSearch = "Default";
       this.searchButton();

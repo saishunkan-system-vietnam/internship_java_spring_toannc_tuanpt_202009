@@ -36,7 +36,7 @@
                 Country:<b>{{ profile.country }}</b>
               </h3>
               <h3>
-                Age:<b>{{ profile.age }}</b>
+                Age:<b>{{ profile.currentAge }}</b>
               </h3>
               <h3>
                 Sex:<b>{{ profile.gender }}</b>
@@ -188,7 +188,6 @@ export default {
   }),
   created() {
     this.profile = this.$store.state.user.userInfo.profile;
-    console.log(this.$store.state.user.userInfo)
     this.lastResults();
     this.getTeam();
     this.scheduleTeam();

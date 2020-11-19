@@ -109,8 +109,9 @@
                     </td>
                     <td>{{ item.location }}</td>
                     <td>
-                      <a :href="$router.resolve({path: '/scheduleDetail/' + item.idSchedule}).href">
-                        <v-icon>mdi-chevron-double-right</v-icon></a>
+                      <router-link :to="'/scheduleDetail/' + item.idSchedule">
+                        <v-icon>mdi-chevron-double-right</v-icon></router-link
+                      >
                     </td>
                   </tr>
                 </tbody>
@@ -234,7 +235,7 @@ export default {
               });
             this.$store
               .dispatch("schedule/teamResults", {
-                idTeam: this.schedule.team[1].idTeam,
+                idTeam: this.schedule.team[0].idTeam,
                 idTournament: this.schedule.tournament.idTournament,
               })
               .then((response) => {

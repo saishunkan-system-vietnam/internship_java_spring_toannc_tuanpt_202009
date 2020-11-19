@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssv.com.mapper.TeamMapper">
+	<resultMap type="Team" id="teamMapping">
+		<id column="team_id" property="idTeam" />
+		<result column="team_name" property="nameTeam" />
+		<result column="team_description" property="description" />
+		<result column="team_logo" property="logo" />
+		<result column="id_tour" property="idTour" />
+		<result column="team_country" property="country" />
+		<result column="team_datecreate" property="createDate" />
+
+		<association property="tournament">
+			<id property="idTournament" column="tournament_id" />
+			<result property="nameTournament" column="tournament_name" />
+		</association>
+
+		<collection property="profile" ofType="Profile"
+			notNullColumn="profile_id">
+			<id property="id" column="profile_id" />
+			<result property="name" column="profile_name" />
+			<result property="email" column="profile_email" />
+			<result property="phone" column="profile_phone" />
+			<result property="age" column="profile_age" />
+			<result property="gender" column="profile_gender" />
+			<result property="country" column="profile_country" />
+			<result property="avatar" column="profile_avatar" />
+			<result property="idTeam" column="id_team" />
+			<result property="position" column="profile_position" />
+			<result property="createDate" column="profile_datecreate" />
+		</collection>
+		<collection property="schedule" ofType="Schedule">
+			<id column="schedule_id" property="idSchedule" />
+			<result column="schedule_score1" property="score1" />
+			<result column="schedule_score2" property="score2" />
+			<result column="schedule_status" property="status" />
+			<result column="schedule_location" property="location" />
+			<result column="schedule_tour" property="idTour" />
+			<result column="schedule_start" property="timeStart" />
+			<result column="schedule_end" property="timeEnd" />
+			<result column="schedule_team1" property="idTeam1" />
+			<result column="schedule_team2" property="idTeam2" />
+			<result column="schedule_image" property="image" />
+			<result column="schedule_video" property="video" />
+			<result column="schedule_winner" property="winner" />
+			<result column="schedule_adraw" property="adraw" />
+			<collection property="goal" ofType="Goal">
+				<id property="idGoal" column="goal_id" />
+				<result property="idSchedule" column="id_schedule" />
+				<result property="idMember" column="member_id" />
+				<result property="time" column="goal_time" />
+				<result property="team" column="goal_team" />
+			</collection>
+
+		</collection>
+	</resultMap>
+	<resultMap type="Team" id="teamMapping1">
+		<id column="team_id" property="idTeam" />
+		<result column="team_name" property="nameTeam" />
+		<result column="team_description" property="description" />
+		<result column="team_logo" property="logo" />
+		<result column="id_tour" property="idTour" />
+		<result column="team_country" property="country" />
+		<result column="team_datecreate" property="createDate" />
+	</resultMap>
+
+	<insert id="createTeam" parameterType="Team">
+		INSERT INTO team_tbl(
+		team_name,
+		team_description,
+		team_logo,
+		team_country,
+		team_datecreate
+		)
+		VALUES(
+		#{nameTeam},
+		#{description},
+		#{logo},
+		#{country},
+		#{createDate}
+		)
+	</insert>
+
+	<select id="getTeams" resultMap="teamMapping">
+		SELECT p.*, t.*, c.* FROM
+		team_tbl p
+		left join profile_tbl c on p.team_id = c.id_team
+		left join
+		tournament_tbl t on p.id_tour = t.tournament_id order by p.team_id
+		desc
+	</select>
+
+	<select id="getTeamById" resultMap="teamMapping">
+		select * from team_tbl left
+		join profile_tbl on team_tbl.team_id=profile_tbl.id_team where
+		team_tbl.team_id=${idTeam}
+	</select>
+
+	<update id="formatTournament">
+		UPDATE `sports`.`team_tbl` SET `id_tour` = 0 WHERE
+		(`id_tour` =
+		${idTournament});
+	</update>
+
+	<select id="getTeamNoTournament" resultMap="teamMapping">
+		SELECT p.*, c.* FROM
+		team_tbl p
+		inner join profile_tbl c on p.team_id =
+		c.id_team
+		where
+		p.id_tour = 0
+	</select>
+
+	<update id="newTournament" parameterType="int">
+		UPDATE
+		`sports`.`team_tbl` SET `id_tour` = ${idTournament} WHERE (`team_id` =
+		${idTeam});
+	</update>
+
+	<update id="updateTeam">
+		UPDATE team_tbl SET
+		team_name = #{team.nameTeam},
+		team_description = #{team.description},
+		team_country = #{team.country},
+		team_logo = #{team.logo}
+		WHERE team_id = ${id};
+	</update>
+	<update id="formatTourTeam">
+		UPDATE `sports`.`team_tbl` SET `id_tour` = 0 WHERE
+		(`team_id` =
+		${idTeam});
+	</update>
+	<update id="createTournament">
+		UPDATE `sports`.`team_tbl` SET `id_tour` =
+		${idTournament} WHERE (`team_id` =
+		${idTeam});
+	</update>
+	<select id="getHistory" resultMap="teamMapping">
+		SELECT * FROM sports.team_tbl
+		left join (history_tbl inner join profile_tbl
+		on
+		history_tbl.id_member=profile_tbl.profile_id inner join
+		tournament_tbl
+		on tournament_tbl.tournament_id=history_tbl.id_tour ) on
+		history_tbl.id_team=team_tbl.team_id left join (schedule_tbl left join goal_tbl on
+		schedule_tbl.schedule_id=goal_tbl.id_schedule  ) on schedule_tbl.schedule_team1=team_tbl.team_id or schedule_tbl.schedule_team2=team_tbl.team_id where
+		team_tbl.team_id=${idTeam}
+		and tournament_tbl.tournament_id=${idTour} and schedule_tbl.schedule_id=${idSchedule};
+	</select>
+	
+</mapper>
