@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <v-data-table
       :headers="headers"
       :items="desserts"
@@ -91,7 +92,8 @@ export default {
         .then(function (response) {
           if (response.data.code == 9999) {
             console.log("Run here Rank tour");
-            alert(response.data.message);
+            // alert(response.data.message);
+            self.desserts = []
           } else {
             self.desserts = response.data.payload;
           }

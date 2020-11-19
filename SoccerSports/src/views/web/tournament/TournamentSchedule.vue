@@ -15,8 +15,7 @@
         <v-avatar>
           <img :src="baseUrl + item.team[0].logo" />
         </v-avatar>
-        <b style="font-size: 25px; margin-left: 40px; margin-right: 40px"
-          >vs</b
+        <b style="font-size: 25px; margin-left: 40px; margin-right: 40px">vs</b
         ><v-avatar>
           <img :src="baseUrl + item.team[1].logo" />
         </v-avatar>
@@ -33,15 +32,34 @@
         </router-link>
       </div>
     </template>
+    <template v-slot:[`item.status`]="{ item }">
+      <div
+        :style="
+          item.status == 0
+            ? 'color:green'
+            : item.status == 1
+            ? 'color:blue'
+            : ' color:red'
+        "
+      >
+        {{
+          item.status == 0
+            ? "UpComming"
+            : item.status == 1
+            ? "OnGame"
+            : "Finished"
+        }}
+      </div>
+    </template>
     <template v-slot:no-data>
-        <div class="text-center">
-      <v-img
-        max-height="500"
-        max-width="500"
-        src="@/assets/soccer.png"
-      ></v-img>
-      <h1>No Match </h1>
-        </div>
+      <div class="text-center">
+        <v-img
+          max-height="500"
+          max-width="500"
+          src="@/assets/soccer.png"
+        ></v-img>
+        <h1>No Match</h1>
+      </div>
     </template>
   </v-data-table>
 </template>
@@ -70,7 +88,7 @@ export default {
           value: "timeStart",
         },
         { text: "EVENT", value: "event", sortable: false, width: "500px" },
-
+        { text: "Status", value: "status" },
         { text: "", value: "article", width: "100px" },
       ],
     };

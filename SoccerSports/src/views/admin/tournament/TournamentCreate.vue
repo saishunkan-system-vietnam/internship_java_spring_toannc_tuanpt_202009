@@ -8,9 +8,6 @@
       <v-toolbar-title>Create Tournamet</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn dark text @click="reset"> Reset </v-btn>
-      </v-toolbar-items>
-      <v-toolbar-items>
         <v-btn dark text @click="save"> Save </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -236,6 +233,7 @@ export default {
   props: {
     hideDialog: Function,
     getData: Function,
+    tournamentData:Array,
   },
   data: () => ({
     valid: false,
@@ -339,10 +337,7 @@ export default {
         }
       }
     },
-    close() {
-      this.hideDialog();
-    },
-    async reset() {
+    async close() {
       await this.$refs.form.reset();
       this.dateEnd = new Date(new Date().setDate(new Date().getDate() + 1))
         .toISOString()
@@ -350,6 +345,7 @@ export default {
       this.dateStart = new Date(new Date().setDate(new Date().getDate() + 1))
         .toISOString()
         .substr(0, 10);
+      this.hideDialog();
     },
   },
   mounted() {
@@ -376,16 +372,29 @@ export default {
         reader.readAsDataURL(event);
       }
     },
+    nameTournament() {
+      console.log(this.teamSelected);
+    },
     teamSelected() {
       this.teamChoose = [];
-      this.teamSelected.forEach((element) => {
-        this.listTeam.forEach((team) => {
-          if (team.idTeam == element) {
-            this.teamChoose.push(team);
-          }
+      if (this.teamSelected == undefined) {
+        this.teamSelected = [];
+      }
+      if (this.teamSelected.length > 0) {
+        this.teamSelected.forEach((element) => {
+          this.listTeam.forEach((team) => {
+            if (team.idTeam == element) {
+              this.teamChoose.push(team);
+            }
+          });
         });
-      });
+      }
     },
+    tournamentData(){
+      this.$refs.form.reset();
+      this.getListTeam();
+    }
+    
   },
 };
 </script>
