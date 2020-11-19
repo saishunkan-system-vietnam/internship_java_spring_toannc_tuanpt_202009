@@ -1,5 +1,6 @@
 package ssv.com.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -99,6 +100,10 @@ public class TeamService {
 
 	public Team getTeamById(int idTeam) {
 		Team team = teamRepository.getTeamById(idTeam);
+		List<Profile> profiles = team.getProfile();
+		for (Profile member : profiles) {
+			member.setCurrentAge(LocalDate.now().getYear() - LocalDate.parse(member.getAge()).getYear());
+		}
 		if (team.getIdTour() != 0) {
 			List<Schedule> schedules = scheduleRepository.getAll();
 			team.setTourName(tournamentRepository.getById(team.getIdTour()).getNameTournament());
