@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ssv.com.dto.ResponseQuery;
 import ssv.com.entity.Profile;
-import ssv.com.entity.Team;
 import ssv.com.exception.ResourceExistsException;
 import ssv.com.form.ProfileForm;
 import ssv.com.service.ProfileService;

@@ -1,6 +1,7 @@
 package ssv.com.service;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.mindrot.jbcrypt.BCrypt;
@@ -51,14 +52,23 @@ public class AccountService {
 		}
 	}
 
+	public Stream<?> streamOf(List<?> list){
+		return list == null || list.isEmpty() ? Stream.empty() : list.stream();
+	}
+
+	public Stream<?> testList(){
+		streamOf(accountRepository.getAll());
+//		List<Team> teams = new
+		return null;
+	}
+
 	public List<Account> getAll() {
-		// TODO Auto-generated method stub
 		return accountRepository.getAll();
 	}
 
 	public void replacePass(Account account) {
 		accountRepository.replacePass(account);
-		
+
 	}
 
 }

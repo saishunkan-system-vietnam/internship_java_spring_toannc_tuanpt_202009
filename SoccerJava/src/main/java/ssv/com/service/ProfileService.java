@@ -122,7 +122,9 @@ public class ProfileService {
 	}
 
 	public Optional<Profile> findProfileById(Integer id) {
-		return profileRepository.findProfileById(id);
+		Optional<Profile> profile = profileRepository.findProfileById(id);
+		profile.get().setCurrentAge(LocalDate.now().getYear() - LocalDate.parse(profile.get().getAge()).getYear());
+		return profile;
 	}
 
 	public HashSet<Profile> getTourGoal(int idTeam) {
