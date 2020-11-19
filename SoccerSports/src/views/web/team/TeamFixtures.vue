@@ -25,8 +25,8 @@
                         hide-default-footer
                         :items-per-page="15"
                       >
-                        <template v-slot:[`item.nameTeam1`]="{ item }">
-                          <p class="pt-3" style="color: red">
+                        <template  v-slot:[`item.nameTeam1`]="{ item }">
+                          <p class="pt-3" style="color: red; width: 90px; margin-right: -27px !important">
                             {{ item.nameTeam1 }}
                           </p>
                         </template>
@@ -35,22 +35,20 @@
                             :src="baseUrl + item.logoTeam1"
                             width="50px"
                             height="50px"
-                            style="margin: 3px 0 3px 0"
                           />
                         </template>
                         <template v-slot:[`item.vs`]="{}">
-                          <p class="pt-3" style="color: blue">VS</p>
+                          <p class="pt-3" style="color: blue; width: 20px; margin-right: 21px !important">VS</p>
                         </template>
                         <template v-slot:[`item.logoTeam2`]="{ item }">
                           <img
                             :src="baseUrl + item.logoTeam2"
                             width="50px"
                             height="50px"
-                            style="margin: 3px 0 3px 0"
                           />
                         </template>
                         <template v-slot:[`item.nameTeam2`]="{ item }">
-                          <p class="pt-3" style="color: red">
+                          <p class="pt-3" style="color: red; width: 90px; margin-right: -27px !important">
                             {{ item.nameTeam2 }}
                           </p>
                         </template>
