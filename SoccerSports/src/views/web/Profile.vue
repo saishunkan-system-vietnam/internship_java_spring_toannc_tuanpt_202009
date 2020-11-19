@@ -18,17 +18,17 @@
               <h2>
                 <b>{{ profile.name }}</b>
               </h2>
-              <v-avatar tile>
+              <v-avatar tile v-if="Object.keys(team).length!=0">
                 <img :src="baseUrl + team.logo" alt="John" />
               </v-avatar>
               <h3 style="display: inline-block">
-                <b>{{ team.nameTeam }}</b>
+                <b>{{ Object.keys(team).length!=0?team.nameTeam:'No Team' }}</b>
               </h3>
               <h3>
                 Position:<b>{{ profile.position }}</b>
               </h3>
               <h5 style="font-family: time new roman; font-size: 20px">
-                Tournament:<b>{{ team.tourName }}</b>
+                Tournament:<b>{{ Object.keys(team).length!=0?team.tourName:"No tournament" }}</b>
               </h5>
             </v-col>
             <v-col>
@@ -56,7 +56,6 @@
                   <th class="text-left">Tournament</th>
                   <th class="text-left">Date</th>
                   <th class="text-left">Event</th>
-                  <th class="text-left">Location</th>
                 </tr>
               </thead>
               <tbody>
@@ -66,31 +65,31 @@
                   @click="detailSchedule(item)"
                 >
                   <template v-if="i < 5">
-                    <td>{{ item.tournament.nameTournament }}</td>
+                    <td>{{ item.nameTour }}</td>
                     <td>
-                      {{ new Date(item.timeStart).toString().substring(0, 21) }}
+                      {{ item.dayStart }} {{item.monthStart.substr(item.monthStart.length-6)}}
                     </td>
                     <td>
                       <v-row>
                         <v-col>
                           <v-avatar tile>
                             <img
-                              :src="baseUrl + item.team[0].logo"
+                              :src="baseUrl + item.logoTeam1"
                               alt="John"
                             /> </v-avatar></v-col
-                        ><v-col> {{ item.team[0].nameTeam }}</v-col
-                        ><v-col><b>1 - 1</b></v-col
-                        ><v-col> {{ item.team[1].nameTeam }}</v-col
+                        ><v-col> {{ item.nameTeam1 }}</v-col
+                        ><v-col
+                          ><b>{{ item.score1 }} - {{ item.score2 }}</b></v-col
+                        ><v-col> {{ item.nameTeam2 }}</v-col
                         ><v-col>
                           <v-avatar tile>
                             <img
-                              :src="baseUrl + item.team[1].logo"
+                              :src="baseUrl + item.logoTeam2" 
                               alt="John"
                             /> </v-avatar
                         ></v-col>
                       </v-row>
                     </td>
-                    <td>{{ item.location }}</td>
                   </template>
                 </tr>
               </tbody>
@@ -140,12 +139,38 @@
                   <v-card color="grey lighten-4" min-width="350px" flat>
                     <v-toolbar :color="selectedEvent.color" dark>
                       <v-toolbar-title
-                        v-html="selectedEvent.tournament"
-                      ></v-toolbar-title>
+                        ><a
+                          :href="
+                            $router.resolve({
+                              path:
+                                '/tournamentDetail/' +
+                                selectedEvent.idTour +
+                                '/team',
+                            }).href
+                          "
+                          >{{ selectedEvent.tournament }}</a
+                        >
+                      </v-toolbar-title>
                       <v-spacer></v-spacer>
                     </v-toolbar>
                     <v-card-text>
-                      <span v-html="selectedEvent.name"></span>
+                      <a
+                        :href="
+                          $router.resolve({
+                            path: '/summary/' + selectedEvent.idSchedule,
+                          }).href
+                        "
+                      >
+                        <span v-html="selectedEvent.name"></span>
+                        <div>
+                          <v-avatar tile>
+                            <img
+                              :src="baseUrl + selectedEvent.logo"
+                              alt="John"
+                            />
+                          </v-avatar>
+                        </div>
+                      </a>
                     </v-card-text>
                     <v-card-actions>
                       <v-btn
@@ -188,7 +213,7 @@ export default {
   }),
   created() {
     this.profile = this.$store.state.user.userInfo.profile;
-    console.log(this.$store.state.user.userInfo)
+    console.log(this.$store.state.user.userInfo);
     this.lastResults();
     this.getTeam();
     this.scheduleTeam();
@@ -227,22 +252,38 @@ export default {
       return Math.floor((b - a + 1) * Math.random()) + a;
     },
     getTeam() {
-      this.$store
-        .dispatch("team/getTeamById", this.profile.idTeam)
-        .then((response) => {
+      this.$store.dispatch("team/getTeamById", this.profile.idTeam).then((response) => {
+        if (response.data.code == 0) {
           this.team = response.data.payload;
-        });
+        } else {
+          this.team = {};
+        }
+      });
     },
     lastResults() {
+      let self = this;
       this.$store
-        .dispatch("schedule/teamLastResults", this.profile.idTeam)
+        .dispatch(
+          "member/lastFiveMatch",
+          this.$store.state.user.userInfo.profile.id
+        )
         .then((response) => {
-          this.lastResultsData = response.data.payload;
+          let data = response.data;
+          if (data.code == 0) {
+            self.lastResultsData = response.data.payload;
+            console.log(response.data.payload);
+          } else {
+            self.lastResultsData = [];
+            // alert(data.message);
+          }
+        })
+        .catch(function (error) {
+          alert(error);
         });
     },
     detailSchedule(item) {
-      console.log(item)
-      this.$router.push('/scheduleDetail/'+item.idSchedule)
+      console.log(item);
+      this.$router.push("/summary/" + item.idSchedule);
     },
     async scheduleTeam() {
       await this.$store
@@ -257,7 +298,10 @@ export default {
               start: element.timeStart,
               timed: true,
               name: "VS " + item.nameTeam,
+              logo: item.logo,
+              idTour: element.idTour,
               tournament: element.tournament.nameTournament,
+              idSchedule: element.idSchedule,
             });
           }
         });

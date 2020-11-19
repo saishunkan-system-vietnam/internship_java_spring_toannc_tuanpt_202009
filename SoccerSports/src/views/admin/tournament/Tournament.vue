@@ -6,7 +6,11 @@
       </template>
     </v-breadcrumbs>
     <template>
-      <v-data-table :headers="headers" :items="tournament">
+      <v-data-table
+        :headers="headers"
+        :items="tournament"
+        :options.sync="options"
+      >
         <template v-slot:top>
           <v-toolbar flat>
             <v-toolbar-title>Tournament</v-toolbar-title>
@@ -147,7 +151,6 @@
           <router-link
             :to="{
               path: `tournament/` + item.idTournament,
-          
             }"
             style="text-decoration: none"
           >
@@ -182,7 +185,11 @@
       </v-card>
     </v-dialog>
     <v-dialog v-model="dialogCreate" fullscreen persistent>
-      <TournamentCreate :hideDialog="hideDialog" :getData="getData" :tournamentData="tournament"/>
+      <TournamentCreate
+        :hideDialog="hideDialog"
+        :getData="getData"
+        :tournamentData="tournament"
+      />
     </v-dialog>
   </div>
 </template>
@@ -218,6 +225,7 @@ export default {
       tournament: [],
       nameDelete: "",
       editedIndex: "",
+      options: {},
       headers: [
         {
           text: "Name",
@@ -278,7 +286,6 @@ export default {
       this.$store.dispatch("tournament/getAll").then((response) => {
         this.$store.commit("auth/auth_overlay_false");
         if (response.data.code == 0) {
-          console.log(response.data.payload);
           this.tournament = response.data.payload;
         }
       });
@@ -339,6 +346,20 @@ export default {
       } else {
         return value > this.dateStart;
       }
+    },
+  },
+  watch: {
+    dateStart() {
+      this.options.page = 1;
+    },
+    dateEnd() {
+      this.options.page = 1;
+    },
+    selectStatus() {
+      this.options.page = 1;
+    },
+    searchName() {
+      this.options.page = 1;
     },
   },
 };

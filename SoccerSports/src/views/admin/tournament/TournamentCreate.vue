@@ -233,7 +233,7 @@ export default {
   props: {
     hideDialog: Function,
     getData: Function,
-    tournamentData:Array,
+    tournamentData: Array,
   },
   data: () => ({
     valid: false,
@@ -291,7 +291,9 @@ export default {
   },
   methods: {
     getListTeam() {
+    
       this.$store.dispatch("team/getTeamNoTournament").then((response) => {
+        this.teamSelected = [];
         this.listTeam = response.data.payload;
       });
     },
@@ -318,14 +320,13 @@ export default {
           bodyFormData.append("listTeam", this.teamSelected);
           this.$store
             .dispatch("tournament/create", bodyFormData)
-            .then((response) => {
+            .then(async (response) => {
               if (response.data.code == 0) {
                 this.overlay = !this.overlay;
 
-                this.close();
+                await this.close();
                 alert(response.data.message);
                 this.getData();
-                this.getListTeam();
               } else {
                 alert(response.data.message);
               }
@@ -348,14 +349,6 @@ export default {
       this.hideDialog();
     },
   },
-  mounted() {
-    this.getListTeam();
-  },
-  updated() {
-    if (this.listTeam.length == 0) {
-      this.getListTeam();
-    }
-  },
 
   watch: {
     fileImage(event) {
@@ -372,15 +365,13 @@ export default {
         reader.readAsDataURL(event);
       }
     },
-    nameTournament() {
-      console.log(this.teamSelected);
-    },
+   
     teamSelected() {
+      console.log(this.teamSelected)
       this.teamChoose = [];
       if (this.teamSelected == undefined) {
         this.teamSelected = [];
-      }
-      if (this.teamSelected.length > 0) {
+      } else if (this.teamSelected.length > 0) {
         this.teamSelected.forEach((element) => {
           this.listTeam.forEach((team) => {
             if (team.idTeam == element) {
@@ -390,11 +381,9 @@ export default {
         });
       }
     },
-    tournamentData(){
-      this.$refs.form.reset();
-      this.getListTeam();
-    }
-    
+     tournamentData() {
+       this.getListTeam();
+    },
   },
 };
 </script>

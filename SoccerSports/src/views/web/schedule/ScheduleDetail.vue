@@ -49,14 +49,19 @@
                               : baseUrl + schedule.team[0].logo
                           "
                           alt="Logo" /></v-avatar></v-row
-                    ><v-row>
-                      <span v-for="(item, i) in goal1" :key="i"
-                        ><v-icon dark color="red"> mdi-soccer </v-icon
+                    ><v-row style="display: block">
+                      <div v-for="(item, i) in goal1" :key="i">
+                        <v-icon dark color="red"> mdi-soccer </v-icon
                         >{{ goal1.length > 0 ? item.profile.name : "" }}({{
-                          goal1.length > 0 ? item.time.substring(0, 5) : ""
-                        }})<br
-                      /></span> </v-row></v-col></v-row
-              ></v-col>
+                          goal1.length > 0
+                            ? item.time.substring(0, 5) + "&nbsp;"
+                            : ""
+                        }})
+                      </div>
+                    </v-row></v-col
+                  ></v-row
+                ></v-col
+              >
               <v-col class="text-center">
                 <v-row>
                   <v-col
@@ -130,32 +135,30 @@
     </v-hover>
 
     <v-container>
-      <ul>
-        <li>
-          <router-link
-            :to="{
-              path: `/summary/${schedule.idSchedule}`,
-            }"
-            >Summary</router-link
-          >
-        </li>
-        <li>
-          <router-link
-            :to="{
-              path: `/statistics/${schedule.idSchedule}`,
-            }"
-            >Statistics</router-link
-          >
-        </li>
-        <li v-if="schedule.status == 2">
+      <nav id="nav">
+        <router-link
+          :to="{
+            path: `/summary/${schedule.idSchedule}`,
+          }"
+          >Summary</router-link
+        >
+
+        <router-link
+          :to="{
+            path: `/statistics/${schedule.idSchedule}`,
+          }"
+          >Statistics</router-link
+        >
+
+        <template v-if="schedule.status == 2">
           <router-link
             :to="{
               path: `/video/${schedule.idSchedule}`,
             }"
             >Video-photo</router-link
           >
-        </li>
-      </ul>
+        </template>
+      </nav>
       <hr />
     </v-container>
     <section>
@@ -182,7 +185,6 @@ export default {
   created() {
     this.getData();
   },
-  
 
   methods: {
     detailTeam(item) {
@@ -192,7 +194,7 @@ export default {
       });
     },
     getData() {
-      console.log( this.$route.params.id)
+      console.log(this.$route.params.id);
       this.$store.commit("auth/auth_overlay_true");
       this.$store
         .dispatch("schedule/getById", this.$route.params.id)
@@ -206,7 +208,7 @@ export default {
         });
     },
     detailTournament(item) {
-      this.$router.push("/tournamentDetail/" + item);
+      this.$router.push("/tournamentDetail/" + item+"/team");
     },
     getDataGoal() {
       this.goal1 = [];
@@ -239,27 +241,17 @@ export default {
   },
 };
 </script>
-<style>
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+<style scoped>
+#nav {
+  display: flex;
+  align-items: center;
 }
-
-li {
-  float: left;
-}
-
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-li a:hover {
+#nav a {
+  font-weight: bold;
   color: red;
+  padding: 0 10px;
+}
+#nav a.vue-school-active-class {
+  color: green;
 }
 </style>

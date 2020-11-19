@@ -602,7 +602,7 @@ export default {
         });
     },
     detailTournament(item) {
-      this.$router.push({ path: "/tournamentDetail/" + item });
+      this.$router.push({ path: "/tournamentDetail/" + item +"/team"});
     },
     detailResults(item) {
       console.log(item.idSchedule);

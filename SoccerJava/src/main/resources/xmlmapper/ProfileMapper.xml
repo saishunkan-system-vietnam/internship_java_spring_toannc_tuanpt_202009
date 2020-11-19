@@ -130,27 +130,29 @@
 	<select id="getNumberGoal" resultType="int">
 		SELECT
 		COUNT(goal_id)
-		FROM goal_tbl where
-		goal_tbl.member_id=${idMember} 
+		FROM
+		goal_tbl where
+		goal_tbl.member_id=${idMember}
 	</select>
 	<select id="getAll" resultMap="profileMapping">
-			SELECT p.*, t.*
+		SELECT p.*, t.*
 		FROM
 		profile_tbl p
 		left JOIN account_tbl a ON p.profile_email =
 		a.account_email
-		left join team_tbl t on t.team_id = p.id_team
+		left join
+		team_tbl t on t.team_id = p.id_team
 	</select>
 
 
 	<select id="lastFiveMatch" resultMap="profileSchedule">
-		SELECT * FROM
-		sports.profile_tbl inner join (team_tbl inner join schedule_tbl on
-		(team_tbl.team_id=schedule_tbl.schedule_team1 or
-		team_tbl.team_id=schedule_tbl.schedule_team2)) on
-		team_tbl.team_id=profile_tbl.id_team where profile_id=#{id} and
-		schedule_tbl.schedule_status=2 order by schedule_tbl.schedule_start
-		desc limit 0,5 ;
+	SELECT c.*,team_tbl.*,schedule_tbl.* FROM
+		(SELECT
+		a.profile_id,a.profile_name,a.profile_country,a.profile_age,a.profile_datecreate,a.profile_email,a.profile_gender,a.profile_phone,a.profile_position,a.profile_avatar,b.id_team
+		From sports.profile_tbl a inner join history_tbl b on
+		a.profile_id=b.id_member where a.profile_id=${idPlayer}) c
+		inner join team_tbl on
+		team_tbl.team_id=c.id_team inner join schedule_tbl on (schedule_tbl.schedule_team1=c.id_team or schedule_tbl.schedule_team2=c.id_team )where profile_id=${idPlayer} and schedule_tbl.schedule_status=2 order by schedule_tbl.schedule_start  desc ;
 
 	</select>
 </mapper>
