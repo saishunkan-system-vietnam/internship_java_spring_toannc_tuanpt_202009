@@ -49,7 +49,6 @@
             </v-col>
             <v-col cols="12" md="6">
               <v-file-input
-               accept="image/png, image/jpeg, image/bmp"
                 :rules="rulesImage"
                 v-model="fileImage"
                 label="Change Avatar"

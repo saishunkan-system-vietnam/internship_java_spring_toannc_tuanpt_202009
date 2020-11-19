@@ -85,6 +85,7 @@ export default {
       await this.$store
         .dispatch("schedule/getByTour", this.$route.params.id)
         .then((response) => {
+          this.$store.commit("auth/auth_overlay_false");
           if (response.data.code == 0) {
             a = response.data.payload;
           }
@@ -94,7 +95,6 @@ export default {
           this.schedule.push(element);
         }
       });
-      this.$store.commit("auth/auth_overlay_false");
     },
   },
 };

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssv.com.mapper.ProfileMapper">
+
+	<resultMap type="Profile" id="profileMapping">
+		<id property="id" column="profile_id" />
+		<result property="name" column="profile_name" />
+		<result property="email" column="profile_email" />
+		<result property="phone" column="profile_phone" />
+		<result property="age" column="profile_age" />
+		<result property="gender" column="profile_gender" />
+		<result property="country" column="profile_country" />
+		<result property="avatar" column="profile_avatar" />
+		<result property="position" column="profile_position" />
+		<result property="createDate" column="profile_datecreate" />
+		<result property="idTeam" column="id_team" />
+		<collection property="history" ofType="History">
+			<id column="history_id" property="idHistory" />
+			<result column="id_member" property="idMember" />
+			<result column="id_team" property="idTeam" />
+			<result column="id_tour" property="idTournament" />
+		</collection>
+	</resultMap>
+	<resultMap type="Profile" id="profileSchedule">
+		<id property="id" column="profile_id" />
+		<collection property="teams" ofType="Team">
+			<id column="team_id" property="idTeam" />
+			<result column="team_name" property="nameTeam" />
+			<result column="team_logo" property="logo" />
+			<result column="id_tour" property="idTour" />
+			<result column="team_country" property="country" />
+			<collection property="schedule" ofType="Schedule">
+				<id column="schedule_id" property="idSchedule" />
+				<result column="schedule_score1" property="score1" />
+				<result column="schedule_score2" property="score2" />
+				<result column="schedule_status" property="status" />
+				<result column="schedule_location" property="location" />
+				<result column="schedule_tour" property="idTour" />
+				<result column="schedule_start" property="timeStart" />
+				<result column="schedule_end" property="timeEnd" />
+				<result column="schedule_team1" property="idTeam1" />
+				<result column="schedule_team2" property="idTeam2" />
+				<result column="schedule_image" property="image" />
+				<result column="schedule_video" property="video" />
+				<result column="schedule_winner" property="winner" />
+				<result column="schedule_adraw" property="adraw" />
+			</collection>
+		</collection>
+
+	</resultMap>
+
+	<insert id="saveProfile" flushCache="true"
+		statementType="PREPARED" useGeneratedKeys="true"
+		keyColumn="profile_id" keyProperty="id">
+		INSERT INTO profile_tbl(
+		profile_name, profile_email, profile_phone, profile_age,
+		profile_gender, profile_country, profile_position ,profile_avatar,
+		profile_datecreate )
+		VALUES( #{name}, #{email}, #{phone}, #{age},
+		#{gender}, #{country},
+		#{position}, #{avatar}, #{createDate} );
+	</insert>
+
+	<select id="findByEmail" flushCache="true"
+		statementType="PREPARED" resultType="Profile"
+		resultMap="profileMapping">
+		SELECT * FROM profile_tbl WHERE
+		profile_email='${email}'
+	</select>
+
+	<select id="checkPhoneExist" flushCache="true"
+		statementType="PREPARED" resultType="Profile"
+		resultMap="profileMapping">
+		SELECT * FROM profile_tbl WHERE
+		profile_phone='${phone}'
+	</select>
+
+	<select id="getMembers" resultMap="profileMapping">
+		SELECT p.*, t.*
+		FROM
+		profile_tbl p
+		left JOIN account_tbl a ON p.profile_email =
+		a.account_email
+		left join team_tbl t on t.team_id = p.id_team
+		WHERE
+		account_role = 'ROLE_MEMBER' ORDER BY a.account_id DESC
+	</select>
+
+	<update id="updateMembersInTeam">
+		update profile_tbl set id_team = 0 where
+		id_team = ${idTeam};
+
+		<foreach collection="profile" item="item" index="index"
+			separator=";">
+			update profile_tbl set id_team = #{idTeam} where profile_id
+			=
+			${item.id}
+		</foreach>
+	</update>
+
+	<update id="updateProfile" parameterType="Profile">
+		update profile_tbl SET
+		profile_name=#{name},
+		profile_phone=#{phone},
+		profile_avatar=#{avatar},
+		profile_age=#{age},
+		profile_gender=#{gender},
+		profile_country=#{country},
+		profile_position=#{position}
+		where
+		profile_id=#{id}
+	</update>
+
+	<select id="findProfileById" flushCache="true"
+		statementType="PREPARED" resultType="Profile"
+		resultMap="profileMapping">
+		SELECT * FROM profile_tbl WHERE
+		profile_id='${id}'
+	</select>
+
+	<select id="getByTeamTour" resultMap="profileMapping">
+		SELECT * FROM
+		sports.profile_tbl inner join history_tbl on
+		history_tbl.id_member=profile_tbl.profile_id where
+		history_tbl.id_team=${idTeam};
+	</select>
+
+	<select id="getNumberGoal" resultType="int">
+		SELECT
+		COUNT(goal_id)
+		FROM goal_tbl where
+		goal_tbl.member_id=${idMember} 
+	</select>
+	<select id="getAll" resultMap="profileMapping">
+			SELECT p.*, t.*
+		FROM
+		profile_tbl p
+		left JOIN account_tbl a ON p.profile_email =
+		a.account_email
+		left join team_tbl t on t.team_id = p.id_team
+	</select>
+
+
+	<select id="lastFiveMatch" resultMap="profileSchedule">
+		SELECT * FROM
+		sports.profile_tbl inner join (team_tbl inner join schedule_tbl on
+		(team_tbl.team_id=schedule_tbl.schedule_team1 or
+		team_tbl.team_id=schedule_tbl.schedule_team2)) on
+		team_tbl.team_id=profile_tbl.id_team where profile_id=#{id} and
+		schedule_tbl.schedule_status=2 order by schedule_tbl.schedule_start
+		desc limit 0,5 ;
+
+	</select>
+</mapper>

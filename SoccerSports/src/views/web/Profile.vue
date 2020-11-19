@@ -188,7 +188,6 @@ export default {
   }),
   created() {
     this.profile = this.$store.state.user.userInfo.profile;
-    console.log(this.$store.state.user.userInfo)
     this.lastResults();
     this.getTeam();
     this.scheduleTeam();

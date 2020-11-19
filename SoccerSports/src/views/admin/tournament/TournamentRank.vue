@@ -15,8 +15,7 @@
           </tr>
         </thead>
         <tbody>
-       
-          <tr v-for="(item, index) in rank" :key="index" style="cursor: pointer" @click="detaiTeam(item.idTeam)">
+          <tr v-for="(item, index) in rank" :key="index">
             <td>
               {{ index + 1 }}
             </td>
@@ -65,11 +64,6 @@ export default {
           this.rank = response.data.payload;
         }
       });
-  },
-  methods:{
-    detaiTeam(id){
-      this.$router.push('/admin/team/detail/'+id)
-    }
   },
   computed: {
     baseUrl() {
