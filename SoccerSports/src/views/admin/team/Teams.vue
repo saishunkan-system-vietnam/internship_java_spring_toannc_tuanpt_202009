@@ -10,6 +10,7 @@
       :headers="headers"
       :items="desserts"
       class="elevation-1 container row-pointer"
+      :options.sync="options"
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
@@ -29,8 +30,8 @@
 
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-row>
-            <v-col cols="12" sm="3" md="3"> </v-col>
-            <v-col cols="12" sm="3" md="3">
+            <v-col cols="0" sm="2" md="2"> </v-col>
+            <v-col cols="3" sm="3" md="3">
               <!-- <v-text-field
                 v-model="dateSearch"
                 append-icon="mdi-magnify"
@@ -48,7 +49,7 @@
                 class="pt-3"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="3" md="3">
+            <v-col cols="3" sm="3" md="3">
               <v-text-field
                 v-model="nameTeamSearch"
                 append-icon="mdi-magnify"
@@ -58,13 +59,18 @@
                 class="pt-3"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="3" md="3">
+            <v-col cols="3" sm="3" md="3">
               <v-select
                 v-model="tourNameSearch"
                 label="Tournament Search"
                 :items="tourItems"
+                item-text="nameTournament"
+                item-value="nameTournament"
                 class="pt-3"
               ></v-select>
+            </v-col>
+            <v-col cols="3" sm="3" md="1">
+              <v-btn class="mt-3" color="error" dark @click="reset"> Reset </v-btn>
             </v-col>
           </v-row>
         </v-toolbar>
@@ -109,6 +115,7 @@ export default {
   },
   data() {
     return {
+      options: {},
       createTeamDialog: false,
       search: "",
       tourItems: [],
@@ -166,6 +173,12 @@ export default {
     },
   },
 
+  watch: {
+    nameTeamSearch() {
+      this.options.page = 1;
+    },
+  },
+
   methods: {
     getTeams() {
       let self = this;
@@ -175,10 +188,8 @@ export default {
         .then((response) => {
           this.$store.commit("auth/auth_overlay_false");
           if (response.data.code === 0) {
-            console.log(response)
             self.desserts = response.data.payload;
-            self.getTourById();
-            // console.log(self.desserts)
+            self.getTours();
           } else {
             alert(response.data.message);
           }
@@ -189,19 +200,20 @@ export default {
         });
     },
 
-    getTourById(id) {
+    getTours() {
       let self = this;
       self.$store.commit("auth/auth_overlay_true");
       this.$store
-        .dispatch("tournament/getById", id)
+        .dispatch("tournament/getAll")
         .then((response) => {
           self.$store.commit("auth/auth_overlay_false");
-          if (response.data.code == 0) {
-            console.log(response);
-            self.tourItems = response.data.payload;
+          if (response.data.code == 0 && response.data.payload.length > 0) {
+            self.tourItems = response.data.payload.filter((t) => {
+              return t.status != 2;
+            });
           } else {
             console.log("Run here Teams Client");
-            alert(response.data.message);
+            self.isHavedata = false;
           }
         })
         .catch(function (error) {
@@ -231,16 +243,19 @@ export default {
       if (!this.tourNameSearch) {
         return true;
       }
-      if (value != undefined)
-        return value.toLowerCase().includes(this.tourNameSearch.toLowerCase());
+      console.log(value)
+      console.log(this.tourNameSearch)
+      if (value != undefined) return value == this.tourNameSearch;
     },
 
     countryTeamFilter(value) {
       if (!this.countrySearch) {
         return true;
       }
-      if (value != undefined)
-        return value.toLowerCase().includes(this.countrySearch.toLowerCase());
+      if (this.countrySearch == "") {
+        return true;
+      }
+      return value.toLowerCase().includes(this.countrySearch.toLowerCase());
     },
 
     dateFilter(value) {
@@ -253,6 +268,12 @@ export default {
 
     closeCreateTeamDialog() {
       this.createTeamDialog = !this.closeCreateTeamDialog;
+    },
+
+    reset() {
+      this.nameTeamSearch = "";
+      this.countrySearch = "";
+      this.tourNameSearch = "";
     },
   },
 };

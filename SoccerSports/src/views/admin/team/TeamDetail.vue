@@ -361,6 +361,8 @@ export default {
         });
     },
 
+    
+
     isModalEditMember(id) {
       this.$router.push({
         path: `/admin/member/${id}`,

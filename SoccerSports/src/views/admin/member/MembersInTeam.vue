@@ -1,5 +1,10 @@
 <template>
-  <v-data-table :headers="headers" :items="playersInTeam" class="elevation-1">
+  <v-data-table
+    :headers="headers"
+    :items="playersInTeam"
+    class="elevation-1"
+    :options.sync="options"
+  >
     <template v-slot:top>
       <v-toolbar flat color="white">
         <v-row class="mt-4">
@@ -126,6 +131,12 @@ export default {
         // console.log(oldValue);
         if (oldValue.length > 0 && newValue != oldValue)
           this.checkUpdate = false;
+      },
+    },
+
+    watch: {
+      nameTeamSearch() {
+        this.options.page = 1;
       },
     },
   },
