@@ -72,6 +72,7 @@ export default {
   },
   data() {
     return {
+      options: {},
       checkUpdate: true,
       positionSearch: "",
       positionItems: [
