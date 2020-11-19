@@ -3,6 +3,7 @@
     :headers="headers"
     :items="playersAvailable"
     class="elevation-1"
+    :options.sync="options"
   >
     <template v-slot:top>
       <v-toolbar flat color="white">
@@ -107,7 +108,7 @@ export default {
     },
   },
 
-   watch: {
+  watch: {
     playersAvailable: {
       deep: true,
       handler(newValue, oldValue) {
@@ -118,8 +119,13 @@ export default {
           this.checkUpdate = false;
       },
     },
-  },
 
+    watch: {
+      nameTeamSearch() {
+        this.options.page = 1;
+      },
+    },
+  },
 
   methods: {
     countryFilter(value) {
