@@ -202,6 +202,7 @@ public class ScheduleService {
 		if (goals.size() != 0 && goals != null) {
 			goalRepository.format(goals.get(0).getIdSchedule());
 		}
+		goalRepository.format(goals.get(0).getIdSchedule());
 		for (GoalDto goal : goals) {
 			goalRepository.create(goal.getProfile().getId(), goal.getIdSchedule(), goal.getTime(), goal.getTeam());
 		}

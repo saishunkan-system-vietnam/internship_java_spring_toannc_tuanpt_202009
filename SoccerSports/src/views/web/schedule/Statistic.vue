@@ -160,9 +160,8 @@
                     </td>
                     <td>{{ item.location }}</td>
                     <td>
-                      <router-link :to="'/scheduleDetail/' + item.idSchedule">
-                        <v-icon>mdi-chevron-double-right</v-icon></router-link
-                      >
+                        <a :href="$router.resolve({path: '/scheduleDetail/' + item.idSchedule}).href">
+                        <v-icon>mdi-chevron-double-right</v-icon></a>
                     </td>
                   </tr>
                 </tbody>
@@ -208,7 +207,7 @@ export default {
           this.$store.commit("auth/auth_overlay_false");
           if (response.data.code == 0) {
             this.schedule = response.data.payload;
-
+          
             this.$store
               .dispatch("team/getDetail", {
                 idTeam: this.schedule.team[1].idTeam,

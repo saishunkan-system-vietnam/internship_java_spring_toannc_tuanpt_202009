@@ -33,7 +33,11 @@
               </v-col>
             </v-row>
           </v-card-title>
-          <v-data-table :headers="headers" :items="user" >
+          <v-data-table
+            :headers="headers"
+            :items="user"
+            :options.sync="options"
+          >
             <template v-slot:[`item.role`]="{ item }">
               {{
                 item.role == "ROLE_ADMIN"
@@ -43,8 +47,8 @@
                   : "USER"
               }}
             </template>
-            <template v-slot:[`item.profile`]="{ item }" >
-              <div v-if="item.role=='ROLE_MEMBER'">
+            <template v-slot:[`item.profile`]="{ item }">
+              <div v-if="item.role == 'ROLE_MEMBER'">
                 <router-link
                   :to="{
                     path: '/admin/member/' + item.profile.id,
@@ -66,7 +70,7 @@
 export default {
   data() {
     return {
-       linkUser: [
+      linkUser: [
         {
           text: "Dashboard",
           disabled: false,
@@ -92,6 +96,7 @@ export default {
         { value: "ROLE_ADMIN", text: "ADMIN" },
         { value: "ROLE_MEMBER", text: "MEMBER" },
       ],
+      options: {},
     };
   },
   created() {
@@ -117,6 +122,14 @@ export default {
       this.$store.dispatch("user/getAll").then((response) => {
         this.user = response.data.payload;
       });
+    },
+  },
+  watch: {
+    searchName() {
+      this.options.page = 1;
+    },
+    searchRole() {
+      this.options.page = 1;
     },
   },
 };

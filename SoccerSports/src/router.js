@@ -106,7 +106,7 @@ let routes = [
         ]
       },
       {
-        path:'/profile/:id',
+        path:'/profile',
         name: "profile",
         component: () => import('@/views/web/Profile')
       },
@@ -229,6 +229,7 @@ let routes = [
 ]
 
 const router = new Router({
+  linkExactActiveClass:"vue-school-active-class",
   routes,
   mode: 'history'
 })

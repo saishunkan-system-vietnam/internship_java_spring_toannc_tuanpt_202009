@@ -7,7 +7,7 @@
           max-height="200px"
           min-width="140px"
           :src="
-            tournament.banner != null
+            tournament.banner != ''
               ? baseUrl + tournament.banner
               : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR3XsIP30DtgqB3coyj-Azvfgng0w7v5b4dIw&usqp=CAU'
           "
@@ -41,42 +41,30 @@
       <v-col cols="12" md="2" xm="2"></v-col>
       <v-col>
         <div>
-          <ul class="nav nav-pills">
-            <li class="nav-item">
-              <router-link
+          <nav id="nav" >
+              <router-link  
                 :to="{
                   path: `/tournamentDetail/${tournament.idTournament}/team`,
                 }"
-                class="nav-link"
-                active-class="active"
-                exact
+                
                 style="cursor: pointer"
                 >Rank</router-link
               >
-            </li>
-            <li class="nav-item">
-              <router-link
+              <router-link  
                 :to="{
                   path: `/tournamentDetail/${tournament.idTournament}/results`,
                 }"
-                class="nav-link"
-                active-class="active"
                 style="cursor: pointer"
                 >Results</router-link
               >
-            </li>
-            <li class="nav-item">
-              <router-link
+              <router-link  
                 :to="{
                   path: `/tournamentDetail/${tournament.idTournament}/fixtures`,
                 }"
-                class="nav-link"
-                active-class="active"
                 style="cursor: pointer"
                 >Fixtures</router-link
               >
-            </li>
-          </ul>
+          </nav>
           <hr />
         </div>
       </v-col>
@@ -116,7 +104,19 @@ export default {
 };
 </script>
 <style scoped>
-.active {
-  background-color: rgb(193, 218, 193);
+#nav{
+  display: flex;
+  align-items:center;
+  
 }
+#nav a{
+  font-weight: bold;
+  color: red;
+  padding: 0 10px;
+}
+#nav a.vue-school-active-class{
+
+  color:green
+}
+
 </style>

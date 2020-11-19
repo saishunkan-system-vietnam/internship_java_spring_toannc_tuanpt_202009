@@ -6,7 +6,11 @@
       </template>
     </v-breadcrumbs>
     <template>
-      <v-data-table :headers="headers" :items="schedule">
+      <v-data-table
+        :headers="headers"
+        :items="schedule"
+        :options.sync="options"
+      >
         <template v-slot:top>
           <v-toolbar flat>
             <v-toolbar-title>Schedule</v-toolbar-title>
@@ -42,22 +46,15 @@
               </v-col>
               <v-col>
                 <v-text-field
-                  v-model="searchTeam1"
+                  v-model="searchTeam"
+                  @input="filterSearch"
                   append-icon="mdi-magnify"
-                  label="Home Team"
+                  label="Search Team"
                   single-line
                   hide-details
                 ></v-text-field>
               </v-col>
-              <v-col>
-                <v-text-field
-                  v-model="searchTeam2"
-                  append-icon="mdi-magnify"
-                  label="Away Team"
-                  single-line
-                  hide-details
-                ></v-text-field>
-              </v-col>
+
               <v-col>
                 <v-menu
                   ref="menuStart"
@@ -117,13 +114,15 @@
         </template>
         <template v-slot:[`item.timeStart`]="{ item }">
           <div>
-            {{ (new Date(Date.parse(item.timeStart))).toString().substring(0,21) }}
+            {{
+              new Date(Date.parse(item.timeStart)).toString().substring(0, 21)
+            }}
           </div>
         </template>
         <template v-slot:[`item.team[0].nameTeam`]="{ item }">
           <div>
             <v-avatar tile>
-              <img :src="baseUrl+item.team[0].logo" alt="Logo" />
+              <img :src="baseUrl + item.team[0].logo" alt="Logo" />
             </v-avatar>
             {{ item.team[0].nameTeam }}
           </div>
@@ -131,7 +130,7 @@
         <template v-slot:[`item.team[1].nameTeam`]="{ item }">
           <div>
             <v-avatar tile>
-              <img :src="baseUrl+item.team[1].logo" alt="Logo" />
+              <img :src="baseUrl + item.team[1].logo" alt="Logo" />
             </v-avatar>
             {{ item.team[1].nameTeam }}
           </div>
@@ -139,7 +138,7 @@
         <template v-slot:[`item.actions`]="{ item }">
           <router-link
             :to="{
-              path: `schedule/` + item.idSchedule
+              path: `schedule/` + item.idSchedule,
             }"
             style="text-decoration: none"
           >
@@ -157,11 +156,9 @@
         <ScheduleCreate :getData="getData" :hideDialog="hideDialog" />
       </v-card>
     </v-dialog>
-     <v-dialog v-model="dialogDelete" max-width="600">
+    <v-dialog v-model="dialogDelete" max-width="600">
       <v-card>
-        <v-card-title class="headline">
-          Delete Schedule
-        </v-card-title>
+        <v-card-title class="headline"> Delete Schedule </v-card-title>
 
         <v-card-text> You definitely want to delete? </v-card-text>
 
@@ -194,8 +191,7 @@ export default {
       menuStart: false,
       dialogCreate: false,
       searchName: "",
-      searchTeam1: "",
-      searchTeam2: "",
+      searchTeam: "",
       linkTournament: [
         {
           text: "Dashboard",
@@ -245,7 +241,7 @@ export default {
       dialogDelete: false,
       editedIndex: "",
       idDelete: "",
-
+      scheduleBig: "",
       itemSelect: [
         { text: "No chosse", status: "3" },
         { text: "UpComming", status: "0" },
@@ -254,6 +250,7 @@ export default {
       ],
       selectStatus: "3",
       schedule: [],
+      options: {},
     };
   },
   computed: {
@@ -274,6 +271,7 @@ export default {
         this.$store.commit("auth/auth_overlay_false");
         if (response.data.code == 0) {
           this.schedule = response.data.payload;
+          this.scheduleBig = response.data.payload;
         }
       });
     },
@@ -293,24 +291,12 @@ export default {
         return value == this.selectStatus;
       }
     },
-    teamFilter1(value) {
-      if (!this.searchTeam1) {
-        return true;
-      }
-      return value.toLowerCase().includes(this.searchTeam1.toLowerCase());
-    },
-    teamFilter2(value) {
-      if (!this.searchTeam2) {
-        return true;
-      }
-      return value.toLowerCase().includes(this.searchTeam2.toLowerCase());
-    },
     deleteItem(item) {
       this.idDelete = item.idSchedule;
       this.editedIndex = this.schedule.indexOf(item);
       this.dialogDelete = true;
     },
-     deleteItemConfirm() {
+    deleteItemConfirm() {
       this.dialogDelete = false;
       this.$store.commit("auth/auth_overlay_true");
       this.$store
@@ -332,10 +318,40 @@ export default {
       if (this.dateStart == null) {
         return true;
       }
+
       return (
         new Date(Date.parse(value)).toISOString().substr(0, 10) >=
         this.dateStart
       );
+    },
+    filterSearch(val) {
+      if (val == "") {
+        this.schedule = this.scheduleBig;
+      } else {
+        var a = this.scheduleBig.filter((function1) => {
+          return (
+            function1.team[0].nameTeam
+              .toLowerCase()
+              .includes(val.toLowerCase()) ||
+            function1.team[1].nameTeam.toLowerCase().includes(val.toLowerCase())
+          );
+        });
+        this.schedule = a;
+      }
+    },
+  },
+  watch: {
+    searchName() {
+      this.options.page = 1;
+    },
+    selectStatus() {
+      this.options.page = 1;
+    },
+    searchTeam() {
+      this.options.page = 1;
+    },
+    dateStart() {
+      this.options.page = 1;
     },
   },
 };

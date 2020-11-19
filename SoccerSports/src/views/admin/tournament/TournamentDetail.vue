@@ -38,7 +38,7 @@
             ? "Up Comming"
             : tournament.status == 1
             ? "On Game"
-            : "finished"
+            : "Finished"
         }}
       </div>
     </div>

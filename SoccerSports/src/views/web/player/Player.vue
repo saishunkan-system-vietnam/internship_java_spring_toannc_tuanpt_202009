@@ -626,11 +626,11 @@ export default {
     },
 
     linkSchedule(id) {
-      this.$router.push({ path: "/scheduleDetail/" + id });
+      this.$router.push({ path: "/summary/" + id });
     },
 
     handleRowClick(item) {
-      this.$router.push({ path: "/scheduleDetail/" + item.idSchedule });
+      this.$router.push({ path: "/summary/" + item.idSchedule });
     },
 
     getTeamById(id) {
