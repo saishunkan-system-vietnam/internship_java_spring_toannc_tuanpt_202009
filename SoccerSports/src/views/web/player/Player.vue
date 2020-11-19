@@ -20,6 +20,7 @@
                 class="mt-2"
                 style="cursor: pointer"
                 @click="linkTeam(currentTeam)"
+                v-if="playerProfile.idTeam != 0"
               >
                 <v-img
                   class="ml-4"
@@ -29,19 +30,20 @@
                 ></v-img>
                 {{ currentTeam.nameTeam }}
               </v-row>
+              <h4 v-else>Not In Any Team</h4>
               <h5 class="pt-3" style="font-size: 18px; font-weight: 400">
                 {{ playerProfile.position }}
               </h5>
             </v-toolbar-title>
           </v-col>
           <v-divider class="mx-4" inset vertical></v-divider>
-          
+
           <v-col cols="6" md="2" class="pt-6">
             <p class="status-player">
               Height/Weight: {{ playerStatus.height }},
               {{ playerStatus.weight }}
             </p>
-            <p class="status-player">Age: {{ playerProfile.age }}</p>
+            <p class="status-player">Age: {{ playerProfile.currentAge }}</p>
             <p class="status-player">Country: {{ playerProfile.country }}</p>
           </v-col>
           <v-col>
@@ -101,13 +103,35 @@
           <v-select
             v-model="teamSelect"
             :items="teams"
-            item-text="nameTeam"
             item-value="idTeam"
             class="mx-6"
             label="Select Team"
             dense
             solo
-          ></v-select>
+          >
+            <template slot="selection" slot-scope="data">
+              <!-- HTML that describe how select should render selected items -->
+              <v-img
+                :src="baseUrl + data.item.logo"
+                max-width="40"
+                max-height="40"
+                class="mr-3"
+              >
+              </v-img>
+              <h5>{{ data.item.nameTeam }}</h5>
+            </template>
+            <template slot="item" slot-scope="data">
+              <!-- HTML that describe how select should render items when the select is open -->
+              <v-img
+                :src="baseUrl + data.item.logo"
+                max-width="40"
+                max-height="40"
+                class="mr-3"
+              >
+              </v-img>
+              <h5>{{ data.item.nameTeam }}</h5>
+            </template>
+          </v-select>
           <v-select
             v-model="positionSelect"
             :items="defaultPosition"
@@ -117,7 +141,7 @@
             solo
           ></v-select>
 
-          <template v-if="team != null">
+          <template v-if="team != null && checkInTeam">
             <template v-if="checkPosition">
               <div v-for="(member, index) in team.profile" :key="index">
                 <router-link :to="`/player/${member.id}`">
@@ -145,7 +169,9 @@
                       >
                         {{ member.name }}
                       </p>
-                      <p style="font-size: 12px">Age: {{ member.age }}</p>
+                      <p style="font-size: 12px">
+                        Age: {{ member.currentAge }}
+                      </p>
                     </div>
                   </v-row>
                 </router-link>
@@ -183,7 +209,86 @@
                       >
                         {{ member.name }}
                       </p>
-                      <p style="font-size: 12px">Age: {{ member.age }}</p>
+                      <p style="font-size: 12px">
+                        Age: {{ member.currentAge }}
+                      </p>
+                    </div>
+                  </v-row>
+                </router-link>
+              </div>
+            </template>
+          </template>
+          <template v-else>
+            <template v-if="checkPosition">
+              <div v-for="(member, index) in listAvailable" :key="index">
+                <router-link :to="`/player/${member.id}`">
+                  <v-row class="ml-6" style="cursor: pointer">
+                    <v-avatar
+                      style="border: 1px solid grey"
+                      class="pr-3"
+                      size="48"
+                    >
+                      <v-img
+                        :src="baseUrl + member.avatar"
+                        max-width="60"
+                        max-height="60"
+                        class="ml-3 pointer"
+                      ></v-img>
+                    </v-avatar>
+                    <div>
+                      <p
+                        style="
+                          margin-bottom: 0px;
+                          color: #2b2c2d;
+                          font-weight: 600;
+                          font-size: 14px;
+                        "
+                      >
+                        {{ member.name }}
+                      </p>
+                      <p style="font-size: 12px">
+                        Age: {{ member.currentAge }}
+                      </p>
+                    </div>
+                  </v-row>
+                </router-link>
+              </div>
+            </template>
+            <template v-else>
+              <div
+                v-for="(member, index) in team.profile.filter(
+                  (p) => p.position == positionSelect
+                )"
+                :key="index"
+              >
+                <router-link :to="`/player/${member.id}`">
+                  <v-row class="ml-6" style="cursor: pointer">
+                    <v-avatar
+                      style="border: 1px solid grey"
+                      class="pr-3"
+                      size="48"
+                    >
+                      <v-img
+                        :src="baseUrl + member.avatar"
+                        max-width="60"
+                        max-height="60"
+                        class="ml-3 pointer"
+                      ></v-img>
+                    </v-avatar>
+                    <div>
+                      <p
+                        style="
+                          margin-bottom: 0px;
+                          color: #2b2c2d;
+                          font-weight: 600;
+                          font-size: 14px;
+                        "
+                      >
+                        {{ member.name }}
+                      </p>
+                      <p style="font-size: 12px">
+                        Age: {{ member.currentAge }}
+                      </p>
                     </div>
                   </v-row>
                 </router-link>
@@ -305,6 +410,7 @@ export default {
   data() {
     return {
       checkPosition: true,
+      checkInTeam: true,
       lastFiveMatch: [],
       teamSelect: "",
       positionSelect: "",
@@ -314,6 +420,7 @@ export default {
       team: this.$store.state.team.teamDetail,
       year: "",
       teams: [],
+      listAvailable: [],
       defaultPosition: [
         "None",
         "Goalkeepers",
@@ -358,7 +465,13 @@ export default {
   watch: {
     teamSelect(newValue) {
       // console.log(newValue, oldValue);
-      this.team = this.getTeamById(newValue);
+      console.log(newValue);
+      if (newValue != 0) {
+        this.team = this.getTeamById(newValue);
+        this.checkInTeam = true;
+      } else {
+        this.checkInTeam = false;
+      }
     },
 
     positionSelect(newValue) {
@@ -384,9 +497,28 @@ export default {
         this.getTeams();
         this.getNextMatch(this.$route.params.id);
         this.getLastFiveMatch(this.$route.params.id);
+        this.getPlayersNotInTeam();
         this.randomStatus();
         // console.log(getParams);
       }
+    },
+
+    getPlayersNotInTeam() {
+      let self = this;
+      this.$store
+        .dispatch("member/members")
+        .then(function (response) {
+          if (response.data.code == 0) {
+            self.listAvailable = response.data.payload.filter((item) => {
+              return item.idTeam == 0;
+            });
+          } else {
+            console.log("Run 1");
+          }
+        })
+        .catch(function (error) {
+          alert(error);
+        });
     },
 
     getPlayer(id) {
@@ -396,10 +528,11 @@ export default {
         .then((response) => {
           if (response.data.code == 0) {
             self.playerProfile = response.data.payload;
-            console.log(self.playerProfile)
+            // console.log(self.playerProfile)
             self.getTeamById(self.playerProfile.idTeam);
             self.getTeamCurrent(self.playerProfile.idTeam);
           } else {
+            console.log("Run 2");
             // alert(response.data.message);
           }
         })
@@ -417,8 +550,14 @@ export default {
           this.$store.commit("auth/auth_overlay_false");
           if (response.data.code === 0) {
             self.teams = response.data.payload;
+            self.teams.unshift({
+              idTeam: 0,
+              nameTeam: "None Selected",
+            });
+            console.log(self.teams);
           } else {
-            alert(response.data.message);
+            console.log("Run 3");
+            // alert(response.data.message);
           }
         })
         .catch(function (error) {
@@ -437,6 +576,7 @@ export default {
           if (data.code == 0) {
             self.nextMatch = response.data.payload;
           } else {
+            console.log("Run 4");
             self.nextMatch = {};
             // alert(data.message);
           }
@@ -457,6 +597,7 @@ export default {
           if (data.code == 0) {
             self.lastFiveMatch = response.data.payload;
           } else {
+            console.log("Run 5");
             self.lastFiveMatch = [];
             // alert(data.message);
           }
@@ -533,6 +674,7 @@ export default {
       this.playerStatus.save = Math.floor(Math.random() * 2);
       this.playerStatus.assists = Math.floor(Math.random() * 6);
       this.playerStatus.yc = Math.floor(Math.random() * 2);
+      this.playerStatus.rc = Math.floor(Math.random() * 1);
     },
 
     filterTeamPosition() {

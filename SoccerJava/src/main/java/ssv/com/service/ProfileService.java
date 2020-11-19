@@ -1,9 +1,10 @@
 package ssv.com.service;
 
 import java.io.IOException;
+import java.lang.reflect.Member;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ssv.com.dto.ResponseQuery;
-import ssv.com.dto.TeamDetail;
 import ssv.com.dto.TeamScheduleDto;
-
 import ssv.com.entity.Account;
 import ssv.com.entity.Profile;
 import ssv.com.entity.Schedule;
@@ -48,8 +47,11 @@ public class ProfileService {
 	private ModelMapper modelMapper;
 
 	public List<Profile> getMembers() {
-		return profileRepository.getMembers();
-
+		List<Profile> profiles = profileRepository.getMembers();
+		for (Profile member : profiles) {
+			member.setCurrentAge(LocalDate.now().getYear() - LocalDate.parse(member.getAge()).getYear());
+		}
+		return profiles;
 	}
 
 	public void saveProfile(Profile profile) {
@@ -77,9 +79,10 @@ public class ProfileService {
 
 			// Create Profile
 			Profile profile = modelMapper.map(profileForm, Profile.class);
+			profile.setCurrentAge(LocalDate.now().getYear() - LocalDate.parse(profile.getAge()).getYear());
 			if (profileForm.getFile() != null && !profileForm.getFile().getOriginalFilename().isEmpty()) {
 				profile.setAvatar(UploadFile.saveFile(profileForm.getFile()));
-			}else {
+			} else {
 				profile.setAvatar("/images/default_user.png");
 			}
 			accountRepository.create(account);
@@ -106,6 +109,7 @@ public class ProfileService {
 		profileUpdate.setEmail(oldProfile.get().getEmail());
 		profileUpdate.setPhone(profileForm.getPhone());
 		profileUpdate.setAge(profileForm.getAge());
+		profileUpdate.setCurrentAge(LocalDate.now().getYear() - LocalDate.parse(profileUpdate.getAge()).getYear());
 		profileUpdate.setGender(profileForm.getGender());
 		profileUpdate.setCountry(profileForm.getCountry());
 		profileUpdate.setPosition(profileForm.getPosition());
@@ -118,10 +122,12 @@ public class ProfileService {
 	}
 
 	public Optional<Profile> findProfileById(Integer id) {
-		return profileRepository.findProfileById(id);
+		Optional<Profile> profile = profileRepository.findProfileById(id);
+		profile.get().setCurrentAge(LocalDate.now().getYear() - LocalDate.parse(profile.get().getAge()).getYear());
+		return profile;
 	}
 
-	public List<Profile> getTourGoal(int idTeam) {
+	public HashSet<Profile> getTourGoal(int idTeam) {
 		List<Profile> list = new ArrayList<Profile>();
 		HashSet<Profile> profiles = new HashSet<Profile>();
 		list = profileRepository.getByTeamTour(idTeam);
@@ -129,16 +135,8 @@ public class ProfileService {
 			profile.setNumberGoal(profileRepository.getNumberGoal(idTeam, profile.getId()));
 			profiles.add(profile);
 		}
-		List<Profile> listProfile = new ArrayList<Profile>(profiles);
-		Collections.sort(listProfile, new Comparator<Profile>() {
 
-			@Override
-			public int compare(Profile o1, Profile o2) {
-				// TODO Auto-generated method stub
-				return o2.getNumberGoal()-o1.getNumberGoal();
-			}
-		});
-		return listProfile;
+		return profiles;
 	}
 
 	public ResponseQuery<?> updateProfileUser(ProfileForm profileForm) {

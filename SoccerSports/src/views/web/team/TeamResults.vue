@@ -25,44 +25,63 @@
                         hide-default-footer
                         :items-per-page="15"
                       >
+                        <template v-slot:[`item.dayStart`]="{ item }">
+                          <h5
+                            style="width: 90px; margin-right: -10px !important"
+                          >
+                            {{ item.dayStart }}
+                          </h5>
+                        </template>
                         <template v-slot:[`item.nameTeam1`]="{ item }">
                           <p
-                            class="pt-3"
-                            style="color: red"
+                            class="pt-4"
+                            style="
+                              color: red;
+                              width: 90px;
+                              margin-right: -27px !important;
+                            "
                             v-if="item.score1 > item.score2"
                           >
                             {{ item.nameTeam1 }}
                           </p>
-                          <h5 v-else>
+                          <h5
+                            style="width: 90px; margin-right: -27px !important"
+                            v-else
+                          >
                             {{ item.nameTeam1 }}
                           </h5>
                         </template>
                         <template v-slot:[`item.logoTeam1`]="{ item }">
                           <img
                             :src="baseUrl + item.logoTeam1"
-                            width="70px"
+                            width="50px"
                             height="50px"
-                            style="margin: 3px 0 3px 0"
                           />
                         </template>
                         <template v-slot:[`item.logoTeam2`]="{ item }">
                           <img
                             :src="baseUrl + item.logoTeam2"
-                            width="70px"
+                            width="50px"
                             height="50px"
-                            style="margin: 3px 0 3px 0"
                           />
                         </template>
                         <template v-slot:[`item.nameTeam2`]="{ item }">
                           <p
-                            class="pt-3"
-                            style="color: red"
+                            class="pt-4"
+                            style="
+                              color: red;
+                              width: 90px;
+                              margin-right: -27px !important;
+                            "
                             v-if="item.score1 < item.score2"
                           >
-                            {{ item.nameTeam2 }}
+                            {{ item.nameTeam1 }}
                           </p>
-                          <h5 v-else>
-                            {{ item.nameTeam2 }}
+                          <h5
+                            style="width: 90px; margin-right: -27px !important"
+                            v-else
+                          >
+                            {{ item.nameTeam1 }}
                           </h5>
                         </template>
                         <template v-slot:[`item.status`]="{}">
@@ -70,6 +89,11 @@
                         </template>
                         <template v-slot:[`item.score`]="{ item }">
                           <h4>{{ item.score1 }}-{{ item.score2 }}</h4>
+                        </template>
+                        <template v-slot:[`item.nameTour`]="{ item }">
+                          <h5 class="py-3" style="width: 90px">
+                            {{ item.nameTour }}
+                          </h5>
                         </template>
                       </v-data-table>
                     </v-col>

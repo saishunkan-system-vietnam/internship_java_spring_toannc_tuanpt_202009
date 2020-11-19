@@ -8,6 +8,9 @@
       <v-toolbar-title>Create Tournamet</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
+        <v-btn dark text @click="reset"> Reset </v-btn>
+      </v-toolbar-items>
+      <v-toolbar-items>
         <v-btn dark text @click="save"> Save </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -234,6 +237,7 @@ export default {
     hideDialog: Function,
     getData: Function,
     tournamentData: Array,
+
   },
   data: () => ({
     valid: false,
@@ -338,7 +342,10 @@ export default {
         }
       }
     },
-    async close() {
+    close() {
+      this.hideDialog();
+    },
+    async reset() {
       await this.$refs.form.reset();
       this.dateEnd = new Date(new Date().setDate(new Date().getDate() + 1))
         .toISOString()
@@ -346,7 +353,6 @@ export default {
       this.dateStart = new Date(new Date().setDate(new Date().getDate() + 1))
         .toISOString()
         .substr(0, 10);
-      this.hideDialog();
     },
   },
 
@@ -365,7 +371,6 @@ export default {
         reader.readAsDataURL(event);
       }
     },
-   
     teamSelected() {
       console.log(this.teamSelected)
       this.teamChoose = [];
@@ -378,12 +383,14 @@ export default {
               this.teamChoose.push(team);
             }
           });
+
         });
-      }
+      });
     },
      tournamentData() {
        this.getListTeam();
     },
+
   },
 };
 </script>

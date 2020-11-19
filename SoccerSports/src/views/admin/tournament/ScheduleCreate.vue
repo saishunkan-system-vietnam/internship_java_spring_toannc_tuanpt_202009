@@ -262,6 +262,7 @@ export default {
                 this.tournament.timeEnd +
                 ")"
             );
+
           } else {
             return true;
           }

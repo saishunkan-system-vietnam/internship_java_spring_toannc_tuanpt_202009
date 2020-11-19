@@ -1,5 +1,10 @@
 <template>
-  <v-data-table :headers="headers" :items="playersInTeam" class="elevation-1">
+  <v-data-table
+    :headers="headers"
+    :items="playersInTeam"
+    class="elevation-1"
+    :options.sync="options"
+  >
     <template v-slot:top>
       <v-toolbar flat color="white">
         <v-row class="mt-4">
@@ -70,6 +75,7 @@ export default {
   },
   data() {
     return {
+      options: {},
       checkUpdate: true,
       backUpPlayes: [],
       positionSearch: "",
@@ -92,7 +98,7 @@ export default {
           value: "avatar",
         },
         { text: "Name", value: "name", filter: this.nameMemberFilter },
-        { text: "Age", value: "age", filter: this.ageFilter },
+        { text: "Age", value: "currentAge", filter: this.ageFilter },
         { text: "Gender", value: "gender" },
         { text: "Position", value: "position", filter: this.positionFilter },
         { text: "Country", value: "country", filter: this.countryFilter },
@@ -120,12 +126,18 @@ export default {
     playersInTeam: {
       deep: true,
       handler(newValue, oldValue) {
-        console.log("Run herer");
+        // console.log("Run herer");
         // let copiedArray = oldValue;
-        console.log(newValue);
-        console.log(oldValue);
+        // console.log(newValue);
+        // console.log(oldValue);
         if (oldValue.length > 0 && newValue != oldValue)
           this.checkUpdate = false;
+      },
+    },
+
+    watch: {
+      nameTeamSearch() {
+        this.options.page = 1;
       },
     },
   },

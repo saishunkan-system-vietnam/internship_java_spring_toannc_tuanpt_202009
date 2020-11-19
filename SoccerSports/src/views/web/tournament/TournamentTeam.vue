@@ -14,30 +14,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="(item, index) in rank"
-            :key="index"
-            :style="
-              index == 0
-                ? 'background: red'
-                : index == 1
-                ? 'background: green'
-                : index == 2
-                ? 'background: yellow'
-                : ''
-            "
-            @click="detailTeam(item)"
-            style="cursor: pointer"
-          >
+          <tr v-for="(item, index) in rank" :key="index" :style="index==0?'background: red':index==1?'background: green':index==2?'background: yellow':''" @click="detailTeam(item)" style="cursor: pointer;">
             <td>
               {{ index + 1 }}
             </td>
-            <td>
-              <v-avatar tile>
-                <img :src="baseUrl + item.logo" alt="John" /> </v-avatar
-              >{{ item.nameTeam }}
-            </td>
-
+            <td><v-avatar tile>
+                <img :src="baseUrl + item.logo" alt="John" />
+              </v-avatar>{{ item.nameTeam }}</td>
+           
             <td>{{ item.totalMatchByTour }}</td>
             <td>{{ item.totalWinByTour }}</td>
             <td>{{ item.totalAdrawByTour }}</td>
@@ -64,29 +48,30 @@ export default {
       rank: "",
     };
   },
-  async created() {
+  created() {
     this.$store.commit("auth/auth_overlay_true");
-    await this.$store
+    this.$store
       .dispatch("tournament/tournamentRank", this.$route.params.id)
       .then((response) => {
+        this.$store.commit("auth/auth_overlay_false");
         if (response.data.code == 0) {
           this.rank = response.data.payload;
         }
       });
-    this.$store.commit("auth/auth_overlay_false");
   },
   computed: {
     baseUrl() {
       return ENV.BASE_IMAGE;
     },
   },
-  methods: {
-    detailTeam(item) {
+  methods:{
+    detailTeam(item){
       this.$router.push({
         path: `/team/${item.idTeam}`,
         query: { idTab: 1 },
       });
-    },
-  },
+    }
+  }
+
 };
 </script>

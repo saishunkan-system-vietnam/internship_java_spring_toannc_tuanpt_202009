@@ -11,7 +11,7 @@
     </v-btn>
 
     <v-container style="font-family: Times New Roman">
-      <h3 style="color: blue; display: inline-block">SUMMARY</h3>
+      <h3 style="color: blue; display: inline-block">#SUMMARY</h3>
       <v-btn
         v-if="schedule.status == 0"
         style="right: 0px; position: absolute"
@@ -36,6 +36,7 @@
             }}</b
           >
         </router-link>
+
       </h1>
       <h3 class="text-center">
         Time Start:
@@ -110,7 +111,7 @@
       <hr />
 
       <div>
-        <h3 style="color: blue">Schedule</h3>
+        <h3 style="color: blue">#Schedule</h3>
         <template v-if="schedule.status != 2">
           <h1 class="text-center">
             The match is not over or has not been updated
@@ -157,7 +158,7 @@
         </template>
       </div>
       <hr />
-      <h3 style="color: blue">Team</h3>
+      <h3 style="color: blue">#Team</h3>
       <v-row>
         <v-col v-for="(team, index) in schedule.team" :key="index">
           <div class="text-center">
@@ -254,7 +255,9 @@
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title
+
                     >{{ item.name }}&nbsp;{{ item.age }} old&nbsp;{{
+
                       item.country
                     }}</v-list-item-title
                   >
@@ -266,7 +269,7 @@
       </v-row>
       <hr />
       <template v-if="schedule.status == 2">
-        <h3 style="color: blue">Video,Photo</h3>
+        <h3 style="color: blue">#Video,Photo</h3>
         <v-row>
           <v-col>
             <v-container>

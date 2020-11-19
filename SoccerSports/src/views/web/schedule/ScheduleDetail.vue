@@ -7,22 +7,14 @@
             style="font-family: times; color: blue; cursor: pointer"
             @click="detailTournament(schedule.tournament.idTournament)"
           >
-            {{
-              Object.keys(schedule).length === 0
-                ? ""
-                : schedule.tournament.nameTournament
-            }}
+            {{ Object.keys(schedule).length === 0?'':schedule.tournament.nameTournament }}
           </h1>
         </v-card>
         <v-row style="margin-top: 40px">
           <v-col class="text-center" cols="12" sm="3">
             <v-avatar size="128" tile
               ><img
-                :src="
-                  Object.keys(schedule).length === 0
-                    ? ''
-                    : baseUrl + schedule.team[0].logo
-                "
+                :src="Object.keys(schedule).length === 0?'': baseUrl + schedule.team[0].logo "
                 alt="Logo" /></v-avatar
           ></v-col>
           <v-col>
@@ -35,18 +27,13 @@
                         @click="detailTeam(schedule.team[0])"
                         style="cursor: pointer"
                       >
-                        {{
-                          Object.keys(schedule).length === 0
-                            ? ""
-                            : schedule.team[0].nameTeam
-                        }}
+                        {{Object.keys(schedule).length === 0?'':schedule.team[0].nameTeam }}
+
                       </h2>
                       <v-avatar size="50"
                         ><img
                           :src="
-                            Object.keys(schedule).length === 0
-                              ? ''
-                              : baseUrl + schedule.team[0].logo
+                           Object.keys(schedule).length === 0?'':baseUrl + schedule.team[0].logo
                           "
                           alt="Logo" /></v-avatar></v-row
                     ><v-row style="display: block">
@@ -76,27 +63,18 @@
                     </h2></v-col
                   >
                 </v-row>
-                {{
-                  Object.keys(schedule).length === 0
-                    ? ""
-                    : schedule.timeStart.substring(0, 10)
-                }}<br />
-                {{
-                  Object.keys(schedule).length === 0
-                    ? ""
-                    : schedule.timeStart.substring(11, 16)
-                }}
+                {{   Object.keys(schedule).length === 0?'':schedule.timeStart.substring(0, 10) }}<br />
+                {{   Object.keys(schedule).length === 0?'':schedule.timeStart.substring(11, 16) }}
+
               </v-col>
-              <v-col class="text-right"
+              <v-col
                 ><v-row
                   ><v-col
-                    ><v-row style="display: flex; justify-content: flex-end">
+                    ><v-row>
                       <v-avatar size="50"
                         ><img
                           :src="
-                            Object.keys(schedule).length === 0
-                              ? ''
-                              : baseUrl + schedule.team[1].logo
+                              Object.keys(schedule).length === 0?'': baseUrl + schedule.team[1].logo 
                           "
                           alt="Logo"
                       /></v-avatar>
@@ -104,30 +82,23 @@
                         @click="detailTeam(schedule.team[1])"
                         style="cursor: pointer"
                       >
-                        {{
-                          Object.keys(schedule).length === 0
-                            ? ""
-                            : schedule.team[1].nameTeam
-                        }}
+                        {{   Object.keys(schedule).length === 0?'': schedule.team[1].nameTeam  }}
                       </h2>
                     </v-row>
                     <span v-for="(item, i) in goal2" :key="i"
-                      ><v-icon dark color="red"> mdi-soccer </v-icon
                       >{{ item.profile.name }}({{
                         item.time.substring(0, 5)
-                      }})<br
-                    /></span> </v-col></v-row
-              ></v-col>
+                      }})<br></span
+                    >
+                  </v-col></v-row
+                ></v-col
+              >
             </v-row>
           </v-col>
           <v-col class="text-center" cols="12" sm="3">
             <v-avatar size="128" tile
               ><img
-                :src="
-                  Object.keys(schedule).length === 0
-                    ? ''
-                    : baseUrl + schedule.team[1].logo
-                "
+                :src="  Object.keys(schedule).length === 0?'': baseUrl + schedule.team[1].logo "
                 alt="Logo" /></v-avatar
           ></v-col>
         </v-row>
@@ -194,7 +165,6 @@ export default {
       });
     },
     getData() {
-      console.log(this.$route.params.id);
       this.$store.commit("auth/auth_overlay_true");
       this.$store
         .dispatch("schedule/getById", this.$route.params.id)

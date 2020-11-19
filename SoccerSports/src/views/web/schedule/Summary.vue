@@ -68,7 +68,7 @@
                   <h5>{{ team1.nameTeam }}</h5>
                   <v-row>
                     <v-col cols="12" sm="4" v-for="(n,i) in member1" :key="i" @click="detailMember(n)">
-                      <v-card style="height:200px;cursor: pointer" v-if="n.numberGoal>0&&i<6">
+                      <v-card style="height:200px;cursor: pointer">
                         <v-img
                           lazy-src="https://picsum.photos/id/11/10/6"
                           :src="baseUrl+n.avatar"
@@ -89,7 +89,7 @@
                   <h5>{{ team2.nameTeam }}</h5>
                   <v-row>
                     <v-col cols="12" sm="4" v-for="(n,i) in member2" :key="i" @click="detailMember(n)">
-                      <v-card style="height:200px;cursor: pointer" v-if="n.numberGoal>0&&i<6">
+                      <v-card style="height:200px;cursor: pointer">
                         <v-img
                           lazy-src="https://picsum.photos/id/11/10/6"
                           :src="baseUrl+n.avatar"
