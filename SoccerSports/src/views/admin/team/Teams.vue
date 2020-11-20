@@ -243,8 +243,6 @@ export default {
       if (!this.tourNameSearch) {
         return true;
       }
-      console.log(value)
-      console.log(this.tourNameSearch)
       if (value != undefined) return value == this.tourNameSearch;
     },
 

@@ -530,7 +530,8 @@ export default {
               this.setintervalTime(this.time);
             }
           } else {
-            console.log(response);
+            
+            // console.log(response);
           }
         })
         .catch(function (error) {
