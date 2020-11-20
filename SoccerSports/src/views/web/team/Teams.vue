@@ -300,7 +300,6 @@ export default {
         .catch(function (error) {
           self.$store.commit("auth/auth_overlay_false");
           console.log("Run here Teams Client");
-          console.log("Run here 3");
           alert(error);
         });
     },

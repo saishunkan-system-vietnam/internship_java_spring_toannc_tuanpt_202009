@@ -270,7 +270,7 @@ export default {
           let data = response.data;
           if (data.code == 0) {
             self.lastResultsData = response.data.payload;
-            console.log(response.data.payload);
+            // console.log(response.data.payload);
           } else {
             self.lastResultsData = [];
             // alert(data.message);
@@ -281,7 +281,7 @@ export default {
         });
     },
     detailSchedule(item) {
-      console.log(item);
+      // console.log(item);
       this.$router.push("/summary/" + item.idSchedule);
     },
     async scheduleTeam() {

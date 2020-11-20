@@ -113,7 +113,6 @@ export default {
     playersAvailable: {
       deep: true,
       handler(newValue, oldValue) {
-        // console.log("Run herer");
         // console.log(newValue);
         // console.log(oldValue);
         if (oldValue.length > 0 && newValue != oldValue)
@@ -177,7 +176,7 @@ export default {
     },
 
     editPlayer(player) {
-      console.log(this.checkUpdate)
+      console.log(this.checkUpdate);
       if (this.checkUpdate) {
         this.$router.push({
           path: `/admin/member/${player.id}`,

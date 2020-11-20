@@ -213,7 +213,7 @@ export default {
         this.$refs.form.validate();
       } else {
         // console.log(this.fileImage);
-        console.log(this.birthDate);
+        // console.log(this.birthDate);
         let self = this;
         var memberForm = new FormData();
         memberForm.append("name", this.name);
@@ -226,9 +226,9 @@ export default {
         if (this.fileImage.size > 0) {
           memberForm.append("file", this.fileImage);
         }
-        for (var value of memberForm.values()) {
-          console.log(value);
-        }
+        // for (var value of memberForm.values()) {
+        //   console.log(value);
+        // }
         this.$store
           .dispatch("member/createMember", memberForm)
           .then((response) => {
