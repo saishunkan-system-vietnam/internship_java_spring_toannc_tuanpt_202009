@@ -385,7 +385,7 @@ export default {
           });
 
         });
-      });
+      }
     },
      tournamentData() {
        this.getListTeam();

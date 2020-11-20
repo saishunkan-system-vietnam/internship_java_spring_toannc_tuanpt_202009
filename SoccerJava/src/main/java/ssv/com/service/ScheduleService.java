@@ -232,7 +232,7 @@ public class ScheduleService {
 	public String lastVideo() {
 		List<Schedule> schedules = scheduleRepository.getByStatus(2);
 		for (int i = schedules.size() - 1; i >= 0; i--) {
-			if (!schedules.get(i).getVideo().equals("null") ) {
+			if (!schedules.get(i).getVideo().equals("null") &schedules.get(i).getVideo()!=null) {
 				return schedules.get(i).getVideo();
 			}
 		}
@@ -244,13 +244,34 @@ public class ScheduleService {
 	}
 
 	public List<Schedule> teamResults(int idTeam, int idTournament) {
-		// TODO Auto-generated method stub
-		return scheduleRepository.teamResults(idTeam, idTournament);
+		List<Schedule> schedules = scheduleRepository.teamResults(idTeam, idTournament);
+		for (Schedule schedule : schedules) {
+			if (schedule.getIdTeam1() > schedule.getIdTeam2()) {
+				if (schedule.getTeam().get(0).getIdTeam() < schedule.getTeam().get(1).getIdTeam()) {
+					List<Team> list = new ArrayList<Team>();
+					list.add(schedule.getTeam().get(1));
+					list.add(schedule.getTeam().get(0));
+					schedule.setTeam(list);
+				}
+			}
+		}
+		return schedules;
 	}
 
 	public List<Schedule> teamLastResults(int idTeam) {
 		// TODO Auto-generated method stub
-		return scheduleRepository.teamLastResults(idTeam);
+		List<Schedule> schedules = scheduleRepository.teamLastResults(idTeam);
+		for (Schedule schedule : schedules) {
+			if (schedule.getIdTeam1() > schedule.getIdTeam2()) {
+				if (schedule.getTeam().get(0).getIdTeam() < schedule.getTeam().get(1).getIdTeam()) {
+					List<Team> list = new ArrayList<Team>();
+					list.add(schedule.getTeam().get(1));
+					list.add(schedule.getTeam().get(0));
+					schedule.setTeam(list);
+				}
+			}
+		}
+		return schedules;
 	}
 
 	public List<Schedule> scheduleTeam(int idTeam) {

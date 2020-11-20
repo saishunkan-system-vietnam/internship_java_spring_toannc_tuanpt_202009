@@ -6,10 +6,11 @@
         <v-img
           max-height="200px"
           min-width="140px"
+       
           :src="
             tournament.banner != ''
               ? baseUrl + tournament.banner
-              : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR3XsIP30DtgqB3coyj-Azvfgng0w7v5b4dIw&usqp=CAU'
+              : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1200px-No_image_3x4.svg.png'
           "
         ></v-img>
         <v-toolbar-title class="pl-5">
@@ -41,29 +42,28 @@
       <v-col cols="12" md="2" xm="2"></v-col>
       <v-col>
         <div>
-          <nav id="nav" >
-              <router-link  
-                :to="{
-                  path: `/tournamentDetail/${tournament.idTournament}/team`,
-                }"
-                
-                style="cursor: pointer"
-                >Rank</router-link
-              >
-              <router-link  
-                :to="{
-                  path: `/tournamentDetail/${tournament.idTournament}/results`,
-                }"
-                style="cursor: pointer"
-                >Results</router-link
-              >
-              <router-link  
-                :to="{
-                  path: `/tournamentDetail/${tournament.idTournament}/fixtures`,
-                }"
-                style="cursor: pointer"
-                >Fixtures</router-link
-              >
+          <nav id="nav">
+            <router-link
+              :to="{
+                path: `/tournamentDetail/${tournament.idTournament}/team`,
+              }"
+              style="cursor: pointer"
+              >Rank</router-link
+            >
+            <router-link
+              :to="{
+                path: `/tournamentDetail/${tournament.idTournament}/results`,
+              }"
+              style="cursor: pointer"
+              >Results</router-link
+            >
+            <router-link
+              :to="{
+                path: `/tournamentDetail/${tournament.idTournament}/fixtures`,
+              }"
+              style="cursor: pointer"
+              >Fixtures</router-link
+            >
           </nav>
           <hr />
         </div>
@@ -104,19 +104,16 @@ export default {
 };
 </script>
 <style scoped>
-#nav{
+#nav {
   display: flex;
-  align-items:center;
-  
+  align-items: center;
 }
-#nav a{
+#nav a {
   font-weight: bold;
   color: red;
   padding: 0 10px;
 }
-#nav a.vue-school-active-class{
-
-  color:green
+#nav a.vue-school-active-class {
+  color: green;
 }
-
 </style>

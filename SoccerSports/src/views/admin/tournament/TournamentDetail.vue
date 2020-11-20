@@ -13,7 +13,7 @@
         :src="
           tournament.banner != ''
             ? baseUrl + tournament.banner
-            : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR3XsIP30DtgqB3coyj-Azvfgng0w7v5b4dIw&usqp=CAU'
+            : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1200px-No_image_3x4.svg.png'
         "
       ></v-img>
       <h1>{{ tournament.nameTournament }}</h1>

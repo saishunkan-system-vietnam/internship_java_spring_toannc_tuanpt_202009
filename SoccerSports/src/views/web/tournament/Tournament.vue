@@ -32,7 +32,7 @@
                   <v-img
                     max-height="150"
                     max-width="250"
-                    :src="item.banner!=''?baseUrl + item.banner:'https://picsum.photos/id/11/10/6'"
+                    :src="item.banner!=''?baseUrl + item.banner:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1200px-No_image_3x4.svg.png'"
                   ></v-img>
                 </v-col>
                 <v-col>
@@ -42,7 +42,8 @@
                   >
                     <h1>{{ item.nameTournament }}</h1></router-link
                   >
-                  <h4
+                  {{(new Date(item.timeStart)).toString().substring(0,16)}}
+                  <h4 
                     :style="
                       item.status == 0
                         ? 'color:green'
@@ -60,28 +61,29 @@
                     }}
                   </h4>
                   <h5>
+                     <router-link
+                      :to="{
+                        path:
+                          '/tournamentDetail/' + item.idTournament + '/team',
+                      }"
+                      >Rank</router-link
+                    >
+                    
                     <router-link
+                      :to="{
+                        path:
+                          '/tournamentDetail/' + item.idTournament + '/results',
+                      }"
+                      >||Results</router-link
+                    >
+                   <router-link
                       :to="{
                         path:
                           '/tournamentDetail/' +
                           item.idTournament +
                           '/fixtures',
                       }"
-                      >Fixtures||</router-link
-                    >
-                    <router-link
-                      :to="{
-                        path:
-                          '/tournamentDetail/' + item.idTournament + '/results',
-                      }"
-                      >Results</router-link
-                    >
-                    <router-link
-                      :to="{
-                        path:
-                          '/tournamentDetail/' + item.idTournament + '/team',
-                      }"
-                      >||Rank</router-link
+                      >||Fixtures</router-link
                     >
                   </h5>
                 </v-col>
