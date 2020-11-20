@@ -21,10 +21,10 @@
       </v-row>
       <v-card max-width="95%" class="my-8 container">
         <v-row v-if="isEditTeam">
-          <v-col cols="12" md="2" sm="2">
+          <v-col cols="6" md="2" sm="2">
             <v-img max-width="200" :src="baseUrl + team.logo"></v-img>
           </v-col>
-          <v-col cols="12" md="2" sm="2">
+          <v-col cols="6" md="2" sm="2">
             <h3 class="name-team-text">{{ team.nameTeam }}</h3>
             <h5 class="country-text">Country: {{ team.country }}</h5>
             <h5 style="line-height: 1.7; font-size: 1.2rem; font-weight: 300">
@@ -47,7 +47,7 @@
               }}
             </h5>
           </v-col>
-          <v-col cols="12" md="2" sm="2" class="pt-15 pl-10">
+          <v-col cols="6" md="2" sm="2" class="pt-15 pl-10">
             <h5 class="country-text">
               Win Rate:
               {{
@@ -80,93 +80,96 @@
             </p>
           </v-col>
         </v-row>
-
         <EditTeam
           v-else
           :getTeamById="getTeamById"
           :editTeam="editTeam"
           :team="team"
         />
+      </v-card>
 
-        <v-divider class="my-8"></v-divider>
-
-        <h2 class="titleText my-4 ml-6">Members</h2>
-        <template>
-          <v-toolbar flat color="white">
-            <v-btn
-              color="primary"
-              class="ma-2"
-              v-if="team.idTour == 0"
-              dark
-              @click="toManageMembers"
-            >
-              Manage Members
-            </v-btn>
-            <v-divider class="mx-4" inset vertical></v-divider>
-            <v-spacer></v-spacer>
-            <v-row class="mt-4">
-              <v-col cols="12" sm="6" md="2"></v-col>
-              <v-col cols="12" sm="6" md="1">
-                <v-select
-                  v-model="from"
-                  :items="ages"
-                  outlined
-                  dense
-                  label="From Age"
-                ></v-select>
-              </v-col>
-              <v-col cols="12" sm="6" md="1">
-                <v-select
-                  v-model="to"
-                  :items="ages"
-                  outlined
-                  dense
-                  label="To Age"
-                ></v-select>
-              </v-col>
-              <v-col cols="4" sm="6" md="2">
-                <v-text-field
-                  v-model="countrySearch"
-                  label="Country"
-                  outlined
-                  dense
-                ></v-text-field>
-              </v-col>
-              <v-col cols="4" sm="6" md="2">
-                <v-text-field
-                  v-model="namePlayerSearch"
-                  label="Name search"
-                  outlined
-                  dense
-                ></v-text-field>
-              </v-col>
-              <v-col cols="4" sm="6" md="2">
-                <v-select
-                  v-model="positionSearch"
-                  :items="items"
-                  label="Position"
-                  outlined
-                  dense
-                ></v-select>
-              </v-col>
-              <v-col cols="6" sm="3" md="1">
-                <v-btn color="primary" dark @click="searchButton">
-                  Search
-                </v-btn>
-              </v-col>
-              <v-col cols="6" sm="3" md="1">
-                <v-btn color="error" dark @click="reset"> Reset </v-btn>
-              </v-col>
-            </v-row>
-          </v-toolbar>
-        </template>
-        <v-divider class="my-8 mx-6"></v-divider>
+      <!-- <v-divider class="my-8"></v-divider> -->
+      <v-card max-width="95%" class="container">
+        <h2 style="height: 140px; padding-bottom: -10px" class="titleText ml-6" >Members</h2>
+        <v-row style="height: 110px">
+          <template>
+            <v-toolbar flat color="white">
+              <v-row>
+                <v-col cols="4" sm="4" md="3" xl="2">
+                  <v-btn
+                    color="primary"
+                    v-if="team.idTour == 0"
+                    dark
+                    @click="toManageMembers"
+                  >
+                    Manage Members
+                  </v-btn>
+                </v-col>
+                <!-- <v-divider class="mr-4 ml-0" inset vertical></v-divider> -->
+                <v-col cols="4" sm="4" md="2" xl="1">
+                  <v-select
+                    v-model="from"
+                    :items="ages"
+                    outlined
+                    dense
+                    label="From Age"
+                  ></v-select>
+                </v-col>
+                <v-col cols="4" sm="4" md="2" xl="1">
+                  <v-select
+                    v-model="to"
+                    :items="ages"
+                    outlined
+                    dense
+                    label="To Age"
+                  ></v-select>
+                </v-col>
+                <v-col cols="6" sm="4" md="3" xl="2">
+                  <v-text-field
+                    v-model="countrySearch"
+                    label="Country"
+                    outlined
+                    dense
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="6" sm="4" md="3" xl="2">
+                  <v-text-field
+                    v-model="namePlayerSearch"
+                    label="Name search"
+                    outlined
+                    dense
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="6" sm="4" md="3" xl="2">
+                  <v-select
+                    v-model="positionSearch"
+                    :items="items"
+                    label="Position"
+                    outlined
+                    dense
+                  ></v-select>
+                </v-col>
+                <v-col cols="2" sm="2" md="1" xl="1">
+                  <v-btn color="primary" dark @click="searchButton">
+                    Search
+                  </v-btn>
+                </v-col>
+                <v-col cols="2" sm="2" md="3" xl="1">
+                  <v-btn color="error" dark @click="reset"> Reset </v-btn>
+                </v-col>
+              </v-row>
+            </v-toolbar>
+          </template>
+        </v-row>
+        <v-row>
+          <v-divider class="my-8 mx-6"></v-divider>
+        </v-row>
         <template class="container" v-if="team.profile && team.profile.length">
           <v-row class="px-6">
             <v-col
               cols="12"
-              md="3"
-              sm="3"
+              md="4"
+              sm="6"
               v-for="player in membersSearch"
               :key="player.id"
             >
