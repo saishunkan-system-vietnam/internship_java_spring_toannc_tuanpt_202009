@@ -91,6 +91,13 @@ public class ProfileController {
 			return ResponseQuery.success("Connect!", profileService.lastFiveMatch(idPlayer));
 		}
 		return ResponseQuery.faild("Don't have any data", null);
+	}
 
+	@GetMapping("test/{idPlayer}")
+	public ResponseQuery<?> test(@PathVariable int idPlayer) {
+		if (profileService.test(idPlayer) != null) {
+			return ResponseQuery.success("Connect!", profileService.test(idPlayer));
+		}
+		return ResponseQuery.faild("Don't have any data", null);
 	}
 }

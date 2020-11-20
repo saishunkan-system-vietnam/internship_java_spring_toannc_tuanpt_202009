@@ -52,14 +52,14 @@ let routes = [
             component: Summary,
 
           },
-          
+
           {
             path: '/statistics/:id',
             component: () => import('@/views/web/schedule/Statistic'),
 
           }
           ,
-          
+
           {
             path: '/video/:id',
             component: () => import('@/views/web/schedule/Video'),
@@ -106,8 +106,7 @@ let routes = [
         ]
       },
       {
-        path:'/profile',
-        name: "profile",
+        path: '/profile/:id', name: "profile",
         component: () => import('@/views/web/Profile')
       },
       {
@@ -119,6 +118,14 @@ let routes = [
         path: '/teams',
         component: Teams,
       },
+      // {
+      //   path: '/players',
+      //   component: () => import('@/views/web/player'),
+      //   children: [{
+      //     path: '/player/:id',
+      //     component: () => import('@/views/web/player/Player')
+      //   },]
+      // },
       {
         path: '/player/:id',
         component: () => import('@/views/web/player/Player'),
@@ -229,7 +236,7 @@ let routes = [
 ]
 
 const router = new Router({
-  linkExactActiveClass:"vue-school-active-class",
+  linkExactActiveClass: "vue-school-active-class",
   routes,
   mode: 'history'
 })

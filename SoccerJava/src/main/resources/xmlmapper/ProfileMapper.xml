@@ -143,16 +143,4 @@
 		left join
 		team_tbl t on t.team_id = p.id_team
 	</select>
-
-
-	<select id="lastFiveMatch" resultMap="profileSchedule">
-	SELECT c.*,team_tbl.*,schedule_tbl.* FROM
-		(SELECT
-		a.profile_id,a.profile_name,a.profile_country,a.profile_age,a.profile_datecreate,a.profile_email,a.profile_gender,a.profile_phone,a.profile_position,a.profile_avatar,b.id_team
-		From sports.profile_tbl a inner join history_tbl b on
-		a.profile_id=b.id_member where a.profile_id=${idPlayer}) c
-		inner join team_tbl on
-		team_tbl.team_id=c.id_team inner join schedule_tbl on (schedule_tbl.schedule_team1=c.id_team or schedule_tbl.schedule_team2=c.id_team )where profile_id=${idPlayer} and schedule_tbl.schedule_status=2 order by schedule_tbl.schedule_start  desc ;
-
-	</select>
 </mapper>

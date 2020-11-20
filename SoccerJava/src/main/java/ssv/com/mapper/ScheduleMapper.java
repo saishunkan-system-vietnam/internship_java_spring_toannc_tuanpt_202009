@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import ssv.com.entity.Profile;
 import ssv.com.entity.Schedule;
 
 @Mapper
@@ -57,4 +58,5 @@ public interface ScheduleMapper {
 
 	List<Schedule> getScheduleByTeam(int idTeam, int idTour);
 
+	public List<Schedule> lastFiveMatch(int idPlayer);
 }

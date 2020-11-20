@@ -53,7 +53,7 @@ public class ProfileRepository {
 
 	public int getNumberGoal(int idTeam, Long idMember) {
 		// TODO Auto-generated method stub
-		return profileMapper.getNumberGoal(idTeam,idMember);
+		return profileMapper.getNumberGoal(idTeam, idMember);
 	}
 
 	public List<Profile> getAll() {
@@ -62,10 +62,10 @@ public class ProfileRepository {
 	}
 
 	public void updateProfileUser(Profile profile) {
-		 profileMapper.updateProfileUser(profile);
-  }
+		profileMapper.updateProfileUser(profile);
+	}
+
 	public Profile lastFiveMatch(int idPlayer) {
 		return profileMapper.lastFiveMatch(idPlayer);
-
 	}
 }
