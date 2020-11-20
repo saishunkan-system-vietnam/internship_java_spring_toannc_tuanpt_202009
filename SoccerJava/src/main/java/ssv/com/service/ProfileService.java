@@ -5,6 +5,8 @@ import java.lang.reflect.Member;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ssv.com.dto.ResponseQuery;
+import ssv.com.dto.TeamDetail;
 import ssv.com.dto.TeamScheduleDto;
 import ssv.com.entity.Account;
 import ssv.com.entity.Profile;
@@ -127,7 +130,7 @@ public class ProfileService {
 		return profile;
 	}
 
-	public HashSet<Profile> getTourGoal(int idTeam) {
+	public List<Profile> getTourGoal(int idTeam) {
 		List<Profile> list = new ArrayList<Profile>();
 		HashSet<Profile> profiles = new HashSet<Profile>();
 		list = profileRepository.getByTeamTour(idTeam);
@@ -135,8 +138,19 @@ public class ProfileService {
 			profile.setNumberGoal(profileRepository.getNumberGoal(idTeam, profile.getId()));
 			profiles.add(profile);
 		}
+		List<Profile> list1 = new ArrayList<Profile>(profiles);
 
-		return profiles;
+		Collections.sort(list1, new Comparator<Profile>() {
+
+			@Override
+			public int compare(Profile o1, Profile o2) {
+				// TODO Auto-generated method stub
+				return o2.getNumberGoal()-o1.getNumberGoal();
+			}
+
+		});
+
+		return list1;
 	}
 
 	public ResponseQuery<?> updateProfileUser(ProfileForm profileForm) {

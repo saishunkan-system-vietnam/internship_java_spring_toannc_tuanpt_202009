@@ -158,12 +158,15 @@ public class TeamService {
 		detail.setTotalMatch(scheduleRepository.teamTotalMatch(idTeam));
 		detail.setTotalWin(scheduleRepository.teamTotalWin(idTeam));
 		detail.setTotalAdraw(scheduleRepository.teamAdraw(idTeam));
-		detail.setTotalMatchByTour(scheduleRepository.teamTotalMatchByTour(idTeam, idTournament));
-		detail.setTotalWinByTour(scheduleRepository.teamTotalWinByTour(idTeam, idTournament));
-		detail.setTotalAdrawByTour(scheduleRepository.teamTotalAdrawByTour(idTeam, idTournament));
-		int point = detail.getTotalWinByTour() * 3 + detail.getTotalAdrawByTour() * 1;
+		if(idTournament!=0) {
+			detail.setTotalMatchByTour(scheduleRepository.teamTotalMatchByTour(idTeam, idTournament));
+			detail.setTotalWinByTour(scheduleRepository.teamTotalWinByTour(idTeam, idTournament));
+			detail.setTotalAdrawByTour(scheduleRepository.teamTotalAdrawByTour(idTeam, idTournament));
+			int point = detail.getTotalWinByTour() * 3 + detail.getTotalAdrawByTour() * 1;
+			detail.setPointByTour(point);
+		}
 		int pointAll = detail.getTotalWin() * 3 + detail.getTotalAdraw() * 1;
-		detail.setPointByTour(point);
+		
 		detail.setPointAll(pointAll);
 		detail.setNameTeam(team.getNameTeam());
 		detail.setLogo(team.getLogo());
