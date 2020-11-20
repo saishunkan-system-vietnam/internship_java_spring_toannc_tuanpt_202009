@@ -7,7 +7,7 @@
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-btn
-          v-if="tournament.status!=2"
+            v-if="tournament.status != 2"
             color="primary"
             dark
             class="mb-2"
@@ -17,7 +17,6 @@
         </v-toolbar>
         <v-toolbar flat>
           <v-row>
-          
             <v-col>
               <v-select
                 :items="itemSelect"
@@ -29,22 +28,14 @@
             </v-col>
             <v-col>
               <v-text-field
-                v-model="searchTeam1"
+                @input="filterSearch"
                 append-icon="mdi-magnify"
-                label="Home Team"
+                label="Search Team"
                 single-line
                 hide-details
               ></v-text-field>
             </v-col>
-            <v-col>
-              <v-text-field
-                v-model="searchTeam2"
-                append-icon="mdi-magnify"
-                label="Away Team"
-                single-line
-                hide-details
-              ></v-text-field>
-            </v-col>
+
             <v-col>
               <v-menu
                 ref="menuStart"
@@ -104,14 +95,13 @@
       </template>
       <template v-slot:[`item.timeStart`]="{ item }">
         <div>
-          {{ new Date(Date.parse(item.timeStart)) }}
-        </div>
+      {{item.timeStart.substring(11,16)}}&emsp;&emsp;    {{ item.timeStart.substring(0,10) }}</div>
       </template>
 
       <template v-slot:[`item.team[0].nameTeam`]="{ item }">
         <div>
           <v-avatar tile>
-            <img :src="baseUrl+item.team[0].logo" alt="Logo" />
+            <img :src="baseUrl + item.team[0].logo" alt="Logo" />
           </v-avatar>
           {{ item.team[0].nameTeam }}
         </div>
@@ -119,7 +109,7 @@
       <template v-slot:[`item.team[1].nameTeam`]="{ item }">
         <div>
           <v-avatar tile>
-            <img :src="baseUrl+item.team[1].logo" alt="Logo" />
+            <img :src="baseUrl + item.team[1].logo" alt="Logo" />
           </v-avatar>
           {{ item.team[1].nameTeam }}
         </div>
@@ -160,7 +150,11 @@
     </v-dialog>
     <v-dialog v-model="dialogCreate" width="700px">
       <v-card>
-        <ScheduleCreate :getData="getData" :hideDialog="hideDialog" :idSchedule="tournament.idTournament" />
+        <ScheduleCreate
+          :getData="getData"
+          :hideDialog="hideDialog"
+          :idSchedule="tournament.idTournament"
+        />
       </v-card>
     </v-dialog>
   </div>
@@ -184,9 +178,9 @@ export default {
       searchName: "",
       searchTeam1: "",
       searchTeam2: "",
+      scheduleBig: "",
 
       headers: [
-       
         {
           text: "Time Start",
           value: "timeStart",
@@ -247,6 +241,7 @@ export default {
           this.$store.commit("auth/auth_overlay_false");
           if (response.data.code == 0) {
             this.schedule = response.data.payload;
+            this.scheduleBig = response.data.payload;
           }
         });
     },
@@ -269,17 +264,19 @@ export default {
         return value == this.selectStatus;
       }
     },
-    teamFilter1(value) {
-      if (!this.searchTeam1) {
-        return true;
+    filterSearch(val) {
+      if (val == "") {
+        this.schedule = this.scheduleBig;
       }
-      return value.toLowerCase().includes(this.searchTeam1.toLowerCase());
-    },
-    teamFilter2(value) {
-      if (!this.searchTeam2) {
-        return true;
-      }
-      return value.toLowerCase().includes(this.searchTeam2.toLowerCase());
+      var a = this.scheduleBig.filter((function1) => {
+        return (
+          function1.team[0].nameTeam
+            .toLowerCase()
+            .includes(val.toLowerCase()) ||
+          function1.team[1].nameTeam.toLowerCase().includes(val.toLowerCase())
+        );
+      });
+      this.schedule = a;
     },
     startFilter(value) {
       if (this.dateStart == null) {

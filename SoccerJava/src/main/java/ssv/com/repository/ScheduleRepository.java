@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ssv.com.entity.Profile;
 import ssv.com.entity.Schedule;
 import ssv.com.mapper.ScheduleMapper;
 
@@ -26,12 +27,10 @@ public class ScheduleRepository {
 
 	public void Delete(int idSchedule) {
 		scheduleMapper.delete(idSchedule);
-
 	}
 
 	public void edit(Schedule schedule) {
 		scheduleMapper.edit(schedule);
-
 	}
 
 	public List<Schedule> getAll() {
@@ -40,8 +39,6 @@ public class ScheduleRepository {
 
 	public void updateStatus(int idSchedule) {
 		scheduleMapper.updateStatus(idSchedule);
-
-
 	}
 
 	public int teamTotalMatch(int idTeam) {
@@ -81,8 +78,6 @@ public class ScheduleRepository {
 
 	public void deleteByTour(int idTournament) {
 		scheduleMapper.deleteByTour(idTournament);
-
-
 	}
 
 	public List<Schedule> getByStatus(int status) {
@@ -124,4 +119,7 @@ public class ScheduleRepository {
 		return scheduleMapper.getScheduleByTeam(idTeam,idTour);
 	}
 
+	public List<Schedule> lastFiveMatch(int idPlayer) {
+		return scheduleMapper.lastFiveMatch(idPlayer);
+	}
 }

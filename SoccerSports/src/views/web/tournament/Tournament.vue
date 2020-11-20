@@ -27,17 +27,17 @@
           <v-row v-for="(item, i) in tournament" :key="i">
             <v-card width="900px" height="200px">
               <v-row>
+           
                 <v-col cols="12" sm="4">
                   <v-img
-                    lazy-src="https://picsum.photos/id/11/10/6"
                     max-height="150"
                     max-width="250"
-                    :src="baseUrl + item.banner"
+                    :src="item.banner!=''?baseUrl + item.banner:'https://picsum.photos/id/11/10/6'"
                   ></v-img>
                 </v-col>
                 <v-col>
                   <router-link
-                    :to="{ path: '/tournamentDetail/' + item.idTournament }"
+                    :to="{ path: '/tournamentDetail/' + item.idTournament+'/team' }"
                     style="color: black"
                   >
                     <h1>{{ item.nameTournament }}</h1></router-link
@@ -81,7 +81,7 @@
                         path:
                           '/tournamentDetail/' + item.idTournament + '/team',
                       }"
-                      >||Table</router-link
+                      >||Rank</router-link
                     >
                   </h5>
                 </v-col>

@@ -74,7 +74,7 @@
                   {{ new Date(item.timeStart).toString().substring(16, 21) }}
                 </template>
                 <template v-slot:[`item.article`]="{ item }">
-                  <router-link :to="'/scheduleDetail/' + item.idSchedule">
+                  <router-link :to="'/summary/' + item.idSchedule">
                     <v-icon>mdi-chevron-double-right</v-icon></router-link
                   >
                 </template>

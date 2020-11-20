@@ -17,7 +17,8 @@ export default new Vuex.Store({
 		tournament,
 		member,
 		schedule
-	}, state: {
+	},
+	state: {
 		Sidebar_drawer: null,
 		Customizer_drawer: false,
 		SidebarColor: 'white',
@@ -35,6 +36,6 @@ export default new Vuex.Store({
 		},
 	},
 	plugins: [createPersistedState({
-        storage: window.sessionStorage,
-    })],
+		storage: window.sessionStorage,
+	})],
 })

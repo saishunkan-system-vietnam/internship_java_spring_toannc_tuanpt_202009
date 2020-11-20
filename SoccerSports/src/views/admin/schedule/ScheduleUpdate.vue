@@ -30,7 +30,7 @@
                       ></v-select
                     ></v-col>
                     <v-col>
-                      Time<br />
+                      Time(mm:ss)<br />
                       <input-mask
                         style="border-bottom: solid 1px; height: 32px"
                         v-model="value1"
@@ -314,6 +314,7 @@ export default {
                 profile: profile,
                 time: element.time,
                 idSchedule: this.schedule.idSchedule,
+                team: 1,
               });
             }
           });
@@ -325,6 +326,7 @@ export default {
                 profile: profile,
                 time: element.time,
                 idSchedule: this.schedule.idSchedule,
+                team: 2,
               });
             }
           });
@@ -336,6 +338,7 @@ export default {
       this.$store.commit("auth/auth_overlay_true");
       if (this.$refs.form.validate()) {
         const arr = this.goal1.concat(this.goal2);
+        console.log(arr);
         var bodyFormData = new FormData();
         bodyFormData.append("idSchedule", this.schedule.idSchedule);
         if (this.fileImage.size > 0) {

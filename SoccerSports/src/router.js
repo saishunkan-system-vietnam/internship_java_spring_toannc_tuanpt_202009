@@ -106,8 +106,7 @@ let routes = [
         ]
       },
       {
-        path: '/profile/:id',
-        name: "profile",
+        path: '/profile/:id', name: "profile",
         component: () => import('@/views/web/Profile')
       },
       {
@@ -119,13 +118,17 @@ let routes = [
         path: '/teams',
         component: Teams,
       },
+      // {
+      //   path: '/players',
+      //   component: () => import('@/views/web/player'),
+      //   children: [{
+      //     path: '/player/:id',
+      //     component: () => import('@/views/web/player/Player')
+      //   },]
+      // },
       {
-        path: '/players',
-        component: () => import('@/views/web/player'),
-        children: [{
-          path: '/player/:id',
-          component: () => import('@/views/web/player/Player')
-        },]
+        path: '/player/:id',
+        component: () => import('@/views/web/player/Player'),
       },
       {
         path: '/team/:id',
@@ -233,6 +236,7 @@ let routes = [
 ]
 
 const router = new Router({
+  linkExactActiveClass: "vue-school-active-class",
   routes,
   mode: 'history'
 })

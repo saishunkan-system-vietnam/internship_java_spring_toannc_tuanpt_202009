@@ -19,35 +19,59 @@
         @click="dialogEdit = true"
         >Edit</v-btn
       >
-      <h1 class="text-center">
-        {{ Object.keys(schedule).length === 0?'':schedule.tournament.nameTournament  }}
+      <h1 class="text-center" style="cursor: pointer">
+        <router-link
+          :to="{
+            path:
+              Object.keys(schedule).length === 0
+                ? ''
+                : '/admin/tournament/' + schedule.tournament.idTournament,
+          }"
+        >
+          <b>
+            {{
+              Object.keys(schedule).length === 0
+                ? ""
+                : schedule.tournament.nameTournament
+            }}</b
+          >
+        </router-link>
 
       </h1>
       <h3 class="text-center">
-        Time Start: {{ (new Date(Date.parse(schedule.timeStart)).toString().substring(0,21)) }}
+        Time Start:
+        {{
+          new Date(Date.parse(schedule.timeStart)).toString().substring(0, 21)
+        }}
       </h3>
       <h3 class="text-center">Location:{{ schedule.location }}</h3>
       <div class="text-center">
         <v-avatar tile>
           <img
-
-            :src="Object.keys(schedule).length === 0?'': baseUrl + schedule.team[0].logo "
-
+            :src="
+              Object.keys(schedule).length === 0
+                ? ''
+                : baseUrl + schedule.team[0].logo
+            "
             alt="John"
           />
         </v-avatar>
         <router-link
-
-          :to="Object.keys(schedule).length === 0?'':{
-
-            path: '/admin/team/detail/' + schedule.team[0].idTeam,
-          }"
+          :to="
+            Object.keys(schedule).length === 0
+              ? ''
+              : {
+                  path: '/admin/team/detail/' + schedule.team[0].idTeam,
+                }
+          "
           style="text-decoration: none"
         >
           <h4 style="display: inline-block">
-
-            {{ Object.keys(schedule).length === 0?'': schedule.team[0].nameTeam }}
-
+            {{
+              Object.keys(schedule).length === 0
+                ? ""
+                : schedule.team[0].nameTeam
+            }}
           </h4></router-link
         >
         <v-avatar style="margin-left: 50px; margin-right: 50px">
@@ -55,25 +79,31 @@
         </v-avatar>
 
         <router-link
-
-          :to="Object.keys(schedule).length === 0?'':{
-
-            path: '/admin/team/detail/' + schedule.team[1].idTeam,
-          }"
+          :to="
+            Object.keys(schedule).length === 0
+              ? ''
+              : {
+                  path: '/admin/team/detail/' + schedule.team[1].idTeam,
+                }
+          "
           style="text-decoration: none"
         >
           <h4 style="display: inline-block">
-
-            {{ Object.keys(schedule).length === 0?'': schedule.team[1].nameTeam  }}
-
+            {{
+              Object.keys(schedule).length === 0
+                ? ""
+                : schedule.team[1].nameTeam
+            }}
           </h4>
         </router-link>
 
         <v-avatar tile>
           <img
-
-            :src="Object.keys(schedule).length === 0?'': baseUrl + schedule.team[1].logo"
-
+            :src="
+              Object.keys(schedule).length === 0
+                ? ''
+                : baseUrl + schedule.team[1].logo
+            "
             alt="John"
           />
         </v-avatar>
@@ -168,6 +198,18 @@
             <v-list-item-group>
               <v-list-item>
                 <v-list-item-content>
+                  Total Draw :
+                  {{
+                    !!detailTeam && !!detailTeam[index]
+                      ? detailTeam[index].totalAdraw
+                      : ""
+                  }}
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+            <v-list-item-group>
+              <v-list-item>
+                <v-list-item-content>
                   Total Match By Tournament :
                   {{
                     !!detailTeam && !!detailTeam[index]
@@ -189,6 +231,18 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
+            <v-list-item-group>
+              <v-list-item>
+                <v-list-item-content>
+                  Total Draw By Tournament :
+                  {{
+                    !!detailTeam && !!detailTeam[index]
+                      ? detailTeam[index].totalMatchByTour
+                      : ""
+                  }}
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
           </v-list>
           <v-list disabled>
             <v-subheader>MEMBER</v-subheader>
@@ -201,12 +255,9 @@
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title
-                    >{{
-                      item.name
-                    }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{
-                      item.currentAge
-                    }}
-                    old&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{
+
+                    >{{ item.name }}&nbsp;{{ item.age }} old&nbsp;{{
+
                       item.country
                     }}</v-list-item-title
                   >
@@ -349,7 +400,7 @@ export default {
         }
       });
     },
-    getData() {
+    async getData() {
       this.$store.commit("auth/auth_overlay_true");
       this.$store
         .dispatch("schedule/getById", this.$route.params.id)
@@ -357,42 +408,25 @@ export default {
           this.$store.commit("auth/auth_overlay_false");
           if (response.data.code == 0) {
             this.schedule = response.data.payload;
+            console.log(this.schedule)
             this.getDataGoal();
-            if (this.schedule.idTeam1 > this.schedule.idTeam2) {
-              this.$store
-                .dispatch("team/getDetail", {
-                  idTeam: this.schedule.team[1].idTeam,
-                  idTournament: this.$route.params.id,
-                })
-                .then((response) => {
-                  this.detailTeam.push(response.data.payload);
-                });
-              this.$store
-                .dispatch("team/getDetail", {
-                  idTeam: this.schedule.team[0].idTeam,
-                  idTournament: this.$route.params.id,
-                })
-                .then((response) => {
-                  this.detailTeam.push(response.data.payload);
-                });
-            } else {
-              this.$store
-                .dispatch("team/getDetail", {
-                  idTeam: this.schedule.team[0].idTeam,
-                  idTournament: this.$route.params.id,
-                })
-                .then((response) => {
-                  this.detailTeam.push(response.data.payload);
-                });
-              this.$store
-                .dispatch("team/getDetail", {
-                  idTeam: this.schedule.team[1].idTeam,
-                  idTournament: this.$route.params.id,
-                })
-                .then((response) => {
-                  this.detailTeam.push(response.data.payload);
-                });
-            }
+            this.$store
+              .dispatch("team/getDetail", {
+                idTeam: this.schedule.team[0].idTeam,
+                idTournament: this.schedule.idTour,
+              })
+              .then((response) => {
+                this.detailTeam.push(response.data.payload);
+                this.$store
+                  .dispatch("team/getDetail", {
+                    idTeam: this.schedule.team[1].idTeam,
+                    idTournament: this.schedule.idTour,
+                  })
+                  .then((response) => {
+                    this.detailTeam.push(response.data.payload);
+                  });
+              });
+            
           } else {
             alert(response.data.message);
           }

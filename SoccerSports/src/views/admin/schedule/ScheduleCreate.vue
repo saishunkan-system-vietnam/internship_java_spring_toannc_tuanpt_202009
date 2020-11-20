@@ -163,6 +163,15 @@
     </v-form>
     <v-btn @click="reset">Reset</v-btn>
     <v-btn @click.prevent="create">Create</v-btn>
+    <span
+      style="
+        position: absolute;
+        right: 20px;
+        color: red;
+        font-family: time new roman;
+      "
+      >*Each match is 3 hours apart</span
+    >
   </v-container>
 </template>
 <script>
@@ -277,10 +286,6 @@ export default {
             },
           ];
         });
-    },
-    time(old, new1) {
-      console.log(old);
-      console.log(new1);
     },
   },
 };

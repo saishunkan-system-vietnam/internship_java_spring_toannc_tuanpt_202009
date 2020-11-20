@@ -155,6 +155,15 @@
     </v-form>
     <v-btn @click="reset">Reset</v-btn>
     <v-btn @click.prevent="create">Create</v-btn>
+    <span
+      style="
+        position: absolute;
+        right: 20px;
+        color: red;
+        font-family: time new roman;
+      "
+      >*Each match is 3 hours apart</span
+    >
   </v-container>
 </template>
 <script>
@@ -245,7 +254,15 @@ export default {
             return false || "time required";
           }
           if (v < this.tournament.timeStart || v > this.tournament.timeEnd) {
-            return false || "Past tournament time";
+            return (
+              false ||
+              "Past tournament time(" +
+                this.tournament.timeStart +
+                "->" +
+                this.tournament.timeEnd +
+                ")"
+            );
+
           } else {
             return true;
           }
