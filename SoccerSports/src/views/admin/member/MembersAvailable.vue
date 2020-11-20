@@ -177,6 +177,7 @@ export default {
     },
 
     editPlayer(player) {
+      console.log(this.checkUpdate)
       if (this.checkUpdate) {
         this.$router.push({
           path: `/admin/member/${player.id}`,

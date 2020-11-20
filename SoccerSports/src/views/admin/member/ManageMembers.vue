@@ -273,7 +273,7 @@ export default {
             self.success = !self.success;
             self.loadListMember(id);
             console.log(index);
-            console.log(id)
+            console.log(id);
             if (index == 1) {
               self.$router.push({
                 path: `/admin/member/${self.idPlayer}`,
@@ -318,12 +318,13 @@ export default {
     },
 
     isConfirm(id) {
+      console.log(id);
       if (id != 0) {
         this.manageConfirm = false;
-      } else {
-        this.idPlayer = id;
-        this.dialogConfirm = !this.dialogConfirm;
       }
+      console.log("Run here");
+      this.idPlayer = id;
+      this.dialogConfirm = !this.dialogConfirm;
     },
   },
 };
