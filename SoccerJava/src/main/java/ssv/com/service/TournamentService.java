@@ -168,6 +168,13 @@ public class TournamentService {
 
 			@Override
 			public int compare(TeamDetail o1, TeamDetail o2) {
+				if(o1.getPointByTour() == o2.getPointByTour()) {
+					if(o1.getTotalMatchByTour()==o2.getTotalMatchByTour()) {
+						return o1.getNameTeam().toLowerCase().compareTo(o2.getNameTeam().toLowerCase());
+					}
+					return o2.getTotalMatchByTour()-o2.getTotalMatchByTour();
+					
+				}
 				return o2.getPointByTour() - o1.getPointByTour();
 			}
 
@@ -270,6 +277,16 @@ public class TournamentService {
 					schedule.setTeam(list1);
 				}
 			}
+			List<Schedule> listSchedule=tournament.getSchedule();
+			Collections.sort(listSchedule, new Comparator<Schedule>() {
+
+				@Override
+				public int compare(Schedule o1, Schedule o2) {
+					// TODO Auto-generated method stub
+					return o2.getTimeStart().compareTo(o1.getTimeStart());
+				}
+			});
+			tournament.setSchedule(listSchedule);
 		}
 		return list;
 

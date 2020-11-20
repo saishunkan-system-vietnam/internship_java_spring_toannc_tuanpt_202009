@@ -209,7 +209,7 @@ export default {
     },
 
     handleRowClick(item) {
-      this.$router.push({ path: "/scheduleDetail/" + item.idSchedule });
+      this.$router.push({ path: "/summary/" + item.idSchedule });
     },
 
     getFilter(list) {

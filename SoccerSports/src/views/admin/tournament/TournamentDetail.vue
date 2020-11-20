@@ -130,11 +130,9 @@ export default {
     this.getData();
   },
   mounted() {
-    this.$store.commit("auth/auth_overlay_true");
     this.$store
       .dispatch("tournament/getById", this.$route.params.id)
       .then((response) => {
-        this.$store.commit("auth/auth_overlay_false");
         if (response.data.code == 0) {
           this.tournament = response.data.payload;
         }
@@ -145,11 +143,9 @@ export default {
       this.dialog=!this.dialog
     },
     getData() {
-      this.$store.commit("auth/auth_overlay_true");
       this.$store
         .dispatch("tournament/getById", this.$route.params.id)
         .then((response) => {
-          this.$store.commit("auth/auth_overlay_false");
           if (response.data.code == 0) {
             this.tournament = response.data.payload;
           }

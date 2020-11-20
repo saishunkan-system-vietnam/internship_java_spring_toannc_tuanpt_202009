@@ -13,15 +13,34 @@
                   <tr>
                     <th class="text-left">
                       <v-avatar size="50"
-                      ><img :src="Object.keys(schedule).length === 0?'':baseUrl + schedule.team[0].logo" alt="John"
+                        ><img
+                          :src="
+                            Object.keys(schedule).length === 0
+                              ? ''
+                              : baseUrl + schedule.team[0].logo
+                          "
+                          alt="John"
                       /></v-avatar>
-                      {{ Object.keys(schedule).length === 0?'': schedule.team[0].nameTeam }}
+                      {{
+                        Object.keys(schedule).length === 0
+                          ? ""
+                          : schedule.team[0].nameTeam
+                      }}
                     </th>
                     <th class="text-left" width="500px"></th>
                     <th class="text-right">
-                      {{ Object.keys(schedule).length === 0?'': schedule.team[1].nameTeam 
+                      {{
+                        Object.keys(schedule).length === 0
+                          ? ""
+                          : schedule.team[1].nameTeam
                       }}<v-avatar size="50"
-                        ><img :src="Object.keys(schedule).length === 0?'':baseUrl + schedule.team[1].logo" alt="John"
+                        ><img
+                          :src="
+                            Object.keys(schedule).length === 0
+                              ? ''
+                              : baseUrl + schedule.team[1].logo
+                          "
+                          alt="John"
                       /></v-avatar>
                     </th>
                   </tr>
@@ -72,7 +91,13 @@
           <v-container>
             <b
               ><v-avatar size="50"
-                ><img :src="Object.keys(schedule).length === 0?'':baseUrl + schedule.team[0].logo" alt="John"
+                ><img
+                  :src="
+                    Object.keys(schedule).length === 0
+                      ? ''
+                      : baseUrl + schedule.team[0].logo
+                  "
+                  alt="John"
               /></v-avatar>
               Form</b
             >
@@ -81,11 +106,11 @@
               <template v-slot:default>
                 <thead>
                   <tr>
-                    <th class="text-left"></th>
-                    <th class="text-left">Results</th>
-                    <th class="text-left"></th>
-                    <th class="text-left">Date</th>
-                    <th class="text-left">Location</th>
+                    <th class="text-left" style="width: 200px">Results</th>
+                    <th class="text-left" style="width: 300px"></th>
+                    <th class="text-left" style="width: 200px"></th>
+                    <th class="text-left" style="width: 200px">Date</th>
+                    <th class="text-left" style="width: 200px">Location</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -96,9 +121,17 @@
                       <v-avatar size="50"
                         ><img :src="baseUrl + item.team[0].logo" alt="John"
                       /></v-avatar>
-                      {{ item.status == 2 ? item.score1 : "" }}-{{
-                        item.status == 2 ? item.score2 : ""
-                      }}
+                      <div
+                        style="
+                          display: inline-block;
+                          width: 100px;
+                          text-align: center;
+                        "
+                      >
+                        {{ item.status == 2 ? item.score1 : "" }}-{{
+                          item.status == 2 ? item.score2 : ""
+                        }}
+                      </div>
                       <v-avatar size="50"
                         ><img :src="baseUrl + item.team[1].logo" alt="John"
                       /></v-avatar>
@@ -109,8 +142,15 @@
                     </td>
                     <td>{{ item.location }}</td>
                     <td>
-                      <a :href="$router.resolve({path: '/summary/' + item.idSchedule}).href">
-                        <v-icon>mdi-chevron-double-right</v-icon></a>
+                      <a
+                        :href="
+                          $router.resolve({
+                            path: '/summary/' + item.idSchedule,
+                          }).href
+                        "
+                      >
+                        <v-icon>mdi-chevron-double-right</v-icon></a
+                      >
                     </td>
                   </tr>
                 </tbody>
@@ -122,7 +162,13 @@
           <v-container>
             <b
               ><v-avatar size="50"
-                ><img :src="Object.keys(schedule).length === 0?'':baseUrl + schedule.team[1].logo" alt="John"
+                ><img
+                  :src="
+                    Object.keys(schedule).length === 0
+                      ? ''
+                      : baseUrl + schedule.team[1].logo
+                  "
+                  alt="John"
               /></v-avatar>
               Form</b
             >
@@ -131,11 +177,11 @@
               <template v-slot:default>
                 <thead>
                   <tr>
-                    <th class="text-left"></th>
-                    <th class="text-left">Results</th>
-                    <th class="text-left"></th>
-                    <th class="text-left">Date</th>
-                    <th class="text-left">Location</th>
+                    <th class="text-left" style="width: 200px">Results</th>
+                    <th class="text-left" style="width: 300px"></th>
+                    <th class="text-left" style="width: 200px"></th>
+                    <th class="text-left" style="width: 200px">Date</th>
+                    <th class="text-left" style="width: 200px">Location</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -146,9 +192,17 @@
                       <v-avatar size="50"
                         ><img :src="baseUrl + item.team[0].logo" alt="John"
                       /></v-avatar>
+                        <div
+                        style="
+                          display: inline-block;
+                          width: 100px;
+                          text-align: center;
+                        "
+                      >
                       {{ item.status == 2 ? item.score1 : "" }}-{{
                         item.status == 2 ? item.score2 : ""
                       }}
+                        </div>
                       <v-avatar size="50"
                         ><img :src="baseUrl + item.team[1].logo" alt="John"
                       /></v-avatar>
@@ -159,8 +213,15 @@
                     </td>
                     <td>{{ item.location }}</td>
                     <td>
-                        <a :href="$router.resolve({path: '/summary/' + item.idSchedule}).href">
-                        <v-icon>mdi-chevron-double-right</v-icon></a>
+                      <a
+                        :href="
+                          $router.resolve({
+                            path: '/summary/' + item.idSchedule,
+                          }).href
+                        "
+                      >
+                        <v-icon>mdi-chevron-double-right</v-icon></a
+                      >
                     </td>
                   </tr>
                 </tbody>
@@ -206,7 +267,7 @@ export default {
           this.$store.commit("auth/auth_overlay_false");
           if (response.data.code == 0) {
             this.schedule = response.data.payload;
-          
+
             this.$store
               .dispatch("team/getDetail", {
                 idTeam: this.schedule.team[1].idTeam,

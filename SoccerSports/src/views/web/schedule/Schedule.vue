@@ -82,12 +82,27 @@
                   <v-avatar size="50" tile
                     ><img :src="baseUrl + item.team[0].logo" alt="Logo"
                   /></v-avatar>
-                  <span v-if="item.status == 2" style="font-size: 15px">
+                   <div
+                        style="
+                          display: inline-block;
+                          width: 100px;
+                          text-align: center;
+                          font-size: 15px
+                        "
+                        v-if="item.status == 2"
+                      >
                     {{ item.score1 }}-{{ item.score2 }}
-                  </span>
-                  <span v-else class="text-center" style="font-size: 15px">
-                    VS
-                  </span>
+                   </div>
+                    <div
+                        style="
+                          display: inline-block;
+                          width: 100px;
+                          text-align: center;
+                          font-size: 15px
+                        "
+                        v-else 
+                  >VS
+                  </div>
 
                   <v-avatar size="50" tile
                     ><img :src="baseUrl + item.team[1].logo" alt="Logo"

@@ -177,6 +177,12 @@ export default {
     nameTeamSearch() {
       this.options.page = 1;
     },
+    tourNameSearch() {
+      this.options.page = 1;
+    },
+    countrySearch() {
+      this.options.page = 1;
+    },
   },
 
   methods: {

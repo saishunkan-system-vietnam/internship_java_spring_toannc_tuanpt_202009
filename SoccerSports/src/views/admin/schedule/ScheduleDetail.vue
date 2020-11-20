@@ -11,7 +11,7 @@
     </v-btn>
 
     <v-container style="font-family: Times New Roman">
-      <h3 style="color: blue; display: inline-block">#SUMMARY</h3>
+      <h3 style="color: blue; display: inline-block">SUMMARY</h3>
       <v-btn
         v-if="schedule.status == 0"
         style="right: 0px; position: absolute"
@@ -111,7 +111,7 @@
       <hr />
 
       <div>
-        <h3 style="color: blue">#Schedule</h3>
+        <h3 style="color: blue">Schedule</h3>
         <template v-if="schedule.status != 2">
           <h1 class="text-center">
             The match is not over or has not been updated
@@ -158,7 +158,7 @@
         </template>
       </div>
       <hr />
-      <h3 style="color: blue">#Team</h3>
+      <h3 style="color: blue">Team</h3>
       <v-row>
         <v-col v-for="(team, index) in schedule.team" :key="index">
           <div class="text-center">
@@ -269,16 +269,16 @@
       </v-row>
       <hr />
       <template v-if="schedule.status == 2">
-        <h3 style="color: blue">#Video,Photo</h3>
-        <v-row>
+        <h3 style="color: blue">Video,Photo</h3>
+        <v-row >
           <v-col>
-            <v-container>
+            <v-container  v-if="schedule.image!='null'">
               <h3>Photo</h3>
               <img style="max-height: 204px" :src="baseUrl + schedule.image" />
             </v-container>
           </v-col>
           <v-col>
-            <v-container>
+            <v-container v-if="schedule.video!='null'">
               <h3>Video</h3>
               <video
                 width="320"
@@ -400,15 +400,15 @@ export default {
         }
       });
     },
-    async getData() {
+     getData() {
       this.$store.commit("auth/auth_overlay_true");
+      this.detailTeam=[]
       this.$store
         .dispatch("schedule/getById", this.$route.params.id)
         .then((response) => {
           this.$store.commit("auth/auth_overlay_false");
           if (response.data.code == 0) {
             this.schedule = response.data.payload;
-            console.log(this.schedule)
             this.getDataGoal();
             this.$store
               .dispatch("team/getDetail", {
