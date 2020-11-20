@@ -75,13 +75,13 @@
                             "
                             v-if="item.score1 < item.score2"
                           >
-                            {{ item.nameTeam1 }}
+                            {{ item.nameTeam2 }}
                           </p>
                           <h5
                             style="width: 90px; margin-right: -27px !important"
                             v-else
                           >
-                            {{ item.nameTeam1 }}
+                            {{ item.nameTeam2 }}
                           </h5>
                         </template>
                         <template v-slot:[`item.status`]="{}">
