@@ -170,9 +170,13 @@
         <v-subheader style="color: blue">Team </v-subheader>
         <v-list-item-subtitle>
           <v-container
-            ><h2>Team selected</h2>
+            ><h2>
+              Team selected{{
+                teamSelected.length > 0 ? "(" + teamSelected.length + ")" : ""
+              }}
+            </h2>
 
-            <template v-if="teamSelected == ''">
+            <template v-if="teamSelected.length == 0">
               No team has been selected yet
             </template>
             <template v-else>
@@ -189,6 +193,11 @@
                   <b style="text-transform: uppercase; margin-left: 20px">{{
                     item.nameTeam
                   }}</b>
+                  <v-icon
+                    style="position: absolute; right: 30px"
+                    @click="remove(item)"
+                    >mdi-alpha-x-box</v-icon
+                  >
                 </v-col>
               </v-row>
             </template>
@@ -196,7 +205,13 @@
         </v-list-item-subtitle>
         <v-list-item-subtitle>
           <v-container>
-            <h2>Choose Team</h2>
+            <v-row>
+              <v-col>
+                <h2>Choose Team</h2>
+              </v-col>
+            
+            </v-row>
+
             <v-row>
               <v-col
                 cols="12"
@@ -254,6 +269,7 @@ export default {
     teamSelected: [],
     nameTournament: "",
     listTeam: [],
+    listTeamData: [],
     teamChoose: [],
     overlay: false,
     rulesImage: [
@@ -297,11 +313,11 @@ export default {
       this.$store.dispatch("team/getTeamNoTournament").then((response) => {
         this.teamSelected = [];
         this.listTeam = response.data.payload;
+        this.listTeamData = response.data.payload;
       });
     },
     save() {
       this.overlay = !this.overlay;
-
       if (!this.$refs.form.validate()) {
         this.$refs.form.validate();
         this.overlay = !this.overlay;
@@ -352,6 +368,11 @@ export default {
         .toISOString()
         .substr(0, 10);
     },
+    remove(item) {
+      this.teamSelected.splice(this.teamSelected.indexOf(item.idTeam), 1);
+      this.teamChoose.splice(this.teamChoose.indexOf(item), 1);
+    },
+   
   },
 
   watch: {
@@ -384,6 +405,7 @@ export default {
         });
       }
     },
+
     tournamentData() {
       this.getListTeam();
     },
