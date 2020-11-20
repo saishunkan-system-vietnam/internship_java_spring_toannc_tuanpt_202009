@@ -199,8 +199,8 @@ public class ScheduleService {
 	}
 
 	public ResponseQuery<?> goal(List<GoalDto> goals) {
-		if (goals.size() != 0 && goals != null) {
-			goalRepository.format(goals.get(0).getIdSchedule());
+		if (goals.isEmpty()) {
+			return ResponseQuery.success("Update Success", goals);
 		}
 		goalRepository.format(goals.get(0).getIdSchedule());
 		for (GoalDto goal : goals) {

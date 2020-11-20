@@ -1,4 +1,4 @@
-<template>
+<template >
   <v-container>
     <v-form ref="form" v-model="valid" lazy-validation>
       <h1>Edit Schedule</h1>
@@ -145,7 +145,16 @@
       </v-row>
     </v-form>
     <v-btn @click="reset">Reset</v-btn>
-    <v-btn @click.prevent="create">Create</v-btn>
+    <v-btn @click.prevent="create">Edit</v-btn>
+     <span
+      style="
+        position: absolute;
+        right: 20px;
+        color: red;
+        font-family: time new roman;
+      "
+      >*Each match is 3 hours apart</span
+    >
   </v-container>
 </template>
 <script>
@@ -201,7 +210,8 @@ export default {
           this.selectTeam2 = this.schedule.idTeam2;
           this.location = this.schedule.location;
           this.date = this.schedule.timeStart.substr(0, 10);
-          this.time = this.schedule.timeStart.substr(11);
+          this.time = this.schedule.timeStart.substr(11).substring(0,5)
+          
         });
     },
     create() {

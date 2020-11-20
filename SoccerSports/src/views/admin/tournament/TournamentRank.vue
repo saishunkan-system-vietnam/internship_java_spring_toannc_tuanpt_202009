@@ -59,9 +59,9 @@ export default {
     this.$store
       .dispatch("tournament/tournamentRank", this.tournament.idTournament)
       .then((response) => {
-        this.$store.commit("auth/auth_overlay_false");
         if (response.data.code == 0) {
           this.rank = response.data.payload;
+          this.$store.commit("auth/auth_overlay_false");
         }
       });
   },

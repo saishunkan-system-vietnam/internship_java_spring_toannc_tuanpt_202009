@@ -148,7 +148,9 @@ public class ProfileService {
 
 			@Override
 			public int compare(Profile o1, Profile o2) {
-				// TODO Auto-generated method stub
+				if(o2.getNumberGoal()==o1.getNumberGoal()) {
+					return (int) (o1.getId()-o2.getId());
+				}
 				return o2.getNumberGoal()-o1.getNumberGoal();
 			}
 

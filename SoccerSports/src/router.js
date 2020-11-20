@@ -106,7 +106,7 @@ let routes = [
         ]
       },
       {
-        path: '/profile/:id', name: "profile",
+        path: '/profile', name: "profile",
         component: () => import('@/views/web/Profile')
       },
       {

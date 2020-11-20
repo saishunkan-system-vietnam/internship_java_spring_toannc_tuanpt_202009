@@ -96,7 +96,7 @@
 		p.tournament_id=q.id_tour left join
 		schedule_tbl c on
 		p.tournament_id=c.schedule_tour ORDER BY
-		tournament_id DESC
+		tournament_start DESC
 	</select>
 	<insert id="create" parameterType="Tournament">
 		INSERT INTO

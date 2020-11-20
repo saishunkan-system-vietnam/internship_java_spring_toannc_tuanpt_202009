@@ -39,6 +39,9 @@ public class TeamController {
 			if (teamForm.getFile() != null && !teamForm.getFile().getOriginalFilename().isEmpty()) {
 				team.setLogo(UploadFile.saveFile(teamForm.getFile()));
 			}
+			else {
+				team.setLogo("/images/No_image_3x4.png");
+			}
 			if (!teamService.checkExistsTeam(team)) {
 				teamService.createTeam(team);
 				return ResponseQuery.success("Success", team);

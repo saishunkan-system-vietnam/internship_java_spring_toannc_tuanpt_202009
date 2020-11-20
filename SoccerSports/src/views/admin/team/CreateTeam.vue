@@ -120,6 +120,11 @@ export default {
       if (!val) return;
       setTimeout(() => (this.successDialog = false), 100000);
     },
+    fileImage(){
+      if(this.fileImage==undefined){
+        this.fileImage=[]
+      }
+    }
   },
   methods: {
     onSubmit() {
