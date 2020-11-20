@@ -30,4 +30,5 @@ public class Schedule {
 	private List<Team> team;
 	private Tournament tournament;
 	private List<Goal> goal;
+	private Team teamByPlayer;
 }

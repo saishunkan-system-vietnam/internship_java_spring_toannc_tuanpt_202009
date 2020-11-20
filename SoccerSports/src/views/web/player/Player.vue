@@ -256,7 +256,7 @@
             </template>
             <template v-else>
               <div
-                v-for="(member, index) in team.profile.filter(
+                v-for="(member, index) in listAvailable.filter(
                   (p) => p.position == positionSelect
                 )"
                 :key="index"
@@ -465,7 +465,6 @@ export default {
   watch: {
     teamSelect(newValue) {
       // console.log(newValue, oldValue);
-      console.log(newValue);
       if (newValue != 0) {
         this.team = this.getTeamById(newValue);
         this.checkInTeam = true;
@@ -554,7 +553,7 @@ export default {
               idTeam: 0,
               nameTeam: "None Selected",
             });
-            console.log(self.teams);
+            // console.log(self.teams);
           } else {
             console.log("Run 3");
             // alert(response.data.message);
@@ -576,7 +575,7 @@ export default {
           if (data.code == 0) {
             self.nextMatch = response.data.payload;
           } else {
-            console.log("Run 4");
+            // console.log("Run 4");
             self.nextMatch = {};
             // alert(data.message);
           }
@@ -597,7 +596,7 @@ export default {
           if (data.code == 0) {
             self.lastFiveMatch = response.data.payload;
           } else {
-            console.log("Run 5");
+            // console.log("Run 5");
             self.lastFiveMatch = [];
             // alert(data.message);
           }

@@ -124,35 +124,37 @@
                   label="To Age"
                 ></v-select>
               </v-col>
-              <v-col cols="12" sm="6" md="2">
+              <v-col cols="4" sm="6" md="2">
                 <v-text-field
                   v-model="countrySearch"
                   label="Country"
-                  single-line
-                  hide-details
+                  outlined
+                  dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="2">
+              <v-col cols="4" sm="6" md="2">
                 <v-text-field
                   v-model="namePlayerSearch"
                   label="Name search"
-                  single-line
-                  hide-details
+                  outlined
+                  dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="2">
+              <v-col cols="4" sm="6" md="2">
                 <v-select
                   v-model="positionSearch"
                   :items="items"
                   label="Position"
+                  outlined
+                  dense
                 ></v-select>
               </v-col>
-              <v-col cols="12" sm="3" md="1">
+              <v-col cols="6" sm="3" md="1">
                 <v-btn color="primary" dark @click="searchButton">
                   Search
                 </v-btn>
               </v-col>
-              <v-col cols="12" sm="3" md="1">
+              <v-col cols="6" sm="3" md="1">
                 <v-btn color="error" dark @click="reset"> Reset </v-btn>
               </v-col>
             </v-row>
@@ -360,8 +362,6 @@ export default {
           alert(error);
         });
     },
-
-    
 
     isModalEditMember(id) {
       this.$router.push({

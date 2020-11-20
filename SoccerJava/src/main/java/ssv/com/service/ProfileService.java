@@ -29,6 +29,7 @@ import ssv.com.file.UploadFile;
 import ssv.com.form.ProfileForm;
 import ssv.com.repository.AccountRepository;
 import ssv.com.repository.ProfileRepository;
+import ssv.com.repository.ScheduleRepository;
 import ssv.com.repository.TeamRepository;
 import ssv.com.repository.TournamentRepository;
 
@@ -48,6 +49,9 @@ public class ProfileService {
 
 	@Autowired
 	private ModelMapper modelMapper;
+
+	@Autowired
+	private ScheduleRepository scheduleRepository;
 
 	public List<Profile> getMembers() {
 		List<Profile> profiles = profileRepository.getMembers();
@@ -191,16 +195,22 @@ public class ProfileService {
 	static String[] monthName = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
 			"October", "November", "December" };
 
+	public List<Schedule> test(Integer idPlayer) {
+		List<Schedule> schedules = scheduleRepository.lastFiveMatch(idPlayer);
+		return schedules;
+	}
+
 	public List<TeamScheduleDto> lastFiveMatch(int idPlayer) {
-		Profile profile = profileRepository.lastFiveMatch(idPlayer);
+		List<Schedule> schedules = scheduleRepository.lastFiveMatch(idPlayer);
 		List<TeamScheduleDto> matchs = new ArrayList<TeamScheduleDto>();
-		for (Team team : profile.getTeams()) {
-			for (Schedule schedule : team.getSchedule()) {
+		int i = 0;
+		for (Schedule schedule : schedules) {
+			if (i < 5) {
 				TeamScheduleDto match = new TeamScheduleDto();
 				match.setIdSchedule(schedule.getIdSchedule());
 				Team team1 = teamRepository.getTeamById(schedule.getIdTeam1());
 				Team team2 = teamRepository.getTeamById(schedule.getIdTeam2());
-				if (team1.getIdTeam() == team.getIdTeam()) {
+				if (team1.getIdTeam() == schedule.getTeamByPlayer().getIdTeam()) {
 					match.setNameTeam1(team1.getNameTeam());
 					match.setLogoTeam1(team1.getLogo());
 					match.setScore1(schedule.getScore1());
@@ -228,7 +238,7 @@ public class ProfileService {
 				match.setNameTour(tournamentRepository.getById(schedule.getIdTour()).getNameTournament());
 				if (schedule.getAdraw() != 0) {
 					match.setStatus(2);
-				} else if (schedule.getWinner() == team.getIdTeam()) {
+				} else if (schedule.getWinner() == schedule.getTeamByPlayer().getIdTeam()) {
 					match.setStatus(0);
 				} else {
 					match.setStatus(1);
@@ -242,8 +252,10 @@ public class ProfileService {
 					}
 				}
 				matchs.add(match);
+				i++;
 			}
 		}
+
 		return matchs;
 	}
 }

@@ -237,7 +237,6 @@ export default {
     hideDialog: Function,
     getData: Function,
     tournamentData: Array,
-
   },
   data: () => ({
     valid: false,
@@ -295,7 +294,6 @@ export default {
   },
   methods: {
     getListTeam() {
-    
       this.$store.dispatch("team/getTeamNoTournament").then((response) => {
         this.teamSelected = [];
         this.listTeam = response.data.payload;
@@ -372,7 +370,7 @@ export default {
       }
     },
     teamSelected() {
-      console.log(this.teamSelected)
+      console.log(this.teamSelected);
       this.teamChoose = [];
       if (this.teamSelected == undefined) {
         this.teamSelected = [];
@@ -383,14 +381,12 @@ export default {
               this.teamChoose.push(team);
             }
           });
-
         });
       }
     },
-     tournamentData() {
-       this.getListTeam();
+    tournamentData() {
+      this.getListTeam();
     },
-
   },
 };
 </script>
