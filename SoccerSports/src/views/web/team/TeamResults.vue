@@ -1,8 +1,9 @@
 <template>
   <div>
-    <v-card class="mx-auto" max-width="85%">
-      <v-row class="container">
-        <v-col cols="12" sm="8">
+    <v-card class="mx-auto">
+      <v-row>
+        <v-col cols="0" sm="0" md="0" xl="1"></v-col>
+        <v-col cols="12" sm="12" md="6" xl="6">
           <v-card-text>
             <v-row class="mb-5">
               <v-col cols="12" sm="6">
@@ -112,7 +113,7 @@
             </template>
           </v-card-text>
         </v-col>
-        <v-col cols="12" sm="4">
+        <v-col cols="12" sm="12" md="5" xl="5">
           <v-row style="height: 107px"></v-row>
           <v-row><RankByTour :tourId="parseInt(idTour)" /></v-row
         ></v-col>

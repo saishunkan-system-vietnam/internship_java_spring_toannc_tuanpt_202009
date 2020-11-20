@@ -1,9 +1,9 @@
 <template>
   <div>
-    <v-card class="mx-auto" max-width="85%">
+    <v-card class="mx-auto">
       <v-row class="container">
-        <v-col cols="0" sm="1"></v-col>
-        <v-col cols="10">
+        <v-col cols="0" sm="0" md="0" xl="2"></v-col>
+        <v-col cols="12" sm="12" md="12" xl="10">
           <v-card-text>
             <v-row>
               <v-col cols="12" sm="6">
@@ -24,53 +24,47 @@
                 ></v-select>
               </v-col>
             </v-row>
-            <v-row>
-              <h5 class="table__Title">Goalkeepers</h5>
-              <v-divider style="margin: 0 !important"></v-divider>
-              <v-row v-if="isHavedata">
-                <v-col>
-                  <v-data-table
-                    @click:row="handleRowClick"
-                    :headers="headers"
-                    :items="desserts"
-                    class="elevation-1 row-pointer"
-                    hide-default-footer
-                    :items-per-page="15"
-                  >
-                    <template v-slot:[`item.name`]="{ item }">
-                      <p class="pt-3" style="color: blue">
-                        {{ item.name }}
-                      </p>
-                    </template>
-                  </v-data-table>
-                </v-col>
-              </v-row>
-              <h2 v-else>No Data Available</h2>
-              <h5 class="table__Title mt-10">Outfield Players</h5>
-              <v-divider style="margin: 0 !important"></v-divider>
-              <v-row v-if="isHavedata">
-                <v-col>
-                  <v-data-table
-                    @click:row="handleRowClick"
-                    :headers="headers1"
-                    :items="desserts1"
-                    class="elevation-1 row-pointer"
-                    hide-default-footer
-                    :items-per-page="15"
-                  >
-                    <template v-slot:[`item.name`]="{ item }">
-                      <p class="pt-3" style="color: blue">
-                        {{ item.name }}
-                      </p>
-                    </template>
-                  </v-data-table>
-                </v-col>
-              </v-row>
-              <h2 v-else>No Data Available</h2>
+
+            <h5 class="table__Title">Goalkeepers</h5>
+            <v-divider style="margin: 0 !important"></v-divider>
+            <v-row v-if="isHavedata">
+              <v-data-table
+                @click:row="handleRowClick"
+                :headers="headers"
+                :items="desserts"
+                class="elevation-1 row-pointer"
+                hide-default-footer
+                :items-per-page="15"
+              >
+                <template v-slot:[`item.name`]="{ item }">
+                  <p class="pt-3" style="color: blue">
+                    {{ item.name }}
+                  </p>
+                </template>
+              </v-data-table>
             </v-row>
+            <h2 v-else>No Data Available</h2>
+            <h5 class="table__Title mt-10">Outfield Players</h5>
+            <v-divider style="margin: 0 !important"></v-divider>
+            <v-row v-if="isHavedata">
+              <v-data-table
+                @click:row="handleRowClick"
+                :headers="headers1"
+                :items="desserts1"
+                class="elevation-1 row-pointer"
+                hide-default-footer
+                :items-per-page="15"
+              >
+                <template v-slot:[`item.name`]="{ item }">
+                  <p class="pt-3" style="color: blue">
+                    {{ item.name }}
+                  </p>
+                </template>
+              </v-data-table>
+            </v-row>
+            <h2 v-else>No Data Available</h2>
           </v-card-text>
         </v-col>
-        <v-col cols="0" sm="1"></v-col>
       </v-row>
     </v-card>
   </div>
