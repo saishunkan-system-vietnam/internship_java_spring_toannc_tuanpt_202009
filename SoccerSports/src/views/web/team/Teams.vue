@@ -1,10 +1,10 @@
 <template>
   <div>
-    <v-card class="mx-auto" max-width="85%">
-      <v-row class="container">
+    <v-card class="mx-auto" >
+      <v-row>
         <template v-if="teamNotInTour">
-          <v-col cols="0" sm="1"></v-col>
-          <v-col cols="12" sm="7">
+          <v-col cols="0" sm="0" md="1"></v-col>
+          <v-col cols="12" sm="12" md="6" xl="6">
             <v-card-text>
               <v-row>
                 <h1 style="font-weight: bold; color: black">Soccer Teams</h1>
@@ -38,7 +38,9 @@
               <v-row v-if="isHavedata">
                 <v-col
                   cols="12"
-                  sm="6"
+                  sm="12"
+                  md="8"
+                  xl="6"
                   v-for="team in tournament.team"
                   :key="team.idTeam"
                 >
@@ -79,7 +81,7 @@
               <h2 v-else>No Data Available</h2>
             </v-card-text>
           </v-col>
-          <v-col cols="12" sm="4">
+          <v-col cols="12" sm="12" md="5" xl="4">
             <v-row style="height: 80px"></v-row>
             <v-row class="mb-5"
               ><v-spacer></v-spacer>
