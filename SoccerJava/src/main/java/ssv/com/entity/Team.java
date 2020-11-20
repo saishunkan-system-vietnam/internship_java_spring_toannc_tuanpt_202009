@@ -18,13 +18,13 @@ public class Team {
 	private int totalmatch;
 	private int totalwin;
 	private String description;
-	private String logo = "/images/default_user.png";
+	private String logo = "/images/No_image_3x4.png";
 	private String country;
 	private LocalDate createDate = LocalDate.now();
 	private int idTour;
 	private Tournament tournament;
 	private List<Profile> profile;
-	private String tourName; 
+	private String tourName;
 	private List<Schedule> schedule;
 	private double rate;
 }
