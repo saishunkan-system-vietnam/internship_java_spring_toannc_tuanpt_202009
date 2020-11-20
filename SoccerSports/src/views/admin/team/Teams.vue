@@ -30,8 +30,8 @@
 
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-row>
-            <v-col cols="0" sm="2" md="2"> </v-col>
-            <v-col cols="3" sm="3" md="3">
+            <v-col cols="0" sm="0" md="1"> </v-col>
+            <v-col cols="2" sm="3" md="3">
               <!-- <v-text-field
                 v-model="dateSearch"
                 append-icon="mdi-magnify"
@@ -49,7 +49,7 @@
                 class="pt-3"
               ></v-text-field>
             </v-col>
-            <v-col cols="3" sm="3" md="3">
+            <v-col cols="2" sm="3" md="3">
               <v-text-field
                 v-model="nameTeamSearch"
                 append-icon="mdi-magnify"
@@ -59,7 +59,7 @@
                 class="pt-3"
               ></v-text-field>
             </v-col>
-            <v-col cols="3" sm="3" md="3">
+            <v-col cols="2" sm="3" md="3">
               <v-select
                 v-model="tourNameSearch"
                 label="Tournament Search"
@@ -69,7 +69,7 @@
                 class="pt-3"
               ></v-select>
             </v-col>
-            <v-col cols="3" sm="3" md="1">
+            <v-col cols="2" sm="3" md="1">
               <v-btn class="mt-3" color="error" dark @click="reset"> Reset </v-btn>
             </v-col>
           </v-row>

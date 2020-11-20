@@ -1,8 +1,9 @@
 <template>
   <div>
-    <v-card class="mx-auto" max-width="85%">
-      <v-row class="container">
-        <v-col cols="12" sm="8">
+    <v-card class="mx-auto">
+      <v-row>
+        <v-col cols="0" sm="0" md="0" xl="1"></v-col>
+        <v-col cols="12" sm="12" md="6" xl="6">
           <v-card-text>
             <v-row class="mb-5">
               <v-col cols="12" sm="6">
@@ -25,8 +26,15 @@
                         hide-default-footer
                         :items-per-page="15"
                       >
-                        <template  v-slot:[`item.nameTeam1`]="{ item }">
-                          <p class="pt-3" style="color: red; width: 90px; margin-right: -27px !important">
+                        <template v-slot:[`item.nameTeam1`]="{ item }">
+                          <p
+                            class="pt-3"
+                            style="
+                              color: red;
+                              width: 90px;
+                              margin-right: -27px !important;
+                            "
+                          >
                             {{ item.nameTeam1 }}
                           </p>
                         </template>
@@ -38,7 +46,16 @@
                           />
                         </template>
                         <template v-slot:[`item.vs`]="{}">
-                          <p class="pt-3" style="color: blue; width: 20px; margin-right: 21px !important">VS</p>
+                          <p
+                            class="pt-3"
+                            style="
+                              color: blue;
+                              width: 20px;
+                              margin-right: 21px !important;
+                            "
+                          >
+                            VS
+                          </p>
                         </template>
                         <template v-slot:[`item.logoTeam2`]="{ item }">
                           <img
@@ -48,7 +65,14 @@
                           />
                         </template>
                         <template v-slot:[`item.nameTeam2`]="{ item }">
-                          <p class="pt-3" style="color: red; width: 90px; margin-right: -27px !important">
+                          <p
+                            class="pt-3"
+                            style="
+                              color: red;
+                              width: 90px;
+                              margin-right: -27px !important;
+                            "
+                          >
                             {{ item.nameTeam2 }}
                           </p>
                         </template>
@@ -70,17 +94,18 @@
             </template>
             <template v-else>
               <div>
-                <h4 style="color: black;display: flex; justify-content: center">
+                <h4
+                  style="color: black; display: flex; justify-content: center"
+                >
                   No Match Available
                 </h4>
               </div>
             </template>
           </v-card-text>
         </v-col>
-        <v-col cols="12" sm="4">
-          <v-row style="height: 107px"></v-row>
-          <v-row> <RankByTour :tourId="idTour" /></v-row
-        ></v-col>
+        <v-col cols="12" sm="12" md="5" xl="5">
+          <v-row> <RankByTour :tourId="idTour" /></v-row>
+        </v-col>
       </v-row>
     </v-card>
   </div>
@@ -172,8 +197,6 @@ export default {
           alert(e);
         });
     },
-
-    
 
     handleRowClick(item) {
       this.$router.push({ path: "/scheduleDetail/" + item.idSchedule });

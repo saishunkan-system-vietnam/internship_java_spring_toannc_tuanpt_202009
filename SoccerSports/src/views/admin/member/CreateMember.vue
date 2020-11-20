@@ -162,10 +162,10 @@ export default {
       birthDate: vueData,
       birthDateRules: [
         (v) => !!v || "Age number is required",
-        (v) => v.substr(0, v.indexOf("-")).length == 4 || "Unvalid Year",
+        (v) => v.substring(0, v.indexOf("-")).length == 4 || "Unvalid Year",
         (v) =>
-          (parseInt(v.substr(0, v.indexOf("-"))) > 1900 &&
-            parseInt(v.substr(0, v.indexOf("-"))) < 3000) ||
+          (parseInt(v.substring(0, v.indexOf("-"))) > 1900 &&
+            parseInt(v.substring(0, v.indexOf("-"))) < 3000) ||
           "Year select bettwen 1900 - 3000",
       ],
       gender: "",
