@@ -256,7 +256,7 @@
             </template>
             <template v-else>
               <div
-                v-for="(member, index) in team.profile.filter(
+                v-for="(member, index) in listAvailable.filter(
                   (p) => p.position == positionSelect
                 )"
                 :key="index"
