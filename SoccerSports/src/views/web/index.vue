@@ -41,13 +41,13 @@
                           <span></span>
                         </a>
                       </li>
-                      <li>
+                      <!-- <li>
                         <a>
                           <router-link to="/player">Players</router-link
                           ><span></span> <span></span> <span></span>
                           <span></span>
                         </a>
-                      </li>
+                      </li> -->
                       <li>
                         <a>
                           <router-link to="/rank">Rank</router-link
