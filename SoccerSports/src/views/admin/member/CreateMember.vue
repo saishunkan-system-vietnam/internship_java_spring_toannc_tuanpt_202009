@@ -108,7 +108,7 @@
 
 <script>
 var vueData = {};
-vueData.mydate = '1996-01-21';
+vueData.mydate = "1996-01-21";
 export default {
   props: {
     isOpenModalMember: {
@@ -162,12 +162,11 @@ export default {
       birthDate: vueData,
       birthDateRules: [
         (v) => !!v || "Age number is required",
-        // (v) => {
-        //   let inValid = /^[0-9]+$/;
-        //   return inValid.test(v) || "Age must be a number";
-        // },
-        // (v) =>
-        //    (v >= 1980) || "Year ",
+        (v) => v.substr(0, v.indexOf("-")).length == 4 || "Unvalid Year",
+        (v) =>
+          (parseInt(v.substr(0, v.indexOf("-"))) > 1900 &&
+            parseInt(v.substr(0, v.indexOf("-"))) < 3000) ||
+          "Year select bettwen 1900 - 3000",
       ],
       gender: "",
       defaultGender: ["Male", "Female", "Orther"],
@@ -214,7 +213,7 @@ export default {
         this.$refs.form.validate();
       } else {
         // console.log(this.fileImage);
-        console.log(this.birthDate)
+        console.log(this.birthDate);
         let self = this;
         var memberForm = new FormData();
         memberForm.append("name", this.name);
