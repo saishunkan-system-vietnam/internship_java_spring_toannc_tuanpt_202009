@@ -243,8 +243,12 @@ const router = new Router({
 
 router.beforeEach(async (to, from, next) => {
   if (store.state.auth.token != '' && store.state.user.userInfo == null) {
-    await store.dispatch("user/autoLogin").then(() => {
-      if (store.state.user.userInfo.role === 'ROLE_ADMIN') {
+    await store.dispatch("user/autoLogin").then((res) => {
+      console.log(res)
+      if(res.data.payload == null){
+        next("/")
+      }
+      else if (store.state.user.userInfo.role === 'ROLE_ADMIN') {
         store.commit('user/admin_profile')
       }
       else {
@@ -252,7 +256,7 @@ router.beforeEach(async (to, from, next) => {
       }
     })
   } else {
-    next()
+    next("/")
   }
   if (to.meta.requiredAuth) {
     const authUser = store.state.auth

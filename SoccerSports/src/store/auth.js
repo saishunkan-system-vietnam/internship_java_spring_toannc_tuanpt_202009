@@ -1,7 +1,8 @@
 import { login, register } from '@/api/AuthApi';
-
+import Cookies from 'js-cookie'
 const state = {
-    token: localStorage.getItem('token') || '',
+    // token: localStorage.getItem('token') || '',
+    token: Cookies.get('token'),
     overlay: false,
     checkAccount: false,
     drawer:null
