@@ -145,7 +145,7 @@ export default {
             // this.$store.commit("auth/auth_overlay");
             self.overlay = false;
             let userInfo = res.data.payload.account;
-            // console.log(userInfo.role);
+            this.$cookies.set("token", res.data.payload.token, -1);
             if (userInfo.role === null || userInfo.role === undefined) {
               self.checkProfile();
             } else if (userInfo.role === "ROLE_ADMIN") {

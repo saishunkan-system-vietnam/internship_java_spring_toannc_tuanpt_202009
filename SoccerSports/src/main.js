@@ -7,6 +7,7 @@ import InputMask from 'vue-input-mask';
 
 Vue.component('input-mask', InputMask)
 Vue.config.productionTip = false
+Vue.use(require('vue-cookies'))
 
 new Vue({
   vuetify,
