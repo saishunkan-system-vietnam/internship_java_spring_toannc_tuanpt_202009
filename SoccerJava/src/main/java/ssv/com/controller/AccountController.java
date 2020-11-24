@@ -94,7 +94,10 @@ public class AccountController {
 	@PostMapping(value = "/autoLogin")
 	public ResponseQuery<?> autoLogin(HttpServletRequest request) {
 		Account account = (Account) request.getSession().getAttribute("userInfo");
-		return ResponseQuery.success("Recivce Success", account);
+		if(account != null) {
+			return ResponseQuery.success("Recivce Success", account);
+		}
+		return ResponseQuery.faild("Failed To Access Token", null);
 	}
 
 	@RequestMapping(value = "/forget/{email}", method = RequestMethod.POST)
